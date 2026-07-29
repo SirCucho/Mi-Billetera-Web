@@ -240,6 +240,49 @@
             );
         };
 
+        // --- COMPONENTE: MODAL DE PAGO VIP ---
+        function PaymentModal({ onClose }) {
+            return (
+                <div className="fixed inset-0 modal-overlay z-[200] flex items-center justify-center p-4">
+                    <div className="bg-card w-full max-w-sm rounded-3xl p-8 border border-border shadow-2xl view-animate text-center relative">
+                        
+                        {/* Botón Cerrar */}
+                        <button onClick={onClose} className="absolute top-4 right-4 text-secondary hover:text-primary transition-colors">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                        
+                        <div className="w-16 h-16 rounded-full bg-warning/20 text-warning flex items-center justify-center mx-auto mb-4 border border-warning/50 shadow-lg">
+                            <LucideCrown className="w-8 h-8" />
+                        </div>
+                        
+                        <h2 className="text-2xl font-bold text-primary mb-2">Hazte VIP</h2>
+                        <p className="text-secondary text-sm mb-6 leading-relaxed">
+                            Desbloquea el análisis inteligente, el asistente IA de voz y personalización total por un único pago de 
+                            <strong className="text-white text-base block mt-1">S/ 50.00 <span className="text-xs font-normal text-secondary">(o su equivalente)</span></strong>
+                        </p>
+                        
+                        <div className="bg-white p-3 rounded-2xl inline-block mb-6 shadow-xl border-4 border-white">
+                            {/* QR Dinámico generado vía API (Apunta directo a tu WhatsApp con un mensaje predeterminado) */}
+                            <img 
+                                src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://wa.me/51930266472?text=Hola%20Carlos,%20quiero%20pagar%20mi%20suscripcion%20VIP" 
+                                alt="QR de Pago" 
+                                className="w-40 h-40 object-contain" 
+                            />
+                        </div>
+                        
+                        <div className="bg-background rounded-xl p-4 border border-border">
+                            <p className="text-[10px] text-secondary uppercase font-bold tracking-wider mb-1">Contacto / Titular de Pago</p>
+                            <p className="text-lg font-bold text-primary">Carlos Cucho</p>
+                            <p className="text-accent font-bold text-xl tracking-widest mt-1">930 266 472</p>
+                        </div>
+
+                    </div>
+                </div>
+            );
+        }
+
         function decodeJwtResponse(token) {
             try {
                 var base64Url = token.split('.')[1];
@@ -270,7 +313,7 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ ABAJO TU ID DE CLIENTE DE GOOGLE REAL     */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             
                             callback: handleGoogleResponse
                         });
@@ -683,8 +726,7 @@
             );
         }
 
-        function Chat({ addTxn, settings, activeCurrency, t, isVip }) {
-            // BLOQUEO PARA USUARIOS FREE
+        function Chat({ addTxn, settings, activeCurrency, t, isVip, onUpgrade }) {
             if (!isVip) {
                 return (
                     <div className="p-4 view-animate flex flex-col items-center justify-center min-h-[70vh] text-center">
@@ -693,7 +735,9 @@
                         </div>
                         <h2 className="text-2xl font-bold text-primary mb-3">Asistente IA VIP</h2>
                         <p className="text-secondary text-sm mb-6 max-w-xs leading-relaxed">Habla o escribe a nuestro asistente inteligente para registrar tus movimientos automáticamente.</p>
-                        <span className="bg-accent text-white text-xs uppercase font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-lg"><LucideStar className="w-4 h-4"/> Exclusivo para Premium</span>
+                        <button onClick={onUpgrade} className="bg-accent text-white text-xs uppercase font-bold px-4 py-3 rounded-lg flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
+                            <LucideStar className="w-4 h-4"/> Requiere Membresía
+                        </button>
                     </div>
                 );
             }
@@ -935,8 +979,7 @@
             );
         }
 
-        function Analisis({ txns, settings, activeCurrency, setActiveCurrency, t, isVip }) {
-            // BLOQUEO PARA USUARIOS FREE
+        function Analisis({ txns, settings, activeCurrency, setActiveCurrency, t, isVip, onUpgrade }) {
             if (!isVip) {
                 return (
                     <div className="p-4 view-animate flex flex-col items-center justify-center min-h-[70vh] text-center">
@@ -945,7 +988,9 @@
                         </div>
                         <h2 className="text-2xl font-bold text-primary mb-3">Evaluación Semanal VIP</h2>
                         <p className="text-secondary text-sm mb-6 max-w-xs leading-relaxed">Analiza tus gastos automáticamente y recibe recomendaciones inteligentes para ahorrar más. Función exclusiva.</p>
-                        <span className="bg-accent text-white text-xs uppercase font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-lg"><LucideStar className="w-4 h-4"/> Requiere Membresía</span>
+                        <button onClick={onUpgrade} className="bg-accent text-white text-xs uppercase font-bold px-4 py-3 rounded-lg flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
+                            <LucideStar className="w-4 h-4"/> Requiere Membresía
+                        </button>
                     </div>
                 );
             }
@@ -1044,7 +1089,7 @@
             );
         }
 
-        function Ajustes({ globalSettings, setGlobalSettings, onLogout, currentUser, isVip, t, setView }) {
+        function Ajustes({ globalSettings, setGlobalSettings, onLogout, currentUser, isVip, t, setView, onUpgrade }) {
             const [localSettings, setLocalSettings] = useState(globalSettings);
             const userData = DB.getUserData(currentUser);
             
@@ -1187,9 +1232,9 @@
                         <div className="pt-2 border-t border-border relative">
                             {!isVip && (
                                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-card/60 backdrop-blur-[2px] rounded-b-xl pb-2">
-                                    <span className="bg-warning text-black text-[10px] uppercase font-bold px-3 py-1.5 rounded-md flex items-center gap-1 shadow-lg border border-warning/50">
+                                    <button onClick={onUpgrade} className="bg-warning text-black text-[10px] uppercase font-bold px-3 py-1.5 rounded-md flex items-center gap-1 shadow-lg border border-warning/50 hover:scale-105 transition-transform">
                                         <LucideCrown className="w-3 h-3"/> Solo VIP
-                                    </span>
+                                    </button>
                                 </div>
                             )}
 
@@ -1241,6 +1286,9 @@
             const [isAdmin, setIsAdmin] = useState(false);
             const [isVip, setIsVip] = useState(false);
             
+            // ESTADO PARA EL MODAL DE PAGO
+            const [showPayment, setShowPayment] = useState(false);
+            
             const [view, setView] = useState('home'); 
             const [txns, setTxns] = useState([]);
             const [settings, setSettings] = useState(DEFAULT_SETTINGS);
@@ -1261,7 +1309,6 @@
             const loadUserData = (user) => {
                 setCurrentUser(user);
                 
-                // Leer el estado VIP directo del objeto de usuario
                 const uData = DB.getUserData(user);
                 setIsVip(uData?.vip || false);
                 
@@ -1315,10 +1362,13 @@
                 switch(view) {
                     case 'home': return <Home txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isVip={isVip} currentUser={currentUser} setView={setView}/>;
                     case 'nueva': return <Nueva addTxn={addTxn} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} setView={setView}/>;
-                    case 'analisis': return <Analisis txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isVip={isVip}/>;
-                    case 'chat': return <Chat addTxn={addTxn} settings={settings} activeCurrency={activeCurrency} t={translate} isVip={isVip}/>;
+                    
+                    // SE PASA LA FUNCION onUpgrade A LAS VISTAS QUE LO REQUIEREN
+                    case 'analisis': return <Analisis txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isVip={isVip} onUpgrade={() => setShowPayment(true)}/>;
+                    case 'chat': return <Chat addTxn={addTxn} settings={settings} activeCurrency={activeCurrency} t={translate} isVip={isVip} onUpgrade={() => setShowPayment(true)}/>;
+                    case 'ajustes': return <Ajustes globalSettings={settings} setGlobalSettings={setGlobalSettings} onLogout={handleLogout} currentUser={currentUser} isVip={isVip} t={translate} setView={setView} onUpgrade={() => setShowPayment(true)}/>;
+                    
                     case 'historial': return <Historial txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} deleteTxn={deleteTxn} updateTxn={updateTxn} clearAllTxns={clearAllTxns} t={translate}/>;
-                    case 'ajustes': return <Ajustes globalSettings={settings} setGlobalSettings={setGlobalSettings} onLogout={handleLogout} currentUser={currentUser} isVip={isVip} t={translate} setView={setView}/>;
                     default: return <Home txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isVip={isVip} currentUser={currentUser} setView={setView}/>;
                 }
             };
@@ -1335,7 +1385,7 @@
             const colors = settings.colors || DEFAULT_SETTINGS.colors;
 
             return (
-                <div className="min-h-screen font-sans flex flex-col overflow-auto" style={{
+                <div className="min-h-screen font-sans flex flex-col overflow-auto relative" style={{
                         '--col-bg': colors.bg, '--col-card': colors.card,
                         '--col-text': colors.text || (settings.theme === 'light' ? '#18181b' : '#ffffff'),
                         '--col-secondary': colors.secondary || (settings.theme === 'light' ? '#71717a' : '#a1a1aa'),
@@ -1345,6 +1395,7 @@
                         '--col-nav-active-bg': colors.navActiveBg || (settings.theme === 'light' ? '#e4e4e7' : '#2b3144'),
                         '--col-nav-active-text': colors.accent
                     }}>
+                    
                     <div className="flex-1 pb-20" style={{ transform: `scale(${zoomScale})`, transformOrigin: 'top center', transition: 'transform 0.2s ease-in-out' }}>
                         {renderView()}
                     </div>
@@ -1362,6 +1413,10 @@
                             })}
                         </div>
                     )}
+
+                    {/* MODAL DE PAGO (Aparece por encima de todo si showPayment es true) */}
+                    {showPayment && <PaymentModal onClose={() => setShowPayment(false)} />}
+
                 </div>
             );
         }
