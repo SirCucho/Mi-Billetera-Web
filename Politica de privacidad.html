@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad - Mi Billetera</title>
+    <!-- Importando la fuente 'Inter' desde Google Fonts para máxima legibilidad -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0f172a; /* Azul muy oscuro para títulos */
+            --secondary-color: #1e293b;
+            --accent-color: #2563eb;
+            --text-color: #334155; /* Gris oscuro para el cuerpo del texto, cansa menos la vista que el negro puro */
+            --bg-color: #f8fafc;
+            --container-bg: #ffffff;
+        }
+
+        body {
+            /* Usando la nueva fuente Inter */
+            font-family: 'Inter', sans-serif;
+            font-size: 17px; /* Tamaño base un poco más grande para facilitar la lectura */
+            line-height: 1.75; /* Espaciado generoso entre líneas */
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            
+            /* Suavizado de fuentes para pantallas modernas */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 50px auto;
+            background: var(--container-bg);
+            padding: 60px 70px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border-radius: 16px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.2em;
+            font-weight: 700;
+            letter-spacing: -0.03em; /* Las fuentes modernas se ven mejor un poco más juntas en los títulos */
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .last-updated {
+            color: #64748b;
+            font-size: 0.9em;
+            font-weight: 400;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-top: 30px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        strong {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+
+        /* Caja del índice (Tabla de contenidos) */
+        .toc {
+            background-color: #f1f5f9;
+            padding: 35px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+        }
+
+        .toc h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin-bottom: 12px;
+        }
+
+        .toc a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .toc a:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        /* Caja de contacto */
+        .contact-box {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 35px;
+            border-radius: 12px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .contact-box p {
+            margin: 0 0 15px 0;
+        }
+
+        .contact-box a {
+            color: #1d4ed8;
+            font-weight: 600;
+            font-size: 1.25em;
+            text-decoration: none;
+        }
+        
+        .contact-box a:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 70px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            color: #94a3b8;
+            font-size: 0.85em;
+        }
+
+        /* Adaptabilidad para móviles */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                padding: 30px 20px;
+                border-radius: 0;
+            }
+            h1 { font-size: 1.8em; }
+            body { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Política de Privacidad de "Mi Billetera"</h1>
+            <p class="last-updated">Fecha de entrada en vigor y última actualización: 28 de julio de 2026</p>
+        </header>
+
+        <div class="toc">
+            <h3>Tabla de Contenidos</h3>
+            <ul>
+                <li><a href="#introduccion">1. Introducción y Alcance</a></li>
+                <li><a href="#informacion">2. Información que Recopilamos</a></li>
+                <li><a href="#uso">3. Uso de la Información</a></li>
+                <li><a href="#publicidad">4. Publicidad y Compartición con Terceros</a></li>
+                <li><a href="#gdpr">5. Derechos de Privacidad Europeos (GDPR)</a></li>
+                <li><a href="#ccpa">6. Derechos de Privacidad de California (CCPA y CPRA)</a></li>
+                <li><a href="#caloppa">7. Cumplimiento de CalOPPA</a></li>
+                <li><a href="#contacto">8. Información de Contacto</a></li>
+            </ul>
+        </div>
+
+        <section id="introduccion">
+            <h2>1. Introducción y Alcance</h2>
+            <p>En <strong>"Mi Billetera"</strong>, respetamos su privacidad y estamos fuertemente comprometidos en proteger los datos personales que usted comparte con nosotros. Esta Política de Privacidad detallada explica exhaustivamente nuestras prácticas respecto a la recopilación, uso, mantenimiento y divulgación de la información que obtenemos de los usuarios de nuestra aplicación.</p>
+            <p>Al utilizar nuestra aplicación, usted acepta las prácticas descritas en este documento. Hemos diseñado nuestras políticas no solo para ser transparentes, sino para cumplir de manera estricta con las legislaciones de privacidad más rigurosas a nivel global.</p>
+        </section>
+
+        <section id="informacion">
+            <h2>2. Información que Recopilamos</h2>
+            <p>Nos adherimos al principio de minimización de datos. Esto significa que solo recopilamos la información estrictamente necesaria para proporcionar nuestro servicio. Específicamente, recopilamos los siguientes datos proporcionados directamente por usted:</p>
+            <ul>
+                <li><strong>Información de Identificación Personal:</strong> Su nombre completo.</li>
+                <li><strong>Información de Contacto/Ubicación:</strong> Su dirección física.</li>
+                <li><strong>Información Financiera:</strong> Detalles específicos sobre sus ingresos y gastos corrientes.</li>
+            </ul>
+            <p><strong>Declaración de no recopilación adicional:</strong> No utilizamos tecnologías de seguimiento en segundo plano, no extraemos datos de sus contactos, no accedemos a su cámara ni a su ubicación GPS en tiempo real. La información mencionada arriba es la única que "Mi Billetera" procesa.</p>
+        </section>
+
+        <section id="uso">
+            <h2>3. Uso de la Información</h2>
+            <p>La información recopilada se utiliza con propósitos exclusivos, limitados y legítimos. Su información es utilizada para:</p>
+            <ul>
+                <li>Proporcionar las funcionalidades principales de la aplicación, permitiéndole administrar de manera eficiente su flujo de caja personal.</li>
+                <li>Facilitar herramientas de análisis interno que le ayuden a planificar sus inversiones y ahorros.</li>
+                <li>Mejorar el rendimiento técnico y la experiencia de usuario dentro del entorno de la aplicación.</li>
+            </ul>
+        </section>
+
+        <section id="publicidad">
+            <h2>4. Publicidad y Compartición con Terceros</h2>
+            <p>Nos enorgullece afirmar que nuestro modelo de servicio está centrado en el usuario y no en la monetización de sus datos. Por lo tanto, establecemos lo siguiente de manera categórica:</p>
+            <ul>
+                <li><strong>Cero Publicidad:</strong> No utilizamos servicios de publicidad de terceros, redes de anuncios (Ad Networks) ni mostramos ningún tipo de anuncio dentro de la aplicación.</li>
+                <li><strong>No Venta de Datos:</strong> "Mi Billetera" no vende, alquila, comercializa ni transfiere bajo ninguna circunstancia su información personal, financiera o de uso a terceros, agencias de marketing o corredores de datos (data brokers).</li>
+            </ul>
+        </section>
+
+        <section id="gdpr">
+            <h2>5. Derechos de Privacidad Europeos (GDPR)</h2>
+            <p>Si usted es residente del Espacio Económico Europeo (EEE), sus datos son tratados conforme al Reglamento General de Protección de Datos (GDPR). La base legal para procesar su información es su consentimiento explícito y la necesidad de ejecutar el servicio que nos solicita. Usted posee los siguientes derechos inalienables:</p>
+            <ul>
+                <li><strong>Derecho de Acceso:</strong> Puede solicitar una copia estructurada de todos los datos personales que tenemos sobre usted.</li>
+                <li><strong>Derecho de Rectificación:</strong> Puede exigir la corrección de cualquier dato personal inexacto o incompleto.</li>
+                <li><strong>Derecho al Olvido (Supresión):</strong> Puede solicitar la eliminación inmediata y permanente de todos sus datos de nuestros servidores.</li>
+                <li><strong>Derecho a la Portabilidad:</strong> Tiene derecho a recibir sus datos en un formato estructurado, de uso común y lectura mecánica para transferirlos a otro controlador.</li>
+                <li><strong>Derecho a la Limitación u Oposición:</strong> Puede oponerse al procesamiento de sus datos en cualquier momento.</li>
+            </ul>
+        </section>
+
+        <section id="ccpa">
+            <h2>6. Derechos de Privacidad de California (CCPA y CPRA)</h2>
+            <p>En cumplimiento con la Ley de Privacidad del Consumidor de California (CCPA) y la Ley de Derechos de Privacidad de California (CPRA), otorgamos a los residentes de California (y extendemos estos derechos a todos nuestros usuarios globales) protecciones específicas:</p>
+            <ul>
+                <li><strong>Derecho a Saber (Right to Know):</strong> Usted tiene derecho a solicitar la divulgación de las categorías específicas de información personal que hemos recopilado durante los últimos 12 meses y los fines para los cuales se utilizaron.</li>
+                <li><strong>Derecho a Eliminar (Right to Delete):</strong> Sujeto a ciertas excepciones legales, usted puede solicitar la eliminación de su información personal.</li>
+                <li><strong>Derecho a Optar por no Vender o Compartir (Opt-Out):</strong> Aunque la ley exige que proporcionemos un enlace de "No vender mi información personal", <em>reiteramos que "Mi Billetera" jamás vende ni comparte sus datos personales.</em></li>
+                <li><strong>Derecho a la No Discriminación:</strong> No le negaremos servicios, no le cobraremos precios diferentes ni le proporcionaremos un nivel de calidad inferior por ejercer sus derechos de privacidad.</li>
+            </ul>
+        </section>
+
+        <section id="caloppa">
+            <h2>7. Cumplimiento de CalOPPA</h2>
+            <p>La Ley de Protección de la Privacidad en Línea de California (CalOPPA) exige que los servicios digitales que recopilen información de identificación personal publiquen una política de privacidad visible. Para cumplir con CalOPPA, acordamos lo siguiente:</p>
+            <ul>
+                <li>Los usuarios pueden visitar nuestra aplicación y acceder a las funciones básicas de lectura de esta política de forma anónima.</li>
+                <li>Nuestra Política de Privacidad incluye la palabra "Privacidad" y es fácilmente accesible desde el menú principal de la aplicación.</li>
+                <li><strong>Señales Do Not Track (DNT):</strong> Dado que no utilizamos servicios de seguimiento de terceros ni publicidad conductual, las señales de "No Rastrear" (Do Not Track) de los navegadores web no alteran el funcionamiento de nuestra aplicación, ya que, por defecto, no rastreamos a nuestros usuarios fuera de la plataforma.</li>
+            </ul>
+        </section>
+
+        <section id="contacto">
+            <h2>8. Información de Contacto y Ejercicio de Derechos</h2>
+            <p>Si desea ejercer alguno de los derechos mencionados en las secciones de GDPR, CCPA o CalOPPA, o si tiene cualquier inquietud, pregunta o queja sobre cómo manejamos sus datos personales, el Responsable de Protección de Datos está a su entera disposición.</p>
+            
+            <div class="contact-box">
+                <p>Puede comunicarse directamente con nosotros a través del siguiente correo electrónico:</p>
+                <a href="mailto:sirqcho@gmail.com">sirqcho@gmail.com</a>
+                <p style="margin-top: 20px; font-size: 0.9em; color: #475569; font-weight: 400;">Nos comprometemos a responder a todas las solicitudes de privacidad en un plazo no mayor a 30 días hábiles.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Mi Billetera. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
