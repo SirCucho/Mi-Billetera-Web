@@ -62,7 +62,7 @@
         const DICTIONARY = {
             es: {
                 greeting: "Hola,", nav_home: "Inicio", nav_new: "Nueva", nav_analysis: "Análisis", nav_chat: "Chat", nav_history: "Historial",
-                home_sub: "Tu dinero, bajo control", home_title: "Mi Billetera", balance: "Saldo total", income: "Ingresos del mes",
+                home_title: "Mi Billetera", balance: "Saldo total", income: "Ingresos del mes",
                 expenses: "Gastos del mes", fixed: "Gastos fijos", fixed_sub: "Luz, agua, internet y otros", savings: "Tu ahorro",
                 savings_actual: "Ahorro actual", savings_goal: "Meta sugerida (20%)", new_title: "Nueva Transacción",
                 expense_btn: "Gasto", income_btn: "Ingreso", save_btn: "Guardar", amount: "Monto", desc: "Descripción", 
@@ -73,22 +73,10 @@
                 theme_mode: "Modo visual", mode_dark: "🌙 Noche", mode_light: "☀️ Día",
                 colors_title: "Personalizar Colores", col_bg: "Fondo", col_card: "Tarjetas", col_accent: "Acento",
                 reset_colors: "Restablecer colores", reset: "Restablecer", save_settings: "Guardar Cambios", no_txns: "Sin transacciones.",
-                
                 account_title: "Perfil de Cuenta", logged_in_as: "Sesión activa:", btn_logout: "Cerrar Sesión",
                 auth_login_tab: "Iniciar Sesión", auth_reg_tab: "Registrarse", auth_user: "Usuario", auth_pass: "Contraseña",
                 auth_btn_login: "Ingresar", auth_btn_reg: "Crear Cuenta", auth_error_exist: "El usuario ya existe.",
-                auth_error_login: "Credenciales incorrectas.", auth_error_empty: "Llena todos los campos.",
-                
-                quotes: ["Planifica tus compras y evita decisiones impulsivas."],
-                analysis_rec_title: "Recomendaciones",
-                analysis_rec_save_low: "Intenta llegar al 20% reduciendo gastos pequeños.",
-                analysis_rec_save_high: "¡Excelente trabajo!",
-                analysis_rec_leak_1_a: "Tu mayor gasto fue en ",
-                analysis_rec_leak_1_b: ". ¿Puedes reducirlo?",
-                analysis_rec_leak_2_a: " también pesó.",
-                analysis_rec_rule: "Aplica la regla 50/30/20.",
-                analysis_rec_tip: "Registra cada gasto apenas lo hagas.",
-                analysis_rec_footer: "Basado en tus movimientos"
+                auth_error_login: "Credenciales incorrectas.", auth_error_empty: "Llena todos los campos."
             }
         };
 
@@ -107,6 +95,10 @@
             'CAD': 'CA$', 'AUD': 'A$', 'ARS': '$', 'COP': '$', 'CLP': '$', 'BOB': 'Bs'
         };
 
+        const CONVERSION_RATES = {
+            'USD': 1, 'PEN': 3.40, 'EUR': 0.92, 'MXN': 17.5, 'COP': 3900, 'CLP': 950, 'ARS': 1000, 'BOB': 6.9, 'BRL': 5.5, 'GBP': 0.78, 'CAD': 1.36
+        };
+
         const DEFAULT_SETTINGS = { 
             country: 'Perú', lang: 'es', currencies: ['PEN'], zoom: 100, theme: 'dark',
             colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' }
@@ -117,7 +109,8 @@
             register: (user, pass, isGoogle = false, profile = null) => {
                 const users = DB.getUsers();
                 if(users[user] && !isGoogle) return false; 
-                users[user] = { password: pass, isGoogle, profile, vip: false };
+                // Añadimos campos para gestionar la prueba gratis
+                users[user] = { password: pass, isGoogle, profile, vip: false, trialStart: null, trialChosen: false };
                 localStorage.setItem('billetera_users_v6', JSON.stringify(users));
                 return true;
             },
@@ -131,42 +124,42 @@
                 return { success: false };
             },
             deleteUser: (user) => {
-                const users = DB.getUsers();
-                delete users[user];
-                localStorage.setItem('billetera_users_v6', JSON.stringify(users));
-                localStorage.removeItem(`txns_${user}`);
-                localStorage.removeItem(`settings_${user}`);
+                const users = DB.getUsers(); delete users[user]; localStorage.setItem('billetera_users_v6', JSON.stringify(users));
+                localStorage.removeItem(`txns_${user}`); localStorage.removeItem(`settings_${user}`);
             },
             changeUsername: (oldUser, newUser) => {
                 const users = DB.getUsers();
                 if(users[newUser] || oldUser === 'Admin' || newUser === 'Admin') return false;
-                users[newUser] = users[oldUser];
-                delete users[oldUser];
-                localStorage.setItem('billetera_users_v6', JSON.stringify(users));
-                
-                const txns = localStorage.getItem(`txns_${oldUser}`);
-                if (txns) { localStorage.setItem(`txns_${newUser}`, txns); localStorage.removeItem(`txns_${oldUser}`); }
-                const settings = localStorage.getItem(`settings_${oldUser}`);
-                if (settings) { localStorage.setItem(`settings_${newUser}`, settings); localStorage.removeItem(`settings_${oldUser}`); }
+                users[newUser] = users[oldUser]; delete users[oldUser]; localStorage.setItem('billetera_users_v6', JSON.stringify(users));
+                const txns = localStorage.getItem(`txns_${oldUser}`); if (txns) { localStorage.setItem(`txns_${newUser}`, txns); localStorage.removeItem(`txns_${oldUser}`); }
+                const settings = localStorage.getItem(`settings_${oldUser}`); if (settings) { localStorage.setItem(`settings_${newUser}`, settings); localStorage.removeItem(`settings_${oldUser}`); }
                 return true;
             },
             changePassword: (user, newPass) => {
-                const users = DB.getUsers();
-                if(!users[user]) return false;
-                users[user].password = newPass;
-                localStorage.setItem('billetera_users_v6', JSON.stringify(users));
-                return true;
+                const users = DB.getUsers(); if(!users[user]) return false; users[user].password = newPass; localStorage.setItem('billetera_users_v6', JSON.stringify(users)); return true;
             },
             toggleVip: (user) => {
+                const users = DB.getUsers(); if(!users[user]) return false; users[user].vip = !users[user].vip; localStorage.setItem('billetera_users_v6', JSON.stringify(users)); return true;
+            },
+            startTrial: (user) => {
                 const users = DB.getUsers();
-                if(!users[user]) return false;
-                users[user].vip = !users[user].vip;
-                localStorage.setItem('billetera_users_v6', JSON.stringify(users));
-                return true;
+                if(users[user]) {
+                    users[user].trialStart = new Date().toISOString();
+                    users[user].trialChosen = true;
+                    localStorage.setItem('billetera_users_v6', JSON.stringify(users));
+                    return true;
+                } return false;
+            },
+            skipTrial: (user) => {
+                const users = DB.getUsers();
+                if(users[user]) {
+                    users[user].trialChosen = true;
+                    localStorage.setItem('billetera_users_v6', JSON.stringify(users));
+                    return true;
+                } return false;
             },
             getUserData: (user) => {
-                const users = DB.getUsers();
-                return users[user] || null;
+                const users = DB.getUsers(); return users[user] || null;
             },
             getTxns: (user) => JSON.parse(localStorage.getItem(`txns_${user}`) || '[]'),
             saveTxns: (user, txns) => localStorage.setItem(`txns_${user}`, JSON.stringify(txns)),
@@ -184,13 +177,7 @@
 
         // --- ÍCONOS ---
         const LogoSVG = () => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" className="w-full h-full">
-                <path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
-                <polygon points="48,12 43,16 50,16" fill="#fff"/>
-                <path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" strokeWidth="3" strokeLinejoin="round"/>
-                <path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" strokeWidth="3" strokeLinejoin="round"/>
-                <circle cx="26" cy="42" r="2" fill="#0f172a"/>
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" className="w-full h-full"><path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" strokeWidth="3" strokeLinejoin="round"/><path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" strokeWidth="3" strokeLinejoin="round"/><circle cx="26" cy="42" r="2" fill="#0f172a"/></svg>
         );
         const LucideHome = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>;
         const LucidePlusCircle = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>;
@@ -240,44 +227,108 @@
             );
         };
 
-        // --- COMPONENTE: MODAL DE PAGO VIP ---
-        function PaymentModal({ onClose }) {
+        // --- COMPONENTE: MODAL DE BIENVENIDA (ELECCIÓN INICIAL) ---
+        function WelcomeModal({ onStartTrial, onSkipTrial, onOpenPricing }) {
             return (
-                <div className="fixed inset-0 modal-overlay z-[200] flex items-center justify-center p-4">
-                    <div className="bg-card w-full max-w-sm rounded-3xl p-8 border border-border shadow-2xl view-animate text-center relative">
+                <div className="fixed inset-0 modal-overlay z-[300] flex items-center justify-center p-4">
+                    <div className="bg-card w-full max-w-sm rounded-3xl p-8 border border-border shadow-2xl view-animate text-center relative overflow-hidden">
+                        <div className="absolute -top-10 -right-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl"></div>
+                        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-success/20 rounded-full blur-2xl"></div>
                         
-                        {/* Botón Cerrar */}
-                        <button onClick={onClose} className="absolute top-4 right-4 text-secondary hover:text-primary transition-colors">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                        </button>
-                        
-                        <div className="w-16 h-16 rounded-full bg-warning/20 text-warning flex items-center justify-center mx-auto mb-4 border border-warning/50 shadow-lg">
-                            <LucideCrown className="w-8 h-8" />
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-blue-700 text-white flex items-center justify-center mx-auto mb-6 shadow-lg relative z-10">
+                            <LucideStar className="w-8 h-8" />
                         </div>
                         
-                        <h2 className="text-2xl font-bold text-primary mb-2">Hazte VIP</h2>
-                        <p className="text-secondary text-sm mb-6 leading-relaxed">
-                            Desbloquea el análisis inteligente, el asistente IA de voz y personalización total por un único pago de 
-                            <strong className="text-white text-base block mt-1">S/ 50.00 <span className="text-xs font-normal text-secondary">(o su equivalente)</span></strong>
+                        <h2 className="text-2xl font-bold text-primary mb-2 relative z-10">¡Bienvenido!</h2>
+                        <p className="text-secondary text-sm mb-6 leading-relaxed relative z-10">
+                            Elige cómo quieres empezar a controlar tus finanzas. Puedes probar todas las funciones premium gratis por 14 días.
                         </p>
                         
-                        <div className="bg-white p-3 rounded-2xl inline-block mb-6 shadow-xl border-4 border-white">
-                            {/* QR Dinámico generado vía API (Apunta directo a tu WhatsApp con un mensaje predeterminado) */}
-                            <img 
-                                src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://wa.me/51930266472?text=Hola%20Carlos,%20quiero%20pagar%20mi%20suscripcion%20VIP" 
-                                alt="QR de Pago" 
-                                className="w-40 h-40 object-contain" 
-                            />
+                        <div className="space-y-3 relative z-10">
+                            <button onClick={onStartTrial} className="w-full py-4 bg-accent text-white rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:scale-105 transition-transform flex items-center justify-center gap-2">
+                                <LucideStar className="w-4 h-4"/> Iniciar Prueba de 14 Días
+                            </button>
+                            <button onClick={onOpenPricing} className="w-full py-4 bg-warning/10 text-warning border border-warning/30 rounded-xl font-bold text-sm hover:bg-warning/20 transition-colors flex items-center justify-center gap-2">
+                                <LucideCrown className="w-4 h-4"/> Ver Planes VIP
+                            </button>
+                            <button onClick={onSkipTrial} className="w-full py-3 bg-transparent text-secondary hover:text-primary font-bold text-xs transition-colors underline">
+                                Continuar como Básico (Gratis)
+                            </button>
                         </div>
-                        
-                        <div className="bg-background rounded-xl p-4 border border-border">
-                            <p className="text-[10px] text-secondary uppercase font-bold tracking-wider mb-1">Contacto / Titular de Pago</p>
-                            <p className="text-lg font-bold text-primary">Carlos Cucho</p>
-                            <p className="text-accent font-bold text-xl tracking-widest mt-1">930 266 472</p>
-                        </div>
+                    </div>
+                </div>
+            );
+        }
 
+        // --- COMPONENTE: MODAL DE PAGO (PRECIOS Y QR DINÁMICO) ---
+        function PaymentModal({ onClose, activeCurrency }) {
+            const [selectedPlan, setSelectedPlan] = useState(null);
+            
+            const rate = CONVERSION_RATES[activeCurrency] || 1;
+            const getPrice = (usd) => (usd * rate).toFixed(2);
+            const sym = ALL_CURRENCIES[activeCurrency] || activeCurrency;
+
+            const PLANS = [
+                { id: 'monthly', name: 'Mensual VIP', usd: 3, desc: 'Ideal para probar' },
+                { id: 'annual', name: 'Anual VIP', usd: 15, desc: 'Ahorras 58% vs Mensual' },
+                { id: 'lifetime', name: 'Vitalicio VIP', usd: 45, desc: 'Pago único para siempre' }
+            ];
+
+            return (
+                <div className="fixed inset-0 modal-overlay z-[200] flex items-center justify-center p-4">
+                    <div className="bg-card w-full max-w-sm rounded-3xl p-6 border border-border shadow-2xl view-animate text-center relative max-h-[90vh] overflow-y-auto">
+                        
+                        <button onClick={onClose} className="absolute top-4 right-4 text-secondary hover:text-primary transition-colors bg-background p-1.5 rounded-full">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                        
+                        {!selectedPlan ? (
+                            <>
+                                <div className="w-12 h-12 rounded-full bg-warning/20 text-warning flex items-center justify-center mx-auto mb-3 border border-warning/50">
+                                    <LucideCrown className="w-6 h-6" />
+                                </div>
+                                <h2 className="text-xl font-bold text-primary mb-1">Elige tu Plan VIP</h2>
+                                <p className="text-xs text-secondary mb-5">Precios equivalentes en {activeCurrency}</p>
+                                
+                                <div className="space-y-3">
+                                    {PLANS.map(plan => (
+                                        <div key={plan.id} onClick={() => setSelectedPlan(plan)} className="p-4 rounded-2xl border border-border bg-background cursor-pointer hover:border-accent hover:bg-accent/5 transition-all text-left flex items-center justify-between group">
+                                            <div>
+                                                <h3 className="font-bold text-primary text-sm group-hover:text-accent transition-colors">{plan.name}</h3>
+                                                <p className="text-[10px] text-secondary">{plan.desc}</p>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="font-bold text-lg text-primary">{sym} {getPrice(plan.usd)}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        ) : (
+                            <div className="view-animate pt-4">
+                                <button onClick={() => setSelectedPlan(null)} className="flex items-center gap-1 text-xs text-secondary hover:text-primary mb-4">
+                                    <LucideChevronLeft className="w-4 h-4"/> Cambiar Plan
+                                </button>
+                                
+                                <h2 className="text-lg font-bold text-primary mb-1">Escanea para Pagar</h2>
+                                <p className="text-xs text-secondary mb-4">Plan {selectedPlan.name}: <strong className="text-white">{sym} {getPrice(selectedPlan.usd)}</strong></p>
+                                
+                                <div className="bg-white p-3 rounded-2xl inline-block mb-4 shadow-xl border-4 border-white">
+                                    <img 
+                                        src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`https://wa.me/51930266472?text=Hola Carlos, quiero pagar mi suscripción VIP (${selectedPlan.name}) por ${sym} ${getPrice(selectedPlan.usd)} ${activeCurrency}.`)}`} 
+                                        alt="QR de Pago" 
+                                        className="w-40 h-40 object-contain" 
+                                    />
+                                </div>
+                                
+                                <div className="bg-background rounded-xl p-3 border border-border mt-2">
+                                    <p className="text-[10px] text-secondary uppercase font-bold tracking-wider mb-1">Contacto / Envío de Voucher</p>
+                                    <p className="text-base font-bold text-primary">Carlos Cucho</p>
+                                    <p className="text-accent font-bold text-lg tracking-widest mt-1">930 266 472</p>
+                                </div>
+                                <p className="text-[10px] text-secondary mt-4">Al escanear, se abrirá WhatsApp con el mensaje listo para coordinar la activación de tu cuenta.</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             );
@@ -285,15 +336,10 @@
 
         function decodeJwtResponse(token) {
             try {
-                var base64Url = token.split('.')[1];
-                var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
+                var base64Url = token.split('.')[1]; var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join(''));
                 return JSON.parse(jsonPayload);
-            } catch(e) {
-                return null;
-            }
+            } catch(e) { return null; }
         };
 
         function AuthView({ onLogin }) {
@@ -313,14 +359,10 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ ABAJO TU ID DE CLIENTE DE GOOGLE REAL     */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
-                            
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: handleGoogleResponse
                         });
-                        window.google.accounts.id.renderButton(
-                            document.getElementById("google-btn-container"),
-                            { theme: "outline", size: "large", width: "100%", text: "continue_with" }
-                        );
+                        window.google.accounts.id.renderButton( document.getElementById("google-btn-container"), { theme: "outline", size: "large", width: "100%", text: "continue_with" } );
                         clearInterval(initG);
                     }
                 }, 500);
@@ -331,14 +373,9 @@
                 try {
                     const payload = decodeJwtResponse(response.credential);
                     if(payload) {
-                        const cleanMail = payload.email;
-                        const users = DB.getUsers();
-                        if(users[cleanMail]) {
-                            onLogin(cleanMail, 'user');
-                        } else {
-                            setRegData({
-                                name: payload.name || '', email: cleanMail, dob: '', age: '', country: 'Perú', isGoogle: true, password: '', picture: payload.picture || ''
-                            });
+                        const cleanMail = payload.email; const users = DB.getUsers();
+                        if(users[cleanMail]) { onLogin(cleanMail, 'user'); } else {
+                            setRegData({ name: payload.name || '', email: cleanMail, dob: '', age: '', country: 'Perú', isGoogle: true, password: '', picture: payload.picture || '' });
                             setStep(2);
                         }
                     }
@@ -348,11 +385,8 @@
             const handleGoogleFallback = () => {
                 const mail = prompt("Simulación Local: Ingresa tu correo:", "usuario@gmail.com");
                 if(mail && mail.trim()) {
-                    const cleanMail = mail.trim();
-                    const users = DB.getUsers();
-                    if(users[cleanMail]) {
-                        onLogin(cleanMail, 'user');
-                    } else {
+                    const cleanMail = mail.trim(); const users = DB.getUsers();
+                    if(users[cleanMail]) { onLogin(cleanMail, 'user'); } else {
                         setRegData({ name: cleanMail.split('@')[0], email: cleanMail, dob: '', age: '', country: 'Perú', isGoogle: true, password: '', picture: '' });
                         setStep(2);
                     }
@@ -360,31 +394,23 @@
             };
 
             const handleSubmitStep1 = (e) => {
-                e.preventDefault();
-                setError('');
-                const u = user.trim();
-                const p = pass.trim();
+                e.preventDefault(); setError(''); const u = user.trim(); const p = pass.trim();
                 if(!u || !p) { setError(t('auth_error_empty')); return; }
-
                 if (isLogin) {
                     const res = DB.login(u, p);
-                    if(res.success) onLogin(u, res.role);
-                    else setError(t('auth_error_login'));
+                    if(res.success) onLogin(u, res.role); else setError(t('auth_error_login'));
                 } else {
                     if(u.toLowerCase() === 'admin') { setError("Nombre reservado"); return; }
-                    const users = DB.getUsers();
-                    if(users[u]) { setError(t('auth_error_exist')); return; }
+                    const users = DB.getUsers(); if(users[u]) { setError(t('auth_error_exist')); return; }
                     setRegData({ name: u, email: '', dob: '', age: '', country: 'Perú', isGoogle: false, password: p, picture: '' });
                     setStep(2);
                 }
             };
 
             const handleDobChange = (e) => {
-                const d = e.target.value;
-                let ageCalc = '';
+                const d = e.target.value; let ageCalc = '';
                 if(d) {
-                    const birthDate = new Date(d);
-                    const today = new Date();
+                    const birthDate = new Date(d); const today = new Date();
                     let age = today.getFullYear() - birthDate.getFullYear();
                     const m = today.getMonth() - birthDate.getMonth();
                     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) { age--; }
@@ -398,9 +424,7 @@
                 if(!regData.name || !regData.dob || (regData.isGoogle && !regData.password)) { alert("Completa los datos requeridos."); return; }
                 const finalUser = regData.isGoogle ? regData.email : regData.name;
                 const finalPass = regData.isGoogle ? regData.password : regData.password;
-                
                 const profileObj = { name: regData.name, email: regData.email, dob: regData.dob, age: regData.age, country: regData.country, picture: regData.picture };
-
                 DB.register(finalUser, finalPass, regData.isGoogle, profileObj);
                 alert("Registro completado exitosamente.");
                 onLogin(finalUser, 'user');
@@ -411,46 +435,19 @@
                     <div className="fixed inset-0 flex items-center justify-center p-4 z-50 bg-[#111111] overflow-y-auto">
                         <div className="bg-[#1e1e1e] w-full max-w-sm rounded-3xl p-6 border border-[#27272a] shadow-2xl view-animate text-white mt-10 mb-10">
                             {regData.isGoogle && (
-                                <div className="flex justify-center mb-2">
-                                    {regData.picture ? <img src={regData.picture} className="w-16 h-16 rounded-full border-2 border-[#3b82f6]" alt="Google"/> : <GoogleIcon />}
-                                </div>
+                                <div className="flex justify-center mb-2">{regData.picture ? <img src={regData.picture} className="w-16 h-16 rounded-full border-2 border-[#3b82f6]" alt="Google"/> : <GoogleIcon />}</div>
                             )}
                             <h2 className="text-xl font-bold mb-1 text-center text-white">Completar Registro</h2>
                             <p className="text-xs text-[#a1a1aa] mb-6 text-center">Por favor, rellena tus datos para configurar tu cuenta.</p>
-                            
                             <form onSubmit={handleSubmitStep2} className="space-y-4 text-left">
-                                <div>
-                                    <label className="text-[10px] uppercase font-bold text-[#a1a1aa] block mb-1">Nombre Completo</label>
-                                    <input type="text" required value={regData.name} onChange={e=>setRegData({...regData, name: e.target.value})} disabled={regData.isGoogle} className={`w-full p-3 rounded-xl border border-[#27272a] outline-none text-sm font-bold ${regData.isGoogle ? 'bg-[#111111] text-[#a1a1aa]' : 'bg-[#27272a] text-white'}`}/>
-                                </div>
-                                {regData.isGoogle && (
-                                    <div>
-                                        <label className="text-[10px] uppercase font-bold text-[#a1a1aa] block mb-1">Correo Enlazado</label>
-                                        <input type="text" disabled value={regData.email} className="w-full p-3 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-[#a1a1aa] text-sm"/>
-                                    </div>
-                                )}
+                                <div><label className="text-[10px] uppercase font-bold text-[#a1a1aa] block mb-1">Nombre Completo</label><input type="text" required value={regData.name} onChange={e=>setRegData({...regData, name: e.target.value})} disabled={regData.isGoogle} className={`w-full p-3 rounded-xl border border-[#27272a] outline-none text-sm font-bold ${regData.isGoogle ? 'bg-[#111111] text-[#a1a1aa]' : 'bg-[#27272a] text-white'}`}/></div>
+                                {regData.isGoogle && (<div><label className="text-[10px] uppercase font-bold text-[#a1a1aa] block mb-1">Correo Enlazado</label><input type="text" disabled value={regData.email} className="w-full p-3 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-[#a1a1aa] text-sm"/></div>)}
                                 <div className="grid grid-cols-2 gap-3">
-                                    <div>
-                                        <label className="text-[10px] uppercase font-bold text-white block mb-1">Nacimiento</label>
-                                        <input type="date" required value={regData.dob} onChange={handleDobChange} className="w-full p-3 rounded-xl border border-[#3b82f6] bg-[#111111] outline-none text-white text-sm cursor-pointer"/>
-                                    </div>
-                                    <div>
-                                        <label className="text-[10px] uppercase font-bold text-[#a1a1aa] block mb-1">Edad</label>
-                                        <input type="text" disabled value={regData.age ? `${regData.age} años` : ''} className="w-full p-3 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-[#a1a1aa] text-sm"/>
-                                    </div>
+                                    <div><label className="text-[10px] uppercase font-bold text-white block mb-1">Nacimiento</label><input type="date" required value={regData.dob} onChange={handleDobChange} className="w-full p-3 rounded-xl border border-[#3b82f6] bg-[#111111] outline-none text-white text-sm cursor-pointer"/></div>
+                                    <div><label className="text-[10px] uppercase font-bold text-[#a1a1aa] block mb-1">Edad</label><input type="text" disabled value={regData.age ? `${regData.age} años` : ''} className="w-full p-3 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-[#a1a1aa] text-sm"/></div>
                                 </div>
-                                <div>
-                                    <label className="text-[10px] uppercase font-bold text-white block mb-1">País</label>
-                                    <select value={regData.country} onChange={e=>setRegData({...regData, country: e.target.value})} className="w-full p-3 rounded-xl border border-[#3b82f6] bg-[#111111] outline-none text-white text-sm cursor-pointer">
-                                        {ALL_COUNTRIES.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
-                                    </select>
-                                </div>
-                                {regData.isGoogle && (
-                                    <div className="pt-2 border-t border-[#27272a]">
-                                        <label className="text-[10px] font-bold text-[#3b82f6] uppercase tracking-wider block mb-1">Contraseña Local (Seguridad extra)</label>
-                                        <input type="password" required value={regData.password} onChange={e=>setRegData({...regData, password: e.target.value})} className="w-full p-3 rounded-xl border border-[#3b82f6] bg-[#111111] outline-none text-white text-sm" placeholder="Crea una contraseña..." />
-                                    </div>
-                                )}
+                                <div><label className="text-[10px] uppercase font-bold text-white block mb-1">País</label><select value={regData.country} onChange={e=>setRegData({...regData, country: e.target.value})} className="w-full p-3 rounded-xl border border-[#3b82f6] bg-[#111111] outline-none text-white text-sm cursor-pointer">{ALL_COUNTRIES.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}</select></div>
+                                {regData.isGoogle && (<div className="pt-2 border-t border-[#27272a]"><label className="text-[10px] font-bold text-[#3b82f6] uppercase tracking-wider block mb-1">Contraseña Local (Seguridad extra)</label><input type="password" required value={regData.password} onChange={e=>setRegData({...regData, password: e.target.value})} className="w-full p-3 rounded-xl border border-[#3b82f6] bg-[#111111] outline-none text-white text-sm" placeholder="Crea una contraseña..." /></div>)}
                                 <button type="submit" className="w-full py-3.5 bg-[#3b82f6] text-white rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(59,130,246,0.3)] mt-4">Guardar y Entrar</button>
                                 <button type="button" onClick={()=>setStep(1)} className="w-full py-2 bg-transparent text-[#a1a1aa] hover:text-white font-bold text-xs transition-colors">Cancelar</button>
                             </form>
@@ -463,44 +460,24 @@
                 <div className="min-h-screen flex items-center justify-center p-4 view-animate bg-[#111111] text-white">
                     <div className="bg-[#1e1e1e] w-full max-w-sm p-8 rounded-3xl border border-[#27272a] shadow-2xl">
                         <div className="flex flex-col items-center mb-8">
-                            <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-lg mb-4">
-                                <div className="w-12 h-12"><LogoSVG /></div>
-                            </div>
+                            <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-lg mb-4"><div className="w-12 h-12"><LogoSVG /></div></div>
                             <h1 className="text-2xl font-bold tracking-wide">Mi Billetera</h1>
                             <p className="text-[#a1a1aa] text-sm">Tu espacio financiero seguro</p>
                         </div>
-
                         <div className="flex bg-[#111111] rounded-xl p-1 mb-6 border border-[#27272a]">
                             <button type="button" onClick={() => {setIsLogin(true); setError('');}} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${isLogin?'bg-[#1e1e1e] text-white shadow-sm':'text-[#a1a1aa] hover:text-white'}`}>{t('auth_login_tab')}</button>
                             <button type="button" onClick={() => {setIsLogin(false); setError('');}} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${!isLogin?'bg-[#1e1e1e] text-white shadow-sm':'text-[#a1a1aa] hover:text-white'}`}>{t('auth_reg_tab')}</button>
                         </div>
-
                         <div className="w-full flex flex-col items-center mb-6">
                             <div id="google-btn-container" className="w-full flex justify-center overflow-hidden rounded-xl"></div>
-                            <button type="button" onClick={handleGoogleFallback} className="mt-3 text-[10px] text-[#71717a] hover:text-[#3b82f6] hover:underline transition-colors">
-                                ¿No carga Google Auth? Simular localmente
-                            </button>
+                            <button type="button" onClick={handleGoogleFallback} className="mt-3 text-[10px] text-[#71717a] hover:text-[#3b82f6] hover:underline transition-colors">¿No carga Google Auth? Simular localmente</button>
                         </div>
-                        
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="flex-1 h-px bg-[#27272a]"></div>
-                            <span className="text-[#a1a1aa] text-[10px] uppercase font-bold">O usa cuenta local</span>
-                            <div className="flex-1 h-px bg-[#27272a]"></div>
-                        </div>
-
+                        <div className="flex items-center gap-3 mb-6"><div className="flex-1 h-px bg-[#27272a]"></div><span className="text-[#a1a1aa] text-[10px] uppercase font-bold">O usa cuenta local</span><div className="flex-1 h-px bg-[#27272a]"></div></div>
                         <form onSubmit={handleSubmitStep1} className="space-y-4">
-                            <div>
-                                <label className="text-xs font-bold text-[#a1a1aa] uppercase tracking-wider block mb-2">{t('auth_user')}</label>
-                                <input type="text" value={user} onChange={e=>setUser(e.target.value)} className="w-full p-4 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-white font-medium" placeholder="usuario" />
-                            </div>
-                            <div>
-                                <label className="text-xs font-bold text-[#a1a1aa] uppercase tracking-wider block mb-2">{t('auth_pass')}</label>
-                                <input type="password" value={pass} onChange={e=>setPass(e.target.value)} className="w-full p-4 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-white font-medium" placeholder="••••••••" />
-                            </div>
+                            <div><label className="text-xs font-bold text-[#a1a1aa] uppercase tracking-wider block mb-2">{t('auth_user')}</label><input type="text" value={user} onChange={e=>setUser(e.target.value)} className="w-full p-4 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-white font-medium" placeholder="usuario" /></div>
+                            <div><label className="text-xs font-bold text-[#a1a1aa] uppercase tracking-wider block mb-2">{t('auth_pass')}</label><input type="password" value={pass} onChange={e=>setPass(e.target.value)} className="w-full p-4 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-white font-medium" placeholder="••••••••" /></div>
                             {error && <p className="text-[#ef4444] text-xs font-bold text-center">{error}</p>}
-                            <button type="submit" className="w-full py-4 bg-[#3b82f6] text-white rounded-xl font-bold text-sm mt-2 shadow-[0_0_15px_rgba(59,130,246,0.3)] active:scale-95 transition-transform">
-                                {isLogin ? t('auth_btn_login') : t('auth_btn_reg')}
-                            </button>
+                            <button type="submit" className="w-full py-4 bg-[#3b82f6] text-white rounded-xl font-bold text-sm mt-2 shadow-[0_0_15px_rgba(59,130,246,0.3)] active:scale-95 transition-transform">{isLogin ? t('auth_btn_login') : t('auth_btn_reg')}</button>
                         </form>
                     </div>
                 </div>
@@ -514,25 +491,15 @@
             useEffect(() => { setUsers(DB.getUsers()); }, []);
             const refresh = () => setUsers(DB.getUsers());
 
-            const handleDelete = (u) => {
-                if(confirm(`¿ELIMINAR a ${u}? Se borrarán sus transacciones.`)) {
-                    DB.deleteUser(u); refresh();
-                }
-            };
+            const handleDelete = (u) => { if(confirm(`¿ELIMINAR a ${u}? Se borrarán sus transacciones.`)) { DB.deleteUser(u); refresh(); } };
 
             const EditModal = ({ u, onClose }) => {
-                const [newUsername, setNewUsername] = useState(u);
-                const [newPass, setNewPass] = useState(users[u].password || '');
-                const [isVip, setIsVip] = useState(users[u].vip || false);
-
+                const [newUsername, setNewUsername] = useState(u); const [newPass, setNewPass] = useState(users[u].password || ''); const [isVip, setIsVip] = useState(users[u].vip || false);
                 const handleSave = (e) => {
                     e.preventDefault();
                     if(newPass !== users[u].password) DB.changePassword(u, newPass);
                     if(isVip !== (users[u].vip || false)) DB.toggleVip(u);
-                    if(newUsername !== u) {
-                        const ok = DB.changeUsername(u, newUsername);
-                        if(!ok) { alert("Error: El nombre ya existe."); return; }
-                    }
+                    if(newUsername !== u) { const ok = DB.changeUsername(u, newUsername); if(!ok) { alert("Error: El nombre ya existe."); return; } }
                     onClose();
                 };
 
@@ -541,20 +508,9 @@
                         <div className="bg-[#1e1e1e] w-full max-w-sm rounded-3xl p-6 border border-[#27272a] shadow-2xl view-animate text-white">
                             <h2 className="text-lg font-bold mb-4">Editar: {u}</h2>
                             <form onSubmit={handleSave} className="space-y-4">
-                                <div>
-                                    <label className="text-xs text-[#a1a1aa] mb-1 block uppercase font-bold">Nuevo Nombre</label>
-                                    <input type="text" value={newUsername} onChange={e=>setNewUsername(e.target.value)} className="w-full p-3 rounded-xl border border-[#27272a] bg-[#111111] outline-none font-bold"/>
-                                </div>
-                                {!users[u].isGoogle && (
-                                    <div>
-                                        <label className="text-xs text-[#a1a1aa] mb-1 block uppercase font-bold">Nueva Clave</label>
-                                        <input type="text" value={newPass} onChange={e=>setNewPass(e.target.value)} className="w-full p-3 rounded-xl border border-[#27272a] bg-[#111111] outline-none"/>
-                                    </div>
-                                )}
-                                <label className="flex items-center gap-3 p-3 border border-[#27272a] rounded-xl bg-[#111111] cursor-pointer">
-                                    <input type="checkbox" checked={isVip} onChange={e=>setIsVip(e.target.checked)} className="w-5 h-5 accent-[#eab308]"/>
-                                    <span className="text-sm font-bold text-[#eab308] flex items-center gap-2"><LucideCrown className="w-4 h-4"/> Usuario VIP</span>
-                                </label>
+                                <div><label className="text-xs text-[#a1a1aa] mb-1 block uppercase font-bold">Nuevo Nombre</label><input type="text" value={newUsername} onChange={e=>setNewUsername(e.target.value)} className="w-full p-3 rounded-xl border border-[#27272a] bg-[#111111] outline-none font-bold"/></div>
+                                {!users[u].isGoogle && (<div><label className="text-xs text-[#a1a1aa] mb-1 block uppercase font-bold">Nueva Clave</label><input type="text" value={newPass} onChange={e=>setNewPass(e.target.value)} className="w-full p-3 rounded-xl border border-[#27272a] bg-[#111111] outline-none"/></div>)}
+                                <label className="flex items-center gap-3 p-3 border border-[#27272a] rounded-xl bg-[#111111] cursor-pointer"><input type="checkbox" checked={isVip} onChange={e=>setIsVip(e.target.checked)} className="w-5 h-5 accent-[#eab308]"/><span className="text-sm font-bold text-[#eab308] flex items-center gap-2"><LucideCrown className="w-4 h-4"/> Usuario VIP</span></label>
                                 <div className="flex gap-3 mt-6">
                                     <button type="button" onClick={onClose} className="flex-1 py-3 bg-[#111111] border border-[#27272a] rounded-xl font-bold text-sm">Cancelar</button>
                                     <button type="submit" className="flex-1 py-3 bg-[#3b82f6] text-white rounded-xl font-bold text-sm shadow-lg">Guardar</button>
@@ -569,17 +525,10 @@
                 <div className="min-h-screen p-4 md:p-8 space-y-6 view-animate max-w-3xl mx-auto bg-[#111111] text-white">
                     <div className="flex justify-between items-center bg-[#1e1e1e] p-6 rounded-3xl border border-[#27272a] shadow-lg">
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-[#ef4444]/10 text-[#ef4444] flex items-center justify-center">
-                                <LucideShield className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <h1 className="text-2xl font-bold tracking-wide">Panel Admin</h1>
-                                <p className="text-[#a1a1aa] text-sm">Control total</p>
-                            </div>
+                            <div className="w-12 h-12 rounded-xl bg-[#ef4444]/10 text-[#ef4444] flex items-center justify-center"><LucideShield className="w-6 h-6" /></div>
+                            <div><h1 className="text-2xl font-bold tracking-wide">Panel Admin</h1><p className="text-[#a1a1aa] text-sm">Control total</p></div>
                         </div>
-                        <button onClick={onLogout} className="flex items-center gap-2 px-4 py-2 bg-[#111111] border border-[#27272a] rounded-xl hover:text-[#ef4444] transition-colors font-bold text-sm">
-                            <LucideLogOut className="w-4 h-4"/> Salir
-                        </button>
+                        <button onClick={onLogout} className="flex items-center gap-2 px-4 py-2 bg-[#111111] border border-[#27272a] rounded-xl hover:text-[#ef4444] transition-colors font-bold text-sm"><LucideLogOut className="w-4 h-4"/> Salir</button>
                     </div>
 
                     <div className="space-y-4">
@@ -588,16 +537,10 @@
                                 <div>
                                     <div className="flex items-center gap-3 mb-1">
                                         <h3 className="font-bold text-lg">{uname}</h3>
-                                        {data.vip ? (
-                                            <span className="bg-[#eab308]/20 text-[#eab308] text-[10px] uppercase font-bold px-2 py-0.5 rounded-md flex items-center gap-1"><LucideCrown className="w-3 h-3"/> VIP</span>
-                                        ) : (
-                                            <span className="bg-[#3b82f6]/20 text-[#3b82f6] text-[10px] uppercase font-bold px-2 py-0.5 rounded-md flex items-center gap-1"><LucideStar className="w-3 h-3"/> FREE</span>
-                                        )}
+                                        {data.vip ? <span className="bg-[#eab308]/20 text-[#eab308] text-[10px] uppercase font-bold px-2 py-0.5 rounded-md flex items-center gap-1"><LucideCrown className="w-3 h-3"/> VIP</span> : <span className="bg-[#3b82f6]/20 text-[#3b82f6] text-[10px] uppercase font-bold px-2 py-0.5 rounded-md flex items-center gap-1"><LucideStar className="w-3 h-3"/> FREE</span>}
                                         {data.isGoogle && <span className="bg-[#4285F4]/20 text-[#4285F4] text-[10px] uppercase font-bold px-2 py-0.5 rounded-md">Google Auth</span>}
                                     </div>
-                                    <p className="text-xs text-[#a1a1aa]">
-                                        {data.profile ? `${data.profile.name} • ${data.profile.email}` : `Clave: ${data.password}`}
-                                    </p>
+                                    <p className="text-xs text-[#a1a1aa]">{data.profile ? `${data.profile.name} • ${data.profile.email}` : `Clave: ${data.password}`}</p>
                                 </div>
                                 <div className="flex gap-2">
                                     <button onClick={()=>setEditingUser(uname)} className="p-2.5 bg-[#111111] border border-[#27272a] text-[#a1a1aa] hover:text-[#3b82f6] rounded-xl transition-colors"><LucidePencil className="w-4 h-4"/></button>
@@ -611,8 +554,7 @@
             );
         }
 
-        // --- VISTAS USUARIO ---
-        function Home({ txns, settings, activeCurrency, setActiveCurrency, t, isVip, currentUser, setView }) {
+        function Home({ txns, settings, activeCurrency, setActiveCurrency, t, isRealVip, trialDays, currentUser, setView }) {
             const currentTxns = txns.filter(t => t.currency === activeCurrency);
             const ingresos = currentTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0);
             const gastos = currentTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
@@ -632,26 +574,21 @@
                 <div className="p-4 space-y-4 view-animate">
                     <div className="flex justify-between items-center mb-4 mt-2">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-md shrink-0">
-                                <div className="w-6 h-6"><LogoSVG /></div>
-                            </div>
-                            <div>
-                                <h1 className="text-xl font-bold text-primary tracking-wide">{t('home_title')}</h1>
-                            </div>
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-md shrink-0"><div className="w-6 h-6"><LogoSVG /></div></div>
+                            <div><h1 className="text-xl font-bold text-primary tracking-wide">{t('home_title')}</h1></div>
                         </div>
                         
                         <button onClick={() => setView('ajustes')} className="flex items-center gap-2 bg-card border border-border py-1.5 pl-2 pr-3 rounded-full hover:bg-border transition-colors shadow-sm">
                             <div className="relative">
-                                {userData?.profile?.picture ? (
-                                    <img src={userData.profile.picture} alt="Avatar" className="w-6 h-6 rounded-full" />
-                                ) : (
-                                    <div className="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold">{displayUser.charAt(0).toUpperCase()}</div>
-                                )}
+                                {userData?.profile?.picture ? <img src={userData.profile.picture} alt="Avatar" className="w-6 h-6 rounded-full" /> : <div className="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold">{displayUser.charAt(0).toUpperCase()}</div>}
                                 
-                                {isVip ? (
+                                {/* LÓGICA DE INSIGNIAS: VIP, PRUEBA o FREE */}
+                                {isRealVip ? (
                                     <div className="absolute -top-1 -right-1 bg-warning text-black w-3 h-3 flex items-center justify-center rounded-full shadow-lg border border-background"><LucideCrown className="w-2 h-2"/></div>
-                                ) : (
+                                ) : trialDays > 0 ? (
                                     <div className="absolute -top-1 -right-1 bg-accent text-white w-3 h-3 flex items-center justify-center rounded-full shadow-lg border border-background"><LucideStar className="w-2 h-2"/></div>
+                                ) : (
+                                    <div className="absolute -top-1 -right-1 bg-secondary text-white w-3 h-3 flex items-center justify-center rounded-full shadow-lg border border-background"><LucideStar className="w-2 h-2"/></div>
                                 )}
                             </div>
                             <span className="text-sm font-bold text-primary max-w-[80px] truncate">{displayUser}</span>
@@ -668,66 +605,36 @@
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-card rounded-xl p-4 shadow-sm border border-border">
-                            <div className="flex items-center gap-2 mb-2 text-secondary">
-                                <LucideTrendingUp className="w-4 h-4 text-success" />
-                                <p className="text-xs">{t('income')}</p>
-                            </div>
+                            <div className="flex items-center gap-2 mb-2 text-secondary"><LucideTrendingUp className="w-4 h-4 text-success" /><p className="text-xs">{t('income')}</p></div>
                             <p className="text-lg font-bold text-success">{formatMoneda(ingresos, activeCurrency)}</p>
                         </div>
                         <div className="bg-card rounded-xl p-4 shadow-sm border border-border">
-                            <div className="flex items-center gap-2 mb-2 text-secondary">
-                                <LucideTrendingDown className="w-4 h-4 text-error" />
-                                <p className="text-xs">{t('expenses')}</p>
-                            </div>
+                            <div className="flex items-center gap-2 mb-2 text-secondary"><LucideTrendingDown className="w-4 h-4 text-error" /><p className="text-xs">{t('expenses')}</p></div>
                             <p className="text-lg font-bold text-error">{formatMoneda(gastos, activeCurrency)}</p>
                         </div>
                     </div>
 
-                    <div className="bg-card rounded-xl p-5 shadow-sm border border-border">
-                        <div className="flex items-center gap-2 mb-3 text-primary">
-                            <LucideZap className="w-5 h-5 text-warning" />
-                            <p className="text-sm font-semibold">{t('fixed')}</p>
-                        </div>
-                        <p className="text-2xl font-bold text-warning mb-1">{formatMoneda(fijos, activeCurrency)}</p>
-                        <p className="text-xs text-secondary">{t('fixed_sub')}</p>
-                    </div>
-
                     <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3 shadow-sm">
-                        <LucideLightbulb className="w-6 h-6 text-accent shrink-0" />
-                        <p className="text-sm text-primary italic leading-snug">"{fraseDiaria}"</p>
+                        <LucideLightbulb className="w-6 h-6 text-accent shrink-0" /><p className="text-sm text-primary italic leading-snug">"{fraseDiaria}"</p>
                     </div>
 
                     <div className="bg-card rounded-xl p-5 shadow-sm border border-border">
-                        <div className="flex items-center gap-2 mb-4 text-primary">
-                            <LucidePiggyBank className="w-5 h-5 text-accent" />
-                            <h2 className="text-sm font-semibold">{t('savings')}</h2>
-                        </div>
+                        <div className="flex items-center gap-2 mb-4 text-primary"><LucidePiggyBank className="w-5 h-5 text-accent" /><h2 className="text-sm font-semibold">{t('savings')}</h2></div>
                         <div className="grid grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <p className="text-xs text-secondary mb-1">{t('savings_actual')}</p>
-                                <p className="text-base font-bold text-success">{formatMoneda(saldo, activeCurrency)}</p>
-                            </div>
-                            <div>
-                                <p className="text-xs text-secondary mb-1">{t('savings_goal')}</p>
-                                <p className="text-base font-bold text-primary">{formatMoneda(ahorroRecomendado, activeCurrency)}</p>
-                            </div>
+                            <div><p className="text-xs text-secondary mb-1">{t('savings_actual')}</p><p className="text-base font-bold text-success">{formatMoneda(saldo, activeCurrency)}</p></div>
+                            <div><p className="text-xs text-secondary mb-1">{t('savings_goal')}</p><p className="text-base font-bold text-primary">{formatMoneda(ahorroRecomendado, activeCurrency)}</p></div>
                         </div>
                         <div className="space-y-1">
-                            <div className="flex justify-between text-xs text-secondary">
-                                <span>Progreso</span>
-                                <span className="text-primary font-medium">{pctAhorro}%</span>
-                            </div>
-                            <div className="w-full bg-border rounded-full h-2">
-                                <div className="bg-success h-2 rounded-full transition-all duration-1000" style={{width: `${pctAhorro}%`}}></div>
-                            </div>
+                            <div className="flex justify-between text-xs text-secondary"><span>Progreso</span><span className="text-primary font-medium">{pctAhorro}%</span></div>
+                            <div className="w-full bg-border rounded-full h-2"><div className="bg-success h-2 rounded-full transition-all duration-1000" style={{width: `${pctAhorro}%`}}></div></div>
                         </div>
                     </div>
                 </div>
             );
         }
 
-        function Chat({ addTxn, settings, activeCurrency, t, isVip, onUpgrade }) {
-            if (!isVip) {
+        function Chat({ addTxn, settings, activeCurrency, t, hasPremium, onUpgrade }) {
+            if (!hasPremium) {
                 return (
                     <div className="p-4 view-animate flex flex-col items-center justify-center min-h-[70vh] text-center">
                         <div className="w-20 h-20 rounded-full bg-warning/10 text-warning flex items-center justify-center mb-6 shadow-lg border border-warning/20">
@@ -736,43 +643,31 @@
                         <h2 className="text-2xl font-bold text-primary mb-3">Asistente IA VIP</h2>
                         <p className="text-secondary text-sm mb-6 max-w-xs leading-relaxed">Habla o escribe a nuestro asistente inteligente para registrar tus movimientos automáticamente.</p>
                         <button onClick={onUpgrade} className="bg-accent text-white text-xs uppercase font-bold px-4 py-3 rounded-lg flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
-                            <LucideStar className="w-4 h-4"/> Requiere Membresía
+                            <LucideStar className="w-4 h-4"/> Ver Planes VIP
                         </button>
                     </div>
                 );
             }
 
-            const [msg, setMsg] = useState('');
-            const [modo, setModo] = useState('texto');
-            const [escuchando, setEscuchando] = useState(false);
-            const recognitionRef = useRef(null);
+            const [msg, setMsg] = useState(''); const [modo, setModo] = useState('texto'); const [escuchando, setEscuchando] = useState(false); const recognitionRef = useRef(null);
 
             const iniciarVoz = () => {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 if (!SpeechRecognition) { alert("Tu navegador no soporta voz"); return; }
-                const recognition = new SpeechRecognition();
-                recognition.lang = settings.lang === 'es' ? 'es-PE' : 'en-US'; 
-                recognition.interimResults = true; recognition.continuous = false;
+                const recognition = new SpeechRecognition(); recognition.lang = settings.lang === 'es' ? 'es-PE' : 'en-US'; recognition.interimResults = true; recognition.continuous = false;
                 recognition.onresult = (e) => { let text = ""; for (let i = 0; i < e.results.length; i++) text += e.results[i][0].transcript; setMsg(text); };
-                recognition.onerror = () => { setEscuchando(false); };
-                recognition.onend = () => { setEscuchando(false); };
+                recognition.onerror = () => { setEscuchando(false); }; recognition.onend = () => { setEscuchando(false); };
                 recognitionRef.current = recognition; recognition.start(); setEscuchando(true);
             };
             const detenerVoz = () => { if (recognitionRef.current) recognitionRef.current.stop(); setEscuchando(false); };
 
             const procesar = () => {
-                if(!msg) return;
-                const txt = msg.toLowerCase();
-                const isIncome = txt.includes('recibi') || txt.includes('ingreso') || txt.includes('gane') || txt.includes('cobre');
-                const type = isIncome ? 'ingreso' : 'gasto';
-                const nums = txt.match(/\d+(\.\d+)?/);
-                const amount = nums ? parseFloat(nums[0]) : 0;
-                
+                if(!msg) return; const txt = msg.toLowerCase(); const isIncome = txt.includes('recibi') || txt.includes('ingreso') || txt.includes('gane');
+                const type = isIncome ? 'ingreso' : 'gasto'; const nums = txt.match(/\d+(\.\d+)?/); const amount = nums ? parseFloat(nums[0]) : 0;
                 if(amount > 0) {
                     let cat = "Otros"; CATEGORIAS.forEach(c => { if(txt.includes(c.toLowerCase())) cat = c; });
                     addTxn({ id: Date.now(), type, amount, category: cat, description: msg, is_recurring: false, date: new Date().toISOString(), currency: activeCurrency });
-                    alert(`✅ Registrado: ${type.toUpperCase()} - ${formatMoneda(amount, activeCurrency)} (${cat})`);
-                    setMsg(''); setModo('texto');
+                    alert(`✅ Registrado: ${type.toUpperCase()} - ${formatMoneda(amount, activeCurrency)} (${cat})`); setMsg(''); setModo('texto');
                 } else { alert("Monto no detectado. Intenta: 'Gasté 20 en comida'"); }
             };
 
@@ -804,18 +699,12 @@
         }
 
         function Nueva({ addTxn, settings, activeCurrency, setActiveCurrency, t, setView }) {
-            const [tipo, setTipo] = useState('gasto');
-            const [monto, setMonto] = useState('');
-            const [cat, setCat] = useState(CATEGORIAS[0]);
-            const [desc, setDesc] = useState('');
-
+            const [tipo, setTipo] = useState('gasto'); const [monto, setMonto] = useState(''); const [cat, setCat] = useState(CATEGORIAS[0]); const [desc, setDesc] = useState('');
             const guardar = (e) => {
-                e.preventDefault();
-                if(!monto || isNaN(monto) || monto <= 0) return;
+                e.preventDefault(); if(!monto || isNaN(monto) || monto <= 0) return;
                 addTxn({ id: Date.now(), type: tipo, amount: parseFloat(monto), category: cat, description: desc || cat, is_recurring: false, date: new Date().toISOString(), currency: activeCurrency });
                 setView('home');
             };
-
             return (
                 <div className="p-4 space-y-4 view-animate">
                     <h1 className="text-xl font-bold tracking-tight text-primary mt-2 mb-4">{t('new_title')}</h1>
@@ -826,9 +715,7 @@
                             <button type="button" onClick={() => setTipo('ingreso')} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${tipo==='ingreso'?'bg-success text-white':'text-secondary hover:text-primary'}`}>{t('income_btn')}</button>
                         </div>
                         <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} required className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-lg font-bold text-primary" placeholder="0.00"/>
-                        <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-primary text-sm">
-                            {CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}
-                        </select>
+                        <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-primary text-sm">{CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}</select>
                         <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} required className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-primary text-sm" placeholder={t('desc')}/>
                         <button type="submit" className="w-full py-3.5 bg-accent text-white rounded-xl font-bold text-sm mt-2">{t('save_btn')}</button>
                     </form>
@@ -838,43 +725,21 @@
 
         function Historial({ txns, settings, activeCurrency, setActiveCurrency, deleteTxn, updateTxn, clearAllTxns, t }) {
             const currentTxnsAll = txns.filter(t => t.currency === activeCurrency);
-            
-            const [filtro, setFiltro] = useState('Semanal'); 
-            const [currentDate, setCurrentDate] = useState(new Date());
-            const [selectedDay, setSelectedDay] = useState(null);
-            const [editingTxn, setEditingTxn] = useState(null);
-
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const firstDay = new Date(year, month, 1).getDay();
+            const [filtro, setFiltro] = useState('Semanal'); const [currentDate, setCurrentDate] = useState(new Date()); const [selectedDay, setSelectedDay] = useState(null); const [editingTxn, setEditingTxn] = useState(null);
+            const year = currentDate.getFullYear(); const month = currentDate.getMonth(); const daysInMonth = new Date(year, month + 1, 0).getDate(); const firstDay = new Date(year, month, 1).getDay();
 
             const changeMonth = (dir) => { setCurrentDate(new Date(year, month + dir, 1)); setSelectedDay(null); };
             const checkDayHasTxns = (d) => { const dateStr = new Date(year, month, d).toISOString().split('T')[0]; return currentTxnsAll.some(txn => txn.date && txn.date.startsWith(dateStr)); };
 
-            let displayTxns = [...currentTxnsAll].reverse();
-            let label = "";
+            let displayTxns = [...currentTxnsAll].reverse(); let label = "";
+            if (filtro === 'Diario' && selectedDay) { const dateStr = new Date(year, month, selectedDay).toISOString().split('T')[0]; displayTxns = displayTxns.filter(txn => txn.date && txn.date.startsWith(dateStr)); label = `${selectedDay} DE ${MESES[month].toUpperCase()} ${year}`;
+            } else if (filtro === 'Semanal') { displayTxns = displayTxns.filter(txn => new Date(txn.date).getMonth() === month); label = `SEM · ${MESES[month].substring(0,3).toUpperCase()}. ${year}`;
+            } else { displayTxns = displayTxns.filter(txn => new Date(txn.date).getMonth() === month); label = `${MESES[month].toUpperCase()} ${year}`; }
 
-            if (filtro === 'Diario' && selectedDay) {
-                const dateStr = new Date(year, month, selectedDay).toISOString().split('T')[0];
-                displayTxns = displayTxns.filter(txn => txn.date && txn.date.startsWith(dateStr));
-                label = `${selectedDay} DE ${MESES[month].toUpperCase()} ${year}`;
-            } else if (filtro === 'Semanal') {
-                displayTxns = displayTxns.filter(txn => new Date(txn.date).getMonth() === month);
-                label = `SEM · ${MESES[month].substring(0,3).toUpperCase()}. ${year}`;
-            } else {
-                displayTxns = displayTxns.filter(txn => new Date(txn.date).getMonth() === month);
-                label = `${MESES[month].toUpperCase()} ${year}`;
-            }
-
-            const inTotal = displayTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0);
-            const outTotal = displayTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
-            const netTotal = inTotal - outTotal;
-
+            const inTotal = displayTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0); const outTotal = displayTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
+            
             const EditModal = ({ txn, onClose }) => {
-                const [monto, setMonto] = useState(txn.amount);
-                const [cat, setCat] = useState(txn.category);
-                const [desc, setDesc] = useState(txn.description);
+                const [monto, setMonto] = useState(txn.amount); const [cat, setCat] = useState(txn.category); const [desc, setDesc] = useState(txn.description);
                 const handleSave = (e) => { e.preventDefault(); updateTxn({ ...txn, amount: parseFloat(monto), category: cat, description: desc }); onClose(); };
                 return (
                     <div className="fixed inset-0 modal-overlay z-[100] flex items-center justify-center p-4">
@@ -882,9 +747,7 @@
                             <h2 className="text-lg font-bold mb-4 text-primary">Editar Transacción</h2>
                             <form onSubmit={handleSave} className="space-y-4">
                                 <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary font-bold"/>
-                                <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm">
-                                    {CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}
-                                </select>
+                                <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm">{CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}</select>
                                 <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm"/>
                                 <div className="flex gap-3 mt-6">
                                     <button type="button" onClick={onClose} className="flex-1 py-3 bg-background border border-border rounded-xl text-primary font-bold text-sm">Cancelar</button>
@@ -899,13 +762,8 @@
             return (
                 <div className="p-4 space-y-4 view-animate">
                     <div className="flex justify-between items-start mt-2">
-                        <div>
-                            <h1 className="text-xl font-bold text-primary tracking-wide">{t('history_title')}</h1>
-                            <p className="text-secondary text-sm">{displayTxns.length} movimientos</p>
-                        </div>
-                        <button onClick={clearAllTxns} className="flex items-center gap-1.5 px-3 py-1.5 border border-error/50 text-error rounded-md text-sm hover:bg-error/10 transition-colors">
-                            <LucideTrash2 className="w-4 h-4" /> {t('clear')}
-                        </button>
+                        <div><h1 className="text-xl font-bold text-primary tracking-wide">{t('history_title')}</h1><p className="text-secondary text-sm">{displayTxns.length} movimientos</p></div>
+                        <button onClick={clearAllTxns} className="flex items-center gap-1.5 px-3 py-1.5 border border-error/50 text-error rounded-md text-sm hover:bg-error/10 transition-colors"><LucideTrash2 className="w-4 h-4" /> {t('clear')}</button>
                     </div>
                     <CurrencyTabs currencies={settings.currencies} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} />
 
@@ -915,9 +773,7 @@
                             <span className="font-medium text-primary">{MESES[month]} De {year}</span>
                             <button onClick={() => changeMonth(1)} className="text-secondary hover:text-primary p-1"><LucideChevronRight /></button>
                         </div>
-                        <div className="grid grid-cols-7 gap-1 text-center text-xs text-secondary mb-2">
-                            <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
-                        </div>
+                        <div className="grid grid-cols-7 gap-1 text-center text-xs text-secondary mb-2"><span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span></div>
                         <div className="grid grid-cols-7 gap-y-2 text-center text-sm">
                             {Array.from({length: firstDay}).map((_, i) => <div key={`blank-${i}`}></div>)}
                             {Array.from({length: daysInMonth}).map((_, i) => {
@@ -944,8 +800,7 @@
                     <div className="flex justify-between items-center text-xs font-bold text-secondary uppercase tracking-wider mt-6 mb-2">
                         <span>{label}</span>
                         <div className="flex gap-2">
-                            <span className="text-success">+{formatMoneda(inTotal, activeCurrency)}</span>
-                            <span className="text-error">-{formatMoneda(outTotal, activeCurrency)}</span>
+                            <span className="text-success">+{formatMoneda(inTotal, activeCurrency)}</span><span className="text-error">-{formatMoneda(outTotal, activeCurrency)}</span>
                         </div>
                     </div>
 
@@ -957,15 +812,10 @@
                                     <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${txn.type === 'ingreso' ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>
                                         {txn.type === 'ingreso' ? <LucideTrendingUp className="w-5 h-5"/> : <LucideTrendingDown className="w-5 h-5"/>}
                                     </div>
-                                    <div>
-                                        <p className="font-bold text-sm text-primary">{txn.description}</p>
-                                        <p className="text-[11px] text-secondary">{txn.category}</p>
-                                    </div>
+                                    <div><p className="font-bold text-sm text-primary">{txn.description}</p><p className="text-[11px] text-secondary">{txn.category}</p></div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <span className={`font-bold text-sm ${txn.type==='ingreso'?'text-success':'text-error'}`}>
-                                        {txn.type==='ingreso'?'+':'-'}{formatMoneda(txn.amount, activeCurrency)}
-                                    </span>
+                                    <span className={`font-bold text-sm ${txn.type==='ingreso'?'text-success':'text-error'}`}>{txn.type==='ingreso'?'+':'-'}{formatMoneda(txn.amount, activeCurrency)}</span>
                                     <div className="flex items-center gap-2">
                                         <button onClick={()=>setEditingTxn(txn)} className="text-secondary hover:text-primary transition-colors"><LucidePencil className="w-4 h-4"/></button>
                                         <button onClick={()=>deleteTxn(txn.id)} className="text-secondary hover:text-error transition-colors"><LucideTrash2 className="w-4 h-4"/></button>
@@ -979,8 +829,8 @@
             );
         }
 
-        function Analisis({ txns, settings, activeCurrency, setActiveCurrency, t, isVip, onUpgrade }) {
-            if (!isVip) {
+        function Analisis({ txns, settings, activeCurrency, setActiveCurrency, t, hasPremium, onUpgrade }) {
+            if (!hasPremium) {
                 return (
                     <div className="p-4 view-animate flex flex-col items-center justify-center min-h-[70vh] text-center">
                         <div className="w-20 h-20 rounded-full bg-warning/10 text-warning flex items-center justify-center mb-6 shadow-lg border border-warning/20">
@@ -989,99 +839,57 @@
                         <h2 className="text-2xl font-bold text-primary mb-3">Evaluación Semanal VIP</h2>
                         <p className="text-secondary text-sm mb-6 max-w-xs leading-relaxed">Analiza tus gastos automáticamente y recibe recomendaciones inteligentes para ahorrar más. Función exclusiva.</p>
                         <button onClick={onUpgrade} className="bg-accent text-white text-xs uppercase font-bold px-4 py-3 rounded-lg flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
-                            <LucideStar className="w-4 h-4"/> Requiere Membresía
+                            <LucideStar className="w-4 h-4"/> Ver Planes VIP
                         </button>
                     </div>
                 );
             }
 
-            const [isRefreshing, setIsRefreshing] = useState(false);
-            const [refreshKey, setRefreshKey] = useState(0); 
-
+            const [isRefreshing, setIsRefreshing] = useState(false); const [refreshKey, setRefreshKey] = useState(0); 
             const currentTxnsAll = txns.filter(txn => txn.currency === activeCurrency);
-            
-            const today = new Date();
-            const sevenDaysAgo = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+            const today = new Date(); const sevenDaysAgo = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
             const weeklyTxns = currentTxnsAll.filter(txn => new Date(txn.date) >= sevenDaysAgo);
 
-            const ingresos = weeklyTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0);
-            const gastos = weeklyTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
-            const balance = ingresos - gastos;
-
-            const gastosByCategory = weeklyTxns.filter(txn => txn.type === 'gasto').reduce((acc, txn) => {
-                acc[txn.category] = (acc[txn.category] || 0) + txn.amount; return acc;
-            }, {});
-
+            const ingresos = weeklyTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0); const gastos = weeklyTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0); const balance = ingresos - gastos;
+            const gastosByCategory = weeklyTxns.filter(txn => txn.type === 'gasto').reduce((acc, txn) => { acc[txn.category] = (acc[txn.category] || 0) + txn.amount; return acc; }, {});
             const topGastos = Object.entries(gastosByCategory).map(([categoria, total]) => ({ categoria, total })).sort((a, b) => b.total - a.total).slice(0, 5);
             
-            const mayorGasto = topGastos.length > 0 ? topGastos[0].categoria : "Ninguna";
-            const segundoGasto = topGastos.length > 1 ? topGastos[1].categoria : null;
-            
-            const ahorroPct = ingresos > 0 ? Math.round((balance / ingresos) * 100) : 0;
-            const gastosPct = ingresos > 0 ? Math.round((gastos / ingresos) * 100) : 0;
+            const mayorGasto = topGastos.length > 0 ? topGastos[0].categoria : "Ninguna"; const segundoGasto = topGastos.length > 1 ? topGastos[1].categoria : null;
+            const ahorroPct = ingresos > 0 ? Math.round((balance / ingresos) * 100) : 0; const gastosPct = ingresos > 0 ? Math.round((gastos / ingresos) * 100) : 0;
 
-            const handleRefresh = () => {
-                setIsRefreshing(true);
-                setTimeout(() => { setIsRefreshing(false); setRefreshKey(prev => prev + 1); }, 500);
-            };
+            const handleRefresh = () => { setIsRefreshing(true); setTimeout(() => { setIsRefreshing(false); setRefreshKey(prev => prev + 1); }, 500); };
 
             return (
                 <div key={refreshKey} className="p-4 space-y-4 view-animate">
                     <div className="flex justify-between items-center mt-2 mb-4">
-                        <div>
-                            <h1 className="text-xl font-bold text-primary tracking-wide">{t('analysis_title')}</h1>
-                            <p className="text-secondary text-sm">{t('last_7')}</p>
-                        </div>
-                        <button onClick={handleRefresh} className={`text-secondary hover:text-primary transition-colors ${isRefreshing ? 'spin-once' : ''}`}>
-                            <LucideRefreshCw className="w-5 h-5" />
-                        </button>
+                        <div><h1 className="text-xl font-bold text-primary tracking-wide">{t('analysis_title')}</h1><p className="text-secondary text-sm">{t('last_7')}</p></div>
+                        <button onClick={handleRefresh} className={`text-secondary hover:text-primary transition-colors ${isRefreshing ? 'spin-once' : ''}`}><LucideRefreshCw className="w-5 h-5" /></button>
                     </div>
                     
                     <CurrencyTabs currencies={settings.currencies} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-card rounded-xl p-4 border border-border shadow-sm">
-                            <div className="flex items-center gap-2 mb-2 text-secondary">
-                                <LucideTrendingUp className="w-4 h-4 text-success" />
-                                <p className="text-sm">{t('income')}</p>
-                            </div>
+                            <div className="flex items-center gap-2 mb-2 text-secondary"><LucideTrendingUp className="w-4 h-4 text-success" /><p className="text-sm">{t('income')}</p></div>
                             <p className="text-lg font-bold text-success">{formatMoneda(ingresos, activeCurrency)}</p>
                         </div>
                         <div className="bg-card rounded-xl p-4 border border-border shadow-sm">
-                            <div className="flex items-center gap-2 mb-2 text-secondary">
-                                <LucideTrendingDown className="w-4 h-4 text-error" />
-                                <p className="text-sm">{t('expenses')}</p>
-                            </div>
+                            <div className="flex items-center gap-2 mb-2 text-secondary"><LucideTrendingDown className="w-4 h-4 text-error" /><p className="text-sm">{t('expenses')}</p></div>
                             <p className="text-lg font-bold text-error">{formatMoneda(gastos, activeCurrency)}</p>
                         </div>
                     </div>
 
                     <div className={`rounded-xl p-5 text-center shadow-sm border ${balance >= 0 ? 'bg-success/10 border-success/30' : 'bg-error/10 border-error/30'}`}>
                         <p className="text-secondary text-sm mb-1">{t('weekly_balance')}</p>
-                        <p className={`text-2xl font-bold ${balance >= 0 ? 'text-success' : 'text-error'}`}>
-                            {balance >= 0 ? '+' : ''}{formatMoneda(balance, activeCurrency)}
-                        </p>
+                        <p className={`text-2xl font-bold ${balance >= 0 ? 'text-success' : 'text-error'}`}>{balance >= 0 ? '+' : ''}{formatMoneda(balance, activeCurrency)}</p>
                     </div>
 
                     <div className="bg-card rounded-xl p-5 border border-border shadow-sm mt-4">
-                        <div className="flex items-center gap-2 mb-4">
-                            <LucideLightbulb className="w-5 h-5 text-accent" />
-                            <h2 className="text-sm font-bold text-primary">{t('analysis_rec_title')}</h2>
-                        </div>
+                        <div className="flex items-center gap-2 mb-4"><LucideLightbulb className="w-5 h-5 text-accent" /><h2 className="text-sm font-bold text-primary">{t('analysis_rec_title')}</h2></div>
                         <ul className="space-y-4 text-sm text-secondary leading-relaxed">
-                            <li className="flex items-start gap-3">
-                                <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span>
-                                <span>Ahorraste el {Math.max(0, ahorroPct)}%. {ahorroPct < 20 ? t('analysis_rec_save_low') : t('analysis_rec_save_high')}</span>
-                            </li>
-                            {gastos > 0 && mayorGasto !== "Ninguna" && (
-                                <li className="flex items-start gap-3">
-                                    <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span>
-                                    <span>{t('analysis_rec_leak_1_a')}<strong className="text-primary">{mayorGasto}</strong>{t('analysis_rec_leak_1_b')}</span>
-                                </li>
-                            )}
-                            {gastosPct > 80 && (
-                                <li className="flex items-start gap-3"><span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span><span>{t('analysis_rec_rule')}</span></li>
-                            )}
+                            <li className="flex items-start gap-3"><span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span><span>Ahorraste el {Math.max(0, ahorroPct)}%. {ahorroPct < 20 ? t('analysis_rec_save_low') : t('analysis_rec_save_high')}</span></li>
+                            {gastos > 0 && mayorGasto !== "Ninguna" && (<li className="flex items-start gap-3"><span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span><span>{t('analysis_rec_leak_1_a')}<strong className="text-primary">{mayorGasto}</strong>{t('analysis_rec_leak_1_b')}</span></li>)}
+                            {gastosPct > 80 && (<li className="flex items-start gap-3"><span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span><span>{t('analysis_rec_rule')}</span></li>)}
                             <li className="flex items-start gap-3"><span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span><span>{t('analysis_rec_tip')}</span></li>
                         </ul>
                     </div>
@@ -1089,60 +897,35 @@
             );
         }
 
-        function Ajustes({ globalSettings, setGlobalSettings, onLogout, currentUser, isVip, t, setView, onUpgrade }) {
-            const [localSettings, setLocalSettings] = useState(globalSettings);
-            const userData = DB.getUserData(currentUser);
+        function Ajustes({ globalSettings, setGlobalSettings, onLogout, currentUser, isRealVip, trialDays, hasPremium, t, setView, onUpgrade }) {
+            const [localSettings, setLocalSettings] = useState(globalSettings); const userData = DB.getUserData(currentUser);
             
             const handleCountryChange = (e) => {
-                const countryCode = e.target.value;
-                const countryData = ALL_COUNTRIES.find(c => c.name === countryCode);
-                const newCurrencies = [...localSettings.currencies];
-                newCurrencies[0] = countryData.defaultCurr; 
+                const countryCode = e.target.value; const countryData = ALL_COUNTRIES.find(c => c.name === countryCode);
+                const newCurrencies = [...localSettings.currencies]; newCurrencies[0] = countryData.defaultCurr; 
                 setLocalSettings({ ...localSettings, country: countryCode, lang: countryData.lang, currencies: newCurrencies });
             };
-
-            const handleCurrencyChange = (index, value) => {
-                const newCurrencies = [...localSettings.currencies];
-                newCurrencies[index] = value;
-                setLocalSettings({ ...localSettings, currencies: newCurrencies });
-            };
-
-            const handleColorChange = (key, val) => {
-                setLocalSettings({ ...localSettings, colors: { ...localSettings.colors, [key]: val } });
-            };
+            const handleCurrencyChange = (index, value) => { const newCurrencies = [...localSettings.currencies]; newCurrencies[index] = value; setLocalSettings({ ...localSettings, currencies: newCurrencies }); };
+            const handleColorChange = (key, val) => { setLocalSettings({ ...localSettings, colors: { ...localSettings.colors, [key]: val } }); };
 
             const toggleTheme = (themeType) => {
-                if (themeType === 'dark') {
-                    setLocalSettings({ ...localSettings, theme: 'dark', colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' } });
-                } else {
-                    setLocalSettings({ ...localSettings, theme: 'light', colors: { bg: '#f4f4f5', card: '#ffffff', text: '#18181b', secondary: '#71717a', border: '#e4e4e7', accent: '#2563eb', navBg: '#ffffff', navActiveBg: '#e4e4e7', navActiveText: '#2563eb' } });
-                }
+                if (themeType === 'dark') { setLocalSettings({ ...localSettings, theme: 'dark', colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' } });
+                } else { setLocalSettings({ ...localSettings, theme: 'light', colors: { bg: '#f4f4f5', card: '#ffffff', text: '#18181b', secondary: '#71717a', border: '#e4e4e7', accent: '#2563eb', navBg: '#ffffff', navActiveBg: '#e4e4e7', navActiveText: '#2563eb' } }); }
             };
 
             const resetColors = () => {
                 const isDark = localSettings.theme === 'dark';
-                setLocalSettings({
-                    ...localSettings,
-                    colors: isDark 
-                        ? { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' }
-                        : { bg: '#f4f4f5', card: '#ffffff', text: '#18181b', secondary: '#71717a', border: '#e4e4e7', accent: '#2563eb', navBg: '#ffffff', navActiveBg: '#e4e4e7', navActiveText: '#2563eb' }
-                });
+                setLocalSettings({ ...localSettings, colors: isDark ? { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' } : { bg: '#f4f4f5', card: '#ffffff', text: '#18181b', secondary: '#71717a', border: '#e4e4e7', accent: '#2563eb', navBg: '#ffffff', navActiveBg: '#e4e4e7', navActiveText: '#2563eb' } });
             };
 
-            const save = () => {
-                setGlobalSettings(localSettings);
-                setView('home');
-            };
+            const save = () => { setGlobalSettings(localSettings); setView('home'); };
 
-            const currentZoom = localSettings.zoom || 100;
-            const colors = localSettings.colors || DEFAULT_SETTINGS.colors;
+            const currentZoom = localSettings.zoom || 100; const colors = localSettings.colors || DEFAULT_SETTINGS.colors;
 
             return (
                 <div className="p-4 space-y-4 view-animate">
                     <div className="flex items-center gap-3 mt-2 mb-4">
-                        <button onClick={() => setView('home')} className="text-secondary hover:text-primary transition-colors">
-                            <LucideChevronLeft className="w-6 h-6"/>
-                        </button>
+                        <button onClick={() => setView('home')} className="text-secondary hover:text-primary transition-colors"><LucideChevronLeft className="w-6 h-6"/></button>
                         <h1 className="text-xl font-bold tracking-tight text-primary">{t('settings_title')}</h1>
                     </div>
                     
@@ -1153,37 +936,32 @@
                                 <label className="text-xs font-bold uppercase tracking-wider">{t('account_title')}</label>
                             </div>
                             
-                            {isVip ? (
+                            {isRealVip ? (
                                 <span className="bg-warning/20 text-warning text-[10px] uppercase font-bold px-2 py-1 rounded-md flex items-center gap-1"><LucideCrown className="w-3 h-3"/> VIP</span>
+                            ) : trialDays > 0 ? (
+                                <span className="bg-accent/20 text-accent text-[10px] uppercase font-bold px-2 py-1 rounded-md flex items-center gap-1"><LucideStar className="w-3 h-3"/> PRUEBA: {trialDays} DÍAS</span>
                             ) : (
-                                <span className="bg-accent/20 text-accent text-[10px] uppercase font-bold px-2 py-1 rounded-md flex items-center gap-1"><LucideStar className="w-3 h-3"/> FREE</span>
+                                <span className="bg-secondary/20 text-secondary text-[10px] uppercase font-bold px-2 py-1 rounded-md flex items-center gap-1"><LucideStar className="w-3 h-3"/> BÁSICO</span>
                             )}
                         </div>
                         
                         {userData?.isGoogle && userData?.profile ? (
                             <div className="bg-background rounded-lg border border-border p-4 space-y-2">
                                 <div className="flex items-center gap-3">
-                                    {userData.profile.picture ? (
-                                        <img src={userData.profile.picture} className="w-10 h-10 rounded-full border border-accent" alt="Profile" />
-                                    ) : (
-                                        <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold">{userData.profile.name.charAt(0)}</div>
-                                    )}
-                                    <div>
-                                        <p className="text-[10px] text-secondary uppercase font-bold text-accent">Google Oficial</p>
-                                        <p className="text-sm font-bold text-primary">{userData.profile.name}</p>
-                                    </div>
+                                    {userData.profile.picture ? <img src={userData.profile.picture} className="w-10 h-10 rounded-full border border-accent" alt="Profile" /> : <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold">{userData.profile.name.charAt(0)}</div>}
+                                    <div><p className="text-[10px] text-secondary uppercase font-bold text-accent">Google Oficial</p><p className="text-sm font-bold text-primary">{userData.profile.name}</p></div>
                                 </div>
                                 <p className="text-xs text-secondary mt-2">{userData.profile.email}</p>
-                                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border mt-2">
-                                    <div><p className="text-[10px] text-secondary uppercase">Edad</p><p className="text-sm font-medium text-primary">{userData.profile.age} años</p></div>
-                                    <div><p className="text-[10px] text-secondary uppercase">País</p><p className="text-sm font-medium text-primary">{userData.profile.country}</p></div>
-                                </div>
                             </div>
-                        ) : (
-                            <p className="text-xs text-secondary">{t('logged_in_as')} <strong className="text-primary text-base ml-1">{currentUser}</strong></p>
+                        ) : (<p className="text-xs text-secondary">{t('logged_in_as')} <strong className="text-primary text-base ml-1">{currentUser}</strong></p>)}
+                        
+                        {!isRealVip && (
+                            <button onClick={onUpgrade} className="w-full py-3 bg-warning text-black rounded-xl font-bold text-sm hover:scale-[1.02] transition-transform shadow-lg border border-warning/50 flex justify-center items-center gap-2">
+                                <LucideCrown className="w-4 h-4"/> Ver Planes VIP
+                            </button>
                         )}
                         
-                        <button onClick={onLogout} className="w-full py-3.5 bg-error border border-error/50 text-white rounded-xl font-bold text-sm hover:opacity-90 transition-colors shadow-lg shadow-error/20 flex justify-center items-center gap-2">
+                        <button onClick={onLogout} className="w-full py-3 bg-error/10 border border-error/50 text-error rounded-xl font-bold text-sm hover:bg-error hover:text-white transition-colors flex justify-center items-center gap-2">
                             <LucideLogOut className="w-4 h-4"/> {t('btn_logout')}
                         </button>
                     </div>
@@ -1193,28 +971,13 @@
                         <div>
                             <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">{t('theme_mode')}</label>
                             <div className="grid grid-cols-2 gap-3">
-                                <button type="button" onClick={() => toggleTheme('dark')} className={`py-3 rounded-xl border font-bold text-sm transition-all ${localSettings.theme === 'dark' ? 'bg-accent text-white border-accent' : 'bg-background text-secondary border-border'}`}>
-                                    {t('mode_dark')}
-                                </button>
-                                <button type="button" onClick={() => toggleTheme('light')} className={`py-3 rounded-xl border font-bold text-sm transition-all ${localSettings.theme === 'light' ? 'bg-accent text-white border-accent' : 'bg-background text-secondary border-border'}`}>
-                                    {t('mode_light')}
-                                </button>
+                                <button type="button" onClick={() => toggleTheme('dark')} className={`py-3 rounded-xl border font-bold text-sm transition-all ${localSettings.theme === 'dark' ? 'bg-accent text-white border-accent' : 'bg-background text-secondary border-border'}`}>{t('mode_dark')}</button>
+                                <button type="button" onClick={() => toggleTheme('light')} className={`py-3 rounded-xl border font-bold text-sm transition-all ${localSettings.theme === 'light' ? 'bg-accent text-white border-accent' : 'bg-background text-secondary border-border'}`}>{t('mode_light')}</button>
                             </div>
                         </div>
 
-                        <div>
-                            <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">{t('country')}</label>
-                            <select value={localSettings.country} onChange={handleCountryChange} className="w-full p-4 rounded-xl border border-border bg-background outline-none text-primary text-sm">
-                                {ALL_COUNTRIES.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
-                            </select>
-                        </div>
-
-                        <div>
-                            <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">{t('language')}</label>
-                            <select value={localSettings.lang} onChange={e=>setLocalSettings({...localSettings, lang: e.target.value})} className="w-full p-4 rounded-xl border border-border bg-background outline-none text-primary text-sm">
-                                <option value="es">Español</option><option value="en">English</option>
-                            </select>
-                        </div>
+                        <div><label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">{t('country')}</label><select value={localSettings.country} onChange={handleCountryChange} className="w-full p-4 rounded-xl border border-border bg-background outline-none text-primary text-sm">{ALL_COUNTRIES.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}</select></div>
+                        <div><label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">{t('language')}</label><select value={localSettings.lang} onChange={e=>setLocalSettings({...localSettings, lang: e.target.value})} className="w-full p-4 rounded-xl border border-border bg-background outline-none text-primary text-sm"><option value="es">Español</option><option value="en">English</option></select></div>
 
                         <div>
                             <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">{t('zoom')}</label>
@@ -1228,9 +991,9 @@
                             </div>
                         </div>
 
-                        {/* SECCIÓN COLORES (BLOQUEADA SI ES FREE) */}
+                        {/* SECCIÓN COLORES (BLOQUEADA SI NO ES VIP NI PRUEBA) */}
                         <div className="pt-2 border-t border-border relative">
-                            {!isVip && (
+                            {!hasPremium && (
                                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-card/60 backdrop-blur-[2px] rounded-b-xl pb-2">
                                     <button onClick={onUpgrade} className="bg-warning text-black text-[10px] uppercase font-bold px-3 py-1.5 rounded-md flex items-center gap-1 shadow-lg border border-warning/50 hover:scale-105 transition-transform">
                                         <LucideCrown className="w-3 h-3"/> Solo VIP
@@ -1238,26 +1001,15 @@
                                 </div>
                             )}
 
-                            <div className={`transition-all ${!isVip ? 'opacity-40 pointer-events-none' : ''}`}>
+                            <div className={`transition-all ${!hasPremium ? 'opacity-40 pointer-events-none' : ''}`}>
                                 <div className="flex justify-between items-center mb-3 mt-2">
                                     <label className="text-xs font-bold text-secondary uppercase tracking-wider">{t('colors_title')}</label>
-                                    <button type="button" onClick={resetColors} className="text-xs text-accent hover:underline font-semibold">
-                                        {t('reset_colors')}
-                                    </button>
+                                    <button type="button" onClick={resetColors} className="text-xs text-accent hover:underline font-semibold">{t('reset_colors')}</button>
                                 </div>
                                 <div className="grid grid-cols-3 gap-3">
-                                    <div className="text-center">
-                                        <input type="color" value={colors.bg} onChange={e => handleColorChange('bg', e.target.value)} className="w-full h-10 rounded-lg bg-background border border-border cursor-pointer"/>
-                                        <span className="text-[10px] text-secondary mt-1 block">{t('col_bg')}</span>
-                                    </div>
-                                    <div className="text-center">
-                                        <input type="color" value={colors.card} onChange={e => handleColorChange('card', e.target.value)} className="w-full h-10 rounded-lg bg-background border border-border cursor-pointer"/>
-                                        <span className="text-[10px] text-secondary mt-1 block">{t('col_card')}</span>
-                                    </div>
-                                    <div className="text-center">
-                                        <input type="color" value={colors.accent} onChange={e => handleColorChange('accent', e.target.value)} className="w-full h-10 rounded-lg bg-background border border-border cursor-pointer"/>
-                                        <span className="text-[10px] text-secondary mt-1 block">{t('col_accent')}</span>
-                                    </div>
+                                    <div className="text-center"><input type="color" value={colors.bg} onChange={e => handleColorChange('bg', e.target.value)} className="w-full h-10 rounded-lg bg-background border border-border cursor-pointer"/><span className="text-[10px] text-secondary mt-1 block">{t('col_bg')}</span></div>
+                                    <div className="text-center"><input type="color" value={colors.card} onChange={e => handleColorChange('card', e.target.value)} className="w-full h-10 rounded-lg bg-background border border-border cursor-pointer"/><span className="text-[10px] text-secondary mt-1 block">{t('col_card')}</span></div>
+                                    <div className="text-center"><input type="color" value={colors.accent} onChange={e => handleColorChange('accent', e.target.value)} className="w-full h-10 rounded-lg bg-background border border-border cursor-pointer"/><span className="text-[10px] text-secondary mt-1 block">{t('col_accent')}</span></div>
                                 </div>
                             </div>
                         </div>
@@ -1284,10 +1036,14 @@
         function App() {
             const [currentUser, setCurrentUser] = useState(null);
             const [isAdmin, setIsAdmin] = useState(false);
-            const [isVip, setIsVip] = useState(false);
             
-            // ESTADO PARA EL MODAL DE PAGO
+            // ESTADOS DE SUSCRIPCIÓN
+            const [isRealVip, setIsRealVip] = useState(false);
+            const [trialDays, setTrialDays] = useState(0);
+            
+            // MODALES
             const [showPayment, setShowPayment] = useState(false);
+            const [showWelcome, setShowWelcome] = useState(false);
             
             const [view, setView] = useState('home'); 
             const [txns, setTxns] = useState([]);
@@ -1310,44 +1066,55 @@
                 setCurrentUser(user);
                 
                 const uData = DB.getUserData(user);
-                setIsVip(uData?.vip || false);
+                const actualVip = uData?.vip || false;
+                setIsRealVip(actualVip);
+                
+                let daysLeft = 0;
+                if (!actualVip) {
+                    // Validar si recién se registra y no ha elegido
+                    if (!uData?.trialChosen) {
+                        setShowWelcome(true);
+                    } else if (uData?.trialStart) {
+                        // Calcular días de prueba restantes
+                        const diffTime = new Date() - new Date(uData.trialStart);
+                        const daysPassed = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                        daysLeft = Math.max(0, 14 - daysPassed);
+                    }
+                }
+                setTrialDays(daysLeft);
                 
                 const savedTxns = DB.getTxns(user);
                 const savedSettings = DB.getSettings(user);
                 setTxns(savedTxns);
-                
                 if(savedSettings) {
-                    setSettings(savedSettings);
-                    setActiveCurrency(savedSettings.currencies[0] || 'PEN');
+                    setSettings(savedSettings); setActiveCurrency(savedSettings.currencies[0] || 'PEN');
                 }
                 setView('home');
             };
 
             const handleLogin = (user, role) => {
-                sessionStorage.setItem('billetera_active_user', user);
-                sessionStorage.setItem('billetera_active_role', role);
-                if(role === 'admin') {
-                    setIsAdmin(true); setCurrentUser(user);
-                } else {
-                    loadUserData(user);
-                }
+                sessionStorage.setItem('billetera_active_user', user); sessionStorage.setItem('billetera_active_role', role);
+                if(role === 'admin') { setIsAdmin(true); setCurrentUser(user); } else { loadUserData(user); }
             };
 
             const handleLogout = () => {
                 sessionStorage.removeItem('billetera_active_user'); sessionStorage.removeItem('billetera_active_role');
-                setCurrentUser(null); setIsAdmin(false); setIsVip(false); setTxns([]); setSettings(DEFAULT_SETTINGS);
+                setCurrentUser(null); setIsAdmin(false); setIsRealVip(false); setTrialDays(0); setTxns([]); setSettings(DEFAULT_SETTINGS);
+            };
+            
+            // ACCIONES DEL MODAL DE BIENVENIDA
+            const startTrial = () => {
+                DB.startTrial(currentUser); setShowWelcome(false); loadUserData(currentUser); alert("¡Prueba VIP de 14 días activada!");
+            };
+            const skipTrial = () => {
+                DB.skipTrial(currentUser); setShowWelcome(false); loadUserData(currentUser);
             };
 
-            const translate = (key) => {
-                const langDict = DICTIONARY[settings.lang] || DICTIONARY['es'];
-                return langDict[key] || key;
-            };
+            const translate = (key) => { const langDict = DICTIONARY[settings.lang] || DICTIONARY['es']; return langDict[key] || key; };
 
             const setGlobalSettings = (newSettings) => {
                 if(!newSettings.currencies[0]) newSettings.currencies[0] = 'USD';
-                setSettings(newSettings);
-                DB.saveSettings(currentUser, newSettings);
-                setActiveCurrency(newSettings.currencies[0]);
+                setSettings(newSettings); DB.saveSettings(currentUser, newSettings); setActiveCurrency(newSettings.currencies[0]);
             };
 
             const addTxn = (t) => { const newTxns = [...txns, t]; setTxns(newTxns); DB.saveTxns(currentUser, newTxns); };
@@ -1358,18 +1125,19 @@
             if (!currentUser) return <div className="min-h-screen font-sans" style={{ '--col-bg': '#111111', '--col-card': '#1e1e1e', '--col-text': '#ffffff', '--col-secondary': '#a1a1aa', '--col-border': '#27272a', '--col-accent': '#3b82f6' }}><AuthView onLogin={handleLogin} /></div>;
             if (isAdmin) return <div className="min-h-screen font-sans" style={{ '--col-bg': '#111111', '--col-card': '#1e1e1e', '--col-text': '#ffffff', '--col-secondary': '#a1a1aa', '--col-border': '#27272a', '--col-accent': '#3b82f6' }}><AdminPanel onLogout={handleLogout} /></div>;
 
+            const hasPremium = isRealVip || trialDays > 0;
+
             const renderView = () => {
                 switch(view) {
-                    case 'home': return <Home txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isVip={isVip} currentUser={currentUser} setView={setView}/>;
+                    case 'home': return <Home txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isRealVip={isRealVip} trialDays={trialDays} currentUser={currentUser} setView={setView}/>;
                     case 'nueva': return <Nueva addTxn={addTxn} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} setView={setView}/>;
                     
-                    // SE PASA LA FUNCION onUpgrade A LAS VISTAS QUE LO REQUIEREN
-                    case 'analisis': return <Analisis txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isVip={isVip} onUpgrade={() => setShowPayment(true)}/>;
-                    case 'chat': return <Chat addTxn={addTxn} settings={settings} activeCurrency={activeCurrency} t={translate} isVip={isVip} onUpgrade={() => setShowPayment(true)}/>;
-                    case 'ajustes': return <Ajustes globalSettings={settings} setGlobalSettings={setGlobalSettings} onLogout={handleLogout} currentUser={currentUser} isVip={isVip} t={translate} setView={setView} onUpgrade={() => setShowPayment(true)}/>;
+                    case 'analisis': return <Analisis txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} hasPremium={hasPremium} onUpgrade={() => setShowPayment(true)}/>;
+                    case 'chat': return <Chat addTxn={addTxn} settings={settings} activeCurrency={activeCurrency} t={translate} hasPremium={hasPremium} onUpgrade={() => setShowPayment(true)}/>;
+                    case 'ajustes': return <Ajustes globalSettings={settings} setGlobalSettings={setGlobalSettings} onLogout={handleLogout} currentUser={currentUser} isRealVip={isRealVip} trialDays={trialDays} hasPremium={hasPremium} t={translate} setView={setView} onUpgrade={() => setShowPayment(true)}/>;
                     
                     case 'historial': return <Historial txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} deleteTxn={deleteTxn} updateTxn={updateTxn} clearAllTxns={clearAllTxns} t={translate}/>;
-                    default: return <Home txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isVip={isVip} currentUser={currentUser} setView={setView}/>;
+                    default: return <Home txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isRealVip={isRealVip} trialDays={trialDays} currentUser={currentUser} setView={setView}/>;
                 }
             };
 
@@ -1414,8 +1182,9 @@
                         </div>
                     )}
 
-                    {/* MODAL DE PAGO (Aparece por encima de todo si showPayment es true) */}
-                    {showPayment && <PaymentModal onClose={() => setShowPayment(false)} />}
+                    {/* MODALES SOBREPUESTOS */}
+                    {showWelcome && <WelcomeModal onStartTrial={startTrial} onSkipTrial={skipTrial} onOpenPricing={() => {setShowWelcome(false); setShowPayment(true); DB.skipTrial(currentUser);}} />}
+                    {showPayment && <PaymentModal onClose={() => setShowPayment(false)} activeCurrency={activeCurrency} />}
 
                 </div>
             );
