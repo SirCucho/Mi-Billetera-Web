@@ -109,7 +109,6 @@
             register: (user, pass, isGoogle = false, profile = null) => {
                 const users = DB.getUsers();
                 if(users[user] && !isGoogle) return false; 
-                // Añadimos campos para gestionar la prueba gratis
                 users[user] = { password: pass, isGoogle, profile, vip: false, trialStart: null, trialChosen: false };
                 localStorage.setItem('billetera_users_v6', JSON.stringify(users));
                 return true;
@@ -144,23 +143,17 @@
             startTrial: (user) => {
                 const users = DB.getUsers();
                 if(users[user]) {
-                    users[user].trialStart = new Date().toISOString();
-                    users[user].trialChosen = true;
-                    localStorage.setItem('billetera_users_v6', JSON.stringify(users));
-                    return true;
+                    users[user].trialStart = new Date().toISOString(); users[user].trialChosen = true;
+                    localStorage.setItem('billetera_users_v6', JSON.stringify(users)); return true;
                 } return false;
             },
             skipTrial: (user) => {
                 const users = DB.getUsers();
                 if(users[user]) {
-                    users[user].trialChosen = true;
-                    localStorage.setItem('billetera_users_v6', JSON.stringify(users));
-                    return true;
+                    users[user].trialChosen = true; localStorage.setItem('billetera_users_v6', JSON.stringify(users)); return true;
                 } return false;
             },
-            getUserData: (user) => {
-                const users = DB.getUsers(); return users[user] || null;
-            },
+            getUserData: (user) => { const users = DB.getUsers(); return users[user] || null; },
             getTxns: (user) => JSON.parse(localStorage.getItem(`txns_${user}`) || '[]'),
             saveTxns: (user, txns) => localStorage.setItem(`txns_${user}`, JSON.stringify(txns)),
             getSettings: (user) => JSON.parse(localStorage.getItem(`settings_${user}`)) || DEFAULT_SETTINGS,
@@ -260,7 +253,7 @@
             );
         }
 
-        // --- COMPONENTE: MODAL DE PAGO (PRECIOS Y QR DINÁMICO) ---
+        // --- COMPONENTE: MODAL DE PAGO (PRECIOS Y QR DINÁMICO + BOTÓN WHATSAPP) ---
         function PaymentModal({ onClose, activeCurrency }) {
             const [selectedPlan, setSelectedPlan] = useState(null);
             
@@ -276,7 +269,7 @@
 
             return (
                 <div className="fixed inset-0 modal-overlay z-[200] flex items-center justify-center p-4">
-                    <div className="bg-card w-full max-w-sm rounded-3xl p-6 border border-border shadow-2xl view-animate text-center relative max-h-[90vh] overflow-y-auto">
+                    <div className="bg-card w-full max-w-sm rounded-3xl p-6 border border-border shadow-2xl view-animate text-center relative max-h-[95vh] overflow-y-auto">
                         
                         <button onClick={onClose} className="absolute top-4 right-4 text-secondary hover:text-primary transition-colors bg-background p-1.5 rounded-full">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -310,23 +303,45 @@
                                     <LucideChevronLeft className="w-4 h-4"/> Cambiar Plan
                                 </button>
                                 
-                                <h2 className="text-lg font-bold text-primary mb-1">Escanea para Pagar</h2>
+                                <h2 className="text-lg font-bold text-primary mb-1">Escanea o haz clic para Pagar</h2>
                                 <p className="text-xs text-secondary mb-4">Plan {selectedPlan.name}: <strong className="text-white">{sym} {getPrice(selectedPlan.usd)}</strong></p>
                                 
-                                <div className="bg-white p-3 rounded-2xl inline-block mb-4 shadow-xl border-4 border-white">
-                                    <img 
-                                        src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`https://wa.me/51930266472?text=Hola Carlos, quiero pagar mi suscripción VIP (${selectedPlan.name}) por ${sym} ${getPrice(selectedPlan.usd)} ${activeCurrency}.`)}`} 
-                                        alt="QR de Pago" 
-                                        className="w-40 h-40 object-contain" 
-                                    />
-                                </div>
+                                {(() => {
+                                    // Generamos el texto y la URL de WhatsApp una sola vez
+                                    const wpMsg = `Hola Carlos, quiero pagar mi suscripción VIP (${selectedPlan.name}) por ${sym} ${getPrice(selectedPlan.usd)} ${activeCurrency}.`;
+                                    const waUrl = `https://wa.me/51930266472?text=${encodeURIComponent(wpMsg)}`;
+                                    
+                                    return (
+                                        <>
+                                            <div className="bg-white p-3 rounded-2xl inline-block mb-4 shadow-xl border-4 border-white">
+                                                <img 
+                                                    src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(waUrl)}`} 
+                                                    alt="QR de Pago" 
+                                                    className="w-40 h-40 object-contain" 
+                                                />
+                                            </div>
+                                            
+                                            <div className="bg-background rounded-xl p-3 border border-border mt-2">
+                                                <p className="text-[10px] text-secondary uppercase font-bold tracking-wider mb-1">Contacto / Envío de Voucher</p>
+                                                <p className="text-base font-bold text-primary">Carlos Cucho</p>
+                                                <p className="text-accent font-bold text-lg tracking-widest mt-1">930 266 472</p>
+                                            </div>
+
+                                            {/* BOTÓN DIRECTO A WHATSAPP */}
+                                            <a 
+                                                href={waUrl} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer" 
+                                                className="w-full py-3.5 mt-4 bg-[#25D366] text-white rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(37,211,102,0.3)] hover:scale-[1.02] transition-transform flex items-center justify-center gap-2"
+                                            >
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                                Abrir WhatsApp Directo
+                                            </a>
+                                        </>
+                                    );
+                                })()}
                                 
-                                <div className="bg-background rounded-xl p-3 border border-border mt-2">
-                                    <p className="text-[10px] text-secondary uppercase font-bold tracking-wider mb-1">Contacto / Envío de Voucher</p>
-                                    <p className="text-base font-bold text-primary">Carlos Cucho</p>
-                                    <p className="text-accent font-bold text-lg tracking-widest mt-1">930 266 472</p>
-                                </div>
-                                <p className="text-[10px] text-secondary mt-4">Al escanear, se abrirá WhatsApp con el mensaje listo para coordinar la activación de tu cuenta.</p>
+                                <p className="text-[10px] text-secondary mt-4 leading-tight">Puedes escanear el QR desde tu banco o tocar el botón verde para coordinar tu activación.</p>
                             </div>
                         )}
                     </div>
@@ -359,7 +374,7 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ ABAJO TU ID DE CLIENTE DE GOOGLE REAL     */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: handleGoogleResponse
                         });
                         window.google.accounts.id.renderButton( document.getElementById("google-btn-container"), { theme: "outline", size: "large", width: "100%", text: "continue_with" } );
@@ -582,7 +597,6 @@
                             <div className="relative">
                                 {userData?.profile?.picture ? <img src={userData.profile.picture} alt="Avatar" className="w-6 h-6 rounded-full" /> : <div className="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold">{displayUser.charAt(0).toUpperCase()}</div>}
                                 
-                                {/* LÓGICA DE INSIGNIAS: VIP, PRUEBA o FREE */}
                                 {isRealVip ? (
                                     <div className="absolute -top-1 -right-1 bg-warning text-black w-3 h-3 flex items-center justify-center rounded-full shadow-lg border border-background"><LucideCrown className="w-2 h-2"/></div>
                                 ) : trialDays > 0 ? (
