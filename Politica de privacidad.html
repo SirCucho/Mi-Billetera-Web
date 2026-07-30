@@ -11,25 +11,22 @@
     
     <style>
         :root {
-            --primary-color: #0f172a; /* Azul muy oscuro para títulos */
+            --primary-color: #0f172a; 
             --secondary-color: #1e293b;
-            --accent-color: #2563eb;
-            --text-color: #334155; /* Gris oscuro para el cuerpo del texto, cansa menos la vista que el negro puro */
+            --accent-color: #3b82f6;
+            --text-color: #334155; 
             --bg-color: #f8fafc;
             --container-bg: #ffffff;
         }
 
         body {
-            /* Usando la nueva fuente Inter */
             font-family: 'Inter', sans-serif;
-            font-size: 17px; /* Tamaño base un poco más grande para facilitar la lectura */
-            line-height: 1.75; /* Espaciado generoso entre líneas */
+            font-size: 17px; 
+            line-height: 1.75; 
             color: var(--text-color);
             background-color: var(--bg-color);
             margin: 0;
             padding: 0;
-            
-            /* Suavizado de fuentes para pantallas modernas */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
@@ -54,8 +51,8 @@
         h1 {
             color: var(--primary-color);
             font-size: 2.2em;
-            font-weight: 700;
-            letter-spacing: -0.03em; /* Las fuentes modernas se ven mejor un poco más juntas en los títulos */
+            font-weight: 800;
+            letter-spacing: -0.03em; 
             margin-bottom: 15px;
             line-height: 1.2;
         }
@@ -63,13 +60,15 @@
         .last-updated {
             color: #64748b;
             font-size: 0.9em;
-            font-weight: 400;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         h2 {
             color: var(--primary-color);
             font-size: 1.4em;
-            font-weight: 600;
+            font-weight: 700;
             margin-top: 50px;
             margin-bottom: 20px;
             border-left: 4px solid var(--accent-color);
@@ -103,12 +102,12 @@
             margin-bottom: 12px;
         }
 
-        /* Caja del índice (Tabla de contenidos) */
         .toc {
             background-color: #f1f5f9;
             padding: 35px;
             border-radius: 12px;
             margin-bottom: 50px;
+            border: 1px solid #e2e8f0;
         }
 
         .toc h3 {
@@ -123,10 +122,6 @@
             margin: 0;
         }
 
-        .toc li {
-            margin-bottom: 12px;
-        }
-
         .toc a {
             color: var(--accent-color);
             text-decoration: none;
@@ -139,7 +134,6 @@
             text-decoration: underline;
         }
 
-        /* Caja de contacto */
         .contact-box {
             background-color: #eff6ff;
             border: 1px solid #bfdbfe;
@@ -173,7 +167,6 @@
             font-size: 0.85em;
         }
 
-        /* Adaptabilidad para móviles */
         @media (max-width: 768px) {
             .container {
                 margin: 0;
@@ -190,100 +183,71 @@
     <div class="container">
         <header>
             <h1>Política de Privacidad de "Mi Billetera"</h1>
-            <p class="last-updated">Fecha de entrada en vigor y última actualización: 28 de julio de 2026</p>
+            <p class="last-updated">Última actualización: Julio de 2026</p>
         </header>
 
         <div class="toc">
             <h3>Tabla de Contenidos</h3>
             <ul>
-                <li><a href="#introduccion">1. Introducción y Alcance</a></li>
-                <li><a href="#informacion">2. Información que Recopilamos</a></li>
-                <li><a href="#uso">3. Uso de la Información</a></li>
-                <li><a href="#publicidad">4. Publicidad y Compartición con Terceros</a></li>
-                <li><a href="#gdpr">5. Derechos de Privacidad Europeos (GDPR)</a></li>
-                <li><a href="#ccpa">6. Derechos de Privacidad de California (CCPA y CPRA)</a></li>
-                <li><a href="#caloppa">7. Cumplimiento de CalOPPA</a></li>
-                <li><a href="#contacto">8. Información de Contacto</a></li>
+                <li><a href="#introduccion">1. Introducción y Arquitectura Local</a></li>
+                <li><a href="#informacion">2. Información que Recopilamos (Google Auth)</a></li>
+                <li><a href="#internacional">3. Localización: 195 Países, Idiomas y Monedas</a></li>
+                <li><a href="#publicidad">4. Publicidad, Terceros y Respaldo Cifrado</a></li>
+                <li><a href="#gdpr">5. Derechos de Privacidad (GDPR, CCPA, CPRA)</a></li>
+                <li><a href="#contacto">6. Información de Contacto</a></li>
             </ul>
         </div>
 
         <section id="introduccion">
-            <h2>1. Introducción y Alcance</h2>
-            <p>En <strong>"Mi Billetera"</strong>, respetamos su privacidad y estamos fuertemente comprometidos en proteger los datos personales que usted comparte con nosotros. Esta Política de Privacidad detallada explica exhaustivamente nuestras prácticas respecto a la recopilación, uso, mantenimiento y divulgación de la información que obtenemos de los usuarios de nuestra aplicación.</p>
-            <p>Al utilizar nuestra aplicación, usted acepta las prácticas descritas en este documento. Hemos diseñado nuestras políticas no solo para ser transparentes, sino para cumplir de manera estricta con las legislaciones de privacidad más rigurosas a nivel global.</p>
+            <h2>1. Introducción y Arquitectura Local</h2>
+            <p>En <strong>"Mi Billetera"</strong>, hemos construido nuestra aplicación bajo el estricto principio de "Privacidad por Diseño". A diferencia de otras aplicaciones financieras, <strong>nosotros no poseemos servidores ni bases de datos en la nube que recopilen o almacenen sus transacciones.</strong></p>
+            <p>Toda la información sobre sus ingresos, gastos, ahorros y presupuestos se procesa y almacena <strong>exclusivamente de forma local en la memoria de su propio dispositivo</strong> (a través del <em>localStorage</em> de su navegador). Al utilizar nuestra aplicación, usted mantiene el control absoluto y físico sobre sus datos financieros.</p>
         </section>
 
         <section id="informacion">
-            <h2>2. Información que Recopilamos</h2>
-            <p>Nos adherimos al principio de minimización de datos. Esto significa que solo recopilamos la información estrictamente necesaria para proporcionar nuestro servicio. Específicamente, recopilamos los siguientes datos proporcionados directamente por usted:</p>
+            <h2>2. Información que Recopilamos (Google Auth)</h2>
+            <p>Para garantizar un acceso seguro y evitar cuentas falsas, nuestra aplicación utiliza exclusivamente el sistema de autenticación oficial de Google. Al iniciar sesión, el sistema únicamente recibe de Google los siguientes datos identificativos básicos:</p>
             <ul>
-                <li><strong>Información de Identificación Personal:</strong> Su nombre completo.</li>
-                <li><strong>Información de Contacto/Ubicación:</strong> Su dirección física.</li>
-                <li><strong>Información Financiera:</strong> Detalles específicos sobre sus ingresos y gastos corrientes.</li>
+                <li><strong>Información de Perfil:</strong> Su nombre público, dirección de correo electrónico y fotografía de perfil asociada a su cuenta de Google.</li>
             </ul>
-            <p><strong>Declaración de no recopilación adicional:</strong> No utilizamos tecnologías de seguimiento en segundo plano, no extraemos datos de sus contactos, no accedemos a su cámara ni a su ubicación GPS en tiempo real. La información mencionada arriba es la única que "Mi Billetera" procesa.</p>
+            <p><strong>Declaración de no recopilación:</strong> Nosotros <strong>no tenemos acceso a su contraseña de Google</strong>. Tampoco extraemos datos de sus contactos, no accedemos a su cámara, ni rastreamos su ubicación física mediante GPS. Cualquier otro dato generado (como sus registros financieros o el uso de la Inteligencia Artificial de voz) no sale de su dispositivo.</p>
         </section>
 
-        <section id="uso">
-            <h2>3. Uso de la Información</h2>
-            <p>La información recopilada se utiliza con propósitos exclusivos, limitados y legítimos. Su información es utilizada para:</p>
-            <ul>
-                <li>Proporcionar las funcionalidades principales de la aplicación, permitiéndole administrar de manera eficiente su flujo de caja personal.</li>
-                <li>Facilitar herramientas de análisis interno que le ayuden a planificar sus inversiones y ahorros.</li>
-                <li>Mejorar el rendimiento técnico y la experiencia de usuario dentro del entorno de la aplicación.</li>
-            </ul>
+        <section id="internacional">
+            <h2>3. Localización: 195 Países, Idiomas y Monedas</h2>
+            <p>Para brindar una experiencia global, "Mi Billetera" incluye soporte nativo para 195 países. Las opciones de idioma de la interfaz se adaptan de forma automática, y los precios de los planes VIP (Premium) se ajustan de manera dinámica al <strong>tipo de cambio de su moneda local</strong>.</p>
+            <p>Es importante destacar que <strong>no rastreamos su dirección IP ni su ubicación geográfica para lograr esto</strong>. Es usted (el usuario) quien selecciona manualmente su país de residencia dentro del panel de "Ajustes". Esta preferencia se guarda de manera local en su teléfono.</p>
         </section>
 
         <section id="publicidad">
-            <h2>4. Publicidad y Compartición con Terceros</h2>
-            <p>Nos enorgullece afirmar que nuestro modelo de servicio está centrado en el usuario y no en la monetización de sus datos. Por lo tanto, establecemos lo siguiente de manera categórica:</p>
+            <h2>4. Publicidad, Terceros y Respaldo Cifrado</h2>
+            <p>Nuestro modelo de servicio está centrado en la utilidad para el usuario y en las suscripciones VIP, no en la monetización de sus datos. Por lo tanto, establecemos de manera categórica:</p>
             <ul>
-                <li><strong>Cero Publicidad:</strong> No utilizamos servicios de publicidad de terceros, redes de anuncios (Ad Networks) ni mostramos ningún tipo de anuncio dentro de la aplicación.</li>
-                <li><strong>No Venta de Datos:</strong> "Mi Billetera" no vende, alquila, comercializa ni transfiere bajo ninguna circunstancia su información personal, financiera o de uso a terceros, agencias de marketing o corredores de datos (data brokers).</li>
+                <li><strong>Cero Publicidad:</strong> No utilizamos redes de anuncios, rastreadores (trackers) ni mostramos ningún tipo de publicidad dentro de la aplicación.</li>
+                <li><strong>No Venta de Datos:</strong> "Mi Billetera" no vende, alquila ni comparte su información con agencias de marketing o corredores de datos.</li>
+                <li><strong>Copias de Seguridad (Backups):</strong> Ofrecemos una herramienta para respaldar sus datos vía WhatsApp. Antes de salir de la aplicación, su información financiera es sometida a un <strong>Cifrado de Grado Militar (AES-256)</strong> utilizando una contraseña que solo usted conoce. Nadie, ni siquiera nosotros ni WhatsApp, puede leer sus datos cifrados.</li>
             </ul>
         </section>
 
         <section id="gdpr">
-            <h2>5. Derechos de Privacidad Europeos (GDPR)</h2>
-            <p>Si usted es residente del Espacio Económico Europeo (EEE), sus datos son tratados conforme al Reglamento General de Protección de Datos (GDPR). La base legal para procesar su información es su consentimiento explícito y la necesidad de ejecutar el servicio que nos solicita. Usted posee los siguientes derechos inalienables:</p>
+            <h2>5. Derechos de Privacidad (GDPR, CCPA y CalOPPA)</h2>
+            <p>Cumplimos con las normativas más exigentes a nivel global (Reglamento General de Protección de Datos Europeo y la Ley de Privacidad del Consumidor de California). Sin embargo, dado que operamos bajo una arquitectura de almacenamiento 100% local, la forma de ejercer estos derechos es directa e inmediata por parte del usuario:</p>
             <ul>
-                <li><strong>Derecho de Acceso:</strong> Puede solicitar una copia estructurada de todos los datos personales que tenemos sobre usted.</li>
-                <li><strong>Derecho de Rectificación:</strong> Puede exigir la corrección de cualquier dato personal inexacto o incompleto.</li>
-                <li><strong>Derecho al Olvido (Supresión):</strong> Puede solicitar la eliminación inmediata y permanente de todos sus datos de nuestros servidores.</li>
-                <li><strong>Derecho a la Portabilidad:</strong> Tiene derecho a recibir sus datos en un formato estructurado, de uso común y lectura mecánica para transferirlos a otro controlador.</li>
-                <li><strong>Derecho a la Limitación u Oposición:</strong> Puede oponerse al procesamiento de sus datos en cualquier momento.</li>
-            </ul>
-        </section>
-
-        <section id="ccpa">
-            <h2>6. Derechos de Privacidad de California (CCPA y CPRA)</h2>
-            <p>En cumplimiento con la Ley de Privacidad del Consumidor de California (CCPA) y la Ley de Derechos de Privacidad de California (CPRA), otorgamos a los residentes de California (y extendemos estos derechos a todos nuestros usuarios globales) protecciones específicas:</p>
-            <ul>
-                <li><strong>Derecho a Saber (Right to Know):</strong> Usted tiene derecho a solicitar la divulgación de las categorías específicas de información personal que hemos recopilado durante los últimos 12 meses y los fines para los cuales se utilizaron.</li>
-                <li><strong>Derecho a Eliminar (Right to Delete):</strong> Sujeto a ciertas excepciones legales, usted puede solicitar la eliminación de su información personal.</li>
-                <li><strong>Derecho a Optar por no Vender o Compartir (Opt-Out):</strong> Aunque la ley exige que proporcionemos un enlace de "No vender mi información personal", <em>reiteramos que "Mi Billetera" jamás vende ni comparte sus datos personales.</em></li>
-                <li><strong>Derecho a la No Discriminación:</strong> No le negaremos servicios, no le cobraremos precios diferentes ni le proporcionaremos un nivel de calidad inferior por ejercer sus derechos de privacidad.</li>
-            </ul>
-        </section>
-
-        <section id="caloppa">
-            <h2>7. Cumplimiento de CalOPPA</h2>
-            <p>La Ley de Protección de la Privacidad en Línea de California (CalOPPA) exige que los servicios digitales que recopilen información de identificación personal publiquen una política de privacidad visible. Para cumplir con CalOPPA, acordamos lo siguiente:</p>
-            <ul>
-                <li>Los usuarios pueden visitar nuestra aplicación y acceder a las funciones básicas de lectura de esta política de forma anónima.</li>
-                <li>Nuestra Política de Privacidad incluye la palabra "Privacidad" y es fácilmente accesible desde el menú principal de la aplicación.</li>
-                <li><strong>Señales Do Not Track (DNT):</strong> Dado que no utilizamos servicios de seguimiento de terceros ni publicidad conductual, las señales de "No Rastrear" (Do Not Track) de los navegadores web no alteran el funcionamiento de nuestra aplicación, ya que, por defecto, no rastreamos a nuestros usuarios fuera de la plataforma.</li>
+                <li><strong>Derecho de Acceso y Portabilidad:</strong> Usted puede ver, descargar y exportar toda su información directamente desde la sección "Historial" y "Ajustes" de la aplicación.</li>
+                <li><strong>Derecho al Olvido (Eliminación Total):</strong> Usted puede eliminar todos sus datos financieros y su cuenta al instante mediante dos vías: usando la opción "Limpiar" dentro del historial de la app, o simplemente <strong>borrando los datos de caché y almacenamiento de su navegador web</strong>. Dado que no tenemos servidores en la nube, al borrar los datos de su teléfono, estos desaparecen para siempre.</li>
             </ul>
         </section>
 
         <section id="contacto">
-            <h2>8. Información de Contacto y Ejercicio de Derechos</h2>
-            <p>Si desea ejercer alguno de los derechos mencionados en las secciones de GDPR, CCPA o CalOPPA, o si tiene cualquier inquietud, pregunta o queja sobre cómo manejamos sus datos personales, el Responsable de Protección de Datos está a su entera disposición.</p>
+            <h2>6. Información de Contacto y Soporte</h2>
+            <p>Si tiene alguna inquietud sobre nuestra arquitectura de privacidad, desea gestionar la eliminación de un código de acceso VIP desde nuestra base de datos administrativa, o requiere soporte técnico, el Responsable de Protección de Datos está a su disposición.</p>
             
             <div class="contact-box">
-                <p>Puede comunicarse directamente con nosotros a través del siguiente correo electrónico:</p>
+                <p>Puede comunicarse directamente con nosotros a través de los siguientes canales:</p>
                 <a href="mailto:sirqcho@gmail.com">sirqcho@gmail.com</a>
-                <p style="margin-top: 20px; font-size: 0.9em; color: #475569; font-weight: 400;">Nos comprometemos a responder a todas las solicitudes de privacidad en un plazo no mayor a 30 días hábiles.</p>
+                <p style="margin-top: 15px; font-weight: 600; color: #0f172a;">O mediante WhatsApp Directo:</p>
+                <p style="font-size: 1.1em; color: #3b82f6; font-weight: 700; margin: 0;">+51 930 266 472 (Carlos Cucho)</p>
+                <p style="margin-top: 20px; font-size: 0.85em; color: #475569; font-weight: 400;">Nos comprometemos a responder a todas las solicitudes relacionadas con privacidad y membresías a la mayor brevedad posible.</p>
             </div>
         </section>
 
