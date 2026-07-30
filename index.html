@@ -6,17 +6,32 @@
     <title>Mi Billetera - Controla tus Finanzas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FAVICON (LOGO) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMzYjgyZjYiLz48cGF0aCBkPSJNNDQgMTRjNiA0IDggMTIgNCAxOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwb2x5Z29uIHBvaW50cz0iNDgsMTIgNDMsMTYgNTAsMTYiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTIgMjhoNDB2MjBhNCA0IDAgMCAxLTQgNGgtMzJhNCA0IDAgMCAxLTQtNHoiIGZpbGw9IiMwZWE1ZTkiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTEyIDI4YTQgNCAwIDAgMSA0LTRoMzJhNCA0IDAgMCAxIDQgNHY2aC00MHoiIGZpbGw9IiMzOGJkZjgiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iMjYiIGN5PSI0MiIgcj0iMyIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==">
+
     <script>
         tailwind.config = {
-            theme: { extend: { fontFamily: { sans: ['Outfit', 'sans-serif'] }, colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', success: '#10b981', warning: '#eab308' } } }
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                    colors: {
+                        bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa',
+                        border: '#27272a', accent: '#3b82f6', success: '#10b981', warning: '#eab308'
+                    }
+                }
+            }
         }
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.body.style.overflow = 'auto'; }
     </script>
     <style>
-        body { background-color: #111111; color: #ffffff; scroll-behavior: smooth; }
+        body { background-color: #111111; color: #ffffff; scroll-behavior: smooth; transition: all 0.3s ease; }
         .gradient-text { background: linear-gradient(to right, #3b82f6, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .img-placeholder { background: linear-gradient(45deg, #1e1e1e, #27272a); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #a1a1aa; font-size: 0.8rem; padding: 20px;}
         .table-row-hover:hover { background-color: #19191c; transition: background-color 0.2s; }
+        [dir="rtl"] .text-left { text-align: right; }
+        [dir="rtl"] .flex-row-reverse { flex-direction: row; }
     </style>
 </head>
 <body class="font-sans antialiased" dir="ltr">
@@ -25,51 +40,136 @@
     <nav class="fixed w-full top-0 z-50 bg-[#111111]/90 backdrop-blur-md border-b border-border">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-md"><svg viewBox="0 0 64 64" class="w-5 h-5"><path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" stroke-width="3"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" stroke-width="3"/><path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" stroke-width="3"/><circle cx="26" cy="42" r="2" fill="#0f172a"/></svg></div>
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-md">
+                    <svg viewBox="0 0 64 64" class="w-5 h-5"><path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" stroke-width="3" stroke-linejoin="round"/><path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" stroke-width="3" stroke-linejoin="round"/><circle cx="26" cy="42" r="2" fill="#0f172a"/></svg>
+                </div>
                 <span class="font-bold text-lg tracking-wide">Mi Billetera</span>
             </div>
+            
             <div class="hidden md:flex gap-6 text-sm font-medium text-secondary items-center">
                 <a href="#caracteristicas" data-i18n="nav_feat" class="hover:text-white transition">Características</a>
-                <a href="#vip" class="hover:text-warning transition flex items-center gap-1"><span data-i18n="nav_prem">Premium</span></a>
+                <a href="#vip" class="hover:text-warning transition flex items-center gap-1">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> 
+                    <span data-i18n="nav_prem">Premium</span>
+                </a>
                 <a href="#tutorial" data-i18n="nav_how" class="hover:text-white transition">Cómo Funciona</a>
-                <select id="langSwitcher" onchange="changeLanguage(this.value)" class="bg-[#1e1e1e] border border-[#27272a] text-white text-xs rounded-lg px-2 py-1 outline-none cursor-pointer">
-                    <option value="es">ES 🇪🇸</option><option value="en">EN 🇺🇸</option><option value="pt">PT 🇧🇷</option>
+                
+                <!-- SELECTOR DE IDIOMAS (TOP 10 MUNDIAL) -->
+                <select id="langSwitcher" onchange="changeLanguage(this.value)" class="bg-[#1e1e1e] border border-[#27272a] text-white text-xs rounded-lg px-2 py-1 outline-none cursor-pointer hover:border-accent transition-colors">
+                    <option value="es">ES (Español)</option>
+                    <option value="en">EN (English)</option>
+                    <option value="zh">ZH (中文)</option>
+                    <option value="hi">HI (हिन्दी)</option>
+                    <option value="fr">FR (Français)</option>
+                    <option value="ar">AR (العربية)</option>
+                    <option value="ru">RU (Русский)</option>
+                    <option value="pt">PT (Português)</option>
+                    <option value="de">DE (Deutsch)</option>
+                    <option value="ja">JA (日本語)</option>
                 </select>
             </div>
-            <a href="app.html" data-i18n="nav_open" class="bg-accent text-white px-5 py-2 rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(59,130,246,0.4)]">Abrir App</a>
+
+            <a href="app.html" data-i18n="nav_open" class="bg-accent text-white px-5 py-2 rounded-xl font-bold text-sm hover:scale-105 transition-transform shadow-[0_0_15px_rgba(59,130,246,0.4)]">
+                Abrir App
+            </a>
         </div>
     </nav>
 
-    <!-- PORTADA Y CARACTERÍSTICAS -->
-    <header class="pt-32 pb-20 px-4 text-center">
-        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6" data-i18n="hero_title">Tu dinero, <br><span class="gradient-text">bajo control total.</span></h1>
-        <p class="text-secondary text-lg max-w-2xl mx-auto mb-8" data-i18n="hero_sub">Registra tus ingresos y gastos, analiza tus finanzas y obtén recomendaciones. Todo desde tu celular, sin comprometer tu privacidad.</p>
-        <a href="app.html" data-i18n="hero_btn1" class="bg-accent text-white px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-accent/30 inline-block">Comenzar Gratis</a>
+    <!-- SECCIÓN HERO (PORTADA) -->
+    <header class="pt-32 pb-20 px-4">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight" data-i18n="hero_title">
+                    Tu dinero, <br><span class="gradient-text">bajo control total.</span>
+                </h1>
+                <p class="text-secondary text-lg leading-relaxed" data-i18n="hero_sub">
+                    Registra tus ingresos y gastos en segundos, analiza tus finanzas y obtén recomendaciones de ahorro. Todo desde tu celular, sin comprometer tu privacidad.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="app.html" class="bg-accent text-white px-8 py-3.5 rounded-xl font-bold hover:opacity-90 shadow-lg shadow-accent/30 transition-all flex items-center gap-2">
+                        <span data-i18n="hero_btn1">Comenzar Gratis</span> <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                    </a>
+                    <a href="#tutorial" class="bg-card border border-border text-white px-8 py-3.5 rounded-xl font-bold hover:bg-border transition-all flex items-center gap-2">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> <span data-i18n="hero_btn2">Ver paso a paso</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="relative mx-auto w-full max-w-[320px] h-[640px] bg-card rounded-[2.5rem] border-[10px] border-[#27272a] shadow-2xl overflow-hidden flex items-center justify-center img-placeholder">
+                <img src="portada.png" alt="App" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none'">
+                <div class="z-0">
+                    <svg class="w-10 h-10 mx-auto mb-2 text-[#3b82f6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    <p data-i18n="img_portada">Sube la captura<br><strong class="text-accent">portada.png</strong><br>a tu GitHub</p>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <!-- TABLA COMPARATIVA (SUSCRIPCIONES) -->
-    <section id="vip" class="py-20 bg-bg border-t border-border">
+    <!-- SECCIÓN CARACTERÍSTICAS -->
+    <section id="caracteristicas" class="py-20 bg-card border-y border-border">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4" data-i18n="feat_title">Descubre lo que puedes lograr</h2>
+                <p class="text-secondary" data-i18n="feat_sub">Diseñada para ser rápida, segura y fácil de entender.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-bg p-6 rounded-2xl border border-border hover:border-accent transition-colors">
+                    <div class="w-12 h-12 bg-success/10 text-success rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" data-i18n="f1_title">Control Detallado</h3>
+                    <p class="text-secondary text-sm" data-i18n="f1_desc">Registra gastos e ingresos en segundos. Visualiza tu balance semanal y entiende exactamente en qué se va tu dinero.</p>
+                </div>
+                
+                <div class="bg-bg p-6 rounded-2xl border border-border hover:border-accent transition-colors">
+                    <div class="w-12 h-12 bg-accent/10 text-accent rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" data-i18n="f2_title">Privacidad Total</h3>
+                    <p class="text-secondary text-sm" data-i18n="f2_desc">Tus datos nunca tocan nuestros servidores. Todo se procesa en tu celular. Crea respaldos encriptados directo a tu propio WhatsApp.</p>
+                </div>
+
+                <div class="bg-bg p-6 rounded-2xl border border-warning/30 hover:border-warning transition-colors relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-warning text-black text-[10px] font-bold px-3 py-1 rounded-bl-lg" data-i18n="only_vip">Solo VIP</div>
+                    <div class="w-12 h-12 bg-warning/10 text-warning rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-warning" data-i18n="f3_title">Asistente de Voz IA</h3>
+                    <p class="text-secondary text-sm" data-i18n="f3_desc">Solo di "Gasté 20 dólares en comida". La Inteligencia Artificial detectará el monto y la categoría automáticamente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN: TABLA COMPARATIVA VIP -->
+    <section id="vip" class="py-20 bg-bg">
         <div class="max-w-4xl mx-auto px-4">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4 text-warning" data-i18n="vip_title">Planes y Beneficios</h2>
+                <h2 class="text-3xl font-bold mb-4 text-warning flex justify-center items-center gap-3">
+                    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> 
+                    <span data-i18n="vip_title">Planes y Beneficios</span>
+                </h2>
                 <p class="text-secondary" data-i18n="vip_sub">Elige el plan que mejor se adapte a tus necesidades financieras.</p>
             </div>
 
-            <!-- PRECIOS -->
-            <div class="grid md:grid-cols-3 gap-6 mb-10">
-                <div class="bg-card p-6 rounded-2xl border border-border text-center">
-                    <h3 class="font-bold text-secondary uppercase text-xs mb-2">1 Mes</h3>
-                    <p class="text-3xl font-extrabold text-white">S/ 10</p>
+            <!-- TARJETAS DE PRECIOS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="bg-card p-6 rounded-2xl border border-border text-center shadow-lg hover:border-warning transition">
+                    <h3 class="font-bold text-secondary uppercase text-xs tracking-widest mb-2" data-i18n="plan_1_title">1 Mes</h3>
+                    <p class="text-4xl font-extrabold text-white mb-2">$3</p>
+                    <p class="text-[10px] text-secondary" data-i18n="plan_sub">USD</p>
                 </div>
-                <div class="bg-card p-6 rounded-2xl border border-warning/50 text-center relative">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-warning text-black text-[10px] font-bold px-3 py-1 rounded-full">POPULAR</div>
-                    <h3 class="font-bold text-secondary uppercase text-xs mb-2">6 Meses</h3>
-                    <p class="text-3xl font-extrabold text-warning">S/ 40</p>
+                <div class="bg-card p-6 rounded-2xl border border-warning/50 text-center shadow-[0_0_20px_rgba(234,179,8,0.15)] relative transform scale-105">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-warning text-black text-[10px] font-bold px-3 py-1 rounded-full tracking-widest" data-i18n="plan_pop">POPULAR</div>
+                    <h3 class="font-bold text-warning uppercase text-xs tracking-widest mb-2" data-i18n="plan_2_title">1 Año</h3>
+                    <p class="text-4xl font-extrabold text-white mb-2">$15</p>
+                    <p class="text-[10px] text-secondary" data-i18n="plan_sub">USD</p>
                 </div>
-                <div class="bg-card p-6 rounded-2xl border border-border text-center">
-                    <h3 class="font-bold text-secondary uppercase text-xs mb-2">Vitalicio</h3>
-                    <p class="text-3xl font-extrabold text-white">S/ 70</p>
-                    <p class="text-[10px] text-secondary mt-1">Un solo pago</p>
+                <div class="bg-card p-6 rounded-2xl border border-border text-center shadow-lg hover:border-warning transition">
+                    <h3 class="font-bold text-secondary uppercase text-xs tracking-widest mb-2" data-i18n="plan_3_title">Vitalicio</h3>
+                    <p class="text-4xl font-extrabold text-white mb-2">$45</p>
+                    <p class="text-[10px] text-secondary" data-i18n="plan_3_sub">Único pago USD</p>
                 </div>
             </div>
 
@@ -78,22 +178,107 @@
                     <thead>
                         <tr class="bg-[#19191c] border-b border-border">
                             <th class="p-5 font-bold text-primary w-1/2" data-i18n="tbl_feat">Características de la App</th>
-                            <th class="p-5 font-bold text-center text-primary border-l border-border" data-i18n="tbl_free">FREE</th>
-                            <th class="p-5 font-bold text-center text-warning border-l border-border bg-warning/5" data-i18n="tbl_vip">VIP</th>
+                            <th class="p-5 font-bold text-center text-primary border-l border-border">FREE</th>
+                            <th class="p-5 font-bold text-center text-warning border-l border-border bg-warning/5">VIP</th>
                         </tr>
                     </thead>
                     <tbody class="text-sm text-secondary">
-                        <tr class="border-b border-border table-row-hover"><td class="p-5" data-i18n="f_reg">Registro ilimitado</td><td class="p-5 text-center text-success">✔</td><td class="p-5 text-center text-success border-l border-border bg-warning/5">✔</td></tr>
-                        <tr class="border-b border-border table-row-hover"><td class="p-5" data-i18n="f_sec">Almacenamiento seguro</td><td class="p-5 text-center text-success">✔</td><td class="p-5 text-center text-success border-l border-border bg-warning/5">✔</td></tr>
-                        <tr class="border-b border-border table-row-hover"><td class="p-5 font-semibold text-white" data-i18n="f_ai_anal">Análisis IA</td><td class="p-5 text-center text-error">✖</td><td class="p-5 text-center text-success border-l border-border bg-warning/5">✔</td></tr>
-                        <tr class="table-row-hover"><td class="p-5 font-semibold text-white" data-i18n="f_voice">Voz IA y Personalización</td><td class="p-5 text-center text-error">✖</td><td class="p-5 text-center text-success border-l border-border bg-warning/5">✔</td></tr>
+                        <tr class="border-b border-border table-row-hover">
+                            <td class="p-5" data-i18n="f_reg">Registro de ingresos y gastos ilimitados</td>
+                            <td class="p-5 text-center text-success">✔</td>
+                            <td class="p-5 text-center text-success border-l border-border bg-warning/5">✔</td>
+                        </tr>
+                        <tr class="border-b border-border table-row-hover">
+                            <td class="p-5" data-i18n="f_sec">Almacenamiento local seguro y privado</td>
+                            <td class="p-5 text-center text-success">✔</td>
+                            <td class="p-5 text-center text-success border-l border-border bg-warning/5">✔</td>
+                        </tr>
+                        <tr class="border-b border-border table-row-hover">
+                            <td class="p-5" data-i18n="f_back">Copia de seguridad vía WhatsApp (AES-256)</td>
+                            <td class="p-5 text-center text-success">✔</td>
+                            <td class="p-5 text-center text-success border-l border-border bg-warning/5">✔</td>
+                        </tr>
+                        <tr class="border-b border-border table-row-hover">
+                            <td class="p-5 font-semibold text-white" data-i18n="f_ai_anal">Evaluación Semanal Inteligente (IA)</td>
+                            <td class="p-5 text-center text-error">✖</td>
+                            <td class="p-5 text-center text-success border-l border-border bg-warning/5">✔</td>
+                        </tr>
+                        <tr class="border-b border-border table-row-hover">
+                            <td class="p-5 font-semibold text-white" data-i18n="f_voice">Asistente de Registro por Voz (IA)</td>
+                            <td class="p-5 text-center text-error">✖</td>
+                            <td class="p-5 text-center text-success border-l border-border bg-warning/5">✔</td>
+                        </tr>
+                        <tr class="table-row-hover">
+                            <td class="p-5 font-semibold text-white" data-i18n="f_color">Personalización total de colores</td>
+                            <td class="p-5 text-center text-error">✖</td>
+                            <td class="p-5 text-center text-success border-l border-border bg-warning/5 rounded-br-2xl">✔</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
             
             <div class="mt-10 text-center">
-                 <a href="app.html" data-i18n="btn_upgrade" class="bg-warning text-black px-10 py-4 rounded-xl font-bold text-lg inline-block">Hacerme VIP Ahora</a>
-                 <p class="text-xs text-secondary mt-4" data-i18n="btn_sub">Abre la app, ve a 'Ajustes' para ver el código QR de pago.</p>
+                 <a href="https://wa.me/51930266472?text=Hola,%20vengo%20de%20la%20página%20web.%20Me%20interesa%20comprar%20el%20plan%20VIP." target="_blank" class="bg-warning text-black px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform inline-flex items-center gap-2 shadow-[0_0_25px_rgba(234,179,8,0.4)]">
+                     <span data-i18n="btn_upgrade">Hacerme VIP por WhatsApp</span> <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                 </a>
+                 <p class="text-xs text-secondary mt-4" data-i18n="btn_sub">También puedes pagar escaneando el código QR directamente dentro de la App.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PASO A PASO -->
+    <section id="tutorial" class="py-20 border-t border-border">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4" data-i18n="tut_title">Aprende a usarla en 3 pasos</h2>
+                <p class="text-secondary" data-i18n="tut_sub">Es tan fácil que no necesitarás manual de instrucciones.</p>
+            </div>
+
+            <div class="space-y-24">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="bg-accent text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mb-4">1</div>
+                        <h3 class="text-2xl font-bold mb-4" data-i18n="t1_title">Inicia Sesión con Google</h3>
+                        <p class="text-secondary mb-4" data-i18n="t1_desc">Olvídate de contraseñas complicadas. Ingresa de forma 100% segura utilizando tu cuenta oficial de Google con un solo clic.</p>
+                        <ul class="text-sm space-y-2 text-secondary">
+                            <li class="flex gap-2"><svg class="w-5 h-5 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="t1_b1">Autenticación blindada</span></li>
+                            <li class="flex gap-2"><svg class="w-5 h-5 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="t1_b2">Sincroniza tu foto de perfil automáticamente</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-card rounded-2xl border border-border aspect-[4/3] flex items-center justify-center img-placeholder shadow-xl relative overflow-hidden">
+                        <img src="paso1.png" alt="Paso 1" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none'">
+                        <div class="z-0"><p data-i18n="img_paso1">Sube la captura<br><strong class="text-accent">paso1.png</strong></p></div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
+                    <div class="order-2 md:order-1 bg-card rounded-2xl border border-border aspect-[4/3] flex items-center justify-center img-placeholder shadow-xl relative overflow-hidden">
+                        <img src="paso2.png" alt="Paso 2" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none'">
+                        <div class="z-0"><p data-i18n="img_paso2">Sube la captura<br><strong class="text-accent">paso2.png</strong></p></div>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <div class="bg-accent text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mb-4">2</div>
+                        <h3 class="text-2xl font-bold mb-4" data-i18n="t2_title">Registra con o sin IA</h3>
+                        <p class="text-secondary mb-4" data-i18n="t2_desc">Ve a la pestaña central "Registrar". Puedes escribir el monto y categoría manualmente, o simplemente dictarle a tu teléfono si eres usuario VIP. ¡El panel de inicio se actualizará al instante!</p>
+                        <a href="app.html" class="text-accent font-bold hover:underline" data-i18n="t2_link">Ir a la app y probar →</a>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="bg-accent text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mb-4">3</div>
+                        <h3 class="text-2xl font-bold mb-4" data-i18n="t3_title">Respalda tus datos en WhatsApp</h3>
+                        <p class="text-secondary mb-4" data-i18n="t3_desc">Tus datos nunca se suben a la nube. Ve a Ajustes, crea una contraseña y haz clic en "Respaldar". La app encriptará tu información y te la enviará a tu propio WhatsApp.</p>
+                        <ul class="text-sm space-y-2 text-secondary">
+                            <li class="flex gap-2"><svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <span data-i18n="t3_b1">Nadie más tiene tus datos (Cifrado AES-256)</span></li>
+                            <li class="flex gap-2"><svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> <span data-i18n="t3_b2">Restaura pegando el código y la contraseña</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-card rounded-2xl border border-border aspect-[4/3] flex items-center justify-center img-placeholder shadow-xl relative overflow-hidden">
+                        <img src="paso3.png" alt="Paso 3" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none'">
+                        <div class="z-0"><p data-i18n="img_paso3">Sube la captura<br><strong class="text-accent">paso3.png</strong></p></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -101,9 +286,9 @@
     <!-- FOOTER Y POLÍTICA DE PRIVACIDAD -->
     <footer class="bg-card border-t border-border py-10 mt-10 text-center">
         <p class="font-bold mb-4">Mi Billetera &copy; 2026</p>
-        <button onclick="openModal('privacyModal')" class="text-sm text-secondary hover:text-white underline mb-4 inline-block">Política de Privacidad (Legal)</button>
+        <button onclick="openModal('privacyModal')" class="text-sm text-secondary hover:text-white underline mb-4 inline-block" data-i18n="foot_priv">Política de Privacidad (Legal)</button>
         <br>
-        <a href="app.html" class="text-sm text-accent font-bold hover:underline">Ingresar a la App</a>
+        <a href="app.html" class="text-sm text-accent font-bold hover:underline" data-i18n="foot_enter">Ingresar a la App</a>
     </footer>
 
     <!-- MODAL DE POLÍTICA DE PRIVACIDAD -->
@@ -116,16 +301,16 @@
             <div class="p-6 overflow-y-auto text-sm text-secondary space-y-4 leading-relaxed">
                 <p><strong>Última actualización:</strong> Julio de 2026</p>
                 <p>Bienvenido a <strong>Mi Billetera</strong>. Respetamos tu privacidad y estamos comprometidos a proteger tus datos personales.</p>
-                <h3 class="text-white font-bold mt-4">1. Almacenamiento Local</h3>
-                <p>Mi Billetera está diseñada bajo el principio de "Privacidad por Diseño". <strong>No poseemos servidores ni bases de datos en la nube que recopilen tus transacciones financieras.</strong> Todos los datos de tus ingresos, gastos y presupuestos se almacenan exclusivamente de forma local en tu dispositivo (mediante localStorage).</p>
-                <h3 class="text-white font-bold mt-4">2. Autenticación</h3>
-                <p>Si decides iniciar sesión con Google, recibimos únicamente tu nombre, correo y foto de perfil. No tenemos acceso a tus contraseñas.</p>
-                <h3 class="text-white font-bold mt-4">3. Compartir con Terceros</h3>
-                <p>No vendemos ni compartimos tu información personal o financiera con terceros bajo ninguna circunstancia. El software de Inteligencia Artificial de Voz se procesa mediante las API nativas del navegador.</p>
-                <h3 class="text-white font-bold mt-4">4. Tus Derechos</h3>
-                <p>Dado que los datos están en tu dispositivo, puedes eliminarlos al instante borrando el caché de tu navegador. Tienes derecho a exportar tus datos mediante nuestra herramienta de Respaldo Cifrado.</p>
-                <h3 class="text-white font-bold mt-4">5. Contacto Legal</h3>
-                <p>Para solicitudes o gestión de membresías, contactar al desarrollador: <strong>Carlos Cucho</strong> (+51 930 266 472).</p>
+                <h3 class="text-white font-bold mt-4">1. Almacenamiento Estrictamente Local</h3>
+                <p>Mi Billetera está diseñada bajo el principio de "Privacidad por Diseño". <strong>No poseemos servidores ni bases de datos en la nube que recopilen tus transacciones financieras.</strong> Todos los datos de tus ingresos, gastos y presupuestos se almacenan exclusivamente de forma local en tu dispositivo (mediante localStorage del navegador).</p>
+                <h3 class="text-white font-bold mt-4">2. Autenticación Segura (Google)</h3>
+                <p>El acceso a la aplicación se realiza exclusivamente mediante la API oficial de Google Accounts. Nosotros recibimos únicamente tu nombre, correo y foto de perfil para identificarte dentro de la app. <strong>No guardamos ni tenemos acceso a contraseñas.</strong></p>
+                <h3 class="text-white font-bold mt-4">3. Compartir con Terceros y Funciones IA</h3>
+                <p>No vendemos ni compartimos tu información personal o financiera con terceros bajo ninguna circunstancia. El software de Inteligencia Artificial (reconocimiento de voz y análisis) se ejecuta y procesa mediante las librerías nativas de tu propio dispositivo.</p>
+                <h3 class="text-white font-bold mt-4">4. Tus Derechos sobre los Datos</h3>
+                <p>Dado que los datos viven en tu dispositivo, tienes control absoluto sobre ellos. Puedes eliminarlos al instante borrando el caché de tu navegador. Tienes el derecho exclusivo a exportar tus datos mediante nuestra herramienta de Respaldo Cifrado (AES-256).</p>
+                <h3 class="text-white font-bold mt-4">5. Contacto Comercial y Legal</h3>
+                <p>Para solicitudes, soporte técnico o gestión de membresías VIP, por favor contactar al administrador del sistema: <strong>Carlos Cucho</strong> (WhatsApp: +51 930 266 472).</p>
             </div>
             <div class="p-4 border-t border-border bg-[#19191c] text-center">
                 <button onclick="closeModal('privacyModal')" class="bg-accent text-white px-6 py-2 rounded-lg font-bold text-sm">Entendido y Acepto</button>
@@ -133,19 +318,203 @@
         </div>
     </div>
 
-    <!-- DICCIONARIO BÁSICO -->
+    <!-- SCRIPT DE TRADUCCIÓN AUTOMÁTICA MUNDIAL -->
     <script>
         const i18n = {
-            es: { nav_feat: "Características", nav_how: "Cómo Funciona", nav_prem: "Premium", nav_open: "Abrir App", hero_title: "Tu dinero, <br><span class='gradient-text'>bajo control.</span>", hero_sub: "Registra, analiza y ahorra sin comprometer tu privacidad.", hero_btn1: "Comenzar Gratis", vip_title: "Planes VIP", vip_sub: "Activa la IA.", tbl_feat: "Funciones", tbl_free: "GRATIS", tbl_vip: "VIP", f_reg: "Registro ilimitado", f_sec: "Cifrado militar local", f_ai_anal: "Análisis IA", f_voice: "Asistente de Voz", btn_upgrade: "Hacerme VIP", btn_sub: "Pagos seguros mediante QR en la App." },
-            en: { nav_feat: "Features", nav_how: "How to use", nav_prem: "Premium", nav_open: "Open App", hero_title: "Your money, <br><span class='gradient-text'>under control.</span>", hero_sub: "Track, analyze, and save without compromising privacy.", hero_btn1: "Start for Free", vip_title: "VIP Plans", vip_sub: "Unlock AI.", tbl_feat: "Features", tbl_free: "FREE", tbl_vip: "VIP", f_reg: "Unlimited tracking", f_sec: "Local military encryption", f_ai_anal: "AI Analysis", f_voice: "Voice Assistant", btn_upgrade: "Become VIP", btn_sub: "Secure payments via in-app QR." },
-            pt: { nav_feat: "Recursos", nav_how: "Como funciona", nav_prem: "Premium", nav_open: "Abrir App", hero_title: "Seu dinheiro, <br><span class='gradient-text'>sob controle.</span>", hero_sub: "Acompanhe, analise e economize sem comprometer a privacidade.", hero_btn1: "Comece Grátis", vip_title: "Planos VIP", vip_sub: "Desbloqueie a IA.", tbl_feat: "Recursos", tbl_free: "LIVRE", tbl_vip: "VIP", f_reg: "Rastreamento ilimitado", f_sec: "Criptografia local", f_ai_anal: "Análise IA", f_voice: "Assistente de Voz", btn_upgrade: "Tornar-se VIP", btn_sub: "Pagamentos seguros via QR no aplicativo." }
+            es: {
+                nav_feat: "Características", nav_how: "Cómo Funciona", nav_prem: "Premium", nav_open: "Abrir App",
+                hero_title: "Tu dinero, <br><span class='gradient-text'>bajo control total.</span>",
+                hero_sub: "Registra tus ingresos y gastos en segundos, analiza tus finanzas y obtén recomendaciones de ahorro. Todo desde tu celular, sin comprometer tu privacidad.",
+                hero_btn1: "Comenzar Gratis", hero_btn2: "Ver paso a paso",
+                feat_title: "Descubre lo que puedes lograr", feat_sub: "Diseñada para ser rápida, segura y fácil de entender.",
+                f1_title: "Control Detallado", f1_desc: "Registra gastos e ingresos en segundos. Visualiza tu balance semanal y entiende exactamente en qué se va tu dinero.",
+                f2_title: "Privacidad Total", f2_desc: "Tus datos nunca tocan nuestros servidores. Todo se procesa en tu celular. Crea respaldos encriptados directo a tu propio WhatsApp.",
+                f3_title: "Asistente de Voz IA", f3_desc: "Solo di 'Gasté 15 dólares en comida'. La Inteligencia Artificial detectará el monto y la categoría automáticamente.",
+                vip_title: "Planes y Beneficios", vip_sub: "Elige el plan que mejor se adapte a tus necesidades financieras.",
+                plan_1_title: "1 Mes", plan_2_title: "1 Año", plan_3_title: "Vitalicio", plan_pop: "POPULAR", plan_sub: "USD", plan_3_sub: "Único pago USD",
+                tbl_feat: "Características de la App",
+                f_reg: "Registro de ingresos y gastos ilimitados", f_sec: "Almacenamiento local seguro y privado",
+                f_back: "Copia de seguridad vía WhatsApp (AES-256)", f_ai_anal: "Evaluación Semanal Inteligente (IA)",
+                f_voice: "Asistente de Registro por Voz (IA)", f_color: "Personalización total de colores",
+                btn_upgrade: "Hacerme VIP por WhatsApp", btn_sub: "También puedes pagar escaneando el código QR directamente dentro de la App.",
+                tut_title: "Aprende a usarla en 3 pasos", tut_sub: "Es tan fácil que no necesitarás manual de instrucciones.",
+                t1_title: "Inicia Sesión con Google", t1_desc: "Olvídate de contraseñas complicadas. Ingresa de forma 100% segura utilizando tu cuenta oficial de Google con un solo clic.", t1_b1: "Autenticación blindada", t1_b2: "Sincroniza tu foto de perfil automáticamente",
+                t2_title: "Registra con o sin IA", t2_desc: "Ve a la pestaña central 'Registrar'. Puedes escribir el monto y categoría manualmente, o simplemente dictarle a tu teléfono si eres usuario VIP. ¡El panel de inicio se actualizará al instante!", t2_link: "Ir a la app y probar →",
+                t3_title: "Respalda tus datos en WhatsApp", t3_desc: "Tus datos nunca se suben a la nube. Ve a Ajustes, crea una contraseña y haz clic en 'Respaldar'. La app encriptará tu información y te la enviará a tu propio WhatsApp.", t3_b1: "Nadie más tiene tus datos (Cifrado AES-256)", t3_b2: "Restaura pegando el código y la contraseña",
+                foot_priv: "Política de Privacidad (Legal)", foot_enter: "Ingresar a la App", only_vip: "Solo VIP",
+                img_portada: "Sube la captura<br><strong class='text-accent'>portada.png</strong>", img_paso1: "Sube la captura<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "Sube la captura<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "Sube la captura<br><strong class='text-accent'>paso3.png</strong>"
+            },
+            en: {
+                nav_feat: "Features", nav_how: "How it works", nav_prem: "Premium", nav_open: "Open App",
+                hero_title: "Your money, <br><span class='gradient-text'>under total control.</span>", hero_sub: "Record your income and expenses in seconds, analyze your finances, and get savings recommendations. All from your phone, keeping your privacy intact.",
+                hero_btn1: "Start for Free", hero_btn2: "See step by step",
+                feat_title: "Discover what you can achieve", feat_sub: "Designed to be fast, secure, and easy to understand.",
+                f1_title: "Detailed Control", f1_desc: "Log expenses and income in seconds. View your weekly balance.",
+                f2_title: "Total Privacy", f2_desc: "Your data never touches our servers. Create encrypted backups directly to your WhatsApp.",
+                f3_title: "AI Voice Assistant", f3_desc: "Just say 'I spent 15 dollars on food'. The AI will detect the amount and category automatically.",
+                vip_title: "Plans and Benefits", vip_sub: "Choose the plan that best fits your financial needs.",
+                plan_1_title: "1 Month", plan_2_title: "1 Year", plan_3_title: "Lifetime", plan_pop: "POPULAR", plan_sub: "USD", plan_3_sub: "One-time payment USD",
+                tbl_feat: "App Features", f_reg: "Unlimited tracking", f_sec: "Secure local storage", f_back: "Data backup via WhatsApp (AES-256)", f_ai_anal: "Smart Weekly Evaluation (AI)", f_voice: "Voice Recording Assistant (AI)", f_color: "Full color customization",
+                btn_upgrade: "Become VIP via WhatsApp", btn_sub: "You can also pay by scanning the QR code directly inside the App.",
+                tut_title: "Learn to use it in 3 steps", tut_sub: "It's so easy you won't need a manual.",
+                t1_title: "Sign in with Google", t1_desc: "Forget about passwords. Log in securely using your official Google account.", t1_b1: "Bulletproof authentication", t1_b2: "Sync your profile picture automatically",
+                t2_title: "Record with or without AI", t2_desc: "Go to the 'Record' tab. Enter the amount manually or just speak to your phone if you are VIP.", t2_link: "Go to the app and try →",
+                t3_title: "Backup your data on WhatsApp", t3_desc: "Your data is never uploaded to the cloud. Go to Settings, click 'Backup', and the app will encrypt your info and send it to your WhatsApp.", t3_b1: "No one else has your data", t3_b2: "Restore by pasting the code and password",
+                foot_priv: "Privacy Policy", foot_enter: "Enter the App", only_vip: "VIP Only",
+                img_portada: "Upload image<br><strong class='text-accent'>portada.png</strong>", img_paso1: "Upload image<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "Upload image<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "Upload image<br><strong class='text-accent'>paso3.png</strong>"
+            },
+            pt: {
+                nav_feat: "Recursos", nav_how: "Como funciona", nav_prem: "Premium", nav_open: "Abrir App",
+                hero_title: "Seu dinheiro, <br><span class='gradient-text'>sob controle total.</span>", hero_sub: "Registre suas receitas e despesas em segundos, analise suas finanças e obtenha recomendações. Tudo do seu celular, mantendo sua privacidade intacta.",
+                hero_btn1: "Comece Grátis", hero_btn2: "Veja o passo a passo",
+                feat_title: "Descubra o que você pode alcançar", feat_sub: "Projetado para ser rápido, seguro e fácil de entender.",
+                f1_title: "Controle Detalhado", f1_desc: "Registre despesas e receitas em segundos. Visualize seu saldo semanal.",
+                f2_title: "Privacidade Total", f2_desc: "Seus dados nunca tocam nossos servidores. Crie backups criptografados diretamente para o seu WhatsApp.",
+                f3_title: "Assistente de Voz IA", f3_desc: "Basta dizer 'Gastei 15 dólares em comida'. A IA detectará o valor e a categoria automaticamente.",
+                vip_title: "Planos e Benefícios", vip_sub: "Escolha o plano que melhor se adapta às suas necessidades.",
+                plan_1_title: "1 Mês", plan_2_title: "1 Ano", plan_3_title: "Vitalício", plan_pop: "POPULAR", plan_sub: "USD", plan_3_sub: "Pagamento único USD",
+                tbl_feat: "Recursos do App", f_reg: "Rastreamento ilimitado", f_sec: "Armazenamento local seguro", f_back: "Backup de dados via WhatsApp", f_ai_anal: "Avaliação Semanal (IA)", f_voice: "Assistente de Voz (IA)", f_color: "Personalização de cores",
+                btn_upgrade: "Tornar-se VIP no WhatsApp", btn_sub: "Você também pode pagar escaneando o código QR dentro do App.",
+                tut_title: "Aprenda a usar em 3 passos", tut_sub: "É tão fácil que você não precisará de manual.",
+                t1_title: "Faça login com o Google", t1_desc: "Esqueça as senhas. Faça login com segurança usando sua conta do Google.", t1_b1: "Autenticação blindada", t1_b2: "Sincronize sua foto de perfil",
+                t2_title: "Registre com ou sem IA", t2_desc: "Vá para a guia 'Registrar'. Insira o valor manualmente ou apenas fale com o seu telefone se for VIP.", t2_link: "Ir para o app e testar →",
+                t3_title: "Faça backup no WhatsApp", t3_desc: "Seus dados nunca são enviados para a nuvem. Vá em Configurações, clique em 'Backup' e o aplicativo enviará os dados para o seu WhatsApp.", t3_b1: "Ninguém mais tem seus dados", t3_b2: "Restaure colando o código e a senha",
+                foot_priv: "Política de Privacidade", foot_enter: "Entrar no App", only_vip: "Apenas VIP",
+                img_portada: "Envie a imagem<br><strong class='text-accent'>portada.png</strong>", img_paso1: "Envie a imagem<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "Envie a imagem<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "Envie a imagem<br><strong class='text-accent'>paso3.png</strong>"
+            },
+            zh: {
+                nav_feat: "功能", nav_how: "怎么运作", nav_prem: "高级版", nav_open: "打开应用",
+                hero_title: "您的资金，<br><span class='gradient-text'>全面掌控。</span>", hero_sub: "只需几秒即可记录收支，分析财务并获取省钱建议。一切都在手机上完成，保障您的隐私。",
+                hero_btn1: "免费开始", hero_btn2: "查看步骤", feat_title: "发现您可以实现的目标", feat_sub: "专为快速、安全和易于理解而设计。",
+                f1_title: "详细控制", f1_desc: "几秒钟内记录支出和收入。查看您的每周余额。", f2_title: "完全隐私", f2_desc: "您的数据永远不会接触我们的服务器。直接创建加密备份到您的WhatsApp。", f3_title: "AI 语音助手", f3_desc: "只需说“我花了15元吃饭”，人工智能就会自动检测金额和类别。",
+                vip_title: "计划与福利", vip_sub: "选择最适合您财务需求的计划。",
+                plan_1_title: "1个月", plan_2_title: "1年", plan_3_title: "终身", plan_pop: "热门", plan_sub: "美元", plan_3_sub: "一次性付款 美元",
+                tbl_feat: "应用功能", f_reg: "无限收支记录", f_sec: "安全私密的本地存储", f_back: "通过WhatsApp备份数据", f_ai_anal: "智能每周评估 (AI)", f_voice: "语音记录助手 (AI)", f_color: "完全颜色自定义",
+                btn_upgrade: "通过WhatsApp成为VIP", btn_sub: "您也可以直接在应用程序内扫描二维码进行支付。",
+                tut_title: "3个步骤学会使用", tut_sub: "非常简单，不需要说明书。",
+                t1_title: "使用Google登录", t1_desc: "安全登录", t1_b1: "一键使用官方Google帐户安全登录", t1_b2: "同步个人资料照片",
+                t2_title: "秒级记录", t2_desc: "进入“记录”菜单，输入金额，选择类别即可。如果是VIP，您可以直接对手机说话。", t2_link: "转到应用并尝试 →",
+                t3_title: "在WhatsApp上备份数据", t3_desc: "您的数据永远不会上传到云端。进入设置进行加密备份。", t3_b1: "没有其他人拥有您的数据", t3_b2: "通过粘贴代码恢复",
+                foot_priv: "隐私政策", foot_enter: "进入应用", only_vip: "仅限 VIP",
+                img_portada: "上传图片<br><strong class='text-accent'>portada.png</strong>", img_paso1: "上传图片<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "上传图片<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "上传图片<br><strong class='text-accent'>paso3.png</strong>"
+            },
+            hi: {
+                nav_feat: "विशेषताएं", nav_how: "यह कैसे काम करता है", nav_prem: "प्रीमियम", nav_open: "ऐप खोलें",
+                hero_title: "आपका पैसा, <br><span class='gradient-text'>पूर्ण नियंत्रण में।</span>", hero_sub: "सेकंड में अपनी आय और व्यय दर्ज करें, अपने वित्त का विश्लेषण करें और बचत की सिफारिशें प्राप्त करें।",
+                hero_btn1: "मुफ़्त शुरू करें", hero_btn2: "कदम दर कदम देखें", feat_title: "खोजें कि आप क्या हासिल कर सकते हैं", feat_sub: "तेज़, सुरक्षित और समझने में आसान होने के लिए डिज़ाइन किया गया।",
+                f1_title: "विस्तृत नियंत्रण", f1_desc: "सेकंड में व्यय और आय लॉग करें। अपना साप्ताहिक शेष देखें।", f2_title: "पूर्ण गोपनीयता", f2_desc: "आपका डेटा कभी भी हमारे सर्वर को नहीं छूता है।", f3_title: "AI वॉयस असिस्टेंट", f3_desc: "बस कहें 'मैंने खाने पर 15 खर्च किए'।",
+                vip_title: "योजनाएं और लाभ", vip_sub: "वह योजना चुनें जो आपकी आवश्यकताओं के अनुकूल हो।",
+                plan_1_title: "1 महीना", plan_2_title: "1 साल", plan_3_title: "आजीवन", plan_pop: "लोकप्रिय", plan_sub: "USD", plan_3_sub: "वन-टाइम भुगतान USD",
+                tbl_feat: "ऐप की विशेषताएं", f_reg: "असीमित ट्रैकिंग", f_sec: "सुरक्षित स्थानीय संग्रहण", f_back: "WhatsApp के माध्यम से डेटा बैकअप", f_ai_anal: "स्मार्ट साप्ताहिक मूल्यांकन (AI)", f_voice: "वॉयस रिकॉर्डिंग असिस्टेंट (AI)", f_color: "पूर्ण रंग अनुकूलन",
+                btn_upgrade: "WhatsApp के माध्यम से VIP बनें", btn_sub: "आप सीधे ऐप के अंदर QR कोड को स्कैन करके भी भुगतान कर सकते हैं।",
+                tut_title: "इसे 3 चरणों में उपयोग करना सीखें", tut_sub: "यह इतना आसान है कि आपको किसी मैनुअल की आवश्यकता नहीं होगी।",
+                t1_title: "Google के साथ साइन इन करें", t1_desc: "Google खाते का उपयोग करके सुरक्षित रूप से लॉग इन करें।", t1_b1: "सुरक्षित", t1_b2: "अपनी प्रोफ़ाइल फ़ोटो सिंक करें",
+                t2_title: "सेकंड में रिकॉर्ड करें", t2_desc: "'रिकॉर्ड' मेनू पर जाएं, राशि दर्ज करें।", t2_link: "ऐप पर जाएं और प्रयास करें →",
+                t3_title: "WhatsApp पर बैकअप लें", t3_desc: "सेटिंग्स में जाएं और बैकअप लें।", t3_b1: "डेटा सुरक्षित है", t3_b2: "कोड चिपकाकर पुनर्स्थापित करें",
+                foot_priv: "गोपनीयता नीति", foot_enter: "ऐप दर्ज करें", only_vip: "केवल वीआईपी",
+                img_portada: "चित्र अपलोड करें<br><strong class='text-accent'>portada.png</strong>", img_paso1: "चित्र अपलोड करें<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "चित्र अपलोड करें<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "चित्र अपलोड करें<br><strong class='text-accent'>paso3.png</strong>"
+            },
+            fr: {
+                nav_feat: "Fonctionnalités", nav_how: "Comment ça marche", nav_prem: "Premium", nav_open: "Ouvrir l'App",
+                hero_title: "Votre argent, <br><span class='gradient-text'>sous contrôle total.</span>", hero_sub: "Enregistrez vos revenus et dépenses en quelques secondes.",
+                hero_btn1: "Commencer Gratuitement", hero_btn2: "Voir étape par étape", feat_title: "Découvrez ce que vous pouvez accomplir", feat_sub: "Rapide, sécurisé et facile à comprendre.",
+                f1_title: "Contrôle Détaillé", f1_desc: "Enregistrez vos dépenses et revenus en quelques secondes.", f2_title: "Confidentialité Totale", f2_desc: "Vos données ne touchent jamais nos serveurs.", f3_title: "Assistant Vocal IA", f3_desc: "Dites simplement 'J'ai dépensé 15 pour manger'.",
+                vip_title: "Plans et Avantages", vip_sub: "Choisissez le plan qui vous correspond.",
+                plan_1_title: "1 Mois", plan_2_title: "1 An", plan_3_title: "À vie", plan_pop: "POPULAIRE", plan_sub: "USD", plan_3_sub: "Paiement unique USD",
+                tbl_feat: "Fonctionnalités de l'App", f_reg: "Suivi illimité", f_sec: "Stockage local sécurisé", f_back: "Sauvegarde via WhatsApp", f_ai_anal: "Évaluation Hebdomadaire (IA)", f_voice: "Assistant Vocal (IA)", f_color: "Personnalisation complète",
+                btn_upgrade: "Devenir VIP sur WhatsApp", btn_sub: "Vous pouvez également payer en scannant le QR code dans l'application.",
+                tut_title: "Apprenez en 3 étapes", tut_sub: "C'est si simple.",
+                t1_title: "Connectez-vous avec Google", t1_desc: "Connectez-vous en toute sécurité en utilisant votre compte Google.", t1_b1: "Rapide et sécurisé", t1_b2: "Synchronisez votre photo",
+                t2_title: "Enregistrez en Secondes", t2_desc: "Allez dans le menu 'Enregistrer'.", t2_link: "Aller à l'app →",
+                t3_title: "Sauvegardez vos données", t3_desc: "Allez dans Paramètres, cliquez sur 'Sauvegarder'.", t3_b1: "Sécurisé", t3_b2: "Restaurez en collant le code",
+                foot_priv: "Politique de Confidentialité", foot_enter: "Entrer dans l'App", only_vip: "Uniquement VIP",
+                img_portada: "Télécharger l'image<br><strong class='text-accent'>portada.png</strong>", img_paso1: "Télécharger l'image<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "Télécharger l'image<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "Télécharger l'image<br><strong class='text-accent'>paso3.png</strong>"
+            },
+            ar: {
+                nav_feat: "الميزات", nav_how: "كيف تعمل", nav_prem: "بريميوم", nav_open: "افتح التطبيق",
+                hero_title: "أموالك، <br><span class='gradient-text'>تحت السيطرة الكاملة.</span>", hero_sub: "سجل دخلك ونفقاتك في ثوانٍ، وحلل أموالك، واحصل على توصيات التوفير.",
+                hero_btn1: "ابدأ مجانًا", hero_btn2: "انظر خطوة بخطوة", feat_title: "اكتشف ما يمكنك تحقيقه", feat_sub: "سريع وآمن وسهل.",
+                f1_title: "تحكم مفصل", f1_desc: "سجل النفقات والدخل في ثوان.", f2_title: "خصوصية تامة", f2_desc: "بياناتك لا تلمس خوادمنا أبدًا.", f3_title: "مساعد صوتي بالذكاء الاصطناعي", f3_desc: "فقط قل 'صرفت 15 على الطعام'.",
+                vip_title: "الخطط والفوائد", vip_sub: "اختر الخطة التي تناسب احتياجاتك.",
+                plan_1_title: "شهر واحد", plan_2_title: "سنة واحدة", plan_3_title: "مدى الحياة", plan_pop: "شائع", plan_sub: "USD", plan_3_sub: "دفعة لمرة واحدة USD",
+                tbl_feat: "ميزات التطبيق", f_reg: "تتبع غير محدود", f_sec: "تخزين محلي آمن", f_back: "نسخ احتياطي عبر WhatsApp", f_ai_anal: "تقييم ذكي (AI)", f_voice: "مساعد صوتي (AI)", f_color: "تخصيص الألوان",
+                btn_upgrade: "كن VIP عبر WhatsApp", btn_sub: "يمكنك أيضًا الدفع عن طريق مسح رمز QR داخل التطبيق.",
+                tut_title: "تعلم في 3 خطوات", tut_sub: "سهل للغاية.",
+                t1_title: "تسجيل الدخول باستخدام Google", t1_desc: "تسجيل الدخول بأمان.", t1_b1: "آمن", t1_b2: "مزامنة صورتك",
+                t2_title: "سجل في ثوان", t2_desc: "اذهب إلى قائمة 'تسجيل'.", t2_link: "الذهاب إلى التطبيق →",
+                t3_title: "النسخ الاحتياطي", t3_desc: "اذهب إلى الإعدادات وقم بالنسخ الاحتياطي.", t3_b1: "آمن", t3_b2: "استعد عن طريق لصق الرمز",
+                foot_priv: "سياسة الخصوصية", foot_enter: "الدخول للتطبيق", only_vip: "فقط VIP",
+                img_portada: "ارفع الصورة<br><strong class='text-accent'>portada.png</strong>", img_paso1: "ارفع الصورة<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "ارفع الصورة<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "ارفع الصورة<br><strong class='text-accent'>paso3.png</strong>"
+            },
+            ru: {
+                nav_feat: "Функции", nav_how: "Как это работает", nav_prem: "Премиум", nav_open: "Открыть App",
+                hero_title: "Ваши деньги <br><span class='gradient-text'>под полным контролем.</span>", hero_sub: "Записывайте доходы и расходы за секунды.",
+                hero_btn1: "Начать бесплатно", hero_btn2: "Смотреть шаг за шагом", feat_title: "Узнайте, чего вы можете достичь", feat_sub: "Быстро, безопасно и просто.",
+                f1_title: "Детальный контроль", f1_desc: "Записывайте расходы за секунды.", f2_title: "Полная конфиденциальность", f2_desc: "Данные хранятся локально.", f3_title: "Голосовой ИИ", f3_desc: "Просто скажите: «Я потратил 15 на еду».",
+                vip_title: "Планы и преимущества", vip_sub: "Выберите свой план.",
+                plan_1_title: "1 Месяц", plan_2_title: "1 Год", plan_3_title: "Навсегда", plan_pop: "ПОПУЛЯРНО", plan_sub: "USD", plan_3_sub: "Разовый платеж USD",
+                tbl_feat: "Функции", f_reg: "Неограниченный учет", f_sec: "Безопасное хранилище", f_back: "Резервное копирование", f_ai_anal: "Умная оценка (ИИ)", f_voice: "Голосовой ИИ", f_color: "Настройка цветов",
+                btn_upgrade: "Стать VIP в WhatsApp", btn_sub: "Вы также можете оплатить по QR-коду в приложении.",
+                tut_title: "3 простых шага", tut_sub: "Очень легко.",
+                t1_title: "Войти через Google", t1_desc: "Безопасный вход.", t1_b1: "Безопасно", t1_b2: "Синхронизация фото",
+                t2_title: "Запись", t2_desc: "Перейдите в меню записи.", t2_link: "Перейти в приложение →",
+                t3_title: "Резервное копирование", t3_desc: "В WhatsApp.", t3_b1: "Безопасно", t3_b2: "Восстановление",
+                foot_priv: "Политика конфиденциальности", foot_enter: "Войти в приложение", only_vip: "Только VIP",
+                img_portada: "Загрузить фото<br><strong class='text-accent'>portada.png</strong>", img_paso1: "Загрузить фото<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "Загрузить фото<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "Загрузить фото<br><strong class='text-accent'>paso3.png</strong>"
+            },
+            de: {
+                nav_feat: "Funktionen", nav_how: "Wie es funktioniert", nav_prem: "Premium", nav_open: "App öffnen",
+                hero_title: "Ihr Geld, <br><span class='gradient-text'>unter voller Kontrolle.</span>", hero_sub: "Erfassen Sie Einnahmen und Ausgaben in Sekunden.",
+                hero_btn1: "Kostenlos starten", hero_btn2: "Schritt für Schritt", feat_title: "Entdecken Sie", feat_sub: "Schnell, sicher und einfach.",
+                f1_title: "Detaillierte Kontrolle", f1_desc: "Ausgaben in Sekunden erfassen.", f2_title: "Volle Privatsphäre", f2_desc: "Ihre Daten bleiben lokal.", f3_title: "KI-Sprachassistent", f3_desc: "Sagen Sie: 'Ich habe 15 für Essen ausgegeben'.",
+                vip_title: "Pläne und Vorteile", vip_sub: "Wählen Sie Ihren Plan.",
+                plan_1_title: "1 Monat", plan_2_title: "1 Jahr", plan_3_title: "Lebenslang", plan_pop: "BELIEBT", plan_sub: "USD", plan_3_sub: "Einmalige Zahlung USD",
+                tbl_feat: "Funktionen", f_reg: "Unbegrenzte Verfolgung", f_sec: "Sicherer Speicher", f_back: "WhatsApp-Backup", f_ai_anal: "Smarte Auswertung (KI)", f_voice: "Sprach-KI", f_color: "Farbanpassung",
+                btn_upgrade: "VIP über WhatsApp werden", btn_sub: "Bezahlen Sie auch per QR-Code in der App.",
+                tut_title: "In 3 Schritten", tut_sub: "Sehr einfach.",
+                t1_title: "Mit Google anmelden", t1_desc: "Sicher anmelden.", t1_b1: "Sicher", t1_b2: "Profilbild synchronisieren",
+                t2_title: "Aufzeichnen", t2_desc: "Gehen Sie zum Aufzeichnen-Menü.", t2_link: "Zur App →",
+                t3_title: "Backup", t3_desc: "In WhatsApp sichern.", t3_b1: "Sicher", t3_b2: "Wiederherstellen",
+                foot_priv: "Datenschutzrichtlinie", foot_enter: "App betreten", only_vip: "Nur VIP",
+                img_portada: "Bild hochladen<br><strong class='text-accent'>portada.png</strong>", img_paso1: "Bild hochladen<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "Bild hochladen<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "Bild hochladen<br><strong class='text-accent'>paso3.png</strong>"
+            },
+            ja: {
+                nav_feat: "機能", nav_how: "使い方", nav_prem: "プレミアム", nav_open: "アプリを開く",
+                hero_title: "あなたのお金を、<br><span class='gradient-text'>完全にコントロール。</span>", hero_sub: "数秒で収入と支出を記録します。",
+                hero_btn1: "無料で始める", hero_btn2: "ステップを見る", feat_title: "できること", feat_sub: "高速、安全、簡単。",
+                f1_title: "詳細なコントロール", f1_desc: "数秒で記録します。", f2_title: "完全なプライバシー", f2_desc: "データはローカルに保存されます。", f3_title: "AI音声", f3_desc: "「食事に15使った」と言うだけです。",
+                vip_title: "プラン", vip_sub: "プランを選択してください。",
+                plan_1_title: "1ヶ月", plan_2_title: "1年", plan_3_title: "生涯", plan_pop: "人気", plan_sub: "USD", plan_3_sub: "1回払い USD",
+                tbl_feat: "機能", f_reg: "無制限", f_sec: "安全なストレージ", f_back: "WhatsAppバックアップ", f_ai_anal: "AI分析", f_voice: "音声AI", f_color: "カラーカスタマイズ",
+                btn_upgrade: "WhatsAppでVIPになる", btn_sub: "アプリ内のQRコードでもお支払いいただけます。",
+                tut_title: "3つのステップ", tut_sub: "とても簡単です。",
+                t1_title: "Googleでログイン", t1_desc: "安全にログイン。", t1_b1: "安全", t1_b2: "写真を同期",
+                t2_title: "記録", t2_desc: "記録メニューに移動します。", t2_link: "アプリへ →",
+                t3_title: "バックアップ", t3_desc: "WhatsAppにバックアップ。", t3_b1: "安全", t3_b2: "復元する",
+                foot_priv: "プライバシーポリシー", foot_enter: "アプリに入る", only_vip: "VIPのみ",
+                img_portada: "画像をアップロード<br><strong class='text-accent'>portada.png</strong>", img_paso1: "画像をアップロード<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "画像をアップロード<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "画像をアップロード<br><strong class='text-accent'>paso3.png</strong>"
+            }
         };
+
         function changeLanguage(langCode) {
-            if(!i18n[langCode]) langCode = 'es';
+            if(!i18n[langCode]) langCode = 'en'; 
             document.getElementById('html-tag').lang = langCode;
-            document.querySelectorAll('[data-i18n]').forEach(el => { if(i18n[langCode][el.getAttribute('data-i18n')]) el.innerHTML = i18n[langCode][el.getAttribute('data-i18n')]; });
+            document.getElementById('langSwitcher').value = langCode;
+
+            if(langCode === 'ar') document.body.setAttribute('dir', 'rtl');
+            else document.body.setAttribute('dir', 'ltr');
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(i18n[langCode][key]) el.innerHTML = i18n[langCode][key];
+            });
         }
-        window.onload = () => changeLanguage(navigator.language.slice(0, 2));
+
+        window.onload = () => {
+            const browserLang = navigator.language.slice(0, 2); 
+            const initialLang = i18n[browserLang] ? browserLang : 'en'; 
+            changeLanguage(initialLang);
+        };
     </script>
 </body>
 </html>
