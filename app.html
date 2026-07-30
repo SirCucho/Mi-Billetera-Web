@@ -7,7 +7,7 @@
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwMGQyZmYiIC8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjM2E3YmQ1IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjE2IiBmaWxsPSJ1cmwoI2JnKSIvPjxwYXRoIGQ9Ik00NCAxNCBjIDYgNCA4IDEyIDQgMTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cG9seWdvbiBwb2ludHM9IjQ4LDEyIDQzLDE2IDUwLDE2IiBmaWxsPSIjZmZmIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjIsIDE2KSByb3RhdGUoLTIwKSI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE2IiByeD0iMiIgZmlsbD0iI2UyZThmMCIgc3Ryb2tlPSIjMGYxNzJhIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB5PSI0IiB3aWR0aD0iMjQiIGhlaWdodD0iNCIgZmlsbD0iIzBmMTcyYSIvPjwvZz48cGF0aCBkPSJNMTIgMjggaCA0MCB2IDIwIGEgNCA0IDAgMCAxIC00IDQgaCAtMzIgYSA0IDQgMCAwIDEgLTQgLTQgeiIgZmlsbD0iIzBlYTVlOSIgc3Ryb2tlPSIjMGYxNzJhIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNMTIgMjggYSA0IDQgMCAwIDEgNCAtNCBoIDMyIGEgNCA0IDAgMCAxIDQgNCB2IDYgaCAtNDAgeiIgZmlsbD0iIzM4YmRmOCIgc3Ryb2tlPSIjMGYxNzJhIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNMTIgMzQgaCAyMCBhIDQgNCAwIDAgMSA0IDQgdiA0IGEgNCA0IDAgMCAxIC00IDQgaCAtMjAiIGZpbGw9IiMzOGJkZjgiIHN0cm9rZT0iIzBmMTcyYSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PGNpcmNsZSBjeD0iMjYiIGN5PSI0MiIgcj0iMiIgZmlsbD0iIzBmMTcyYSIvPjx0ZXh0IHg9IjE0IiB5PSIyMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj4kPC90ZXh0Pjx0ZXh0IHg9IjQyIiB5PSI0NiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj4kPC90ZXh0Pjwvc3ZnPg==">
 
-    <!-- LIBRERÍAS SEGURIDAD -->
+    <!-- LIBRERÍAS DE SEGURIDAD Y GOOGLE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -36,14 +36,22 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
-        :root { --col-bg: #111111; --col-card: #1e1e1e; --col-text: #ffffff; --col-secondary: #a1a1aa; --col-border: #27272a; --col-accent: #3b82f6; --col-nav-bg: #19191c; --col-nav-active-bg: #2b3144; --col-nav-active-text: #5a86ff; }
+        :root {
+            --col-bg: #111111; --col-card: #1e1e1e; --col-text: #ffffff; --col-secondary: #a1a1aa;
+            --col-border: #27272a; --col-accent: #3b82f6; --col-nav-bg: #19191c;
+            --col-nav-active-bg: #2b3144; --col-nav-active-text: #5a86ff;
+        }
         body { background-color: var(--col-bg); color: var(--col-text); overflow: auto; }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--col-bg); }
         ::-webkit-scrollbar-thumb { background: var(--col-border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--col-secondary); }
+        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .view-animate { animation: fadeIn 0.3s ease-out forwards; }
         .modal-overlay { background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); z-index: 1000;}
+        .spin-once { animation: spin-once 0.5s ease; }
+        @keyframes spin-once { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-accent selection:text-white">
@@ -55,20 +63,45 @@
         const DICTIONARY = {
             es: {
                 greeting: "Hola,", nav_home: "Inicio", nav_new: "Nueva", nav_analysis: "Análisis", nav_chat: "Chat", nav_history: "Historial",
-                home_title: "Mi Billetera", balance: "Saldo total", income: "Ingresos", expenses: "Gastos", fixed: "Gastos fijos", fixed_sub: "Recurrentes", savings: "Tu ahorro",
-                savings_actual: "Ahorro", savings_goal: "Meta (20%)", new_title: "Nueva Transacción", expense_btn: "Gasto", income_btn: "Ingreso", save_btn: "Guardar", desc: "Descripción", 
-                history_title: "Historial", clear: "Limpiar", analysis_title: "Evaluación semanal", last_7: "Últimos 7 días", weekly_balance: "Balance semanal", chat_title: "Asistente IA", 
-                text_mode: "Texto", voice_mode: "Voz", tap_speak: "Toca para hablar", settings_title: "Tu Perfil y Ajustes", country: "País", language: "Idioma", zoom: "Tamaño", reset: "Restablecer",
-                theme_mode: "Modo visual", mode_dark: "🌙 Noche", mode_light: "☀️ Día", colors_title: "Personalizar Colores", col_bg: "Fondo", col_card: "Tarjetas", col_accent: "Acento",
-                reset_colors: "Restablecer colores", save_settings: "Guardar Cambios", no_txns: "Sin transacciones.", account_title: "Perfil", logged_in_as: "Sesión:", btn_logout: "Cerrar Sesión",
-                auth_login_tab: "Iniciar Sesión", auth_reg_tab: "Registrarse", auth_user: "Usuario", auth_pass: "Contraseña", auth_btn_login: "Ingresar", auth_btn_reg: "Crear Cuenta",
-                quotes: ["Planifica tus compras y evita decisiones impulsivas."]
+                home_sub: "Tu dinero, bajo control", home_title: "Mi Billetera", balance: "Saldo total", income: "Ingresos del mes",
+                expenses: "Gastos del mes", fixed: "Gastos fijos", fixed_sub: "Luz, agua, internet y otros", savings: "Tu ahorro",
+                savings_actual: "Ahorro actual", savings_goal: "Meta sugerida (20%)", new_title: "Nueva Transacción",
+                expense_btn: "Gasto", income_btn: "Ingreso", save_btn: "Guardar", amount: "Monto", desc: "Descripción", 
+                history_title: "Historial", clear: "Limpiar", analysis_title: "Evaluación semanal", last_7: "Últimos 7 días", 
+                weekly_balance: "Balance semanal", top_expenses: "Top gastos", chat_title: "Asistente IA", 
+                text_mode: "Texto", voice_mode: "Voz", tap_speak: "Toca para hablar", settings_title: "Tu Perfil y Ajustes", 
+                country: "País", language: "Idioma", currencies_title: "Monedas", zoom: "Tamaño", profile_btn: "Ajustes",
+                theme_mode: "Modo visual", mode_dark: "🌙 Noche", mode_light: "☀️ Día",
+                colors_title: "Personalizar Colores", col_bg: "Fondo", col_card: "Tarjetas", col_accent: "Acento",
+                reset_colors: "Restablecer colores", reset: "Restablecer", save_settings: "Guardar Cambios", no_txns: "Sin transacciones.",
+                account_title: "Perfil de Cuenta", logged_in_as: "Sesión activa:", btn_logout: "Cerrar Sesión",
+                auth_login_tab: "Iniciar Sesión", auth_reg_tab: "Registrarse", auth_user: "Usuario", auth_pass: "Contraseña",
+                auth_btn_login: "Ingresar", auth_btn_reg: "Crear Cuenta", auth_error_exist: "El usuario ya existe.",
+                auth_error_login: "Credenciales incorrectas.", auth_error_empty: "Llena todos los campos.",
+                quotes: ["Planifica tus compras y evita decisiones impulsivas.", "Ahorrar no es solo guardar, es saber gastar.", "Controla tus gastos antes de que ellos te controlen a ti."],
+                analysis_rec_title: "Recomendaciones", analysis_rec_save_low: "Intenta llegar al 20% reduciendo gastos pequeños.",
+                analysis_rec_save_high: "¡Excelente trabajo!", analysis_rec_leak_1_a: "Tu mayor gasto fue en ",
+                analysis_rec_leak_1_b: ". ¿Puedes reducirlo?", analysis_rec_rule: "Aplica la regla 50/30/20.",
+                analysis_rec_tip: "Registra cada gasto apenas lo hagas."
             }
         };
 
-        const ALL_COUNTRIES = [{ name: 'Argentina', lang: 'es', defaultCurr: 'ARS' }, { name: 'Bolivia', lang: 'es', defaultCurr: 'BOB' }, { name: 'Brasil', lang: 'en', defaultCurr: 'BRL' }, { name: 'Chile', lang: 'es', defaultCurr: 'CLP' }, { name: 'Colombia', lang: 'es', defaultCurr: 'COP' }, { name: 'Ecuador', lang: 'es', defaultCurr: 'USD' }, { name: 'España', lang: 'es', defaultCurr: 'EUR' }, { name: 'Estados Unidos', lang: 'en', defaultCurr: 'USD' }, { name: 'México', lang: 'es', defaultCurr: 'MXN' }, { name: 'Perú', lang: 'es', defaultCurr: 'PEN' }];
-        const ALL_CURRENCIES = { 'PEN': 'S/', 'USD': '$', 'EUR': '€', 'BRL': 'R$', 'MXN': '$', 'ARS': '$', 'COP': '$', 'CLP': '$', 'BOB': 'Bs' };
-        const DEFAULT_SETTINGS = { country: 'Perú', lang: 'es', currencies: ['PEN'], zoom: 100, theme: 'dark', phone: '', colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' }};
+        const ALL_COUNTRIES = [
+            { name: 'Argentina', lang: 'es', defaultCurr: 'ARS' }, { name: 'Bolivia', lang: 'es', defaultCurr: 'BOB' },
+            { name: 'Brasil', lang: 'en', defaultCurr: 'BRL' }, { name: 'Canadá', lang: 'en', defaultCurr: 'CAD' },
+            { name: 'Chile', lang: 'es', defaultCurr: 'CLP' }, { name: 'Colombia', lang: 'es', defaultCurr: 'COP' },
+            { name: 'Ecuador', lang: 'es', defaultCurr: 'USD' }, { name: 'España', lang: 'es', defaultCurr: 'EUR' },
+            { name: 'Estados Unidos', lang: 'en', defaultCurr: 'USD' }, { name: 'Francia', lang: 'en', defaultCurr: 'EUR' },
+            { name: 'México', lang: 'es', defaultCurr: 'MXN' }, { name: 'Perú', lang: 'es', defaultCurr: 'PEN' },
+            { name: 'Reino Unido', lang: 'en', defaultCurr: 'GBP' }
+        ];
+
+        const ALL_CURRENCIES = { 'PEN': 'S/', 'USD': '$', 'EUR': '€', 'GBP': '£', 'CNY': '¥', 'BRL': 'R$', 'MXN': '$', 'CAD': 'CA$', 'AUD': 'A$', 'ARS': '$', 'COP': '$', 'CLP': '$', 'BOB': 'Bs' };
+
+        const DEFAULT_SETTINGS = { 
+            country: 'Perú', lang: 'es', currencies: ['PEN'], zoom: 100, theme: 'dark', phone: '',
+            colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' }
+        };
 
         // --- MOTOR DE BASE DE DATOS SEGURA ---
         const DB = {
@@ -76,6 +109,7 @@
             register: (user, pass, isGoogle = false, profile = null) => {
                 const users = DB.getUsers();
                 if(users[user] && !isGoogle) return false; 
+                // Cifrado SHA-256
                 const securePass = isGoogle ? pass : CryptoJS.SHA256(pass).toString();
                 users[user] = { password: securePass, isGoogle, profile, vip: false, expireAt: null };
                 localStorage.setItem('billetera_users_sec', JSON.stringify(users));
@@ -85,9 +119,10 @@
                 const users = DB.getUsers();
                 const u = users[user];
                 if (!u) return { success: false };
-                if (u.isGoogle && !pass) return { success: true, role: 'user', vip: u.vip, profile: u.profile }; 
+                if (u.isGoogle && !pass) return { success: true, role: 'user', vip: u.vip, profile: u.profile, expireAt: u.expireAt }; 
+                
                 const hashedPass = CryptoJS.SHA256(pass).toString();
-                if (u.password === hashedPass) return { success: true, role: 'user', vip: u.vip, profile: u.profile };
+                if (u.password === hashedPass) return { success: true, role: 'user', vip: u.vip, profile: u.profile, expireAt: u.expireAt };
                 return { success: false };
             },
             activateVipLocally: (user, expireDateStr) => {
@@ -106,14 +141,17 @@
                 localStorage.setItem('billetera_users_sec', JSON.stringify(users));
                 return true;
             },
-            getUserData: (user) => DB.getUsers()[user] || null,
+            getUserData: (user) => {
+                const users = DB.getUsers();
+                return users[user] || null;
+            },
             getTxns: (user) => JSON.parse(localStorage.getItem(`txns_${user}`) || '[]'),
             saveTxns: (user, txns) => localStorage.setItem(`txns_${user}`, JSON.stringify(txns)),
             getSettings: (user) => JSON.parse(localStorage.getItem(`settings_${user}`)) || DEFAULT_SETTINGS,
             saveSettings: (user, s) => localStorage.setItem(`settings_${user}`, JSON.stringify(s))
         };
 
-        const CATEGORIAS = ["Salario", "Freelance", "Comida", "Transporte", "Luz", "Agua", "Internet", "Vivienda", "Salud", "Educación", "Entretenimiento", "Otros"];
+        const CATEGORIAS = ["Salario", "Freelance", "Comida", "Transporte", "Luz", "Agua", "Internet", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
         const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
         function formatMoneda(val, currCode) {
@@ -121,13 +159,22 @@
             return `${sym} ${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         }
 
-        const LogoSVG = () => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" className="w-full h-full"><path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" strokeWidth="3" strokeLinejoin="round"/><path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" strokeWidth="3" strokeLinejoin="round"/><circle cx="26" cy="42" r="2" fill="#0f172a"/></svg>);
+        // --- ÍCONOS ---
+        const LogoSVG = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" className="w-full h-full">
+                <path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+                <polygon points="48,12 43,16 50,16" fill="#fff"/>
+                <path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" strokeWidth="3" strokeLinejoin="round"/>
+                <path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" strokeWidth="3" strokeLinejoin="round"/>
+                <circle cx="26" cy="42" r="2" fill="#0f172a"/>
+            </svg>
+        );
         const LucideHome = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>;
         const LucidePlusCircle = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>;
         const LucideBrain = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/></svg>;
         const LucideMessageCircle = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>;
         const LucideList = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>;
-        const LucideSettings = ({className}) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>;
+        const LucideSettings = ({className}) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>;
         const LucideTrendingUp = ({className}) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>;
         const LucideTrendingDown = ({className}) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>;
         const LucideZap = ({className}) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
@@ -146,7 +193,15 @@
         const LucideCrown = ({className}) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>;
         const LucideStar = ({className}) => <svg className={className} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>;
         const LucideLogOut = ({className}) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>;
-        const GoogleIcon = () => (<svg className="w-5 h-5 bg-white rounded-full p-0.5" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>);
+        
+        const GoogleIcon = () => (
+            <svg className="w-5 h-5 bg-white rounded-full p-0.5" viewBox="0 0 24 24">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+        );
 
         const CurrencyTabs = ({ currencies, activeCurrency, setActiveCurrency }) => {
             const validCurrencies = currencies.filter(c => c);
@@ -167,12 +222,18 @@
             return (
                 <div className="fixed inset-0 modal-overlay z-[200] flex items-center justify-center p-4">
                     <div className="bg-card w-full max-w-sm rounded-3xl p-8 border border-border shadow-2xl view-animate text-center relative">
-                        <button onClick={onClose} className="absolute top-4 right-4 text-secondary hover:text-primary transition-colors"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-                        <div className="w-16 h-16 rounded-full bg-warning/20 text-warning flex items-center justify-center mx-auto mb-4 border border-warning/50 shadow-lg"><LucideCrown className="w-8 h-8" /></div>
+                        <button onClick={onClose} className="absolute top-4 right-4 text-secondary hover:text-primary transition-colors">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                        <div className="w-16 h-16 rounded-full bg-warning/20 text-warning flex items-center justify-center mx-auto mb-4 border border-warning/50 shadow-lg">
+                            <LucideCrown className="w-8 h-8" />
+                        </div>
                         <h2 className="text-2xl font-bold text-primary mb-2">Suscripción VIP</h2>
                         <p className="text-secondary text-sm mb-4">Escanea y transfiere para obtener tu código.</p>
                         
-                        <div className="flex justify-center gap-2 mb-4 text-xs font-bold">
+                        <div className="flex justify-center gap-2 mb-4 text-[11px] font-bold">
                             <span className="bg-[#19191c] px-2 py-1 rounded">1 Mes: S/ 10</span>
                             <span className="bg-[#19191c] px-2 py-1 rounded">6 Meses: S/ 40</span>
                             <span className="bg-[#19191c] px-2 py-1 rounded border border-warning/50 text-warning">Vitalicio: S/ 70</span>
@@ -186,6 +247,7 @@
                             <p className="text-sm font-bold text-primary">Carlos Cucho</p>
                             <p className="text-accent font-bold text-lg tracking-widest mt-1">930 266 472</p>
                         </div>
+                        <p className="text-[10px] text-secondary mt-4">Tras el pago, se te otorgará un Código de Activación para canjear en los Ajustes.</p>
                     </div>
                 </div>
             );
@@ -263,7 +325,7 @@
                                 <div key={c.id} className="bg-background p-4 rounded-xl border border-border flex justify-between items-center group">
                                     <div>
                                         <p className="font-bold text-primary text-sm mb-1">{c.email}</p>
-                                        <div className="flex items-center gap-3 text-[11px] font-mono text-secondary">
+                                        <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono text-secondary">
                                             <span className="bg-[#1e1e1e] px-2 py-1 rounded text-warning">{c.code}</span>
                                             <span>Plan: {c.plan}</span>
                                             <span>Vence: {c.expires}</span>
@@ -278,82 +340,222 @@
             );
         }
 
+        // --- COMPONENTE AUTENTICACIÓN ---
         function AuthView({ onLogin }) {
             const [isLogin, setIsLogin] = useState(true);
             const [user, setUser] = useState('');
             const [pass, setPass] = useState('');
             const [error, setError] = useState('');
+            const [step, setStep] = useState(1);
+            const [regData, setRegData] = useState({ name: '', email: '', dob: '', age: '', country: 'Perú', isGoogle: false, password: '', picture: '' });
+
+            const t = (k) => DICTIONARY['es'][k] || k;
 
             useEffect(() => {
                 const initG = setInterval(() => {
                     if (window.google && window.google.accounts) {
                         window.google.accounts.id.initialize({
-                            // Pon tu ID de Google aquí:
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
-                            callback: (res) => {
-                                try {
-                                    const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
-                                    if(payload) {
-                                        const cleanMail = payload.email;
-                                        const users = DB.getUsers();
-                                        if(!users[cleanMail]) DB.register(cleanMail, '', true, { name: payload.name||'', email: cleanMail, picture: payload.picture||'' });
-                                        onLogin(cleanMail, 'user');
-                                    }
-                                } catch(e) { setError("Error de Google."); }
-                            }
+                            /* ---------------------------------------------------- */
+                            /* PEGA AQUÍ ABAJO TU ID DE CLIENTE DE GOOGLE REAL      */
+                            /* ---------------------------------------------------- */
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
+                            callback: handleGoogleResponse
                         });
-                        window.google.accounts.id.renderButton(document.getElementById("google-btn-container"), { theme: "outline", size: "large", width: "100%", text: "continue_with" });
+                        window.google.accounts.id.renderButton(
+                            document.getElementById("google-btn-container"),
+                            { theme: "outline", size: "large", width: "100%", text: "continue_with" }
+                        );
                         clearInterval(initG);
                     }
                 }, 500);
                 return () => clearInterval(initG);
             }, []);
 
-            const handleSubmit = (e) => {
+            const decodeJwtResponse = (token) => {
+                try {
+                    var base64Url = token.split('.')[1];
+                    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    }).join(''));
+                    return JSON.parse(jsonPayload);
+                } catch(e) { return null; }
+            };
+
+            const handleGoogleResponse = (response) => {
+                try {
+                    const payload = decodeJwtResponse(response.credential);
+                    if(payload) {
+                        const cleanMail = payload.email;
+                        const users = DB.getUsers();
+                        if(users[cleanMail]) {
+                            onLogin(cleanMail, 'user');
+                        } else {
+                            setRegData({ name: payload.name || '', email: cleanMail, dob: '', age: '', country: 'Perú', isGoogle: true, password: '', picture: payload.picture || '' });
+                            setStep(2);
+                        }
+                    }
+                } catch(e) { setError("Error al sincronizar con Google."); }
+            };
+
+            const handleSubmitStep1 = (e) => {
                 e.preventDefault();
                 setError('');
-                const u = user.trim(); const p = pass.trim();
-                if(!u || !p) return setError('Llena todos los campos.');
+                const u = user.trim();
+                const p = pass.trim();
+                if(!u || !p) { setError(t('auth_error_empty')); return; }
+
                 if (isLogin) {
                     const res = DB.login(u, p);
-                    if(res.success) onLogin(u, res.role); else setError('Credenciales incorrectas.');
+                    if(res.success) onLogin(u, res.role);
+                    else setError(t('auth_error_login'));
                 } else {
-                    const ok = DB.register(u, p, false, { name: u, email: u });
-                    if(ok) { alert("Registro exitoso."); onLogin(u, 'user'); } else setError('El usuario ya existe.');
+                    const users = DB.getUsers();
+                    if(users[u]) { setError(t('auth_error_exist')); return; }
+                    setRegData({ name: u, email: '', dob: '', age: '', country: 'Perú', isGoogle: false, password: p, picture: '' });
+                    setStep(2);
                 }
             };
+
+            const handleDobChange = (e) => {
+                const d = e.target.value;
+                let ageCalc = '';
+                if(d) {
+                    const birthDate = new Date(d);
+                    const today = new Date();
+                    let age = today.getFullYear() - birthDate.getFullYear();
+                    const m = today.getMonth() - birthDate.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) { age--; }
+                    ageCalc = age;
+                }
+                setRegData({...regData, dob: d, age: ageCalc});
+            };
+
+            const handleSubmitStep2 = (e) => {
+                e.preventDefault();
+                if(!regData.name || !regData.dob || (regData.isGoogle && !regData.password)) { alert("Completa los datos requeridos."); return; }
+                const finalUser = regData.isGoogle ? regData.email : regData.name;
+                const finalPass = regData.isGoogle ? regData.password : regData.password;
+                const profileObj = { name: regData.name, email: regData.email, dob: regData.dob, age: regData.age, country: regData.country, picture: regData.picture };
+
+                DB.register(finalUser, finalPass, regData.isGoogle, profileObj);
+                alert("Registro completado exitosamente.");
+                onLogin(finalUser, 'user');
+            };
+
+            if (step === 2) {
+                return (
+                    <div className="fixed inset-0 flex items-center justify-center p-4 z-50 bg-[#111111] overflow-y-auto">
+                        <div className="bg-[#1e1e1e] w-full max-w-sm rounded-3xl p-6 border border-[#27272a] shadow-2xl view-animate text-white mt-10 mb-10">
+                            {regData.isGoogle && (
+                                <div className="flex justify-center mb-2">
+                                    {regData.picture ? <img src={regData.picture} className="w-16 h-16 rounded-full border-2 border-[#3b82f6]" alt="Google"/> : <GoogleIcon />}
+                                </div>
+                            )}
+                            <h2 className="text-xl font-bold mb-1 text-center text-white">Completar Registro</h2>
+                            <p className="text-xs text-[#a1a1aa] mb-6 text-center">Por favor, rellena tus datos para configurar tu cuenta.</p>
+                            
+                            <form onSubmit={handleSubmitStep2} className="space-y-4 text-left">
+                                <div>
+                                    <label className="text-[10px] uppercase font-bold text-[#a1a1aa] block mb-1">Nombre Completo</label>
+                                    <input type="text" required value={regData.name} onChange={e=>setRegData({...regData, name: e.target.value})} disabled={regData.isGoogle} className={`w-full p-3 rounded-xl border border-[#27272a] outline-none text-sm font-bold ${regData.isGoogle ? 'bg-[#111111] text-[#a1a1aa]' : 'bg-[#27272a] text-white'}`}/>
+                                </div>
+                                {regData.isGoogle && (
+                                    <div>
+                                        <label className="text-[10px] uppercase font-bold text-[#a1a1aa] block mb-1">Correo Enlazado</label>
+                                        <input type="text" disabled value={regData.email} className="w-full p-3 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-[#a1a1aa] text-sm"/>
+                                    </div>
+                                )}
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label className="text-[10px] uppercase font-bold text-white block mb-1">Nacimiento</label>
+                                        <input type="date" required value={regData.dob} onChange={handleDobChange} className="w-full p-3 rounded-xl border border-[#3b82f6] bg-[#111111] outline-none text-white text-sm cursor-pointer"/>
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] uppercase font-bold text-[#a1a1aa] block mb-1">Edad</label>
+                                        <input type="text" disabled value={regData.age ? `${regData.age} años` : ''} className="w-full p-3 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-[#a1a1aa] text-sm"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="text-[10px] uppercase font-bold text-white block mb-1">País</label>
+                                    <select value={regData.country} onChange={e=>setRegData({...regData, country: e.target.value})} className="w-full p-3 rounded-xl border border-[#3b82f6] bg-[#111111] outline-none text-white text-sm cursor-pointer">
+                                        {ALL_COUNTRIES.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
+                                    </select>
+                                </div>
+                                {regData.isGoogle && (
+                                    <div className="pt-2 border-t border-[#27272a]">
+                                        <label className="text-[10px] font-bold text-[#3b82f6] uppercase tracking-wider block mb-1">Contraseña Local (Seguridad extra)</label>
+                                        <input type="password" required value={regData.password} onChange={e=>setRegData({...regData, password: e.target.value})} className="w-full p-3 rounded-xl border border-[#3b82f6] bg-[#111111] outline-none text-white text-sm" placeholder="Crea una contraseña..." />
+                                    </div>
+                                )}
+                                <button type="submit" className="w-full py-3.5 bg-[#3b82f6] text-white rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(59,130,246,0.3)] mt-4">Guardar y Entrar</button>
+                                <button type="button" onClick={()=>setStep(1)} className="w-full py-2 bg-transparent text-[#a1a1aa] hover:text-white font-bold text-xs transition-colors">Cancelar</button>
+                            </form>
+                        </div>
+                    </div>
+                );
+            }
 
             return (
                 <div className="min-h-screen flex items-center justify-center p-4 view-animate bg-[#111111] text-white">
                     <div className="bg-[#1e1e1e] w-full max-w-sm p-8 rounded-3xl border border-[#27272a] shadow-2xl">
                         <div className="flex flex-col items-center mb-8">
-                            <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-lg mb-4"><div className="w-12 h-12"><LogoSVG /></div></div>
+                            <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-lg mb-4">
+                                <div className="w-12 h-12"><LogoSVG /></div>
+                            </div>
                             <h1 className="text-2xl font-bold tracking-wide">Mi Billetera</h1>
                             <p className="text-[#a1a1aa] text-sm">Tu espacio financiero seguro</p>
                         </div>
+
                         <div className="flex bg-[#111111] rounded-xl p-1 mb-6 border border-[#27272a]">
-                            <button type="button" onClick={() => {setIsLogin(true); setError('');}} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${isLogin?'bg-[#1e1e1e] text-white shadow-sm':'text-[#a1a1aa]'}`}>Iniciar Sesión</button>
-                            <button type="button" onClick={() => {setIsLogin(false); setError('');}} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${!isLogin?'bg-[#1e1e1e] text-white shadow-sm':'text-[#a1a1aa]'}`}>Registrarse</button>
+                            <button type="button" onClick={() => {setIsLogin(true); setError('');}} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${isLogin?'bg-[#1e1e1e] text-white shadow-sm':'text-[#a1a1aa] hover:text-white'}`}>{t('auth_login_tab')}</button>
+                            <button type="button" onClick={() => {setIsLogin(false); setError('');}} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${!isLogin?'bg-[#1e1e1e] text-white shadow-sm':'text-[#a1a1aa] hover:text-white'}`}>{t('auth_reg_tab')}</button>
                         </div>
-                        <div className="w-full flex justify-center overflow-hidden rounded-xl mb-6" id="google-btn-container"></div>
-                        <div className="flex items-center gap-3 mb-6"><div className="flex-1 h-px bg-[#27272a]"></div><span className="text-[#a1a1aa] text-[10px] uppercase font-bold">O local</span><div className="flex-1 h-px bg-[#27272a]"></div></div>
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <input type="text" value={user} onChange={e=>setUser(e.target.value)} className="w-full p-4 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-white font-medium text-sm" placeholder="Usuario / Correo" />
-                            <input type="password" value={pass} onChange={e=>setPass(e.target.value)} className="w-full p-4 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-white font-medium text-sm" placeholder="Contraseña" />
+
+                        <div className="w-full flex flex-col items-center mb-6">
+                            <div id="google-btn-container" className="w-full flex justify-center overflow-hidden rounded-xl"></div>
+                        </div>
+                        
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="flex-1 h-px bg-[#27272a]"></div>
+                            <span className="text-[#a1a1aa] text-[10px] uppercase font-bold">O usa cuenta local</span>
+                            <div className="flex-1 h-px bg-[#27272a]"></div>
+                        </div>
+
+                        <form onSubmit={handleSubmitStep1} className="space-y-4">
+                            <div>
+                                <label className="text-xs font-bold text-[#a1a1aa] uppercase tracking-wider block mb-2">{t('auth_user')}</label>
+                                <input type="text" value={user} onChange={e=>setUser(e.target.value)} className="w-full p-4 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-white font-medium" placeholder="usuario" />
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-[#a1a1aa] uppercase tracking-wider block mb-2">{t('auth_pass')}</label>
+                                <input type="password" value={pass} onChange={e=>setPass(e.target.value)} className="w-full p-4 rounded-xl border border-[#27272a] bg-[#111111] outline-none text-white font-medium" placeholder="••••••••" />
+                            </div>
                             {error && <p className="text-[#ef4444] text-xs font-bold text-center">{error}</p>}
-                            <button type="submit" className="w-full py-4 bg-[#3b82f6] text-white rounded-xl font-bold text-sm mt-2">{isLogin ? 'Ingresar' : 'Crear Cuenta'}</button>
+                            <button type="submit" className="w-full py-4 bg-[#3b82f6] text-white rounded-xl font-bold text-sm mt-2 shadow-[0_0_15px_rgba(59,130,246,0.3)] active:scale-95 transition-transform">
+                                {isLogin ? t('auth_btn_login') : t('auth_btn_reg')}
+                            </button>
                         </form>
                     </div>
                 </div>
             );
         }
 
-        // --- VISTAS USUARIO ---
+        // --- VISTAS USUARIO COMPLETAS ---
+
         function Home({ txns, settings, activeCurrency, setActiveCurrency, t, isVip, currentUser, setView, expireAt }) {
             const currentTxns = txns.filter(t => t.currency === activeCurrency);
             const ingresos = currentTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0);
             const gastos = currentTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
+            const fijos = currentTxns.filter(txn => txn.type === 'gasto' && txn.is_recurring).reduce((a, b) => a + b.amount, 0);
             const saldo = ingresos - gastos;
+            const ahorroRecomendado = ingresos * 0.2;
+            const pctAhorro = ahorroRecomendado > 0 ? Math.min(Math.round((saldo / ahorroRecomendado) * 100), 100) : (saldo > 0 ? 100 : 0);
+
+            const quotesList = t('quotes') || ["Planea tus compras."];
+            const diaDelAnio = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const fraseDiaria = quotesList[diaDelAnio % quotesList.length];
+
             const userData = DB.getUserData(currentUser);
             const displayUser = userData?.profile?.name ? userData.profile.name.split(' ')[0] : currentUser;
 
@@ -361,15 +563,29 @@
                 <div className="p-4 space-y-4 view-animate">
                     <div className="flex justify-between items-center mb-4 mt-2">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-md shrink-0"><div className="w-6 h-6"><LogoSVG /></div></div>
-                            <h1 className="text-xl font-bold text-primary tracking-wide">Inicio</h1>
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-md shrink-0">
+                                <div className="w-6 h-6"><LogoSVG /></div>
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold text-primary tracking-wide">{t('home_title')}</h1>
+                            </div>
                         </div>
+                        
                         <button onClick={() => setView('ajustes')} className="flex items-center gap-2 bg-card border border-border py-1.5 pl-2 pr-3 rounded-full hover:bg-border transition-colors shadow-sm">
                             <div className="relative">
-                                {userData?.profile?.picture ? <img src={userData.profile.picture} className="w-6 h-6 rounded-full" /> : <div className="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold">{displayUser.charAt(0).toUpperCase()}</div>}
-                                {isVip ? <div className="absolute -top-1 -right-1 bg-warning text-black w-3 h-3 flex items-center justify-center rounded-full"><LucideCrown className="w-2 h-2"/></div> : <div className="absolute -top-1 -right-1 bg-accent text-white w-3 h-3 flex items-center justify-center rounded-full"><LucideStar className="w-2 h-2"/></div>}
+                                {userData?.profile?.picture ? (
+                                    <img src={userData.profile.picture} alt="Avatar" className="w-6 h-6 rounded-full" />
+                                ) : (
+                                    <div className="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold">{displayUser.charAt(0).toUpperCase()}</div>
+                                )}
+                                {isVip ? (
+                                    <div className="absolute -top-1 -right-1 bg-warning text-black w-3 h-3 flex items-center justify-center rounded-full shadow-lg border border-background"><LucideCrown className="w-2 h-2"/></div>
+                                ) : (
+                                    <div className="absolute -top-1 -right-1 bg-accent text-white w-3 h-3 flex items-center justify-center rounded-full shadow-lg border border-background"><LucideStar className="w-2 h-2"/></div>
+                                )}
                             </div>
-                            <span className="text-sm font-bold text-primary truncate max-w-[80px]">{displayUser}</span>
+                            <span className="text-sm font-bold text-primary max-w-[80px] truncate">{displayUser}</span>
+                            <LucideSettings className="w-4 h-4 text-secondary ml-1" />
                         </button>
                     </div>
 
@@ -389,14 +605,411 @@
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-card rounded-xl p-4 shadow-sm border border-border">
-                            <div className="flex items-center gap-2 mb-2 text-secondary"><LucideTrendingUp className="w-4 h-4 text-success" /><p className="text-xs">{t('income')}</p></div>
+                            <div className="flex items-center gap-2 mb-2 text-secondary">
+                                <LucideTrendingUp className="w-4 h-4 text-success" />
+                                <p className="text-xs">{t('income')}</p>
+                            </div>
                             <p className="text-lg font-bold text-success">{formatMoneda(ingresos, activeCurrency)}</p>
                         </div>
                         <div className="bg-card rounded-xl p-4 shadow-sm border border-border">
-                            <div className="flex items-center gap-2 mb-2 text-secondary"><LucideTrendingDown className="w-4 h-4 text-error" /><p className="text-xs">{t('expenses')}</p></div>
+                            <div className="flex items-center gap-2 mb-2 text-secondary">
+                                <LucideTrendingDown className="w-4 h-4 text-error" />
+                                <p className="text-xs">{t('expenses')}</p>
+                            </div>
                             <p className="text-lg font-bold text-error">{formatMoneda(gastos, activeCurrency)}</p>
                         </div>
                     </div>
+
+                    <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3 shadow-sm">
+                        <LucideLightbulb className="w-6 h-6 text-accent shrink-0" />
+                        <p className="text-sm text-primary italic leading-snug">"{fraseDiaria}"</p>
+                    </div>
+
+                    <div className="bg-card rounded-xl p-5 shadow-sm border border-border">
+                        <div className="flex items-center gap-2 mb-4 text-primary">
+                            <LucidePiggyBank className="w-5 h-5 text-accent" />
+                            <h2 className="text-sm font-semibold">{t('savings')}</h2>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <p className="text-xs text-secondary mb-1">{t('savings_actual')}</p>
+                                <p className="text-base font-bold text-success">{formatMoneda(saldo, activeCurrency)}</p>
+                            </div>
+                            <div>
+                                <p className="text-xs text-secondary mb-1">{t('savings_goal')}</p>
+                                <p className="text-base font-bold text-primary">{formatMoneda(ahorroRecomendado, activeCurrency)}</p>
+                            </div>
+                        </div>
+                        <div className="space-y-1">
+                            <div className="flex justify-between text-xs text-secondary">
+                                <span>Progreso</span>
+                                <span className="text-primary font-medium">{pctAhorro}%</span>
+                            </div>
+                            <div className="w-full bg-border rounded-full h-2">
+                                <div className="bg-success h-2 rounded-full transition-all duration-1000" style={{width: `${pctAhorro}%`}}></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function Nueva({ addTxn, settings, activeCurrency, setActiveCurrency, t, setView }) {
+            const [tipo, setTipo] = useState('gasto');
+            const [monto, setMonto] = useState('');
+            const [cat, setCat] = useState(CATEGORIAS[0]);
+            const [desc, setDesc] = useState('');
+
+            const guardar = (e) => {
+                e.preventDefault();
+                if(!monto || isNaN(monto) || monto <= 0) return;
+                addTxn({ id: Date.now(), type: tipo, amount: parseFloat(monto), category: cat, description: desc || cat, is_recurring: false, date: new Date().toISOString(), currency: activeCurrency });
+                setView('home');
+            };
+
+            return (
+                <div className="p-4 space-y-4 view-animate">
+                    <h1 className="text-xl font-bold tracking-tight text-primary mt-2 mb-4">{t('new_title')}</h1>
+                    <CurrencyTabs currencies={settings.currencies} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} />
+                    <form onSubmit={guardar} className="space-y-4 bg-card p-5 rounded-xl border border-border shadow-sm">
+                        <div className="flex bg-background rounded-xl p-1 border border-border">
+                            <button type="button" onClick={() => setTipo('gasto')} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${tipo==='gasto'?'bg-error text-white':'text-secondary hover:text-primary'}`}>{t('expense_btn')}</button>
+                            <button type="button" onClick={() => setTipo('ingreso')} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${tipo==='ingreso'?'bg-success text-white':'text-secondary hover:text-primary'}`}>{t('income_btn')}</button>
+                        </div>
+                        <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} required className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-lg font-bold text-primary" placeholder="0.00"/>
+                        <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-primary text-sm">
+                            {CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
+                        <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} required className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-primary text-sm" placeholder={t('desc')}/>
+                        <button type="submit" className="w-full py-3.5 bg-accent text-white rounded-xl font-bold text-sm mt-2">{t('save_btn')}</button>
+                    </form>
+                </div>
+            );
+        }
+
+        function Analisis({ txns, settings, activeCurrency, setActiveCurrency, t, isVip, onUpgrade }) {
+            if (!isVip) {
+                return (
+                    <div className="p-4 view-animate flex flex-col items-center justify-center min-h-[70vh] text-center">
+                        <div className="w-20 h-20 rounded-full bg-warning/10 text-warning flex items-center justify-center mb-6 shadow-lg border border-warning/20">
+                            <LucideCrown className="w-10 h-10" />
+                        </div>
+                        <h2 className="text-2xl font-bold text-primary mb-3">Evaluación Semanal VIP</h2>
+                        <p className="text-secondary text-sm mb-6 max-w-xs leading-relaxed">Analiza tus gastos automáticamente y recibe recomendaciones inteligentes para ahorrar más. Función exclusiva.</p>
+                        <button onClick={onUpgrade} className="bg-accent text-white text-xs uppercase font-bold px-4 py-3 rounded-lg flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
+                            <LucideStar className="w-4 h-4"/> Requiere Membresía
+                        </button>
+                    </div>
+                );
+            }
+
+            const [isRefreshing, setIsRefreshing] = useState(false);
+            const [refreshKey, setRefreshKey] = useState(0); 
+
+            const currentTxnsAll = txns.filter(txn => txn.currency === activeCurrency);
+            
+            const today = new Date();
+            const sevenDaysAgo = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+            const weeklyTxns = currentTxnsAll.filter(txn => new Date(txn.date) >= sevenDaysAgo);
+
+            const ingresos = weeklyTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0);
+            const gastos = weeklyTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
+            const balance = ingresos - gastos;
+
+            const gastosByCategory = weeklyTxns.filter(txn => txn.type === 'gasto').reduce((acc, txn) => {
+                acc[txn.category] = (acc[txn.category] || 0) + txn.amount; return acc;
+            }, {});
+
+            const topGastos = Object.entries(gastosByCategory).map(([categoria, total]) => ({ categoria, total })).sort((a, b) => b.total - a.total).slice(0, 5);
+            
+            const mayorGasto = topGastos.length > 0 ? topGastos[0].categoria : "Ninguna";
+            const ahorroPct = ingresos > 0 ? Math.round((balance / ingresos) * 100) : 0;
+            const gastosPct = ingresos > 0 ? Math.round((gastos / ingresos) * 100) : 0;
+
+            const handleRefresh = () => {
+                setIsRefreshing(true);
+                setTimeout(() => { setIsRefreshing(false); setRefreshKey(prev => prev + 1); }, 500);
+            };
+
+            return (
+                <div key={refreshKey} className="p-4 space-y-4 view-animate">
+                    <div className="flex justify-between items-center mt-2 mb-4">
+                        <div>
+                            <h1 className="text-xl font-bold text-primary tracking-wide">{t('analysis_title')}</h1>
+                            <p className="text-secondary text-sm">{t('last_7')}</p>
+                        </div>
+                        <button onClick={handleRefresh} className={`text-secondary hover:text-primary transition-colors ${isRefreshing ? 'spin-once' : ''}`}>
+                            <LucideRefreshCw className="w-5 h-5" />
+                        </button>
+                    </div>
+                    
+                    <CurrencyTabs currencies={settings.currencies} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-card rounded-xl p-4 border border-border shadow-sm">
+                            <div className="flex items-center gap-2 mb-2 text-secondary">
+                                <LucideTrendingUp className="w-4 h-4 text-success" />
+                                <p className="text-sm">{t('income')}</p>
+                            </div>
+                            <p className="text-lg font-bold text-success">{formatMoneda(ingresos, activeCurrency)}</p>
+                        </div>
+                        <div className="bg-card rounded-xl p-4 border border-border shadow-sm">
+                            <div className="flex items-center gap-2 mb-2 text-secondary">
+                                <LucideTrendingDown className="w-4 h-4 text-error" />
+                                <p className="text-sm">{t('expenses')}</p>
+                            </div>
+                            <p className="text-lg font-bold text-error">{formatMoneda(gastos, activeCurrency)}</p>
+                        </div>
+                    </div>
+
+                    <div className={`rounded-xl p-5 text-center shadow-sm border ${balance >= 0 ? 'bg-success/10 border-success/30' : 'bg-error/10 border-error/30'}`}>
+                        <p className="text-secondary text-sm mb-1">{t('weekly_balance')}</p>
+                        <p className={`text-2xl font-bold ${balance >= 0 ? 'text-success' : 'text-error'}`}>
+                            {balance >= 0 ? '+' : ''}{formatMoneda(balance, activeCurrency)}
+                        </p>
+                    </div>
+
+                    <div className="bg-card rounded-xl p-5 border border-border shadow-sm mt-4">
+                        <div className="flex items-center gap-2 mb-4">
+                            <LucideLightbulb className="w-5 h-5 text-accent" />
+                            <h2 className="text-sm font-bold text-primary">{t('analysis_rec_title')}</h2>
+                        </div>
+                        <ul className="space-y-4 text-sm text-secondary leading-relaxed">
+                            <li className="flex items-start gap-3">
+                                <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span>
+                                <span>Ahorraste el {Math.max(0, ahorroPct)}%. {ahorroPct < 20 ? t('analysis_rec_save_low') : t('analysis_rec_save_high')}</span>
+                            </li>
+                            {gastos > 0 && mayorGasto !== "Ninguna" && (
+                                <li className="flex items-start gap-3">
+                                    <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span>
+                                    <span>{t('analysis_rec_leak_1_a')}<strong className="text-primary">{mayorGasto}</strong>{t('analysis_rec_leak_1_b')}</span>
+                                </li>
+                            )}
+                            {gastosPct > 80 && (
+                                <li className="flex items-start gap-3"><span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span><span>{t('analysis_rec_rule')}</span></li>
+                            )}
+                            <li className="flex items-start gap-3"><span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0"></span><span>{t('analysis_rec_tip')}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            );
+        }
+
+        function Chat({ addTxn, settings, activeCurrency, t, isVip, onUpgrade }) {
+            if (!isVip) {
+                return (
+                    <div className="p-4 view-animate flex flex-col items-center justify-center min-h-[70vh] text-center">
+                        <div className="w-20 h-20 rounded-full bg-warning/10 text-warning flex items-center justify-center mb-6 shadow-lg border border-warning/20">
+                            <LucideCrown className="w-10 h-10" />
+                        </div>
+                        <h2 className="text-2xl font-bold text-primary mb-3">Asistente IA VIP</h2>
+                        <p className="text-secondary text-sm mb-6 max-w-xs leading-relaxed">Habla o escribe a nuestro asistente inteligente para registrar tus movimientos automáticamente.</p>
+                        <button onClick={onUpgrade} className="bg-accent text-white text-xs uppercase font-bold px-4 py-3 rounded-lg flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
+                            <LucideStar className="w-4 h-4"/> Requiere Membresía
+                        </button>
+                    </div>
+                );
+            }
+
+            const [msg, setMsg] = useState('');
+            const [modo, setModo] = useState('texto');
+            const [escuchando, setEscuchando] = useState(false);
+            const recognitionRef = useRef(null);
+
+            const iniciarVoz = () => {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) { alert("Tu navegador no soporta voz"); return; }
+                const recognition = new SpeechRecognition();
+                recognition.lang = settings.lang === 'es' ? 'es-PE' : 'en-US'; 
+                recognition.interimResults = true; recognition.continuous = false;
+                recognition.onresult = (e) => { let text = ""; for (let i = 0; i < e.results.length; i++) text += e.results[i][0].transcript; setMsg(text); };
+                recognition.onerror = () => { setEscuchando(false); };
+                recognition.onend = () => { setEscuchando(false); };
+                recognitionRef.current = recognition; recognition.start(); setEscuchando(true);
+            };
+            const detenerVoz = () => { if (recognitionRef.current) recognitionRef.current.stop(); setEscuchando(false); };
+
+            const procesar = () => {
+                if(!msg) return;
+                const txt = msg.toLowerCase();
+                const isIncome = txt.includes('recibi') || txt.includes('ingreso') || txt.includes('gane') || txt.includes('cobre');
+                const type = isIncome ? 'ingreso' : 'gasto';
+                const nums = txt.match(/\d+(\.\d+)?/);
+                const amount = nums ? parseFloat(nums[0]) : 0;
+                
+                if(amount > 0) {
+                    let cat = "Otros"; CATEGORIAS.forEach(c => { if(txt.includes(c.toLowerCase())) cat = c; });
+                    addTxn({ id: Date.now(), type, amount, category: cat, description: msg, is_recurring: false, date: new Date().toISOString(), currency: activeCurrency });
+                    alert(`✅ Registrado: ${type.toUpperCase()} - ${formatMoneda(amount, activeCurrency)} (${cat})`);
+                    setMsg(''); setModo('texto');
+                } else { alert("Monto no detectado. Intenta: 'Gasté 20 en comida'"); }
+            };
+
+            return (
+                <div className="p-4 space-y-4 view-animate">
+                    <h1 className="text-xl font-bold tracking-tight text-primary mt-2 mb-4">{t('chat_title')}</h1>
+                    <div className="bg-card p-5 rounded-xl border border-border shadow-sm">
+                        <div className="flex bg-background rounded-xl p-1 mb-6 border border-border">
+                            <button onClick={() => {setModo('texto'); detenerVoz();}} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${modo==='texto'?'bg-card text-primary shadow-sm':'text-secondary'}`}>⌨️ {t('text_mode')}</button>
+                            <button onClick={() => setModo('voz')} className={`flex-1 py-2.5 rounded-lg font-bold text-sm transition-all ${modo==='voz'?'bg-card text-primary shadow-sm':'text-secondary'}`}>🎤 {t('voice_mode')}</button>
+                        </div>
+                        {modo === 'texto' ? (
+                            <div className="view-animate">
+                                <textarea value={msg} onChange={e=>setMsg(e.target.value)} className="w-full p-4 border border-border rounded-xl mb-4 bg-background text-primary outline-none resize-none text-sm" rows="4" placeholder="Escribe un movimiento..."></textarea>
+                                <button onClick={procesar} className="w-full py-3.5 bg-accent text-white rounded-xl font-bold">{t('save_btn')}</button>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center py-6 view-animate space-y-6">
+                                <button onClick={escuchando ? detenerVoz : iniciarVoz} className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${escuchando ? 'mic-active text-error border-error' : 'bg-background border-accent text-accent'}`}>
+                                    {escuchando ? <LucideMicOff /> : <LucideMic />}
+                                </button>
+                                <div className="text-center"><p className="text-primary font-medium text-sm">{escuchando ? "Escuchando..." : t('tap_speak')}</p></div>
+                                {msg && <div className="w-full"><div className="w-full p-4 border border-border rounded-xl mb-4 bg-background text-sm text-primary">{msg}</div>{!escuchando && <button onClick={procesar} className="w-full py-3.5 bg-accent text-white rounded-xl font-bold text-sm">{t('save_btn')}</button>}</div>}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        function Historial({ txns, settings, activeCurrency, setActiveCurrency, deleteTxn, updateTxn, clearAllTxns, t }) {
+            const currentTxnsAll = txns.filter(t => t.currency === activeCurrency);
+            
+            const [filtro, setFiltro] = useState('Semanal'); 
+            const [currentDate, setCurrentDate] = useState(new Date());
+            const [selectedDay, setSelectedDay] = useState(null);
+            const [editingTxn, setEditingTxn] = useState(null);
+
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
+
+            const changeMonth = (dir) => { setCurrentDate(new Date(year, month + dir, 1)); setSelectedDay(null); };
+            const checkDayHasTxns = (d) => { const dateStr = new Date(year, month, d).toISOString().split('T')[0]; return currentTxnsAll.some(txn => txn.date && txn.date.startsWith(dateStr)); };
+
+            let displayTxns = [...currentTxnsAll].reverse();
+            let label = "";
+
+            if (filtro === 'Diario' && selectedDay) {
+                const dateStr = new Date(year, month, selectedDay).toISOString().split('T')[0];
+                displayTxns = displayTxns.filter(txn => txn.date && txn.date.startsWith(dateStr));
+                label = `${selectedDay} DE ${MESES[month].toUpperCase()} ${year}`;
+            } else if (filtro === 'Semanal') {
+                displayTxns = displayTxns.filter(txn => new Date(txn.date).getMonth() === month);
+                label = `SEM · ${MESES[month].substring(0,3).toUpperCase()}. ${year}`;
+            } else {
+                displayTxns = displayTxns.filter(txn => new Date(txn.date).getMonth() === month);
+                label = `${MESES[month].toUpperCase()} ${year}`;
+            }
+
+            const inTotal = displayTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0);
+            const outTotal = displayTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
+
+            const EditModal = ({ txn, onClose }) => {
+                const [monto, setMonto] = useState(txn.amount);
+                const [cat, setCat] = useState(txn.category);
+                const [desc, setDesc] = useState(txn.description);
+                const handleSave = (e) => { e.preventDefault(); updateTxn({ ...txn, amount: parseFloat(monto), category: cat, description: desc }); onClose(); };
+                return (
+                    <div className="fixed inset-0 modal-overlay z-[100] flex items-center justify-center p-4">
+                        <div className="bg-card w-full max-w-sm rounded-2xl p-6 border border-border shadow-2xl view-animate">
+                            <h2 className="text-lg font-bold mb-4 text-primary">Editar Transacción</h2>
+                            <form onSubmit={handleSave} className="space-y-4">
+                                <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary font-bold"/>
+                                <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm">
+                                    {CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}
+                                </select>
+                                <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm"/>
+                                <div className="flex gap-3 mt-6">
+                                    <button type="button" onClick={onClose} className="flex-1 py-3 bg-background border border-border rounded-xl text-primary font-bold text-sm">Cancelar</button>
+                                    <button type="submit" className="flex-1 py-3 bg-accent text-white rounded-xl font-bold text-sm">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                );
+            };
+
+            return (
+                <div className="p-4 space-y-4 view-animate">
+                    <div className="flex justify-between items-start mt-2">
+                        <div>
+                            <h1 className="text-xl font-bold text-primary tracking-wide">{t('history_title')}</h1>
+                            <p className="text-secondary text-sm">{displayTxns.length} movimientos</p>
+                        </div>
+                        <button onClick={clearAllTxns} className="flex items-center gap-1.5 px-3 py-1.5 border border-error/50 text-error rounded-md text-sm hover:bg-error/10 transition-colors">
+                            <LucideTrash2 className="w-4 h-4" /> {t('clear')}
+                        </button>
+                    </div>
+                    <CurrencyTabs currencies={settings.currencies} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} />
+
+                    <div className="bg-card rounded-xl p-4 border border-border shadow-sm">
+                        <div className="flex justify-between items-center mb-4">
+                            <button onClick={() => changeMonth(-1)} className="text-secondary hover:text-primary p-1"><LucideChevronLeft /></button>
+                            <span className="font-medium text-primary">{MESES[month]} De {year}</span>
+                            <button onClick={() => changeMonth(1)} className="text-secondary hover:text-primary p-1"><LucideChevronRight /></button>
+                        </div>
+                        <div className="grid grid-cols-7 gap-1 text-center text-xs text-secondary mb-2">
+                            <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+                        </div>
+                        <div className="grid grid-cols-7 gap-y-2 text-center text-sm">
+                            {Array.from({length: firstDay}).map((_, i) => <div key={`blank-${i}`}></div>)}
+                            {Array.from({length: daysInMonth}).map((_, i) => {
+                                const d = i + 1; const hasDot = checkDayHasTxns(d); const isSelected = selectedDay === d;
+                                return (
+                                    <div key={d} onClick={() => { setSelectedDay(d); setFiltro('Diario'); }} className="relative flex justify-center cursor-pointer group">
+                                        <div className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors ${isSelected ? 'bg-accent/20 text-accent font-bold' : 'text-secondary group-hover:bg-border'}`}>{d}</div>
+                                        {hasDot && <span className="absolute bottom-0 w-1 h-1 bg-accent rounded-full"></span>}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <LucideCalendar className="text-secondary"/>
+                        <div className="flex bg-card rounded-md border border-border p-0.5">
+                            {['Diario', 'Semanal', 'Mensual'].map(f => (
+                                <button key={f} onClick={() => { setFiltro(f); if(f!=='Diario') setSelectedDay(null); }} className={`px-4 py-1.5 text-sm rounded-md font-medium transition-colors ${filtro === f ? 'bg-accent text-white' : 'text-secondary hover:text-primary'}`}>{f}</button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="flex justify-between items-center text-xs font-bold text-secondary uppercase tracking-wider mt-6 mb-2">
+                        <span>{label}</span>
+                        <div className="flex gap-2">
+                            <span className="text-success">+{formatMoneda(inTotal, activeCurrency)}</span>
+                            <span className="text-error">-{formatMoneda(outTotal, activeCurrency)}</span>
+                        </div>
+                    </div>
+
+                    <div className="space-y-3">
+                        {displayTxns.length === 0 ? <p className="text-center text-secondary py-4 text-sm">{t('no_txns')}</p> : 
+                        displayTxns.map(txn => (
+                            <div key={txn.id} className="flex justify-between items-center p-3.5 bg-card rounded-xl border border-border shadow-sm group hover:border-accent transition-colors">
+                                <div className="flex items-center gap-3">
+                                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${txn.type === 'ingreso' ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>
+                                        {txn.type === 'ingreso' ? <LucideTrendingUp className="w-5 h-5"/> : <LucideTrendingDown className="w-5 h-5"/>}
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-sm text-primary">{txn.description}</p>
+                                        <p className="text-[11px] text-secondary">{txn.category}</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className={`font-bold text-sm ${txn.type==='ingreso'?'text-success':'text-error'}`}>
+                                        {txn.type==='ingreso'?'+':'-'}{formatMoneda(txn.amount, activeCurrency)}
+                                    </span>
+                                    <div className="flex items-center gap-2">
+                                        <button onClick={()=>setEditingTxn(txn)} className="text-secondary hover:text-primary transition-colors"><LucidePencil className="w-4 h-4"/></button>
+                                        <button onClick={()=>deleteTxn(txn.id)} className="text-secondary hover:text-error transition-colors"><LucideTrash2 className="w-4 h-4"/></button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    {editingTxn && <EditModal txn={editingTxn} onClose={()=>setEditingTxn(null)} />}
                 </div>
             );
         }
@@ -406,6 +1019,28 @@
             const [backupCode, setBackupCode] = useState('');
             const [showCRM, setShowCRM] = useState(false);
             const userData = DB.getUserData(currentUser);
+            
+            const handleCountryChange = (e) => {
+                const countryCode = e.target.value;
+                const countryData = ALL_COUNTRIES.find(c => c.name === countryCode);
+                const newCurrencies = [...localSettings.currencies];
+                newCurrencies[0] = countryData.defaultCurr; 
+                setLocalSettings({ ...localSettings, country: countryCode, lang: countryData.lang, currencies: newCurrencies });
+            };
+
+            const handleCurrencyChange = (index, value) => {
+                const newCurrencies = [...localSettings.currencies];
+                newCurrencies[index] = value;
+                setLocalSettings({ ...localSettings, currencies: newCurrencies });
+            };
+
+            const toggleTheme = (themeType) => {
+                if (themeType === 'dark') {
+                    setLocalSettings({ ...localSettings, theme: 'dark', colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' } });
+                } else {
+                    setLocalSettings({ ...localSettings, theme: 'light', colors: { bg: '#f4f4f5', card: '#ffffff', text: '#18181b', secondary: '#71717a', border: '#e4e4e7', accent: '#2563eb', navBg: '#ffffff', navActiveBg: '#e4e4e7', navActiveText: '#2563eb' } });
+                }
+            };
             
             const handleBackup = async () => {
                 let phone = localSettings.phone || '';
@@ -442,7 +1077,7 @@
                 // PANEL ADMIN SECRETO
                 if (cleanCode === 'SIRQCHO-ADMIN') { setShowCRM(true); return; }
                 
-                // VALIDACIÓN DE CÓDIGO (EJ: 20260830-A1B2C3)
+                // VALIDACIÓN DE CÓDIGO
                 if(cleanCode.length < 15 || !cleanCode.includes('-')) { alert("❌ Código inválido o mal copiado."); return; }
                 const [dateStr, hashStr] = cleanCode.split('-');
                 if(dateStr.length !== 8 || hashStr.length !== 6) { alert("❌ Código con formato incorrecto."); return; }
@@ -453,7 +1088,6 @@
                 if (hashStr === expectedHash) {
                     const formattedDate = `${dateStr.substring(0,4)}-${dateStr.substring(4,6)}-${dateStr.substring(6,8)}`;
                     
-                    // Doble check: Asegurar que la fecha del código no esté ya caducada al momento de canjear
                     const today = new Date().toISOString().split('T')[0];
                     if(formattedDate < today) {
                         alert("❌ Este código ha caducado."); return;
@@ -468,6 +1102,7 @@
             };
 
             const save = () => { setGlobalSettings(localSettings); setView('home'); };
+            const currentZoom = localSettings.zoom || 100;
 
             return (
                 <div className="p-4 space-y-4 view-animate">
@@ -493,6 +1128,41 @@
                     </div>
 
                     <div className="bg-card p-5 rounded-xl border border-border shadow-sm space-y-5">
+                        
+                        <div>
+                            <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">{t('theme_mode')}</label>
+                            <div className="grid grid-cols-2 gap-3">
+                                <button type="button" onClick={() => toggleTheme('dark')} className={`py-3 rounded-xl border font-bold text-sm transition-all ${localSettings.theme === 'dark' ? 'bg-accent text-white border-accent' : 'bg-background text-secondary border-border'}`}>{t('mode_dark')}</button>
+                                <button type="button" onClick={() => toggleTheme('light')} className={`py-3 rounded-xl border font-bold text-sm transition-all ${localSettings.theme === 'light' ? 'bg-accent text-white border-accent' : 'bg-background text-secondary border-border'}`}>{t('mode_light')}</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">{t('country')}</label>
+                            <select value={localSettings.country} onChange={handleCountryChange} className="w-full p-4 rounded-xl border border-border bg-background outline-none text-primary text-sm">
+                                {ALL_COUNTRIES.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">{t('language')}</label>
+                            <select value={localSettings.lang} onChange={e=>setLocalSettings({...localSettings, lang: e.target.value})} className="w-full p-4 rounded-xl border border-border bg-background outline-none text-primary text-sm">
+                                <option value="es">Español</option><option value="en">English</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">{t('zoom')}</label>
+                            <div className="flex items-center justify-between bg-background p-3 rounded-xl border border-border">
+                                <span className="text-primary font-bold text-base pl-1">{currentZoom}%</span>
+                                <div className="flex items-center gap-2">
+                                    <button type="button" onClick={() => setLocalSettings({...localSettings, zoom: Math.max(50, currentZoom - 10)})} className="w-9 h-9 rounded-lg bg-card border border-border flex items-center justify-center text-primary font-bold hover:bg-border transition-colors text-lg">-</button>
+                                    <button type="button" onClick={() => setLocalSettings({...localSettings, zoom: Math.min(200, currentZoom + 10)})} className="w-9 h-9 rounded-lg bg-card border border-border flex items-center justify-center text-primary font-bold hover:bg-border transition-colors text-lg">+</button>
+                                    <button type="button" onClick={() => setLocalSettings({...localSettings, zoom: 100})} className="px-3.5 py-2 rounded-xl border border-border bg-card text-primary text-xs font-medium hover:bg-border transition-colors">{t('reset')}</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="pt-2 border-t border-border relative">
                             {!isVip && <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-card/60 backdrop-blur-[2px] rounded-xl"><button onClick={onUpgrade} className="bg-warning text-black text-[10px] uppercase font-bold px-3 py-1.5 rounded-md shadow-lg border border-warning/50 hover:scale-105">Solo VIP</button></div>}
                             <div className={!isVip ? 'opacity-40 pointer-events-none' : ''}>
@@ -509,6 +1179,18 @@
                         </div>
 
                         <div className="pt-2 border-t border-border">
+                            <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-3">Monedas Adicionales</label>
+                            {[0, 1, 2].map(i => (
+                                <div className="mb-3" key={i}>
+                                    <select value={localSettings.currencies[i] || ''} onChange={e => handleCurrencyChange(i, e.target.value)} className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-primary text-sm">
+                                        <option value="">-- {i===0?'Requerido':'Opcional'} --</option>
+                                        {Object.entries(ALL_CURRENCIES).map(([code, sym]) => <option key={code} value={code}>{code} ({sym})</option>)}
+                                    </select>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="pt-2 border-t border-border">
                             <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-3 flex items-center gap-2"><LucideShield className="w-5 h-5 text-success" /> Respaldo Cifrado</label>
                             <input type="tel" value={localSettings.phone || ''} onChange={e=>setLocalSettings({...localSettings, phone: e.target.value})} className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-primary text-sm mb-3" placeholder="Tu WhatsApp"/>
                             <button onClick={handleBackup} className="w-full py-3 bg-success/10 text-success border border-success/30 rounded-xl font-bold text-sm hover:bg-success hover:text-white mb-4">↑ Respaldar (WhatsApp)</button>
@@ -521,7 +1203,7 @@
             );
         }
 
-        // --- APP PRINCIPAL ---
+        // --- APP PRINCIPAL COMPLETA ---
         function App() {
             const [currentUser, setCurrentUser] = useState(null);
             const [isVip, setIsVip] = useState(false);
@@ -541,7 +1223,6 @@
                 setCurrentUser(user);
                 const uData = DB.getUserData(user);
                 
-                // MOTOR DE CADUCIDAD AUTOMÁTICA
                 let activeVip = false;
                 let currentExpiration = null;
                 
@@ -551,7 +1232,6 @@
                         activeVip = true;
                         currentExpiration = uData.expireAt;
                     } else {
-                        // El código ha caducado. Se revierte a cuenta FREE en la base de datos local
                         DB.deactivateVip(user);
                         alert("⚠️ Tu suscripción VIP ha caducado. Has vuelto a la versión gratuita.");
                     }
@@ -569,30 +1249,73 @@
             const handleLogin = (user) => { sessionStorage.setItem('billetera_active_user', user); loadUserData(user); };
             const handleLogout = () => { sessionStorage.removeItem('billetera_active_user'); setCurrentUser(null); };
 
+            const translate = (key) => {
+                const langDict = DICTIONARY[settings.lang] || DICTIONARY['es'];
+                return langDict[key] || key;
+            };
+
+            const setGlobalSettings = (newSettings) => {
+                if(!newSettings.currencies[0]) newSettings.currencies[0] = 'USD';
+                setSettings(newSettings);
+                DB.saveSettings(currentUser, newSettings);
+                setActiveCurrency(newSettings.currencies[0]);
+            };
+
+            const addTxn = (t) => { const newTxns = [...txns, t]; setTxns(newTxns); DB.saveTxns(currentUser, newTxns); };
+            const deleteTxn = (id) => { if(confirm("¿Eliminar?")) { const newTxns = txns.filter(t => t.id !== id); setTxns(newTxns); DB.saveTxns(currentUser, newTxns); } };
+            const updateTxn = (updatedTxn) => { const newTxns = txns.map(t => t.id === updatedTxn.id ? updatedTxn : t); setTxns(newTxns); DB.saveTxns(currentUser, newTxns); };
+            const clearAllTxns = () => { if(confirm("¿Borrar todo?")) { const newTxns = txns.filter(t => t.currency !== activeCurrency); setTxns(newTxns); DB.saveTxns(currentUser, newTxns); } };
+
             if (!currentUser) return <div className="min-h-screen font-sans" style={{ '--col-bg': '#111111', '--col-card': '#1e1e1e', '--col-text': '#ffffff', '--col-secondary': '#a1a1aa', '--col-border': '#27272a', '--col-accent': '#3b82f6' }}><AuthView onLogin={handleLogin} /></div>;
 
             const renderView = () => {
                 switch(view) {
-                    case 'home': return <Home txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={(k)=>DICTIONARY[settings.lang][k]} isVip={isVip} currentUser={currentUser} setView={setView} expireAt={expireAt}/>;
-                    case 'ajustes': return <Ajustes globalSettings={settings} setGlobalSettings={(s)=>{setSettings(s); DB.saveSettings(currentUser,s); setActiveCurrency(s.currencies[0]);}} onLogout={handleLogout} currentUser={currentUser} isVip={isVip} t={(k)=>DICTIONARY[settings.lang][k]} setView={setView} onUpgrade={() => setShowPayment(true)}/>;
-                    default: return <div className="p-4 text-center mt-20 text-secondary">La vista <b className="text-primary">{view}</b> está resumida en esta previsualización para enfocarnos en la seguridad. <br/><br/><button onClick={()=>setView('home')} className="text-accent underline">Volver al inicio</button></div>;
+                    case 'home': return <Home txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isVip={isVip} currentUser={currentUser} setView={setView} expireAt={expireAt}/>;
+                    case 'nueva': return <Nueva addTxn={addTxn} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} setView={setView}/>;
+                    case 'analisis': return <Analisis txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isVip={isVip} onUpgrade={() => setShowPayment(true)}/>;
+                    case 'chat': return <Chat addTxn={addTxn} settings={settings} activeCurrency={activeCurrency} t={translate} isVip={isVip} onUpgrade={() => setShowPayment(true)}/>;
+                    case 'historial': return <Historial txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} deleteTxn={deleteTxn} updateTxn={updateTxn} clearAllTxns={clearAllTxns} t={translate}/>;
+                    case 'ajustes': return <Ajustes globalSettings={settings} setGlobalSettings={setGlobalSettings} onLogout={handleLogout} currentUser={currentUser} isVip={isVip} t={translate} setView={setView} onUpgrade={() => setShowPayment(true)}/>;
+                    default: return <Home txns={txns} settings={settings} activeCurrency={activeCurrency} setActiveCurrency={setActiveCurrency} t={translate} isVip={isVip} currentUser={currentUser} setView={setView} expireAt={expireAt}/>;
                 }
             };
 
-            const NAV_ITEMS = [{ id: 'home', Icon: LucideHome }, { id: 'nueva', Icon: LucidePlusCircle }, { id: 'analisis', Icon: LucideBrain }, { id: 'chat', Icon: LucideMessageCircle }, { id: 'historial', Icon: LucideList }];
+            const NAV_ITEMS = [
+                { id: 'home', Icon: LucideHome }, { id: 'nueva', Icon: LucidePlusCircle }, { id: 'analisis', Icon: LucideBrain }, { id: 'chat', Icon: LucideMessageCircle }, { id: 'historial', Icon: LucideList }
+            ];
+
             const zoomScale = (settings.zoom || 100) / 100;
+            const colors = settings.colors || DEFAULT_SETTINGS.colors;
 
             return (
-                <div className="min-h-screen font-sans flex flex-col overflow-auto relative" style={{ '--col-bg': settings.colors.bg, '--col-card': settings.colors.card, '--col-text': settings.colors.text, '--col-secondary': settings.colors.secondary, '--col-border': settings.colors.border, '--col-accent': settings.colors.accent, '--col-nav-bg': settings.colors.navBg, '--col-nav-active-bg': settings.colors.navActiveBg, '--col-nav-active-text': settings.colors.accent }}>
-                    <div className="flex-1 pb-20" style={{ transform: `scale(${zoomScale})`, transformOrigin: 'top center', transition: 'transform 0.2s' }}>{renderView()}</div>
+                <div className="min-h-screen font-sans flex flex-col overflow-auto relative" style={{
+                        '--col-bg': colors.bg, '--col-card': colors.card,
+                        '--col-text': colors.text || (settings.theme === 'light' ? '#18181b' : '#ffffff'),
+                        '--col-secondary': colors.secondary || (settings.theme === 'light' ? '#71717a' : '#a1a1aa'),
+                        '--col-border': colors.border || (settings.theme === 'light' ? '#e4e4e7' : '#27272a'),
+                        '--col-accent': colors.accent,
+                        '--col-nav-bg': colors.navBg || (settings.theme === 'light' ? '#ffffff' : '#19191c'),
+                        '--col-nav-active-bg': colors.navActiveBg || (settings.theme === 'light' ? '#e4e4e7' : '#2b3144'),
+                        '--col-nav-active-text': colors.accent
+                    }}>
+                    
+                    <div className="flex-1 pb-20" style={{ transform: `scale(${zoomScale})`, transformOrigin: 'top center', transition: 'transform 0.2s' }}>
+                        {renderView()}
+                    </div>
+                    
                     {view !== 'ajustes' && (
                         <div className="fixed bottom-4 left-1/2 w-[92%] max-w-sm bg-nav-bg rounded-full flex justify-around px-2 py-2 items-center shadow-2xl border border-border z-50" style={{ transform: `translateX(-50%) scale(${zoomScale})`, transformOrigin: 'bottom center' }}>
                             {NAV_ITEMS.map(({ id, Icon }) => {
                                 const active = view === id;
-                                return <button key={id} onClick={() => setView(id)} className={`relative flex flex-col items-center justify-center min-w-[4rem] px-3 py-2 rounded-[1.25rem] transition-all duration-200 ${active ? 'bg-nav-active-bg text-nav-active-text' : 'text-secondary hover:text-primary'}`}><Icon/></button>;
+                                return (
+                                    <button key={id} onClick={() => setView(id)} className={`relative flex flex-col items-center justify-center min-w-[4rem] px-3 py-2 rounded-[1.25rem] transition-all duration-200 ${active ? 'bg-nav-active-bg text-nav-active-text' : 'text-secondary hover:text-primary'}`}>
+                                        <Icon className={active ? '' : 'text-secondary'}/>
+                                    </button>
+                                );
                             })}
                         </div>
                     )}
+
                     {showPayment && <PaymentModal onClose={() => setShowPayment(false)} />}
                 </div>
             );
