@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Billetera - App Financiera</title>
     
-    <!-- LIBRERÍAS DE SEGURIDAD Y GOOGLE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -49,8 +48,6 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- MOTOR COMPRIMIDO: 195 PAÍSES ---
-        // Formato: Nombre|Moneda|Idioma
         const RAW_COUNTRIES = "Afganistán|AFN|ar,Albania|ALL|sq,Argelia|DZD|ar,Andorra|ALL|ca,Angola|DZD|ar,Antigua y Barbuda|EUR|ca,Argentina|ARS|es,Armenia|AMD|sq,Australia|AUD|en,Austria|EUR|de,Azerbaiyán|AZN|ru,Bahamas|XCD|en,Bahréin|BHD|ar,Bangladesh|BDT|en,Barbados|BSD|en,Bielorrusia|BYN|ru,Bélgica|EUR|de,Belice|BZD|en,Benín|AOA|fr,Bhután|BDT|en,Bolivia|BOB|es,Bosnia y Herzegovina|BAM|ru,Botsuana|BWP|en,Brasil|BRL|pt,Brunéi|BTN|en,Bulgaria|EUR|fr,Burkina Faso|XOF|fr,Burundi|XOF|fr,Cabo Verde|CVE|pt,Camboya|BND|en,Camerún|XAF|fr,Canadá|CAD|en,República Centroafricana|XAF|fr,Chad|XAF|fr,Chile|CLP|es,China|CNY|zh,Colombia|COP|es,Comoras|KHR|fr,Congo|XAF|fr,Costa Rica|COP|es,Croacia|BGN|ru,Cuba|CLP|es,Chipre|HRK|en,República Checa|EUR|en,Dinamarca|CZK|en,Yibuti|KMF|ar,Dominica|XCD|en,República Dominicana|DOP|es,Ecuador|USD|es,Egipto|EGP|ar,El Salvador|CRC|es,Guinea Ecuatorial|XAF|es,Eritrea|DJF|ar,Estonia|DKK|en,Eswatini|ERN|en,Etiopía|EGP|ar,Fiji|FJD|en,Finlandia|EUR|en,Francia|EUR|fr,Gabón|XAF|fr,Gambia|GMD|en,Georgia|GEL|ru,Alemania|EUR|de,Ghana|GHS|en,Grecia|EUR|en,Granada|XCD|en,Guatemala|CRC|es,Guinea|GNF|fr,Guinea-Bisáu|XOF|pt,Guyana|GYD|en,Haití|HTG|fr,Honduras|HNL|es,Hungría|HUF|en,Islandia|EUR|en,India|INR|hi,Indonesia|IDR|en,Irán|IRR|ar,Irak|IQD|ar,Irlanda|EUR|en,Israel|ILS|ar,Italia|EUR|it,Jamaica|JMD|en,Japón|JPY|ja,Jordania|JOD|ar,Kazajistán|KZT|ru,Kenia|KES|en,Kiribati|KWD|en,Kuwait|KWD|ar,Kirguistán|KGS|ru,Laos|LAK|fr,Letonia|EUR|ru,Líbano|LBP|ar,Lesoto|LSL|en,Liberia|LRD|en,Libia|LYD|ar,Liechtenstein|EUR|ca,Lituania|EUR|ru,Luxemburgo|CHF|de,Madagascar|MGA|fr,Malaui|MWK|en,Malasia|MYR|en,Maldivas|MVR|en,Malí|XOF|fr,Malta|EUR|fr,Islas Marshall|AUD|en,Mauritania|MRU|ar,Mauricio|MUR|en,México|MXN|es,Micronesia|AUD|en,Moldavia|EUR|ru,Mónaco|EUR|fr,Mongolia|MDL|ru,Montenegro|EUR|en,Marruecos|MAD|ar,Mozambique|MZN|fr,Myanmar|MNT|zh,Namibia|NAD|pt,Nauru|AUD|en,Nepal|NPR|hi,Países Bajos|EUR|fr,Nueva Zelanda|NZD|en,Nicaragua|NIO|es,Níger|XOF|fr,Nigeria|XOF|fr,Macedonia del Norte|EUR|ru,Noruega|NZD|en,Omán|OMR|ar,Pakistán|NPR|hi,Palaos|AUD|en,Panamá|NIO|es,Papúa Nueva Guinea|USD|en,Paraguay|NIO|es,Perú|PEN|es,Filipinas|PHP|en,Polonia|EUR|en,Portugal|EUR|pt,Catar|QAR|ar,Corea del Sur|KRW|ja,Rumania|RON|en,Rusia|RUB|ru,Ruanda|ZAR|en,San Cristóbal y Nieves|XCD|en,Santa Lucía|XCD|en,San Vicente y las Granadinas|XCD|en,Samoa|AUD|en,San Marino|EUR|fr,Santo Tomé y Príncipe|XCD|en,Arabia Saudita|SAR|ar,Senegal|XOF|fr,Serbia|RSD|ru,Seychelles|STN|en,Sierra Leona|XOF|fr,Singapur|SGD|en,Eslovaquia|EUR|en,Eslovenia|EUR|en,Islas Salomón|AUD|en,Somalia|SOS|ar,Sudáfrica|ZAR|en,Sudán del Sur|SOS|ar,España|EUR|es,Sri Lanka|LKR|en,Sudán|SDG|ar,Surinam|PYG|es,Suecia|SEK|en,Suiza|CHF|de,Siria|SYP|ar,Tayikistán|TJS|ru,Tanzania|TZS|en,Tailandia|THB|en,Timor Oriental|USD|pt,Togo|XOF|fr,Tonga|TOP|en,Trinidad y Tobago|TTD|en,Túnez|TND|ar,Turquía|TRY|en,Turkmenistán|TMT|ru,Tuvalu|TOP|en,Uganda|UGX|en,Ucrania|UAH|ru,Emiratos Árabes Unidos|AED|ar,Reino Unido|GBP|en,Estados Unidos|USD|en,Uruguay|UYU|es,Uzbekistán|UZS|ru,Vanuatu|AUD|en,Ciudad del Vaticano|EUR|it,Venezuela|UYU|es,Vietnam|VND|en,Yemen|YER|ar,Zambia|UGX|en,Zimbabue|ZWL|en";
         const COUNTRIES = RAW_COUNTRIES.split(',').map(item => { const [name, curr, lang] = item.split('|'); return { name, defaultCurr: curr, lang }; });
 
@@ -62,7 +59,6 @@
 
         const DEFAULT_SETTINGS = { country: 'Perú', lang: 'es', currencies: ['PEN'], zoom: 100, theme: 'dark', colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' }};
 
-        // --- BASE DE DATOS LOCAL SEGURA (GSI EXCLUSIVO) ---
         const DB = {
             getUsers: () => JSON.parse(localStorage.getItem('billetera_users_v8') || '{}'),
             loginOrRegisterGoogle: (email, profile) => {
@@ -84,13 +80,19 @@
             getUserData: (user) => DB.getUsers()[user] || null,
             getTxns: (user) => JSON.parse(localStorage.getItem(`txns_${user}`) || '[]'),
             saveTxns: (user, txns) => localStorage.setItem(`txns_${user}`, JSON.stringify(txns)),
-            getSettings: (user) => JSON.parse(localStorage.getItem(`settings_${user}`)) || DEFAULT_SETTINGS,
+            getSettings: (user) => {
+                const saved = JSON.parse(localStorage.getItem(`settings_${user}`));
+                if (!saved) return DEFAULT_SETTINGS;
+                // Fusión segura de datos para evitar la pantalla negra por falta de 'colors'
+                return { ...DEFAULT_SETTINGS, ...saved, colors: { ...DEFAULT_SETTINGS.colors, ...(saved.colors || {}) } };
+            },
             saveSettings: (user, s) => localStorage.setItem(`settings_${user}`, JSON.stringify(s))
         };
 
         const CATEGORIAS = ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
+        const ALL_CURRENCIES = { 'PEN': 'S/', 'USD': '$', 'EUR': '€', 'GBP': '£', 'CNY': '¥', 'BRL': 'R$', 'MXN': '$', 'CAD': 'CA$', 'AUD': 'A$', 'ARS': '$', 'COP': '$', 'CLP': '$', 'BOB': 'Bs' };
+        function formatMoneda(val, currCode) { const sym = ALL_CURRENCIES[currCode] || currCode; return `${sym} ${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
 
-        // --- COMPONENTES UI (ICONOS Y MODALES) ---
         const Icons = {
             Logo: () => <svg viewBox="0 0 64 64" className="w-full h-full"><path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" strokeWidth="3" strokeLinejoin="round"/><path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" strokeWidth="3"/><circle cx="26" cy="42" r="2" fill="#0f172a"/></svg>,
             Home: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>,
@@ -103,7 +105,6 @@
             Trash: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
         };
 
-        // --- COMPONENTE: MODAL DE PAGO VIP ---
         function PaymentModal({ onClose }) {
             const redirectWA = (plan) => window.open(`https://wa.me/51930266472?text=Hola%20Carlos,%20quiero%20pagar%20el%20plan%20VIP%20de%20${plan}`, '_blank');
             return (
@@ -126,7 +127,6 @@
                                 <span className="text-secondary font-bold group-hover:text-white">Vitalicio</span><span className="text-white font-extrabold">$45.00</span>
                             </button>
                         </div>
-
                         <div className="bg-white p-3 rounded-2xl inline-block shadow-xl cursor-pointer" onClick={()=>redirectWA('Suscripción')}>
                             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/51930266472?text=Hola%20Carlos,%20quiero%20pagar%20mi%20suscripcion%20VIP" alt="QR" className="w-32 h-32"/>
                         </div>
@@ -136,26 +136,19 @@
             );
         }
 
-        // --- COMPONENTE: PANEL CRM OCULTO (GENERADOR) ---
         function AdminCRMModal({ onClose }) {
             const [clients, setClients] = useState(JSON.parse(localStorage.getItem('billetera_admin_crm') || '[]'));
-            const [email, setEmail] = useState('');
-            const [plan, setPlan] = useState('30'); // 30, 365, 0 (vitalicio)
-
+            const [email, setEmail] = useState(''); const [plan, setPlan] = useState('30'); 
             const generateCode = (e) => {
                 e.preventDefault(); if(!email) return;
-                let expDate = new Date();
-                if(plan === '0') expDate = new Date(2099, 11, 31); else expDate.setDate(expDate.getDate() + parseInt(plan));
-                
+                let expDate = new Date(); if(plan === '0') expDate = new Date(2099, 11, 31); else expDate.setDate(expDate.getDate() + parseInt(plan));
                 const dStr = `${expDate.getFullYear()}${String(expDate.getMonth()+1).padStart(2,'0')}${String(expDate.getDate()).padStart(2,'0')}`; 
                 const hash = CryptoJS.SHA256(email.toLowerCase().trim() + dStr + "Billetera_Carlos_Secreta_195").toString().substring(0,6).toUpperCase();
                 const code = `${dStr}-${hash}`;
-                
-                const nc = { id: Date.now(), email: email.toLowerCase(), code, expires: expDate.toISOString().split('T')[0], plan: plan==='0'?'Vitalicio':`${plan}d` };
-                const upd = [nc, ...clients]; setClients(upd); localStorage.setItem('billetera_admin_crm', JSON.stringify(upd)); setEmail('');
-                alert(`✅ ENVIAR ESTE CÓDIGO AL CLIENTE:\n\n${code}`);
+                const upd = [{ id: Date.now(), email: email.toLowerCase(), code, expires: expDate.toISOString().split('T')[0], plan: plan==='0'?'Vitalicio':`${plan}d` }, ...clients];
+                setClients(upd); localStorage.setItem('billetera_admin_crm', JSON.stringify(upd)); setEmail('');
+                alert(`✅ CÓDIGO GENERADO:\n\n${code}`);
             };
-
             return (
                 <div className="fixed inset-0 modal-overlay flex items-center justify-center p-4 z-[300]">
                     <div className="bg-card w-full max-w-2xl rounded-3xl p-6 border border-border shadow-2xl relative max-h-[90vh] flex flex-col">
@@ -176,16 +169,12 @@
             );
         }
 
-        // --- PANTALLA: AUTENTICACIÓN GOOGLE EXCLUSIVA ---
         function AuthView({ onLogin }) {
             useEffect(() => {
                 const initG = setInterval(() => {
                     if (window.google && window.google.accounts) {
                         window.google.accounts.id.initialize({
-                            /* ---------------------------------------------------- */
-                            /* PEGA AQUÍ TU ID DE CLIENTE DE GOOGLE REAL            */
-                            /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -214,28 +203,32 @@
             );
         }
 
-        // --- PANTALLAS DE USUARIO ---
+        const CurrencyTabs = ({ currencies, activeCurrency, setActiveCurrency }) => {
+            const validCurrencies = currencies.filter(c => c);
+            if (validCurrencies.length <= 1) return null;
+            return (
+                <div className="flex bg-[#19191c] rounded-xl p-1 mb-4 border border-border w-full">
+                    {validCurrencies.map(curr => <button key={curr} onClick={() => setActiveCurrency(curr)} className={`flex-1 py-1.5 rounded-lg font-bold text-xs transition-all ${activeCurrency===curr?'bg-accent text-white':'text-secondary hover:text-primary'}`}>{curr}</button>)}
+                </div>
+            );
+        };
+
         function Dashboard({ txns, cur, t, isVip, user, setView, expire }) {
             const m = txns.filter(x => x.currency === cur);
-            const inC = m.filter(x=>x.type==='ingreso').reduce((a,b)=>a+b.amount,0);
-            const outC = m.filter(x=>x.type==='gasto').reduce((a,b)=>a+b.amount,0);
-            const bal = inC - outC;
-            const target = inC * 0.2; const pct = target>0 ? Math.min(Math.round((bal/target)*100),100) : (bal>0?100:0);
+            const inC = m.filter(x=>x.type==='ingreso').reduce((a,b)=>a+b.amount,0); const outC = m.filter(x=>x.type==='gasto').reduce((a,b)=>a+b.amount,0);
+            const bal = inC - outC; const target = inC * 0.2; const pct = target>0 ? Math.min(Math.round((bal/target)*100),100) : (bal>0?100:0);
             const prof = DB.getUserData(user)?.profile;
 
             return (
                 <div className="p-4 space-y-4 view-animate">
                     <div className="flex justify-between items-center pt-2">
-                        <div>
-                            <p className="text-secondary text-sm">Hola, <strong className="text-primary">{prof?.name?.split(' ')[0]||'Usuario'}</strong></p>
-                            <h1 className="text-xl font-extrabold text-primary">Mi Resumen</h1>
-                        </div>
+                        <div><p className="text-secondary text-sm">Hola, <strong className="text-primary">{prof?.name?.split(' ')[0]||'Usuario'}</strong></p><h1 className="text-xl font-extrabold text-primary">Mi Resumen</h1></div>
                         <button onClick={()=>setView('ajustes')} className="w-10 h-10 rounded-full border-2 border-border overflow-hidden relative">
                             {prof?.picture ? <img src={prof.picture}/> : <div className="w-full h-full bg-accent flex items-center justify-center font-bold">U</div>}
                             {isVip && <div className="absolute -bottom-1 -right-1 bg-warning text-black rounded-full w-4 h-4 flex items-center justify-center border border-card"><Icons.Crown c="w-2.5 h-2.5"/></div>}
                         </button>
                     </div>
-
+                    {isVip && expire && <div className="bg-warning/10 border border-warning/30 rounded-xl p-3 flex justify-between items-center text-xs"><span className="text-warning font-bold flex items-center gap-2"><Icons.Crown c="w-4 h-4"/> Suscripción Activa</span><span className="text-secondary">Vence: {expire === '2099-12-31' ? 'Vitalicio' : expire}</span></div>}
                     <div className="bg-gradient-to-br from-card to-background rounded-3xl p-6 border border-border shadow-lg relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-4 opacity-10"><Icons.Logo/></div>
                         <p className="text-secondary text-sm font-medium">{t('balance')} ({cur})</p>
@@ -245,7 +238,6 @@
                             <div className="flex-1 bg-error/10 border border-error/20 rounded-2xl p-3"><p className="text-[10px] text-error font-bold uppercase">Gastos</p><p className="text-error font-bold text-lg">-{formatMoneda(outC, cur)}</p></div>
                         </div>
                     </div>
-
                     <div className="bg-card rounded-3xl p-5 border border-border shadow-md">
                         <div className="flex justify-between mb-3"><p className="font-bold text-primary text-sm">{t('save')}</p><p className="font-bold text-accent text-sm">{pct}%</p></div>
                         <div className="w-full bg-background rounded-full h-3 mb-2"><div className="bg-accent h-3 rounded-full transition-all" style={{width:`${pct}%`}}></div></div>
@@ -284,12 +276,11 @@
                     let c = "Otros"; CATEGORIAS.forEach(x => { if(txt.includes(x.toLowerCase())) c = x; });
                     addTxn({ id: Date.now(), type, amount, category: c, description: iaMsg, date: new Date().toISOString(), currency: cur });
                     setIaMsg(''); setIaMode('texto'); alert(`🤖 IA: ${type.toUpperCase()} - ${formatMoneda(amount, cur)} (${c}) guardado.`);
-                } else alert("🤖 IA: No detecté ningún monto. Ej: 'Gasté 20 en comida'.");
+                } else alert("🤖 IA: No detecté ningún monto.");
             };
 
             return (
                 <div className="p-4 space-y-6 view-animate pt-6">
-                    {/* PARTE 1: MANUAL */}
                     <div className="bg-card rounded-3xl p-5 border border-border shadow-lg">
                         <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Icons.Plus className="w-5 h-5"/> {t('manual')}</h2>
                         <form onSubmit={guardarManual} className="space-y-4">
@@ -306,35 +297,26 @@
                         </form>
                     </div>
 
-                    {/* PARTE 2: INTELIGENCIA ARTIFICIAL */}
                     <div className="relative bg-card rounded-3xl p-5 border border-border shadow-lg overflow-hidden">
                         <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-warning"><Icons.Brain className="w-5 h-5"/> {t('ai')}</h2>
-                        
                         {!isVip && (
                             <div className="absolute inset-0 z-10 glass-panel flex flex-col items-center justify-center text-center p-6">
                                 <div className="w-12 h-12 bg-warning/20 text-warning rounded-full flex items-center justify-center mb-3"><Icons.Crown c="w-6 h-6"/></div>
                                 <h3 className="font-bold text-white mb-2">Desbloquea la Inteligencia Artificial</h3>
-                                <p className="text-xs text-secondary mb-4">Registra tus gastos hablándole a tu teléfono. Súper rápido.</p>
+                                <p className="text-xs text-secondary mb-4">Registra tus gastos hablándole a tu teléfono.</p>
                                 <button onClick={onUpgrade} className="bg-warning text-black font-bold px-6 py-2.5 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)]">Ver Planes VIP</button>
                             </div>
                         )}
-
                         <div className={!isVip ? "opacity-30 pointer-events-none filter blur-sm" : ""}>
                             <div className="flex bg-background rounded-xl p-1 mb-4 border border-border">
                                 <button onClick={()=>{setIaMode('texto'); if(escuchando) toggleVoz();}} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='texto'?'bg-card text-primary':'text-secondary'}`}>Escribir</button>
                                 <button onClick={()=>setIaMode('voz')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='voz'?'bg-card text-primary':'text-secondary'}`}>Hablar</button>
                             </div>
-                            
                             {iaMode === 'texto' ? (
-                                <div>
-                                    <textarea value={iaMsg} onChange={e=>setIaMsg(e.target.value)} className="w-full p-4 border border-border rounded-xl mb-3 bg-background outline-none text-sm text-primary" rows="3" placeholder="Ej: Me pagaron 500 de salario..."></textarea>
-                                    <button onClick={procesarIA} className="w-full py-3 bg-[#19191c] border border-warning/50 text-warning rounded-xl font-bold">Procesar con IA</button>
-                                </div>
+                                <div><textarea value={iaMsg} onChange={e=>setIaMsg(e.target.value)} className="w-full p-4 border border-border rounded-xl mb-3 bg-background outline-none text-sm text-primary" rows="3" placeholder="Ej: Me pagaron 500 de salario..."></textarea><button onClick={procesarIA} className="w-full py-3 bg-[#19191c] border border-warning/50 text-warning rounded-xl font-bold">Procesar con IA</button></div>
                             ) : (
                                 <div className="flex flex-col items-center py-4">
-                                    <button onClick={toggleVoz} className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${escuchando ? 'bg-error/20 border-error text-error scale-110' : 'bg-background border-warning text-warning'}`}>
-                                        {escuchando ? <Icons.MicOff /> : <Icons.Mic />}
-                                    </button>
+                                    <button onClick={toggleVoz} className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${escuchando ? 'bg-error/20 border-error text-error scale-110' : 'bg-background border-warning text-warning'}`}>{escuchando ? <Icons.MicOff /> : <Icons.Mic />}</button>
                                     <p className="text-xs text-secondary mt-4 mb-2">{escuchando ? "Escuchando... presiona para detener" : "Toca el micro para hablar"}</p>
                                     {iaMsg && <div className="w-full mt-2"><div className="p-3 bg-background rounded-lg border border-border text-xs text-primary mb-3">"{iaMsg}"</div>{!escuchando && <button onClick={procesarIA} className="w-full py-3 bg-warning text-black rounded-xl font-bold">Analizar Texto</button>}</div>}
                                 </div>
@@ -480,7 +462,7 @@
                 setTxns(DB.getTxns(u)); const s = DB.getSettings(u); setSettings(s); setCur(s.currencies[0]||'PEN'); setView('home');
             };
 
-            const login = (u, p) => { sessionStorage.setItem('billetera_active_user', u); DB.loginOrRegisterGoogle(u, p); loadData(u); };
+            const login = (u, p) => { sessionStorage.setItem('billetera_active_user', u); const res = DB.loginOrRegisterGoogle(u, p); loadData(u); };
             const logout = () => { sessionStorage.removeItem('billetera_active_user'); setUser(null); };
 
             if(!user) return <div style={{'--col-bg':'#111111','--col-card':'#1e1e1e','--col-border':'#27272a'}}><AuthView onLogin={login}/></div>;
@@ -496,15 +478,21 @@
                 }
             };
 
-            const zS = (settings.zoom||100)/100; const c = settings.colors;
+            const zS = (settings.zoom||100)/100; const c = settings.colors || DEFAULT_SETTINGS.colors;
             return (
                 <div className="min-h-screen flex flex-col relative" style={{ '--col-bg':c.bg, '--col-card':c.card, '--col-text':c.text, '--col-secondary':c.secondary, '--col-border':c.border, '--col-accent':c.accent, '--col-nav-bg':c.navBg, '--col-nav-active-bg':c.navActiveBg, '--col-nav-active-text':c.navActiveText }}>
                     <div className="flex-1 pb-24" style={{ transform:`scale(${zS})`, transformOrigin:'top center' }}>{renderV()}</div>
                     {view!=='ajustes' && (
                         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-nav-bg/90 backdrop-blur-md rounded-2xl flex justify-around px-2 py-3 shadow-2xl border border-border z-50">
-                            {[{id:'home', I:Icons.Home, l:'Inicio'},{id:'nueva', I:Icons.Plus, l:'Registrar'},{id:'historial', I:Icons.List, l:'Historial'}].map(x => 
-                                <button key={x.id} onClick={()=>setView(x.id)} className={`flex flex-col items-center min-w-[4rem] transition-colors ${view===x.id?'text-nav-active-text':'text-secondary'}`}><x.I/><span className="text-[10px] mt-1 font-bold">{x.l}</span></button>
-                            )}
+                            {[{id:'home', I:Icons.Home, l:'Inicio'},{id:'nueva', I:Icons.Plus, l:'Registrar'},{id:'historial', I:Icons.List, l:'Historial'}].map(x => {
+                                const IconComponent = x.I;
+                                return (
+                                    <button key={x.id} onClick={()=>setView(x.id)} className={`flex flex-col items-center min-w-[4rem] transition-colors ${view===x.id?'text-nav-active-text':'text-secondary'}`}>
+                                        <IconComponent/>
+                                        <span className="text-[10px] mt-1 font-bold">{x.l}</span>
+                                    </button>
+                                );
+                            })}
                         </div>
                     )}
                     {showPay && <PaymentModal onClose={()=>setShowPay(false)}/>}
