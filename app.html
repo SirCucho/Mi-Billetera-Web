@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Billetera - App Financiera</title>
     
+    <!-- LIBRERÍAS DE SEGURIDAD Y GOOGLE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -52,13 +53,14 @@
         const COUNTRIES = RAW_COUNTRIES.split(',').map(item => { const [name, curr, lang] = item.split('|'); return { name, defaultCurr: curr, lang }; });
 
         const DICTIONARY = {
-            es: { home: "Inicio", record: "Registrar", analysis: "Análisis", history: "Historial", balance: "Saldo total", income: "Ingresos", exp: "Gastos", save: "Tu ahorro", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Monto", cat: "Categoría", desc: "Descripción", btn_save: "Guardar", settings: "Ajustes" },
-            en: { home: "Home", record: "Record", analysis: "Analysis", history: "History", balance: "Total Balance", income: "Income", exp: "Expenses", save: "Savings", manual: "Manual Entry", ai: "Smart Entry (AI)", text_ai: "Text", voice_ai: "Voice", amount: "Amount", cat: "Category", desc: "Description", btn_save: "Save", settings: "Settings" },
-            pt: { home: "Início", record: "Registrar", analysis: "Análise", history: "Histórico", balance: "Saldo total", income: "Receitas", exp: "Despesas", save: "Economia", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Valor", cat: "Categoria", desc: "Descrição", btn_save: "Salvar", settings: "Configurações" }
+            es: { home: "Inicio", record: "Registrar", analysis: "Análisis", history: "Historial", balance: "Saldo total", income: "Ingresos", exp: "Gastos", save: "Tu ahorro", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Monto", cat: "Categoría", desc: "Descripción", btn_save: "Guardar", settings: "Ajustes", fixed: "Gastos fijos", fixed_sub: "Recurrentes", analysis_title: "Evaluación semanal", last_7: "Últimos 7 días", weekly_balance: "Balance semanal", no_txns: "Sin transacciones." },
+            en: { home: "Home", record: "Record", analysis: "Analysis", history: "History", balance: "Total Balance", income: "Income", exp: "Expenses", save: "Savings", manual: "Manual Entry", ai: "Smart Entry (AI)", text_ai: "Text", voice_ai: "Voice", amount: "Amount", cat: "Category", desc: "Description", btn_save: "Save", settings: "Settings", fixed: "Fixed Expenses", fixed_sub: "Recurring", analysis_title: "Weekly Evaluation", last_7: "Last 7 days", weekly_balance: "Weekly Balance", no_txns: "No transactions." },
+            pt: { home: "Início", record: "Registrar", analysis: "Análise", history: "Histórico", balance: "Saldo total", income: "Receitas", exp: "Despesas", save: "Economia", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Valor", cat: "Categoria", desc: "Descrição", btn_save: "Salvar", settings: "Configurações", fixed: "Despesas fixas", fixed_sub: "Recorrentes", analysis_title: "Avaliação semanal", last_7: "Últimos 7 dias", weekly_balance: "Saldo semanal", no_txns: "Sem transações." }
         };
 
-        const DEFAULT_SETTINGS = { country: 'Perú', lang: 'es', currencies: ['PEN'], zoom: 100, theme: 'dark', colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' }};
+        const DEFAULT_SETTINGS = { country: 'Perú', lang: 'es', currencies: ['PEN', '', ''], zoom: 100, theme: 'dark', colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' }};
 
+        // --- BASE DE DATOS LOCAL SEGURA (GSI EXCLUSIVO) ---
         const DB = {
             getUsers: () => JSON.parse(localStorage.getItem('billetera_users_v8') || '{}'),
             loginOrRegisterGoogle: (email, profile) => {
@@ -83,28 +85,35 @@
             getSettings: (user) => {
                 const saved = JSON.parse(localStorage.getItem(`settings_${user}`));
                 if (!saved) return DEFAULT_SETTINGS;
-                // Fusión segura de datos para evitar la pantalla negra por falta de 'colors'
-                return { ...DEFAULT_SETTINGS, ...saved, colors: { ...DEFAULT_SETTINGS.colors, ...(saved.colors || {}) } };
+                const safeCurrencies = saved.currencies && saved.currencies.length > 0 ? saved.currencies : ['PEN', '', ''];
+                return { ...DEFAULT_SETTINGS, ...saved, currencies: safeCurrencies, colors: { ...DEFAULT_SETTINGS.colors, ...(saved.colors || {}) } };
             },
             saveSettings: (user, s) => localStorage.setItem(`settings_${user}`, JSON.stringify(s))
         };
 
         const CATEGORIAS = ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
+        const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         const ALL_CURRENCIES = { 'PEN': 'S/', 'USD': '$', 'EUR': '€', 'GBP': '£', 'CNY': '¥', 'BRL': 'R$', 'MXN': '$', 'CAD': 'CA$', 'AUD': 'A$', 'ARS': '$', 'COP': '$', 'CLP': '$', 'BOB': 'Bs' };
         function formatMoneda(val, currCode) { const sym = ALL_CURRENCIES[currCode] || currCode; return `${sym} ${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
 
+        // --- ICONOS CORREGIDOS (Evita que se hagan gigantes) ---
         const Icons = {
             Logo: () => <svg viewBox="0 0 64 64" className="w-full h-full"><path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" strokeWidth="3" strokeLinejoin="round"/><path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" strokeWidth="3"/><circle cx="26" cy="42" r="2" fill="#0f172a"/></svg>,
-            Home: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>,
-            Plus: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>,
-            Brain: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/></svg>,
-            List: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>,
-            Crown: ({c}) => <svg className={c} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>,
-            Mic: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>,
-            MicOff: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="2" x2="22" y1="2" y2="22"/><path d="M18.89 13.23A7.12 7.12 0 0 0 19 12v-2"/><path d="M5 10v2a7 7 0 0 0 12 5"/><path d="M15 9.34V5a3 3 0 0 0-5.68-1.33"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12"/><line x1="12" x2="12" y1="19" y2="22"/></svg>,
-            Trash: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+            Home: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>,
+            Plus: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>,
+            Brain: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/></svg>,
+            List: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>,
+            Crown: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>,
+            Star: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+            Mic: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>,
+            MicOff: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="2" x2="22" y1="2" y2="22"/><path d="M18.89 13.23A7.12 7.12 0 0 0 19 12v-2"/><path d="M5 10v2a7 7 0 0 0 12 5"/><path d="M15 9.34V5a3 3 0 0 0-5.68-1.33"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12"/><line x1="12" x2="12" y1="19" y2="22"/></svg>,
+            Trash: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>,
+            Pencil: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>,
+            ChevronLeft: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>,
+            ChevronRight: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         };
 
+        // --- COMPONENTE: MODAL DE PAGO VIP ---
         function PaymentModal({ onClose }) {
             const redirectWA = (plan) => window.open(`https://wa.me/51930266472?text=Hola%20Carlos,%20quiero%20pagar%20el%20plan%20VIP%20de%20${plan}`, '_blank');
             return (
@@ -136,9 +145,23 @@
             );
         }
 
+        // --- COMPONENTE: PANEL CRM OCULTO (GENERADOR Y LISTA DE USUARIOS) ---
         function AdminCRMModal({ onClose }) {
             const [clients, setClients] = useState(JSON.parse(localStorage.getItem('billetera_admin_crm') || '[]'));
             const [email, setEmail] = useState(''); const [plan, setPlan] = useState('30'); 
+            const [usersList, setUsersList] = useState([]);
+
+            useEffect(() => {
+                const dbUsers = DB.getUsers();
+                const list = Object.keys(dbUsers).map(mail => ({
+                    email: mail,
+                    name: dbUsers[mail].profile?.name || 'Sin nombre',
+                    vip: dbUsers[mail].vip,
+                    expireAt: dbUsers[mail].expireAt
+                }));
+                setUsersList(list);
+            }, []);
+
             const generateCode = (e) => {
                 e.preventDefault(); if(!email) return;
                 let expDate = new Date(); if(plan === '0') expDate = new Date(2099, 11, 31); else expDate.setDate(expDate.getDate() + parseInt(plan));
@@ -149,32 +172,62 @@
                 setClients(upd); localStorage.setItem('billetera_admin_crm', JSON.stringify(upd)); setEmail('');
                 alert(`✅ CÓDIGO GENERADO:\n\n${code}`);
             };
+
             return (
                 <div className="fixed inset-0 modal-overlay flex items-center justify-center p-4 z-[300]">
-                    <div className="bg-card w-full max-w-2xl rounded-3xl p-6 border border-border shadow-2xl relative max-h-[90vh] flex flex-col">
-                        <button onClick={onClose} className="absolute top-4 right-4 text-white text-2xl">&times;</button>
-                        <h2 className="text-xl font-bold text-warning mb-4">👑 Panel CRM Ventas</h2>
-                        <form onSubmit={generateCode} className="flex gap-2 mb-6 bg-background p-3 rounded-xl border border-border">
-                            <input type="text" value={email} onChange={e=>setEmail(e.target.value)} required placeholder="Correo Google del cliente" className="flex-1 p-2 rounded-lg bg-card border border-border text-sm text-primary outline-none"/>
-                            <select value={plan} onChange={e=>setPlan(e.target.value)} className="p-2 rounded-lg bg-card border border-border text-sm text-primary outline-none">
-                                <option value="30">1 Mes ($3)</option><option value="365">1 Año ($15)</option><option value="0">Vitalicio ($45)</option>
-                            </select>
-                            <button type="submit" className="bg-success text-white font-bold px-4 rounded-lg text-sm">Generar</button>
-                        </form>
-                        <div className="flex-1 overflow-y-auto space-y-2">
-                            {clients.map(c => <div key={c.id} className="bg-background p-3 rounded-lg border border-border text-xs flex justify-between"><div className="text-secondary"><strong className="text-primary text-sm block">{c.email}</strong>Código: <span className="text-warning">{c.code}</span> | Vence: {c.expires}</div></div>)}
+                    <div className="bg-card w-full max-w-4xl rounded-3xl p-6 border border-border shadow-2xl relative max-h-[90vh] flex flex-col md:flex-row gap-6 overflow-hidden">
+                        <button onClick={onClose} className="absolute top-4 right-4 text-white text-2xl z-10">&times;</button>
+                        
+                        {/* Generador */}
+                        <div className="flex-1 flex flex-col">
+                            <h2 className="text-xl font-bold text-warning mb-4">👑 Panel CRM Ventas</h2>
+                            <form onSubmit={generateCode} className="flex flex-col gap-3 mb-6 bg-background p-4 rounded-xl border border-border">
+                                <input type="text" value={email} onChange={e=>setEmail(e.target.value)} required placeholder="Correo Google del cliente" className="w-full p-3 rounded-lg bg-card border border-border text-sm text-primary outline-none"/>
+                                <select value={plan} onChange={e=>setPlan(e.target.value)} className="w-full p-3 rounded-lg bg-card border border-border text-sm text-primary outline-none">
+                                    <option value="30">1 Mes ($3 USD)</option>
+                                    <option value="365">1 Año ($15 USD)</option>
+                                    <option value="0">Vitalicio ($45 USD)</option>
+                                </select>
+                                <button type="submit" className="bg-success text-white font-bold p-3 rounded-lg text-sm w-full">Generar Código</button>
+                            </form>
+                            <h3 className="text-sm font-bold mb-2">Códigos Generados</h3>
+                            <div className="flex-1 overflow-y-auto space-y-2 pr-2">
+                                {clients.map(c => <div key={c.id} className="bg-background p-3 rounded-lg border border-border text-xs flex justify-between"><div className="text-secondary"><strong className="text-primary text-sm block">{c.email}</strong>Código: <span className="text-warning">{c.code}</span> | Vence: {c.expires}</div></div>)}
+                            </div>
+                        </div>
+
+                        {/* Lista de Usuarios de la BD Local */}
+                        <div className="flex-1 flex flex-col border-t md:border-t-0 md:border-l border-border pt-4 md:pt-0 md:pl-6">
+                            <h3 className="text-sm font-bold mb-4">Usuarios Registrados en BD</h3>
+                            <div className="flex-1 overflow-y-auto space-y-2 pr-2">
+                                {usersList.length === 0 ? <p className="text-xs text-secondary">No hay usuarios.</p> :
+                                 usersList.map((u, i) => (
+                                    <div key={i} className="bg-background p-3 rounded-lg border border-border text-xs">
+                                        <div className="flex justify-between items-start mb-1">
+                                            <strong className="text-primary truncate mr-2">{u.email}</strong>
+                                            {u.vip ? <span className="bg-warning/20 text-warning px-2 py-0.5 rounded font-bold text-[10px]">VIP</span> : <span className="bg-accent/20 text-accent px-2 py-0.5 rounded font-bold text-[10px]">FREE</span>}
+                                        </div>
+                                        <p className="text-secondary">{u.name}</p>
+                                        {u.vip && <p className="text-[10px] text-secondary mt-1">Exp: {u.expireAt}</p>}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
             );
         }
 
+        // --- PANTALLA: AUTENTICACIÓN GOOGLE EXCLUSIVA ---
         function AuthView({ onLogin }) {
             useEffect(() => {
                 const initG = setInterval(() => {
                     if (window.google && window.google.accounts) {
                         window.google.accounts.id.initialize({
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            /* ---------------------------------------------------- */
+                            /* PEGA AQUÍ TU ID DE CLIENTE DE GOOGLE REAL            */
+                            /* ---------------------------------------------------- */
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -196,7 +249,7 @@
                     <p className="text-[#a1a1aa] mb-12 text-center max-w-xs">Controla tus finanzas personales con inteligencia artificial. Seguro y privado.</p>
                     <div className="w-full max-w-xs p-6 bg-[#1e1e1e] rounded-3xl border border-[#27272a] shadow-xl text-center">
                         <p className="text-xs font-bold uppercase text-[#a1a1aa] tracking-widest mb-6">Acceso Seguro</p>
-                        <div id="g-btn" className="w-full overflow-hidden rounded-xl h-12"></div>
+                        <div id="g-btn" className="w-full overflow-hidden rounded-xl h-12 flex justify-center"></div>
                         <p className="text-[10px] text-[#a1a1aa] mt-4 leading-relaxed">Al ingresar aceptas que tus datos se guarden únicamente de forma local en tu dispositivo.</p>
                     </div>
                 </div>
@@ -204,7 +257,7 @@
         }
 
         const CurrencyTabs = ({ currencies, activeCurrency, setActiveCurrency }) => {
-            const validCurrencies = currencies.filter(c => c);
+            const validCurrencies = currencies.filter(c => c && c.trim() !== '');
             if (validCurrencies.length <= 1) return null;
             return (
                 <div className="flex bg-[#19191c] rounded-xl p-1 mb-4 border border-border w-full">
@@ -213,40 +266,70 @@
             );
         };
 
+        // --- PANTALLA 1: DASHBOARD (HOME) COMPLETAMENTE RESTAURADO ---
         function Dashboard({ txns, cur, t, isVip, user, setView, expire }) {
             const m = txns.filter(x => x.currency === cur);
-            const inC = m.filter(x=>x.type==='ingreso').reduce((a,b)=>a+b.amount,0); const outC = m.filter(x=>x.type==='gasto').reduce((a,b)=>a+b.amount,0);
-            const bal = inC - outC; const target = inC * 0.2; const pct = target>0 ? Math.min(Math.round((bal/target)*100),100) : (bal>0?100:0);
+            const inC = m.filter(x=>x.type==='ingreso').reduce((a,b)=>a+b.amount,0); 
+            const outC = m.filter(x=>x.type==='gasto').reduce((a,b)=>a+b.amount,0);
+            const fijos = m.filter(x=>x.type==='gasto' && (x.category==='Servicios' || x.category==='Vivienda')).reduce((a,b)=>a+b.amount,0); // Ejemplo de gastos fijos por categoría
+            
+            const bal = inC - outC; 
+            const target = inC * 0.2; 
+            const pct = target>0 ? Math.min(Math.round((bal/target)*100),100) : (bal>0?100:0);
+            
+            const quotesList = t('quotes') || ["Planea tus compras."];
+            const diaDelAnio = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const fraseDiaria = Array.isArray(quotesList) ? quotesList[diaDelAnio % quotesList.length] : quotesList;
+
             const prof = DB.getUserData(user)?.profile;
 
             return (
                 <div className="p-4 space-y-4 view-animate">
                     <div className="flex justify-between items-center pt-2">
                         <div><p className="text-secondary text-sm">Hola, <strong className="text-primary">{prof?.name?.split(' ')[0]||'Usuario'}</strong></p><h1 className="text-xl font-extrabold text-primary">Mi Resumen</h1></div>
-                        <button onClick={()=>setView('ajustes')} className="w-10 h-10 rounded-full border-2 border-border overflow-hidden relative">
-                            {prof?.picture ? <img src={prof.picture}/> : <div className="w-full h-full bg-accent flex items-center justify-center font-bold">U</div>}
-                            {isVip && <div className="absolute -bottom-1 -right-1 bg-warning text-black rounded-full w-4 h-4 flex items-center justify-center border border-card"><Icons.Crown c="w-2.5 h-2.5"/></div>}
+                        <button onClick={()=>setView('ajustes')} className="w-10 h-10 rounded-full border-2 border-border overflow-hidden relative shadow-md">
+                            {prof?.picture ? <img src={prof.picture} className="w-full h-full object-cover"/> : <div className="w-full h-full bg-accent flex items-center justify-center font-bold">U</div>}
+                            {isVip ? <div className="absolute -bottom-1 -right-1 bg-warning text-black rounded-full w-4 h-4 flex items-center justify-center border border-card"><Icons.Crown c="w-2.5 h-2.5"/></div> : <div className="absolute -bottom-1 -right-1 bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center border border-card"><Icons.Star c="w-2.5 h-2.5"/></div>}
                         </button>
                     </div>
+
                     {isVip && expire && <div className="bg-warning/10 border border-warning/30 rounded-xl p-3 flex justify-between items-center text-xs"><span className="text-warning font-bold flex items-center gap-2"><Icons.Crown c="w-4 h-4"/> Suscripción Activa</span><span className="text-secondary">Vence: {expire === '2099-12-31' ? 'Vitalicio' : expire}</span></div>}
+                    
+                    <CurrencyTabs currencies={settings.currencies} activeCurrency={cur} setActiveCurrency={setActiveCurrency} />
+
                     <div className="bg-gradient-to-br from-card to-background rounded-3xl p-6 border border-border shadow-lg relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-4 opacity-10"><Icons.Logo/></div>
+                        <div className="absolute top-0 right-0 p-4 opacity-10 w-24 h-24"><Icons.Logo/></div>
                         <p className="text-secondary text-sm font-medium">{t('balance')} ({cur})</p>
                         <p className="text-4xl font-extrabold text-white mt-1 mb-6">{formatMoneda(bal, cur)}</p>
                         <div className="flex gap-4">
-                            <div className="flex-1 bg-success/10 border border-success/20 rounded-2xl p-3"><p className="text-[10px] text-success font-bold uppercase">Ingresos</p><p className="text-success font-bold text-lg">+{formatMoneda(inC, cur)}</p></div>
-                            <div className="flex-1 bg-error/10 border border-error/20 rounded-2xl p-3"><p className="text-[10px] text-error font-bold uppercase">Gastos</p><p className="text-error font-bold text-lg">-{formatMoneda(outC, cur)}</p></div>
+                            <div className="flex-1 bg-success/10 border border-success/20 rounded-2xl p-3"><p className="text-[10px] text-success font-bold uppercase">{t('income')}</p><p className="text-success font-bold text-lg">+{formatMoneda(inC, cur)}</p></div>
+                            <div className="flex-1 bg-error/10 border border-error/20 rounded-2xl p-3"><p className="text-[10px] text-error font-bold uppercase">{t('exp')}</p><p className="text-error font-bold text-lg">-{formatMoneda(outC, cur)}</p></div>
                         </div>
                     </div>
+
                     <div className="bg-card rounded-3xl p-5 border border-border shadow-md">
                         <div className="flex justify-between mb-3"><p className="font-bold text-primary text-sm">{t('save')}</p><p className="font-bold text-accent text-sm">{pct}%</p></div>
-                        <div className="w-full bg-background rounded-full h-3 mb-2"><div className="bg-accent h-3 rounded-full transition-all" style={{width:`${pct}%`}}></div></div>
+                        <div className="w-full bg-background rounded-full h-3 mb-2"><div className="bg-accent h-3 rounded-full transition-all duration-1000" style={{width:`${pct}%`}}></div></div>
                         <div className="flex justify-between text-xs text-secondary"><p>Actual: {formatMoneda(bal, cur)}</p><p>Meta (20%): {formatMoneda(target, cur)}</p></div>
+                    </div>
+
+                    <div className="bg-card rounded-2xl p-5 shadow-sm border border-border flex justify-between items-center">
+                        <div>
+                            <div className="flex items-center gap-2 mb-1"><span className="w-2 h-2 rounded-full bg-warning"></span><p className="text-sm font-bold text-primary">{t('fixed')}</p></div>
+                            <p className="text-xs text-secondary">{t('fixed_sub')}</p>
+                        </div>
+                        <p className="text-xl font-bold text-warning">{formatMoneda(fijos, cur)}</p>
+                    </div>
+
+                    <div className="bg-background border border-border rounded-xl p-4 flex items-start gap-3 shadow-inner">
+                        <div className="bg-accent/20 p-2 rounded-lg text-accent shrink-0"><Icons.Home c="w-5 h-5"/></div>
+                        <p className="text-sm text-primary italic leading-snug">"{fraseDiaria}"</p>
                     </div>
                 </div>
             );
         }
 
+        // --- PANTALLA 2: REGISTRO UNIFICADO (MANUAL + IA) PROPORCIONAL ---
         function RegistroUnificado({ addTxn, cur, t, isVip, setView, onUpgrade }) {
             const [tipo, setTipo] = useState('gasto'); const [monto, setMonto] = useState(''); const [cat, setCat] = useState(CATEGORIAS[0]); const [desc, setDesc] = useState('');
             const [iaMode, setIaMode] = useState('texto'); const [iaMsg, setIaMsg] = useState(''); const [escuchando, setEscuchando] = useState(false);
@@ -281,8 +364,9 @@
 
             return (
                 <div className="p-4 space-y-6 view-animate pt-6">
+                    {/* PARTE 1: MANUAL */}
                     <div className="bg-card rounded-3xl p-5 border border-border shadow-lg">
-                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Icons.Plus className="w-5 h-5"/> {t('manual')}</h2>
+                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Icons.Plus c="w-5 h-5 text-accent"/> {t('manual')}</h2>
                         <form onSubmit={guardarManual} className="space-y-4">
                             <div className="flex bg-background rounded-xl p-1 border border-border">
                                 <button type="button" onClick={()=>setTipo('gasto')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${tipo==='gasto'?'bg-error text-white':'text-secondary'}`}>Gasto</button>
@@ -297,28 +381,37 @@
                         </form>
                     </div>
 
+                    {/* PARTE 2: INTELIGENCIA ARTIFICIAL */}
                     <div className="relative bg-card rounded-3xl p-5 border border-border shadow-lg overflow-hidden">
-                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-warning"><Icons.Brain className="w-5 h-5"/> {t('ai')}</h2>
+                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-warning"><Icons.Brain c="w-5 h-5"/> {t('ai')}</h2>
+                        
                         {!isVip && (
                             <div className="absolute inset-0 z-10 glass-panel flex flex-col items-center justify-center text-center p-6">
                                 <div className="w-12 h-12 bg-warning/20 text-warning rounded-full flex items-center justify-center mb-3"><Icons.Crown c="w-6 h-6"/></div>
                                 <h3 className="font-bold text-white mb-2">Desbloquea la Inteligencia Artificial</h3>
-                                <p className="text-xs text-secondary mb-4">Registra tus gastos hablándole a tu teléfono.</p>
+                                <p className="text-xs text-secondary mb-4">Registra tus gastos hablándole a tu teléfono. Súper rápido.</p>
                                 <button onClick={onUpgrade} className="bg-warning text-black font-bold px-6 py-2.5 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)]">Ver Planes VIP</button>
                             </div>
                         )}
+
                         <div className={!isVip ? "opacity-30 pointer-events-none filter blur-sm" : ""}>
                             <div className="flex bg-background rounded-xl p-1 mb-4 border border-border">
-                                <button onClick={()=>{setIaMode('texto'); if(escuchando) toggleVoz();}} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='texto'?'bg-card text-primary':'text-secondary'}`}>Escribir</button>
-                                <button onClick={()=>setIaMode('voz')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='voz'?'bg-card text-primary':'text-secondary'}`}>Hablar</button>
+                                <button onClick={()=>{setIaMode('texto'); if(escuchando) toggleVoz();}} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='texto'?'bg-card text-primary shadow-sm':'text-secondary'}`}>{t('text_ai')}</button>
+                                <button onClick={()=>setIaMode('voz')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='voz'?'bg-card text-primary shadow-sm':'text-secondary'}`}>{t('voice_ai')}</button>
                             </div>
+                            
                             {iaMode === 'texto' ? (
-                                <div><textarea value={iaMsg} onChange={e=>setIaMsg(e.target.value)} className="w-full p-4 border border-border rounded-xl mb-3 bg-background outline-none text-sm text-primary" rows="3" placeholder="Ej: Me pagaron 500 de salario..."></textarea><button onClick={procesarIA} className="w-full py-3 bg-[#19191c] border border-warning/50 text-warning rounded-xl font-bold">Procesar con IA</button></div>
+                                <div>
+                                    <textarea value={iaMsg} onChange={e=>setIaMsg(e.target.value)} className="w-full p-4 border border-border rounded-xl mb-3 bg-background outline-none text-sm text-primary" rows="3" placeholder="Ej: Gasté 50 en transporte..."></textarea>
+                                    <button onClick={procesarIA} className="w-full py-3 bg-[#19191c] border border-warning/50 text-warning rounded-xl font-bold">Procesar con IA</button>
+                                </div>
                             ) : (
                                 <div className="flex flex-col items-center py-4">
-                                    <button onClick={toggleVoz} className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${escuchando ? 'bg-error/20 border-error text-error scale-110' : 'bg-background border-warning text-warning'}`}>{escuchando ? <Icons.MicOff /> : <Icons.Mic />}</button>
+                                    <button onClick={toggleVoz} className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${escuchando ? 'bg-error/20 border-error text-error scale-110' : 'bg-background border-warning text-warning'}`}>
+                                        {escuchando ? <Icons.MicOff c="w-8 h-8"/> : <Icons.Mic c="w-8 h-8"/>}
+                                    </button>
                                     <p className="text-xs text-secondary mt-4 mb-2">{escuchando ? "Escuchando... presiona para detener" : "Toca el micro para hablar"}</p>
-                                    {iaMsg && <div className="w-full mt-2"><div className="p-3 bg-background rounded-lg border border-border text-xs text-primary mb-3">"{iaMsg}"</div>{!escuchando && <button onClick={procesarIA} className="w-full py-3 bg-warning text-black rounded-xl font-bold">Analizar Texto</button>}</div>}
+                                    {iaMsg && <div className="w-full mt-2"><div className="p-3 bg-background rounded-lg border border-border text-xs text-primary mb-3 italic">"{iaMsg}"</div>{!escuchando && <button onClick={procesarIA} className="w-full py-3 bg-warning text-black rounded-xl font-bold">Analizar Texto</button>}</div>}
                                 </div>
                             )}
                         </div>
@@ -327,31 +420,180 @@
             );
         }
 
-        function Historial({ txns, cur, setCur, curList, deleteTxn }) {
-            const m = txns.filter(t => t.currency === cur).reverse();
+        // --- PANTALLA 3: ANÁLISIS IA ---
+        function Analisis({ txns, cur, t, isVip, onUpgrade }) {
+            if (!isVip) {
+                return (
+                    <div className="p-4 view-animate flex flex-col items-center justify-center min-h-[70vh] text-center">
+                        <div className="w-20 h-20 rounded-full bg-warning/10 text-warning flex items-center justify-center mb-6 shadow-lg border border-warning/20"><Icons.Crown c="w-10 h-10" /></div>
+                        <h2 className="text-2xl font-bold text-primary mb-3">Evaluación Semanal VIP</h2>
+                        <p className="text-secondary text-sm mb-6 max-w-xs leading-relaxed">Analiza tus gastos automáticamente y recibe recomendaciones inteligentes para ahorrar más.</p>
+                        <button onClick={onUpgrade} className="bg-warning text-black text-sm uppercase font-bold px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform">Ver Planes</button>
+                    </div>
+                );
+            }
+
+            const currentTxnsAll = txns.filter(txn => txn.currency === cur);
+            const today = new Date(); const sevenDaysAgo = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+            const weeklyTxns = currentTxnsAll.filter(txn => new Date(txn.date) >= sevenDaysAgo);
+
+            const ingresos = weeklyTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0);
+            const gastos = weeklyTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
+            const balance = ingresos - gastos;
+
             return (
                 <div className="p-4 space-y-4 view-animate pt-6">
-                    <h1 className="text-xl font-extrabold text-primary mb-4">Historial</h1>
-                    <CurrencyTabs currencies={curList} activeCurrency={cur} setActiveCurrency={setCur} />
-                    <div className="space-y-3">
-                        {m.length===0 ? <p className="text-center text-secondary py-10 text-sm">No hay registros.</p> :
-                         m.map(t => (
-                            <div key={t.id} className="bg-card p-4 rounded-2xl border border-border shadow-sm flex justify-between items-center group">
-                                <div className="flex items-center gap-3">
-                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${t.type==='ingreso'?'bg-success/10 text-success':'bg-error/10 text-error'}`}>{t.type==='ingreso'?<Icons.Home className="w-5 h-5"/>:<Icons.List className="w-5 h-5"/>}</div>
-                                    <div><p className="font-bold text-sm text-primary">{t.description}</p><p className="text-[10px] text-secondary">{t.category} • {new Date(t.date).toLocaleDateString()}</p></div>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <span className={`font-bold ${t.type==='ingreso'?'text-success':'text-error'}`}>{t.type==='ingreso'?'+':'-'}{formatMoneda(t.amount, cur)}</span>
-                                    <button onClick={()=>deleteTxn(t.id)} className="text-secondary hover:text-error p-1"><Icons.Trash/></button>
-                                </div>
-                            </div>
-                        ))}
+                    <div className="mb-6">
+                        <h1 className="text-xl font-extrabold text-primary tracking-wide">{t('analysis_title')}</h1>
+                        <p className="text-secondary text-sm">{t('last_7')}</p>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-card rounded-2xl p-4 border border-border shadow-sm"><p className="text-xs text-secondary mb-1">Ingresos</p><p className="text-lg font-bold text-success">{formatMoneda(ingresos, cur)}</p></div>
+                        <div className="bg-card rounded-2xl p-4 border border-border shadow-sm"><p className="text-xs text-secondary mb-1">Gastos</p><p className="text-lg font-bold text-error">{formatMoneda(gastos, cur)}</p></div>
+                    </div>
+
+                    <div className={`rounded-3xl p-6 text-center shadow-md border ${balance >= 0 ? 'bg-success/10 border-success/30' : 'bg-error/10 border-error/30'}`}>
+                        <p className="text-secondary text-sm mb-1">{t('weekly_balance')}</p>
+                        <p className={`text-3xl font-extrabold ${balance >= 0 ? 'text-success' : 'text-error'}`}>{balance >= 0 ? '+' : ''}{formatMoneda(balance, cur)}</p>
+                    </div>
+
+                    <div className="bg-card rounded-3xl p-6 border border-border shadow-lg mt-6">
+                        <h2 className="text-sm font-bold text-warning mb-4 flex items-center gap-2"><Icons.Brain c="w-5 h-5"/> IA Recomienda</h2>
+                        <ul className="space-y-4 text-sm text-secondary leading-relaxed">
+                            <li className="flex items-start gap-3"><span className="text-accent mt-0.5">●</span><span>Ahorraste el {Math.max(0, ingresos > 0 ? Math.round((balance/ingresos)*100) : 0)}% esta semana.</span></li>
+                            <li className="flex items-start gap-3"><span className="text-accent mt-0.5">●</span><span>Aplica la regla 50/30/20 para un mejor balance.</span></li>
+                            <li className="flex items-start gap-3"><span className="text-accent mt-0.5">●</span><span>Evita compras impulsivas en fines de semana.</span></li>
+                        </ul>
                     </div>
                 </div>
             );
         }
 
+        // --- PANTALLA 4: HISTORIAL (CALENDARIO + EDICIÓN) ---
+        function Historial({ txns, cur, setCur, curList, deleteTxn, updateTxn, t }) {
+            const currentTxnsAll = txns.filter(txn => txn.currency === cur);
+            const [filtro, setFiltro] = useState('Semanal'); 
+            const [currentDate, setCurrentDate] = useState(new Date());
+            const [selectedDay, setSelectedDay] = useState(null);
+            const [editingTxn, setEditingTxn] = useState(null);
+
+            const year = currentDate.getFullYear(); const month = currentDate.getMonth();
+            const daysInMonth = new Date(year, month + 1, 0).getDate(); const firstDay = new Date(year, month, 1).getDay();
+
+            const changeMonth = (dir) => { setCurrentDate(new Date(year, month + dir, 1)); setSelectedDay(null); };
+            const checkDayHasTxns = (d) => { const dateStr = new Date(year, month, d).toISOString().split('T')[0]; return currentTxnsAll.some(txn => txn.date && txn.date.startsWith(dateStr)); };
+
+            let displayTxns = [...currentTxnsAll].reverse(); let label = "";
+            if (filtro === 'Diario' && selectedDay) {
+                const dateStr = new Date(year, month, selectedDay).toISOString().split('T')[0];
+                displayTxns = displayTxns.filter(txn => txn.date && txn.date.startsWith(dateStr));
+                label = `${selectedDay} DE ${MESES[month].toUpperCase()} ${year}`;
+            } else if (filtro === 'Semanal') {
+                displayTxns = displayTxns.filter(txn => new Date(txn.date).getMonth() === month);
+                label = `SEM · ${MESES[month].substring(0,3).toUpperCase()}. ${year}`;
+            } else {
+                displayTxns = displayTxns.filter(txn => new Date(txn.date).getMonth() === month);
+                label = `${MESES[month].toUpperCase()} ${year}`;
+            }
+
+            const inTotal = displayTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0);
+            const outTotal = displayTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
+
+            const EditModal = ({ txn, onClose }) => {
+                const [monto, setMonto] = useState(txn.amount); const [cat, setCat] = useState(txn.category); const [desc, setDesc] = useState(txn.description);
+                const handleSave = (e) => { e.preventDefault(); updateTxn({ ...txn, amount: parseFloat(monto), category: cat, description: desc }); onClose(); };
+                return (
+                    <div className="fixed inset-0 modal-overlay z-[100] flex items-center justify-center p-4">
+                        <div className="bg-card w-full max-w-sm rounded-3xl p-6 border border-border shadow-2xl view-animate">
+                            <h2 className="text-lg font-bold mb-4 text-primary flex items-center gap-2"><Icons.Pencil c="w-5 h-5"/> Editar</h2>
+                            <form onSubmit={handleSave} className="space-y-4">
+                                <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} className="w-full p-4 rounded-xl border border-border bg-background outline-none text-primary font-bold text-xl text-center"/>
+                                <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm">{CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}</select>
+                                <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm"/>
+                                <div className="flex gap-3 mt-6">
+                                    <button type="button" onClick={onClose} className="flex-1 py-3 bg-background border border-border rounded-xl text-primary font-bold text-sm">Cancelar</button>
+                                    <button type="submit" className="flex-1 py-3 bg-accent text-white rounded-xl font-bold text-sm shadow-lg">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                );
+            };
+
+            return (
+                <div className="p-4 space-y-4 view-animate pt-6">
+                    <h1 className="text-xl font-extrabold text-primary mb-4">Historial</h1>
+                    <CurrencyTabs currencies={curList} activeCurrency={cur} setActiveCurrency={setCur} />
+
+                    {/* CALENDARIO RESTAURADO */}
+                    <div className="bg-card rounded-3xl p-5 border border-border shadow-sm">
+                        <div className="flex justify-between items-center mb-4">
+                            <button onClick={() => changeMonth(-1)} className="text-secondary hover:text-primary p-2 bg-background rounded-full"><Icons.ChevronLeft c="w-4 h-4"/></button>
+                            <span className="font-bold text-primary">{MESES[month]} {year}</span>
+                            <button onClick={() => changeMonth(1)} className="text-secondary hover:text-primary p-2 bg-background rounded-full"><Icons.ChevronRight c="w-4 h-4"/></button>
+                        </div>
+                        <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-secondary mb-2 uppercase">
+                            <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+                        </div>
+                        <div className="grid grid-cols-7 gap-y-2 gap-x-1 text-center text-sm">
+                            {Array.from({length: firstDay}).map((_, i) => <div key={`blank-${i}`}></div>)}
+                            {Array.from({length: daysInMonth}).map((_, i) => {
+                                const d = i + 1; const hasDot = checkDayHasTxns(d); const isSelected = selectedDay === d;
+                                return (
+                                    <div key={d} onClick={() => { setSelectedDay(d); setFiltro('Diario'); }} className="relative flex justify-center cursor-pointer group py-1">
+                                        <div className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors ${isSelected ? 'bg-accent text-white font-bold shadow-lg' : 'text-secondary group-hover:bg-border group-hover:text-white'}`}>{d}</div>
+                                        {hasDot && <span className={`absolute bottom-0 w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white' : 'bg-accent'}`}></span>}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* FILTROS */}
+                    <div className="flex bg-card rounded-xl border border-border p-1 shadow-sm">
+                        {['Diario', 'Semanal', 'Mensual'].map(f => (
+                            <button key={f} onClick={() => { setFiltro(f); if(f!=='Diario') setSelectedDay(null); }} className={`flex-1 py-2 text-xs rounded-lg font-bold transition-colors ${filtro === f ? 'bg-background text-primary shadow-sm border border-border' : 'text-secondary hover:text-primary'}`}>{f}</button>
+                        ))}
+                    </div>
+
+                    <div className="flex justify-between items-center text-[10px] font-bold text-secondary uppercase tracking-wider mt-6 mb-2 bg-background p-2 rounded-lg border border-border">
+                        <span>{label}</span>
+                        <div className="flex gap-3"><span className="text-success">+{formatMoneda(inTotal, cur)}</span><span className="text-error">-{formatMoneda(outTotal, cur)}</span></div>
+                    </div>
+
+                    <div className="space-y-3">
+                        {displayTxns.length === 0 ? <p className="text-center text-secondary py-10 text-sm">{t('no_txns')}</p> : 
+                        displayTxns.map(txn => (
+                            <div key={txn.id} className="flex justify-between items-center p-4 bg-card rounded-2xl border border-border shadow-sm group">
+                                <div className="flex items-center gap-4">
+                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${txn.type === 'ingreso' ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>
+                                        {txn.type === 'ingreso' ? <Icons.Home c="w-6 h-6"/> : <Icons.List c="w-6 h-6"/>}
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-sm text-primary">{txn.description}</p>
+                                        <p className="text-[10px] text-secondary">{txn.category} • {new Date(txn.date).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col items-end gap-2">
+                                    <span className={`font-bold text-sm ${txn.type==='ingreso'?'text-success':'text-error'}`}>
+                                        {txn.type==='ingreso'?'+':'-'}{formatMoneda(txn.amount, cur)}
+                                    </span>
+                                    {/* BOTONES RESTAURADOS */}
+                                    <div className="flex items-center gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                                        <button onClick={()=>setEditingTxn(txn)} className="p-1.5 text-secondary hover:text-accent bg-background rounded-md border border-border"><Icons.Pencil c="w-3.5 h-3.5"/></button>
+                                        <button onClick={()=>deleteTxn(txn.id)} className="p-1.5 text-secondary hover:text-error bg-background rounded-md border border-border"><Icons.Trash c="w-3.5 h-3.5"/></button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    {editingTxn && <EditModal txn={editingTxn} onClose={()=>setEditingTxn(null)} />}
+                </div>
+            );
+        }
+
+        // --- PANTALLA 5: AJUSTES (PERFIL, MONEDAS, RESPALDO) ---
         function Ajustes({ settings, saveSettings, user, isVip, onLogout, onUpgrade }) {
             const [local, setLocal] = useState(settings);
             const [code, setCode] = useState(''); const [crm, setCrm] = useState(false);
@@ -361,6 +603,8 @@
                 const cName = e.target.value; const cData = COUNTRIES.find(x => x.name === cName);
                 if(cData) { const nc = [...local.currencies]; nc[0] = cData.defaultCurr; setLocal({...local, country: cName, lang: cData.lang, currencies: nc}); }
             };
+
+            const chgCurr = (index, val) => { const nc = [...local.currencies]; nc[index] = val; setLocal({...local, currencies: nc}); };
 
             const chgTheme = (t) => {
                 if(t==='dark') setLocal({...local, theme:'dark', colors: DEFAULT_SETTINGS.colors});
@@ -401,45 +645,70 @@
                     
                     <div className="bg-card p-5 rounded-3xl border border-border shadow-lg">
                         <div className="flex items-center gap-4 mb-4">
-                            {prof?.picture && <img src={prof.picture} className="w-12 h-12 rounded-full border-2 border-accent"/>}
-                            <div><p className="font-bold text-primary">{prof?.name||user}</p><p className="text-xs text-secondary">{user}</p></div>
+                            {prof?.picture ? <img src={prof.picture} className="w-14 h-14 rounded-full border-2 border-border"/> : <div className="w-14 h-14 bg-background rounded-full border border-border flex items-center justify-center font-bold text-xl">U</div>}
+                            <div>
+                                <p className="font-bold text-primary text-lg">{prof?.name||user}</p>
+                                <p className="text-xs text-secondary mb-1">{user}</p>
+                                {/* ETIQUETA VIP/FREE AGREGADA */}
+                                {isVip ? <span className="bg-warning/20 text-warning px-2 py-0.5 rounded text-[10px] font-bold tracking-widest border border-warning/30">USUARIO VIP</span> : <span className="bg-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-bold tracking-widest border border-accent/30">USUARIO FREE</span>}
+                            </div>
                         </div>
-                        {!isVip ? <button onClick={redeem} className="w-full bg-warning/10 text-warning border border-warning/30 p-3 rounded-xl font-bold text-sm mb-3">👑 Canjear Código VIP</button> : <div className="text-xs text-warning bg-warning/10 p-2 rounded text-center mb-3 font-bold">USUARIO VIP ACTIVO</div>}
-                        <button onClick={onLogout} className="w-full bg-background border border-error/50 text-error p-3 rounded-xl font-bold text-sm">Cerrar Sesión</button>
+                        {!isVip && <button onClick={redeem} className="w-full bg-warning/10 text-warning border border-warning/30 p-3 rounded-xl font-bold text-sm mb-3 shadow-sm hover:bg-warning hover:text-black transition">👑 Canjear Código VIP</button>}
+                        <button onClick={onLogout} className="w-full bg-background border border-error/50 text-error p-3 rounded-xl font-bold text-sm hover:bg-error hover:text-white transition">Cerrar Sesión</button>
                     </div>
 
-                    <div className="bg-card p-5 rounded-3xl border border-border shadow-lg space-y-5">
-                        <div>
-                            <label className="text-xs font-bold text-secondary uppercase mb-2 block">País de Residencia</label>
-                            <select value={local.country} onChange={chgCountry} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm">
-                                {COUNTRIES.map(c=><option key={c.name} value={c.name}>{c.name}</option>)}
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label className="text-xs font-bold text-secondary uppercase mb-2 block">Tema</label>
-                            <div className="flex gap-2">
-                                <button onClick={()=>chgTheme('dark')} className={`flex-1 p-2 rounded-lg font-bold text-sm ${local.theme==='dark'?'bg-accent text-white':'bg-background'}`}>Oscuro</button>
-                                <button onClick={()=>chgTheme('light')} className={`flex-1 p-2 rounded-lg font-bold text-sm ${local.theme==='light'?'bg-accent text-white':'bg-background'}`}>Claro</button>
+                    <div className="bg-card p-6 rounded-3xl border border-border shadow-lg space-y-6">
+                        {/* PAIS Y TEMA */}
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="text-[10px] font-bold text-secondary uppercase mb-2 block tracking-widest">País de Residencia</label>
+                                <select value={local.country} onChange={chgCountry} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm font-medium">
+                                    {COUNTRIES.map(c=><option key={c.name} value={c.name}>{c.name}</option>)}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="text-[10px] font-bold text-secondary uppercase mb-2 block tracking-widest">Tema Visual</label>
+                                <div className="flex bg-background border border-border p-1 rounded-xl">
+                                    <button onClick={()=>chgTheme('dark')} className={`flex-1 p-1.5 rounded-lg font-bold text-xs ${local.theme==='dark'?'bg-accent text-white shadow':'text-secondary'}`}>Oscuro</button>
+                                    <button onClick={()=>chgTheme('light')} className={`flex-1 p-1.5 rounded-lg font-bold text-xs ${local.theme==='light'?'bg-accent text-white shadow':'text-secondary'}`}>Claro</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="pt-4 border-t border-border relative">
-                            {!isVip && <div className="absolute inset-0 glass-panel z-10 flex justify-center items-center rounded-xl"><button onClick={onUpgrade} className="bg-warning text-black font-bold px-4 py-1.5 rounded text-xs shadow-lg">Solo VIP</button></div>}
-                            <label className="text-xs font-bold text-secondary uppercase mb-2 block">Personalizar Colores</label>
-                            <div className="flex justify-between gap-2">
-                                {['bg','card','accent'].map(k => <div key={k} className="flex-1"><input type="color" value={local.colors[k]} onChange={e=>setLocal({...local, colors:{...local.colors, [k]:e.target.value}})} className="w-full h-8 rounded cursor-pointer"/><p className="text-[10px] text-center mt-1 text-secondary">{k}</p></div>)}
-                            </div>
-                        </div>
-
+                        {/* LAS 3 MONEDAS RESTAURADAS */}
                         <div className="pt-4 border-t border-border">
-                            <label className="text-xs font-bold text-secondary uppercase mb-2 block">Respaldo Cifrado (AES-256)</label>
-                            <button onClick={backup} className="w-full bg-success/10 text-success p-3 rounded-xl font-bold text-sm mb-3">↑ Enviar a WhatsApp</button>
-                            <textarea value={code} onChange={e=>setCode(e.target.value)} className="w-full p-3 bg-background border border-border rounded-xl text-xs mb-2 outline-none text-primary" rows="2" placeholder="Pega el código de WhatsApp aquí"></textarea>
-                            <button onClick={restore} className="w-full bg-background border border-border text-primary p-3 rounded-xl font-bold text-sm">↓ Restaurar Datos</button>
+                            <label className="text-[10px] font-bold text-secondary uppercase mb-3 block tracking-widest">Tus 3 Monedas Favoritas</label>
+                            <div className="grid grid-cols-3 gap-2">
+                                {[0, 1, 2].map(i => (
+                                    <select key={i} value={local.currencies[i] || ''} onChange={e => chgCurr(i, e.target.value)} className="w-full p-2.5 rounded-xl border border-border bg-background outline-none text-primary text-xs font-bold text-center appearance-none">
+                                        <option value="">{i===0?'Principal':`Opción ${i+1}`}</option>
+                                        {Object.keys(ALL_CURRENCIES).map(code => <option key={code} value={code}>{code}</option>)}
+                                    </select>
+                                ))}
+                            </div>
+                            <p className="text-[9px] text-secondary mt-2 text-center">Toca las pestañas en Inicio e Historial para alternar.</p>
                         </div>
 
-                        <button onClick={()=>{saveSettings(local); setView('home');}} className="w-full bg-accent text-white p-4 rounded-xl font-bold mt-4 shadow-lg shadow-accent/30">Guardar Todo</button>
+                        {/* COLORES VIP */}
+                        <div className="pt-4 border-t border-border relative">
+                            {!isVip && <div className="absolute inset-0 glass-panel z-10 flex justify-center items-center rounded-2xl"><button onClick={onUpgrade} className="bg-warning text-black font-bold px-4 py-2 rounded-lg text-xs shadow-[0_0_10px_rgba(234,179,8,0.5)] flex items-center gap-1"><Icons.Crown c="w-4 h-4"/> Solo VIP</button></div>}
+                            <label className="text-[10px] font-bold text-secondary uppercase mb-3 block tracking-widest">Personalizar Colores</label>
+                            <div className="flex justify-between gap-3">
+                                {['bg','card','accent'].map(k => <div key={k} className="flex-1"><input type="color" value={local.colors[k]} onChange={e=>setLocal({...local, colors:{...local.colors, [k]:e.target.value}})} className="w-full h-10 rounded-lg cursor-pointer border border-border"/><p className="text-[9px] font-bold uppercase text-center mt-1 text-secondary">{k}</p></div>)}
+                            </div>
+                        </div>
+
+                        {/* RESPALDO */}
+                        <div className="pt-4 border-t border-border">
+                            <label className="text-[10px] font-bold text-success uppercase mb-3 flex items-center gap-1 tracking-widest"><Icons.Shield c="w-3 h-3"/> Respaldo Cifrado (AES-256)</label>
+                            <button onClick={backup} className="w-full bg-success/10 text-success border border-success/30 p-3 rounded-xl font-bold text-sm mb-3 shadow-sm hover:bg-success hover:text-white transition">↑ Enviar a WhatsApp</button>
+                            <div className="bg-background p-1.5 rounded-xl border border-border flex items-center gap-2">
+                                <input type="text" value={code} onChange={e=>setCode(e.target.value)} className="flex-1 p-2 bg-transparent outline-none text-xs text-primary font-mono" placeholder="Pega el código aquí"/>
+                                <button onClick={restore} className="bg-card border border-border text-primary px-4 py-2 rounded-lg font-bold text-xs hover:bg-accent hover:text-white transition">↓ Restaurar</button>
+                            </div>
+                        </div>
+
+                        <button onClick={()=>{saveSettings(local); setView('home');}} className="w-full bg-accent text-white p-4 rounded-xl font-bold mt-2 shadow-lg shadow-accent/30 text-lg">Guardar Todo</button>
                     </div>
                 </div>
             );
@@ -462,7 +731,7 @@
                 setTxns(DB.getTxns(u)); const s = DB.getSettings(u); setSettings(s); setCur(s.currencies[0]||'PEN'); setView('home');
             };
 
-            const login = (u, p) => { sessionStorage.setItem('billetera_active_user', u); const res = DB.loginOrRegisterGoogle(u, p); loadData(u); };
+            const login = (u, p) => { sessionStorage.setItem('billetera_active_user', u); DB.loginOrRegisterGoogle(u, p); loadData(u); };
             const logout = () => { sessionStorage.removeItem('billetera_active_user'); setUser(null); };
 
             if(!user) return <div style={{'--col-bg':'#111111','--col-card':'#1e1e1e','--col-border':'#27272a'}}><AuthView onLogin={login}/></div>;
@@ -470,26 +739,27 @@
             const t = (k) => DICTIONARY[settings.lang]?.[k] || DICTIONARY['es'][k];
             const renderV = () => {
                 switch(view) {
-                    case 'home': return <Dashboard txns={txns} cur={cur} t={t} isVip={vip} user={user} setView={setView} expire={exp}/>;
+                    case 'home': return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} t={t} isVip={vip} user={user} setView={setView} expire={exp}/>;
                     case 'nueva': return <RegistroUnificado addTxn={x=>{const nw=[...txns,x];setTxns(nw);DB.saveTxns(user,nw);}} cur={cur} t={t} isVip={vip} setView={setView} onUpgrade={()=>setShowPay(true)}/>;
-                    case 'historial': return <Historial txns={txns} cur={cur} setCur={setCur} curList={settings.currencies} deleteTxn={id=>{const nw=txns.filter(x=>x.id!==id);setTxns(nw);DB.saveTxns(user,nw);}}/>;
+                    case 'analisis': return <Analisis txns={txns} cur={cur} t={t} isVip={vip} onUpgrade={()=>setShowPay(true)}/>;
+                    case 'historial': return <Historial txns={txns} cur={cur} setCur={setCur} curList={settings.currencies} deleteTxn={id=>{if(confirm("¿Borrar?")){const nw=txns.filter(x=>x.id!==id);setTxns(nw);DB.saveTxns(user,nw);}}} updateTxn={x=>{const nw=txns.map(t=>t.id===x.id?x:t);setTxns(nw);DB.saveTxns(user,nw);}} t={t}/>;
                     case 'ajustes': return <Ajustes settings={settings} saveSettings={s=>{setSettings(s);DB.saveSettings(user,s);setCur(s.currencies[0]);}} user={user} isVip={vip} onLogout={logout} onUpgrade={()=>setShowPay(true)}/>;
-                    default: return <Dashboard txns={txns} cur={cur} t={t} isVip={vip} user={user} setView={setView} expire={exp}/>;
+                    default: return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} t={t} isVip={vip} user={user} setView={setView} expire={exp}/>;
                 }
             };
 
             const zS = (settings.zoom||100)/100; const c = settings.colors || DEFAULT_SETTINGS.colors;
             return (
                 <div className="min-h-screen flex flex-col relative" style={{ '--col-bg':c.bg, '--col-card':c.card, '--col-text':c.text, '--col-secondary':c.secondary, '--col-border':c.border, '--col-accent':c.accent, '--col-nav-bg':c.navBg, '--col-nav-active-bg':c.navActiveBg, '--col-nav-active-text':c.navActiveText }}>
-                    <div className="flex-1 pb-24" style={{ transform:`scale(${zS})`, transformOrigin:'top center' }}>{renderV()}</div>
+                    <div className="flex-1 pb-28" style={{ transform:`scale(${zS})`, transformOrigin:'top center' }}>{renderV()}</div>
                     {view!=='ajustes' && (
-                        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-nav-bg/90 backdrop-blur-md rounded-2xl flex justify-around px-2 py-3 shadow-2xl border border-border z-50">
-                            {[{id:'home', I:Icons.Home, l:'Inicio'},{id:'nueva', I:Icons.Plus, l:'Registrar'},{id:'historial', I:Icons.List, l:'Historial'}].map(x => {
+                        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-nav-bg/95 backdrop-blur-md rounded-[2rem] flex justify-around px-2 py-3 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-border/50 z-50">
+                            {[{id:'home', I:Icons.Home, l:'Inicio'},{id:'nueva', I:Icons.Plus, l:'Registrar'},{id:'analisis', I:Icons.Brain, l:'Análisis'},{id:'historial', I:Icons.List, l:'Historial'}].map(x => {
                                 const IconComponent = x.I;
                                 return (
-                                    <button key={x.id} onClick={()=>setView(x.id)} className={`flex flex-col items-center min-w-[4rem] transition-colors ${view===x.id?'text-nav-active-text':'text-secondary'}`}>
-                                        <IconComponent/>
-                                        <span className="text-[10px] mt-1 font-bold">{x.l}</span>
+                                    <button key={x.id} onClick={()=>setView(x.id)} className={`flex flex-col items-center justify-center min-w-[4rem] transition-all duration-300 ${view===x.id?'text-nav-active-text scale-110 -translate-y-1':'text-secondary hover:text-primary'}`}>
+                                        <IconComponent c="w-6 h-6"/>
+                                        <span className={`text-[10px] mt-1.5 font-bold tracking-wide ${view===x.id?'opacity-100':'opacity-0 h-0 overflow-hidden'}`}>{x.l}</span>
                                     </button>
                                 );
                             })}
