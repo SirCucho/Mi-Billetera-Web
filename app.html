@@ -95,7 +95,7 @@
         const USD_RATES = { 'PEN': 3.75, 'EUR': 0.92, 'GBP': 0.79, 'BRL': 5.15, 'MXN': 16.8, 'ARS': 1000, 'COP': 3900, 'CLP': 950, 'BOB': 6.9, 'CAD': 1.37, 'AUD': 1.52, 'CNY': 7.24, 'USD': 1 };
         function formatMoneda(val, currCode) { const sym = ALL_CURRENCIES[currCode] || currCode; return `${sym} ${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
 
-        // --- ICONOS COMPLETOS ---
+        // --- ICONOS ---
         const Icons = {
             Logo: ({c}) => <svg viewBox="0 0 64 64" className={c || "w-full h-full"}><rect width="64" height="64" rx="16" fill="currentColor"/><path d="M44 14c6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28h40v20a4 4 0 0 1-4 4h-32a4 4 0 0 1-4-4z" fill="#0ea5e9" stroke="#fff" strokeWidth="2"/><path d="M12 28a4 4 0 0 1 4-4h32a4 4 0 0 1 4 4v6h-40z" fill="#38bdf8" stroke="#fff" strokeWidth="2"/><circle cx="26" cy="42" r="3" fill="#fff"/></svg>,
             Home: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>,
@@ -255,7 +255,7 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ TU ID DE CLIENTE DE GOOGLE REAL            */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -623,17 +623,29 @@
 
             const backup = async () => {
                 const p = prompt("Crea una clave para encriptar tu respaldo:"); if(!p) return;
-                const d = CryptoJS.AES.encrypt(JSON.stringify(DB.getTxns(user)), p).toString();
-                await navigator.clipboard.writeText(d);
-                window.open(`https://wa.me/?text=${encodeURIComponent("Mi código seguro Billetera:\n" + d)}`);
+                const ud = DB.getUserData(user);
+                const payload = { txns: DB.getTxns(user), settings: local, vip: ud.vip, expireAt: ud.expireAt };
+                const d = CryptoJS.AES.encrypt(JSON.stringify(payload), p).toString();
+                try {
+                    await navigator.clipboard.writeText(d);
+                    window.open(`https://wa.me/?text=${encodeURIComponent("Mi código seguro Billetera:\n" + d)}`);
+                } catch(e) { alert("Copia este código manualmente:\n\n" + d); }
             };
 
             const restore = () => {
                 if(!code) return alert("Pega el código."); const p = prompt("Clave de cifrado:"); if(!p) return;
                 try {
                     const dec = CryptoJS.AES.decrypt(code, p).toString(CryptoJS.enc.Utf8);
-                    if(dec && confirm("¿Sobrescribir datos?")) { DB.saveTxns(user, JSON.parse(dec)); window.location.reload(); }
-                } catch(e) { alert("Error al descifrar."); }
+                    if(dec && confirm("⚠️ ¿Sobrescribir datos y restaurar tu cuenta?")) { 
+                        const data = JSON.parse(dec);
+                        if (Array.isArray(data)) { DB.saveTxns(user, data); } else {
+                            if(data.txns) DB.saveTxns(user, data.txns);
+                            if(data.settings) DB.saveSettings(user, data.settings);
+                            if(data.vip && data.expireAt) DB.activateVip(user, data.expireAt);
+                        }
+                        alert("✅ Restauración completada exitosamente."); window.location.reload(); 
+                    }
+                } catch(e) { alert("❌ Error: Clave incorrecta o código dañado."); }
             };
 
             const redeem = () => {
