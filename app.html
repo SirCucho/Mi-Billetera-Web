@@ -34,8 +34,17 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
+        /* Variables por defecto (Serán sobrescritas por React en el document.documentElement) */
         :root { --col-bg: #18181b; --col-card: #27272a; --col-text: #ffffff; --col-secondary: #a1a1aa; --col-border: #3f3f46; --col-accent: #3b82f6; --col-nav-bg: #18181b; --col-nav-active-bg: #3f3f46; --col-nav-active-text: #60a5fa; }
-        body { background-color: var(--col-bg); color: var(--col-text); overflow: auto; transition: background-color 0.3s, color 0.3s; }
+        
+        /* Aplicación global al body para que cubra toda la pantalla de borde a borde */
+        body { 
+            background-color: var(--col-bg); 
+            color: var(--col-text); 
+            overflow: auto; 
+            transition: background-color 0.3s ease, color 0.3s ease; 
+        }
+        
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--col-border); border-radius: 4px; }
@@ -46,7 +55,8 @@
     </style>
 </head>
 <body class="selection:bg-accent selection:text-white">
-    <div id="root" class="max-w-md md:max-w-2xl lg:max-w-4xl mx-auto min-h-screen relative bg-background overflow-auto pb-24 px-4 md:px-8 transition-colors duration-300"></div>
+    <!-- Contenedor principal centrado -->
+    <div id="root" class="max-w-md md:max-w-2xl lg:max-w-4xl mx-auto min-h-screen relative overflow-auto pb-24 px-4 md:px-8 transition-colors duration-300"></div>
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
@@ -97,7 +107,6 @@
             { name: 'Ubuntu (Tech)', value: "'Ubuntu', sans-serif" }
         ];
 
-        // Se usa el tema 0 (Pizarra) y fuente 0 (Outfit) por defecto
         const DEFAULT_SETTINGS = { 
             country: 'Perú', lang: 'es', currencies: ['PEN', '', ''], zoom: 100, 
             themeName: PREDEFINED_THEMES[0].name, fontFamily: PREDEFINED_FONTS[0].value,
@@ -158,6 +167,7 @@
             Pencil: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>,
             ChevronLeft: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>,
             ChevronRight: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>,
+            User: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
             LogOut: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>,
             Shield: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
             X: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>,
@@ -168,8 +178,6 @@
             Lightbulb: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>,
             RefreshCw: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>,
             Palette: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>,
-            Type: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>,
-            Image: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
         };
 
         // --- CABECERA UNIVERSAL ---
@@ -306,7 +314,7 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ TU ID DE CLIENTE DE GOOGLE REAL            */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -339,7 +347,7 @@
             const validCurrencies = currencies.filter(c => c && c.trim() !== '');
             if (validCurrencies.length <= 1) return null;
             return (
-                <div className="flex bg-[#19191c] rounded-xl p-1 mb-4 border border-border w-full shadow-inner" style={{backgroundColor: 'var(--col-nav-bg)'}}>
+                <div className="flex rounded-xl p-1 mb-4 border border-border w-full shadow-inner" style={{backgroundColor: 'var(--col-nav-bg)'}}>
                     {validCurrencies.map(curr => <button key={curr} onClick={() => setActiveCurrency(curr)} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${activeCurrency===curr?'bg-accent text-white shadow-md':'text-secondary hover:text-primary'}`}>{curr}</button>)}
                 </div>
             );
@@ -353,7 +361,6 @@
             const fijos = m.filter(x=>x.type==='gasto' && (x.category==='Servicios' || x.category==='Vivienda')).reduce((a,b)=>a+b.amount,0);
             const bal = inC - outC; const target = inC * 0.2; const pct = target>0 ? Math.min(Math.round((bal/target)*100),100) : (bal>0?100:0);
             
-            // Botón actualizar frase
             const quotesList = t('quotes'); 
             const [quoteIdx, setQuoteIdx] = useState(Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)) % quotesList.length);
             const nextQuote = () => setQuoteIdx((prev) => (prev + 1) % quotesList.length);
@@ -422,7 +429,6 @@
 
             const procesarIA = () => {
                 if(!iaMsg) return; const txt = iaMsg.toLowerCase();
-                // Nuevo Regex de Ingresos: Detecta palabras clave de entrada de dinero
                 const isInc = /recib[íi]|ingreso|gan[é\e]|cobr[é\e]|dieron|tengo|pagaron|sueldo/i.test(txt);
                 const type = isInc ? 'ingreso' : 'gasto';
                 const nums = txt.match(/\d+(\.\d+)?/); const amount = nums ? parseFloat(nums[0]) : 0;
@@ -546,7 +552,6 @@
                 }, 1500);
             };
 
-            // Analizar al cargar la primera vez
             useEffect(() => { handleAnalyze(); }, []);
 
             return (
@@ -712,22 +717,21 @@
             );
         }
 
-        // --- PANTALLA 5: AJUSTES (MODAL FLOTANTE VIP) ---
-        function AjustesModal({ onClose, settings, saveSettings, user, isVip, onLogout, onUpgrade }) {
+        // --- PANTALLA 5: AJUSTES (MODAL FLOTANTE Y VISTA PREVIA EN TIEMPO REAL) ---
+        function AjustesModal({ onClose, onPreview, settings, saveSettings, user, isVip, onLogout, onUpgrade }) {
             const [local, setLocal] = useState(settings);
             const [code, setCode] = useState(''); const [crm, setCrm] = useState(false);
-            const [customTab, setCustomTab] = useState('temas'); // temas, fondos, textos
-            
+            const [customTab, setCustomTab] = useState('temas');
             const prof = DB.getUserData(user)?.profile;
+
+            // VISTA PREVIA: Actualiza la app completa mientras juegas con los colores en los ajustes
+            useEffect(() => {
+                onPreview(local);
+            }, [local]);
 
             const chgCountry = (e) => {
                 const cName = e.target.value; const cData = COUNTRIES.find(x => x.name === cName);
                 if(cData) { const nc = [...local.currencies]; nc[0] = cData.defaultCurr; setLocal({...local, country: cName, lang: cData.lang, currencies: nc}); }
-            };
-            const chgCurr = (index, val) => { const nc = [...local.currencies]; nc[index] = val; setLocal({...local, currencies: nc}); };
-
-            const applyPredefinedTheme = (theme) => {
-                setLocal({ ...local, themeName: theme.name, colors: theme.colors });
             };
 
             const backup = async () => {
@@ -804,7 +808,7 @@
                                     </select>
                                     <div className="grid grid-cols-3 gap-3">
                                         {[0, 1, 2].map(i => (
-                                            <select key={i} value={local.currencies[i] || ''} onChange={e => chgCurr(i, e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-xs font-bold text-center appearance-none shadow-inner">
+                                            <select key={i} value={local.currencies[i] || ''} onChange={e => { const nc = [...local.currencies]; nc[i] = e.target.value; setLocal({...local, currencies: nc}); }} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-xs font-bold text-center appearance-none shadow-inner">
                                                 <option value="">{i===0?'Principal':`Opción ${i+1}`}</option>
                                                 {Object.keys(ALL_CURRENCIES).map(code => <option key={code} value={code}>{code}</option>)}
                                             </select>
@@ -813,30 +817,27 @@
                                 </div>
                             </div>
 
-                            {/* --- SECCIÓN VIP: PERSONALIZACIÓN TOTAL (3 BOTONES/PESTAÑAS) --- */}
                             <div className="pt-4 border-t border-border relative">
                                 {!isVip && <div className="absolute inset-0 glass-panel z-10 flex justify-center items-center rounded-2xl"><button onClick={() => { onClose(); onUpgrade(); }} className="bg-warning text-black font-bold px-4 py-2 rounded-lg text-xs shadow-[0_0_15px_rgba(234,179,8,0.5)] flex items-center gap-1"><Icons.Crown c="w-4 h-4"/> Solo VIP</button></div>}
                                 
                                 <div className="flex justify-between items-center mb-4">
-                                    <label className="text-[10px] font-bold text-secondary uppercase tracking-widest flex items-center gap-1.5"><Icons.Palette c="w-3 h-3"/> Personalización VIP</label>
+                                    <label className="text-[10px] font-bold text-secondary uppercase tracking-widest flex items-center gap-1.5">Personalización VIP</label>
                                     <button onClick={()=>{setLocal({...local, colors: DEFAULT_SETTINGS.colors, themeName: DEFAULT_SETTINGS.themeName, fontFamily: DEFAULT_SETTINGS.fontFamily});}} className="text-[10px] text-accent font-bold hover:underline flex items-center gap-1"><Icons.RefreshCw c="w-3 h-3"/> Restaurar Default</button>
                                 </div>
 
-                                {/* Botones 1, 2, 3 (Pestañas) */}
                                 <div className="flex bg-background rounded-xl p-1 mb-4 border border-border shadow-inner">
                                     <button onClick={()=>setCustomTab('temas')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${customTab==='temas'?'bg-card text-primary shadow border border-border':'text-secondary hover:text-primary'}`}>🎨 1. Temas</button>
                                     <button onClick={()=>setCustomTab('fondos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${customTab==='fondos'?'bg-card text-primary shadow border border-border':'text-secondary hover:text-primary'}`}>🖼️ 2. Fondos</button>
                                     <button onClick={()=>setCustomTab('textos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${customTab==='textos'?'bg-card text-primary shadow border border-border':'text-secondary hover:text-primary'}`}>Aa 3. Textos</button>
                                 </div>
 
-                                {/* CONTENIDO DE PESTAÑAS */}
                                 <div className="bg-card border border-border rounded-xl p-4 shadow-sm min-h-[220px]">
                                     {customTab === 'temas' && (
                                         <div>
                                             <p className="text-[10px] text-secondary mb-3 text-center">12 Personalidades diseñadas para ti</p>
                                             <div className="grid grid-cols-2 gap-2 max-h-[160px] overflow-y-auto pr-1">
                                                 {PREDEFINED_THEMES.map(t => (
-                                                    <button key={t.name} onClick={()=>applyPredefinedTheme(t)} className={`p-2 rounded-lg text-xs font-bold transition-all border ${local.themeName === t.name ? 'border-accent ring-1 ring-accent' : 'border-border hover:border-secondary'}`} style={{backgroundColor: t.colors.card, color: t.colors.text}}>
+                                                    <button key={t.name} onClick={()=>setLocal({ ...local, themeName: t.name, colors: t.colors })} className={`p-2 rounded-lg text-xs font-bold transition-all border ${local.themeName === t.name ? 'border-accent ring-1 ring-accent' : 'border-border hover:border-secondary'}`} style={{backgroundColor: t.colors.card, color: t.colors.text}}>
                                                         {t.name}
                                                     </button>
                                                 ))}
@@ -884,7 +885,7 @@
                                 </div>
                             </div>
 
-                            <button onClick={()=>{saveSettings(local); onClose();}} className="w-full bg-accent text-white p-4 rounded-xl font-bold mt-2 shadow-lg shadow-accent/30 text-lg hover:scale-[1.02] transition-transform">Guardar y Cerrar</button>
+                            <button onClick={()=>{saveSettings(local);}} className="w-full bg-accent text-white p-4 rounded-xl font-bold mt-2 shadow-lg shadow-accent/30 text-lg hover:scale-[1.02] transition-transform">Guardar y Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -898,6 +899,7 @@
             const [view, setView] = useState('home'); const [showPay, setShowPay] = useState(false);
             const [showSettings, setShowSettings] = useState(false);
             const [txns, setTxns] = useState([]); const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+            const [previewSettings, setPreviewSettings] = useState(null); // Estado para la Vista Previa Global
             const [cur, setCur] = useState('PEN');
 
             useEffect(() => { const sUser = sessionStorage.getItem('billetera_active_user'); if(sUser) loadData(sUser); }, []);
@@ -910,26 +912,57 @@
             };
 
             const login = (u, p) => { sessionStorage.setItem('billetera_active_user', u); DB.loginOrRegisterGoogle(u, p); loadData(u); };
-            const logout = () => { sessionStorage.removeItem('billetera_active_user'); setUser(null); setShowSettings(false); };
+            
+            const handleCloseSettings = () => {
+                setPreviewSettings(null); // Revierte la vista previa al cerrar sin guardar
+                setShowSettings(false);
+            };
+
+            const handleSaveSettings = (newSettings) => {
+                setSettings(newSettings);
+                DB.saveSettings(user, newSettings);
+                setCur(newSettings.currencies[0]);
+                setPreviewSettings(null);
+                setShowSettings(false);
+            };
+
+            const logout = () => { sessionStorage.removeItem('billetera_active_user'); setUser(null); handleCloseSettings(); };
+
+            // INYECCIÓN GLOBAL DE VARIABLES CSS (Para que el fondo cubra todo de borde a borde y funcione la vista previa)
+            const activeSettings = previewSettings || settings;
+            useEffect(() => {
+                const root = document.documentElement;
+                const c = activeSettings.colors;
+                root.style.setProperty('--col-bg', c.bg);
+                root.style.setProperty('--col-card', c.card);
+                root.style.setProperty('--col-text', c.text);
+                root.style.setProperty('--col-secondary', c.secondary);
+                root.style.setProperty('--col-border', c.border);
+                root.style.setProperty('--col-accent', c.accent);
+                root.style.setProperty('--col-nav-bg', c.navBg);
+                root.style.setProperty('--col-nav-active-bg', c.navActiveBg);
+                root.style.setProperty('--col-nav-active-text', c.navActiveText);
+                document.body.style.fontFamily = activeSettings.fontFamily;
+            }, [activeSettings]);
 
             if(!user) return <div style={{'--col-bg':'#18181b','--col-card':'#27272a','--col-border':'#3f3f46'}}><AuthView onLogin={login}/></div>;
 
-            const t = (k) => DICTIONARY[settings.lang]?.[k] || DICTIONARY['es'][k];
+            const t = (k) => DICTIONARY[activeSettings.lang]?.[k] || DICTIONARY['es'][k];
+            
             const renderV = () => {
                 switch(view) {
-                    case 'home': return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={settings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} expire={exp}/>;
+                    case 'home': return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} expire={exp}/>;
                     case 'nueva': return <RegistroUnificado addTxn={x=>{const nw=[...txns,x];setTxns(nw);DB.saveTxns(user,nw);}} cur={cur} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onUpgrade={()=>setShowPay(true)}/>;
                     case 'analisis': return <Analisis txns={txns} cur={cur} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onUpgrade={()=>setShowPay(true)}/>;
-                    case 'historial': return <Historial txns={txns} cur={cur} setCur={setCur} curList={settings.currencies} deleteTxn={id=>{if(confirm("¿Borrar?")){const nw=txns.filter(x=>x.id!==id);setTxns(nw);DB.saveTxns(user,nw);}}} updateTxn={x=>{const nw=txns.map(t=>t.id===x.id?x:t);setTxns(nw);DB.saveTxns(user,nw);}} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)}/>;
-                    default: return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={settings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} expire={exp}/>;
+                    case 'historial': return <Historial txns={txns} cur={cur} setCur={setCur} curList={activeSettings.currencies} deleteTxn={id=>{if(confirm("¿Borrar?")){const nw=txns.filter(x=>x.id!==id);setTxns(nw);DB.saveTxns(user,nw);}}} updateTxn={x=>{const nw=txns.map(t=>t.id===x.id?x:t);setTxns(nw);DB.saveTxns(user,nw);}} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)}/>;
+                    default: return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} expire={exp}/>;
                 }
             };
 
-            const zS = (settings.zoom||100)/100; const c = settings.colors || DEFAULT_SETTINGS.colors;
+            const zS = (activeSettings.zoom||100)/100; 
             
-            // APLICACIÓN DE ESTILOS GLOBALES (Fuente y Colores Dinámicos)
             return (
-                <div className="min-h-screen flex flex-col relative" style={{ fontFamily: settings.fontFamily, '--col-bg':c.bg, '--col-card':c.card, '--col-text':c.text, '--col-secondary':c.secondary, '--col-border':c.border, '--col-accent':c.accent, '--col-nav-bg':c.navBg, '--col-nav-active-bg':c.navActiveBg, '--col-nav-active-text':c.navActiveText }}>
+                <div className="min-h-screen flex flex-col relative">
                     <div className="flex-1 pb-28" style={{ transform:`scale(${zS})`, transformOrigin:'top center' }}>{renderV()}</div>
                     
                     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-nav-bg/95 backdrop-blur-md rounded-[2rem] flex justify-around px-2 py-3 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-border/50 z-40">
@@ -944,7 +977,7 @@
                         })}
                     </div>
                     
-                    {showSettings && <AjustesModal settings={settings} saveSettings={s=>{setSettings(s);DB.saveSettings(user,s);setCur(s.currencies[0]);}} user={user} isVip={vip} onLogout={logout} onUpgrade={()=>setShowPay(true)} onClose={()=>setShowSettings(false)}/>}
+                    {showSettings && <AjustesModal settings={activeSettings} saveSettings={handleSaveSettings} onPreview={setPreviewSettings} user={user} isVip={vip} onLogout={logout} onUpgrade={()=>setShowPay(true)} onClose={handleCloseSettings}/>}
                     {showPay && <PaymentModal onClose={()=>setShowPay(false)}/>}
                 </div>
             );
