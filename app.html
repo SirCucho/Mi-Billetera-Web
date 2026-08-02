@@ -12,13 +12,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CARGA DE LAS 12 TIPOGRAFÍAS DE GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700&family=Open+Sans:wght@300;400;600;700&family=Oswald:wght@300;400;500&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
                     colors: {
                         background: 'var(--col-bg)', card: 'var(--col-card)', primary: 'var(--col-text)', secondary: 'var(--col-secondary)',
                         accent: 'var(--col-accent)', success: '#10b981', error: '#ef4444', warning: '#eab308', border: 'var(--col-border)',
@@ -34,7 +35,7 @@
 
     <style>
         :root { --col-bg: #18181b; --col-card: #27272a; --col-text: #ffffff; --col-secondary: #a1a1aa; --col-border: #3f3f46; --col-accent: #3b82f6; --col-nav-bg: #18181b; --col-nav-active-bg: #3f3f46; --col-nav-active-text: #60a5fa; }
-        body { background-color: var(--col-bg); color: var(--col-text); overflow: auto; }
+        body { background-color: var(--col-bg); color: var(--col-text); overflow: auto; transition: background-color 0.3s, color 0.3s; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--col-border); border-radius: 4px; }
@@ -44,8 +45,8 @@
         .glass-panel { background: rgba(30,30,30,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-accent selection:text-white">
-    <div id="root" class="max-w-md md:max-w-2xl lg:max-w-4xl mx-auto min-h-screen relative bg-background overflow-auto pb-24 px-4 md:px-8"></div>
+<body class="selection:bg-accent selection:text-white">
+    <div id="root" class="max-w-md md:max-w-2xl lg:max-w-4xl mx-auto min-h-screen relative bg-background overflow-auto pb-24 px-4 md:px-8 transition-colors duration-300"></div>
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
@@ -61,17 +62,46 @@
             en: { 
                 home: "Home", record: "Record", analysis: "Analysis", history: "History", balance: "Total Balance", income: "Income", exp: "Expenses", save: "Savings", manual: "Manual Entry", ai: "Smart Entry (AI)", text_ai: "Text", voice_ai: "Voice", amount: "Amount", cat: "Category", desc: "Description", btn_save: "Save", settings: "Settings", fixed: "Fixed Expenses", fixed_sub: "Recurring", analysis_title: "Weekly Evaluation", last_7: "Last 7 days", weekly_balance: "Weekly Balance", no_txns: "No transactions.",
                 quotes: ["Plan your purchases to avoid impulse buys.", "Saving isn't just storing, it's knowing how to spend.", "Control your expenses before they control you.", "Pay yourself first: save before you spend."]
-            },
-            pt: { 
-                home: "Início", record: "Registrar", analysis: "Análise", history: "Histórico", balance: "Saldo total", income: "Receitas", exp: "Despesas", save: "Economia", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Valor", cat: "Categoria", desc: "Descrição", btn_save: "Salvar", settings: "Configurações", fixed: "Despesas fixas", fixed_sub: "Recorrentes", analysis_title: "Avaliação semanal", last_7: "Últimos 7 dias", weekly_balance: "Saldo semanal", no_txns: "Sem transações.",
-                quotes: ["Planeje suas compras e evite impulsos.", "Economizar é saber gastar.", "Controle seus gastos antes que eles controlem você.", "Pague a si mesmo primeiro."]
             }
         };
 
-        // TEMA POR DEFECTO MÁS SIMPLE (ZINC / SLATE en lugar de negro puro)
+        // --- LAS 12 PERSONALIDADES (TEMAS PREDEFINIDOS) ---
+        const PREDEFINED_THEMES = [
+            { name: 'Pizarra (Default)', colors: { bg: '#18181b', card: '#27272a', text: '#ffffff', secondary: '#a1a1aa', border: '#3f3f46', accent: '#3b82f6', navBg: '#18181b', navActiveBg: '#3f3f46', navActiveText: '#60a5fa' } },
+            { name: 'Claro Minimal', colors: { bg: '#f8fafc', card: '#ffffff', text: '#0f172a', secondary: '#64748b', border: '#e2e8f0', accent: '#2563eb', navBg: '#ffffff', navActiveBg: '#f1f5f9', navActiveText: '#2563eb' } },
+            { name: 'Océano Profundo', colors: { bg: '#0f172a', card: '#1e293b', text: '#f8fafc', secondary: '#94a3b8', border: '#334155', accent: '#0ea5e9', navBg: '#0f172a', navActiveBg: '#1e293b', navActiveText: '#38bdf8' } },
+            { name: 'Bosque Nocturno', colors: { bg: '#064e3b', card: '#065f46', text: '#ecfdf5', secondary: '#a7f3d0', border: '#047857', accent: '#10b981', navBg: '#064e3b', navActiveBg: '#047857', navActiveText: '#34d399' } },
+            { name: 'Café Clásico', colors: { bg: '#292524', card: '#3f3f46', text: '#fafafa', secondary: '#d4d4d8', border: '#52525b', accent: '#d97706', navBg: '#292524', navActiveBg: '#52525b', navActiveText: '#f59e0b' } },
+            { name: 'Cerezo Suave', colors: { bg: '#fdf2f8', card: '#ffffff', text: '#831843', secondary: '#f472b6', border: '#fce7f3', accent: '#db2777', navBg: '#ffffff', navActiveBg: '#fce7f3', navActiveText: '#db2777' } },
+            { name: 'Neón Cyberpunk', colors: { bg: '#000000', card: '#111827', text: '#e0e7ff', secondary: '#818cf8', border: '#312e81', accent: '#c026d3', navBg: '#000000', navActiveBg: '#312e81', navActiveText: '#e879f9' } },
+            { name: 'Lavanda Pastel', colors: { bg: '#faf5ff', card: '#ffffff', text: '#4c1d95', secondary: '#a78bfa', border: '#ede9fe', accent: '#7c3aed', navBg: '#ffffff', navActiveBg: '#ede9fe', navActiveText: '#7c3aed' } },
+            { name: 'Gris Ejecutivo', colors: { bg: '#e4e4e7', card: '#f4f4f5', text: '#18181b', secondary: '#71717a', border: '#d4d4d8', accent: '#2563eb', navBg: '#f4f4f5', navActiveBg: '#d4d4d8', navActiveText: '#2563eb' } },
+            { name: 'Amatista Oscura', colors: { bg: '#2e1065', card: '#4c1d95', text: '#f5f3ff', secondary: '#c4b5fd', border: '#5b21b6', accent: '#8b5cf6', navBg: '#2e1065', navActiveBg: '#5b21b6', navActiveText: '#a78bfa' } },
+            { name: 'Atardecer Cálido', colors: { bg: '#431407', card: '#7c2d12', text: '#fff7ed', secondary: '#fdba74', border: '#9a3412', accent: '#f97316', navBg: '#431407', navActiveBg: '#9a3412', navActiveText: '#fb923c' } },
+            { name: 'Naturaleza Zen', colors: { bg: '#f0fdf4', card: '#ffffff', text: '#064e3b', secondary: '#34d399', border: '#d1fae5', accent: '#059669', navBg: '#ffffff', navActiveBg: '#d1fae5', navActiveText: '#059669' } }
+        ];
+
+        // --- LAS 12 TIPOGRAFÍAS DE GOOGLE FONTS ---
+        const PREDEFINED_FONTS = [
+            { name: 'Outfit (App Base)', value: "'Outfit', sans-serif" },
+            { name: 'Inter (Legibilidad)', value: "'Inter', sans-serif" },
+            { name: 'Roboto (Clásico)', value: "'Roboto', sans-serif" },
+            { name: 'Poppins (Redondo)', value: "'Poppins', sans-serif" },
+            { name: 'Montserrat (Elegante)', value: "'Montserrat', sans-serif" },
+            { name: 'Open Sans (Limpio)', value: "'Open Sans', sans-serif" },
+            { name: 'Lato (Fino)', value: "'Lato', sans-serif" },
+            { name: 'Nunito (Amigable)', value: "'Nunito', sans-serif" },
+            { name: 'Playfair (Serif)', value: "'Playfair Display', serif" },
+            { name: 'Quicksand (Creativo)', value: "'Quicksand', sans-serif" },
+            { name: 'Oswald (Impacto)', value: "'Oswald', sans-serif" },
+            { name: 'Ubuntu (Tech)', value: "'Ubuntu', sans-serif" }
+        ];
+
+        // Se usa el tema 0 (Pizarra) y fuente 0 (Outfit) por defecto
         const DEFAULT_SETTINGS = { 
-            country: 'Perú', lang: 'es', currencies: ['PEN', '', ''], zoom: 100, theme: 'dark', 
-            colors: { bg: '#18181b', card: '#27272a', text: '#ffffff', secondary: '#a1a1aa', border: '#3f3f46', accent: '#3b82f6', navBg: '#18181b', navActiveBg: '#3f3f46', navActiveText: '#60a5fa' }
+            country: 'Perú', lang: 'es', currencies: ['PEN', '', ''], zoom: 100, 
+            themeName: PREDEFINED_THEMES[0].name, fontFamily: PREDEFINED_FONTS[0].value,
+            colors: PREDEFINED_THEMES[0].colors
         };
 
         const DB = {
@@ -96,7 +126,12 @@
                 const saved = JSON.parse(localStorage.getItem(`settings_${user}`));
                 if (!saved) return DEFAULT_SETTINGS;
                 const safeCurrencies = saved.currencies && saved.currencies.length > 0 ? saved.currencies : ['PEN', '', ''];
-                return { ...DEFAULT_SETTINGS, ...saved, currencies: safeCurrencies, colors: { ...DEFAULT_SETTINGS.colors, ...(saved.colors || {}) } };
+                return { 
+                    ...DEFAULT_SETTINGS, ...saved, currencies: safeCurrencies, 
+                    fontFamily: saved.fontFamily || DEFAULT_SETTINGS.fontFamily,
+                    themeName: saved.themeName || DEFAULT_SETTINGS.themeName,
+                    colors: { ...DEFAULT_SETTINGS.colors, ...(saved.colors || {}) } 
+                };
             },
             saveSettings: (user, s) => localStorage.setItem(`settings_${user}`, JSON.stringify(s))
         };
@@ -131,7 +166,10 @@
             PiggyBank: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2h0V5z"/><path d="M2 9v1c0 1.1.9 2 2 2h1"/><path d="M16 11h.01"/></svg>,
             Calendar: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>,
             Lightbulb: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>,
-            RefreshCw: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            RefreshCw: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>,
+            Palette: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>,
+            Type: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>,
+            Image: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
         };
 
         // --- CABECERA UNIVERSAL ---
@@ -164,7 +202,7 @@
                         
                         <div className="w-16 h-16 rounded-full bg-warning/20 text-warning flex items-center justify-center mx-auto mb-4 mt-2 shadow-lg border border-warning/50"><Icons.Crown c="w-8 h-8"/></div>
                         <h2 className="text-2xl font-bold text-primary mb-2">Desbloquea la IA</h2>
-                        <p className="text-secondary text-sm mb-6">Analiza tus finanzas y registra por voz. Elige tu plan y págalo por WhatsApp.</p>
+                        <p className="text-secondary text-sm mb-6">Analiza tus finanzas, personaliza a tu estilo y registra por voz.</p>
                         
                         <div className="space-y-3 mb-6">
                             <button onClick={()=>redirectWA('1 Mes ($3.00)')} className="w-full bg-[#19191c] border border-border p-3 rounded-xl hover:border-warning transition flex justify-between items-center group">
@@ -268,7 +306,7 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ TU ID DE CLIENTE DE GOOGLE REAL            */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -284,11 +322,11 @@
             }, []);
 
             return (
-                <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#111111] text-white">
+                <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#18181b] text-white">
                     <div className="w-24 h-24 rounded-3xl bg-transparent text-accent p-1 mb-6"><Icons.Logo /></div>
                     <h1 className="text-4xl font-extrabold tracking-tight mb-2">Mi Billetera</h1>
                     <p className="text-[#a1a1aa] mb-12 text-center max-w-xs text-sm">Controla tus finanzas personales con Inteligencia Artificial. Rápido y privado.</p>
-                    <div className="w-full max-w-xs p-6 bg-[#1e1e1e] rounded-3xl border border-[#27272a] shadow-xl text-center">
+                    <div className="w-full max-w-xs p-6 bg-[#27272a] rounded-3xl border border-[#3f3f46] shadow-xl text-center">
                         <p className="text-xs font-bold uppercase text-[#a1a1aa] tracking-widest mb-6">Acceso Seguro</p>
                         <div id="g-btn" className="w-full overflow-hidden rounded-xl h-12 flex justify-center"></div>
                         <p className="text-[10px] text-[#a1a1aa] mt-4 leading-relaxed">Al ingresar aceptas que tus datos se guarden únicamente de forma local en tu dispositivo.</p>
@@ -301,7 +339,7 @@
             const validCurrencies = currencies.filter(c => c && c.trim() !== '');
             if (validCurrencies.length <= 1) return null;
             return (
-                <div className="flex bg-[#19191c] rounded-xl p-1 mb-4 border border-border w-full shadow-inner">
+                <div className="flex bg-[#19191c] rounded-xl p-1 mb-4 border border-border w-full shadow-inner" style={{backgroundColor: 'var(--col-nav-bg)'}}>
                     {validCurrencies.map(curr => <button key={curr} onClick={() => setActiveCurrency(curr)} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${activeCurrency===curr?'bg-accent text-white shadow-md':'text-secondary hover:text-primary'}`}>{curr}</button>)}
                 </div>
             );
@@ -316,7 +354,7 @@
             const bal = inC - outC; const target = inC * 0.2; const pct = target>0 ? Math.min(Math.round((bal/target)*100),100) : (bal>0?100:0);
             
             // Botón actualizar frase
-            const quotesList = t('quotes') || ["Planea tus compras."]; 
+            const quotesList = t('quotes'); 
             const [quoteIdx, setQuoteIdx] = useState(Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)) % quotesList.length);
             const nextQuote = () => setQuoteIdx((prev) => (prev + 1) % quotesList.length);
 
@@ -384,7 +422,7 @@
 
             const procesarIA = () => {
                 if(!iaMsg) return; const txt = iaMsg.toLowerCase();
-                // Nuevo Regex de Ingresos (Reconoce: recibí, ingreso, gané, cobré, me dieron, tengo, me pagaron, sueldo)
+                // Nuevo Regex de Ingresos: Detecta palabras clave de entrada de dinero
                 const isInc = /recib[íi]|ingreso|gan[é\e]|cobr[é\e]|dieron|tengo|pagaron|sueldo/i.test(txt);
                 const type = isInc ? 'ingreso' : 'gasto';
                 const nums = txt.match(/\d+(\.\d+)?/); const amount = nums ? parseFloat(nums[0]) : 0;
@@ -392,7 +430,7 @@
                     let c = "Otros"; CATEGORIAS.forEach(x => { if(txt.includes(x.toLowerCase())) c = x; });
                     addTxn({ id: Date.now(), type, amount, category: c, description: iaMsg, date: new Date().toISOString(), currency: cur });
                     setIaMsg(''); setIaMode('texto'); alert(`🤖 IA: ${type.toUpperCase()} - ${formatMoneda(amount, cur)} (${c}) guardado.`);
-                } else alert("🤖 IA: No detecté ningún monto.");
+                } else alert("🤖 IA: No detecté ningún monto en tu frase.");
             };
 
             return (
@@ -435,7 +473,7 @@
                             
                             {iaMode === 'texto' ? (
                                 <div>
-                                    <textarea value={iaMsg} onChange={e=>setIaMsg(e.target.value)} className="w-full p-4 border border-border rounded-xl mb-3 bg-background outline-none text-sm text-primary font-medium" rows="3" placeholder="Ej: Gasté 50 en transporte..."></textarea>
+                                    <textarea value={iaMsg} onChange={e=>setIaMsg(e.target.value)} className="w-full p-4 border border-border rounded-xl mb-3 bg-background outline-none text-sm text-primary font-medium" rows="3" placeholder="Ej: Me pagaron 1500 de salario..."></textarea>
                                     <button onClick={procesarIA} className="w-full py-3 bg-[#19191c] border border-warning/50 text-warning rounded-xl font-bold shadow-sm">Procesar con IA</button>
                                 </div>
                             ) : (
@@ -453,7 +491,7 @@
             );
         }
 
-        // --- PANTALLA 3: ANÁLISIS IA ---
+        // --- PANTALLA 3: ANÁLISIS IA (DINÁMICO) ---
         function Analisis({ txns, cur, t, isVip, user, onOpenSettings, onUpgrade }) {
             if (!isVip) {
                 return (
@@ -674,10 +712,12 @@
             );
         }
 
-        // --- PANTALLA 5: AJUSTES (MODAL FLOTANTE) ---
+        // --- PANTALLA 5: AJUSTES (MODAL FLOTANTE VIP) ---
         function AjustesModal({ onClose, settings, saveSettings, user, isVip, onLogout, onUpgrade }) {
             const [local, setLocal] = useState(settings);
             const [code, setCode] = useState(''); const [crm, setCrm] = useState(false);
+            const [customTab, setCustomTab] = useState('temas'); // temas, fondos, textos
+            
             const prof = DB.getUserData(user)?.profile;
 
             const chgCountry = (e) => {
@@ -685,6 +725,10 @@
                 if(cData) { const nc = [...local.currencies]; nc[0] = cData.defaultCurr; setLocal({...local, country: cName, lang: cData.lang, currencies: nc}); }
             };
             const chgCurr = (index, val) => { const nc = [...local.currencies]; nc[index] = val; setLocal({...local, currencies: nc}); };
+
+            const applyPredefinedTheme = (theme) => {
+                setLocal({ ...local, themeName: theme.name, colors: theme.colors });
+            };
 
             const backup = async () => {
                 const p = prompt("Crea una clave para encriptar tu respaldo:"); if(!p) return;
@@ -752,42 +796,82 @@
                         </div>
 
                         <div className="space-y-6">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 gap-4">
                                 <div>
-                                    <label className="text-[10px] font-bold text-secondary uppercase mb-2 block tracking-widest">País de Residencia</label>
-                                    <select value={local.country} onChange={chgCountry} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm font-bold shadow-inner">
+                                    <label className="text-[10px] font-bold text-secondary uppercase mb-2 block tracking-widest">País de Residencia y Monedas</label>
+                                    <select value={local.country} onChange={chgCountry} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm font-bold shadow-inner mb-3">
                                         {COUNTRIES.map(c=><option key={c.name} value={c.name}>{c.name}</option>)}
                                     </select>
-                                </div>
-                                <div>
-                                    <label className="text-[10px] font-bold text-secondary uppercase mb-2 block tracking-widest">Tema Visual</label>
-                                    <div className="flex bg-background border border-border p-1 rounded-xl shadow-inner h-[46px] items-center">
-                                        <button onClick={()=>setLocal({...local, theme:'dark', colors: DEFAULT_SETTINGS.colors})} className={`flex-1 p-2 rounded-lg font-bold text-xs h-full ${local.theme==='dark'?'bg-accent text-white shadow-md':'text-secondary'}`}>Oscuro</button>
-                                        <button onClick={()=>setLocal({...local, theme:'light', colors: { bg:'#f4f4f5', card:'#ffffff', text:'#18181b', secondary:'#71717a', border:'#e4e4e7', accent:'#2563eb', navBg:'#ffffff', navActiveBg:'#e4e4e7', navActiveText:'#2563eb' }})} className={`flex-1 p-2 rounded-lg font-bold text-xs h-full ${local.theme==='light'?'bg-accent text-white shadow-md':'text-secondary'}`}>Claro</button>
+                                    <div className="grid grid-cols-3 gap-3">
+                                        {[0, 1, 2].map(i => (
+                                            <select key={i} value={local.currencies[i] || ''} onChange={e => chgCurr(i, e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-xs font-bold text-center appearance-none shadow-inner">
+                                                <option value="">{i===0?'Principal':`Opción ${i+1}`}</option>
+                                                {Object.keys(ALL_CURRENCIES).map(code => <option key={code} value={code}>{code}</option>)}
+                                            </select>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="pt-4 border-t border-border">
-                                <label className="text-[10px] font-bold text-secondary uppercase mb-3 block tracking-widest">Tus 3 Monedas Favoritas</label>
-                                <div className="grid grid-cols-3 gap-3">
-                                    {[0, 1, 2].map(i => (
-                                        <select key={i} value={local.currencies[i] || ''} onChange={e => chgCurr(i, e.target.value)} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-xs font-bold text-center appearance-none shadow-inner">
-                                            <option value="">{i===0?'Principal':`Opción ${i+1}`}</option>
-                                            {Object.keys(ALL_CURRENCIES).map(code => <option key={code} value={code}>{code}</option>)}
-                                        </select>
-                                    ))}
-                                </div>
-                            </div>
-
+                            {/* --- SECCIÓN VIP: PERSONALIZACIÓN TOTAL (3 BOTONES/PESTAÑAS) --- */}
                             <div className="pt-4 border-t border-border relative">
                                 {!isVip && <div className="absolute inset-0 glass-panel z-10 flex justify-center items-center rounded-2xl"><button onClick={() => { onClose(); onUpgrade(); }} className="bg-warning text-black font-bold px-4 py-2 rounded-lg text-xs shadow-[0_0_15px_rgba(234,179,8,0.5)] flex items-center gap-1"><Icons.Crown c="w-4 h-4"/> Solo VIP</button></div>}
-                                <div className="flex justify-between items-center mb-3">
-                                    <label className="text-[10px] font-bold text-secondary uppercase tracking-widest">Personalizar Colores</label>
-                                    <button onClick={()=>setLocal({...local, colors: DEFAULT_SETTINGS.colors})} className="text-[10px] text-accent font-bold hover:underline">Restaurar Default</button>
+                                
+                                <div className="flex justify-between items-center mb-4">
+                                    <label className="text-[10px] font-bold text-secondary uppercase tracking-widest flex items-center gap-1.5"><Icons.Palette c="w-3 h-3"/> Personalización VIP</label>
+                                    <button onClick={()=>{setLocal({...local, colors: DEFAULT_SETTINGS.colors, themeName: DEFAULT_SETTINGS.themeName, fontFamily: DEFAULT_SETTINGS.fontFamily});}} className="text-[10px] text-accent font-bold hover:underline flex items-center gap-1"><Icons.RefreshCw c="w-3 h-3"/> Restaurar Default</button>
                                 </div>
-                                <div className="flex justify-between gap-3">
-                                    {['bg','card','accent'].map(k => <div key={k} className="flex-1"><input type="color" value={local.colors[k]} onChange={e=>setLocal({...local, colors:{...local.colors, [k]:e.target.value}})} className="w-full h-10 rounded-lg cursor-pointer border border-border shadow-sm"/><p className="text-[9px] font-bold uppercase text-center mt-1 text-secondary">{k}</p></div>)}
+
+                                {/* Botones 1, 2, 3 (Pestañas) */}
+                                <div className="flex bg-background rounded-xl p-1 mb-4 border border-border shadow-inner">
+                                    <button onClick={()=>setCustomTab('temas')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${customTab==='temas'?'bg-card text-primary shadow border border-border':'text-secondary hover:text-primary'}`}>🎨 1. Temas</button>
+                                    <button onClick={()=>setCustomTab('fondos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${customTab==='fondos'?'bg-card text-primary shadow border border-border':'text-secondary hover:text-primary'}`}>🖼️ 2. Fondos</button>
+                                    <button onClick={()=>setCustomTab('textos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${customTab==='textos'?'bg-card text-primary shadow border border-border':'text-secondary hover:text-primary'}`}>Aa 3. Textos</button>
+                                </div>
+
+                                {/* CONTENIDO DE PESTAÑAS */}
+                                <div className="bg-card border border-border rounded-xl p-4 shadow-sm min-h-[220px]">
+                                    {customTab === 'temas' && (
+                                        <div>
+                                            <p className="text-[10px] text-secondary mb-3 text-center">12 Personalidades diseñadas para ti</p>
+                                            <div className="grid grid-cols-2 gap-2 max-h-[160px] overflow-y-auto pr-1">
+                                                {PREDEFINED_THEMES.map(t => (
+                                                    <button key={t.name} onClick={()=>applyPredefinedTheme(t)} className={`p-2 rounded-lg text-xs font-bold transition-all border ${local.themeName === t.name ? 'border-accent ring-1 ring-accent' : 'border-border hover:border-secondary'}`} style={{backgroundColor: t.colors.card, color: t.colors.text}}>
+                                                        {t.name}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {customTab === 'fondos' && (
+                                        <div>
+                                            <p className="text-[10px] text-secondary mb-4 text-center">Personaliza el fondo de la app libremente</p>
+                                            <div className="flex justify-around gap-4">
+                                                <div className="flex flex-col items-center gap-2">
+                                                    <input type="color" value={local.colors.bg} onChange={e=>setLocal({...local, colors:{...local.colors, bg:e.target.value}})} className="w-16 h-16 rounded-xl cursor-pointer border-2 border-border shadow-sm"/>
+                                                    <span className="text-[10px] font-bold uppercase text-secondary">Fondo Global</span>
+                                                </div>
+                                                <div className="flex flex-col items-center gap-2">
+                                                    <input type="color" value={local.colors.card} onChange={e=>setLocal({...local, colors:{...local.colors, card:e.target.value}})} className="w-16 h-16 rounded-xl cursor-pointer border-2 border-border shadow-sm"/>
+                                                    <span className="text-[10px] font-bold uppercase text-secondary">Tarjetas</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {customTab === 'textos' && (
+                                        <div>
+                                            <p className="text-[10px] text-secondary mb-4 text-center">Elige tu tipografía favorita de 12 estilos</p>
+                                            <select value={local.fontFamily} onChange={e=>setLocal({...local, fontFamily: e.target.value})} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm font-bold shadow-inner mb-4" style={{fontFamily: local.fontFamily}}>
+                                                {PREDEFINED_FONTS.map(f => <option key={f.name} value={f.value} style={{fontFamily: f.value}}>{f.name}</option>)}
+                                            </select>
+                                            <div className="flex justify-center items-center gap-4">
+                                                <span className="text-[10px] font-bold uppercase text-secondary">Color de texto principal:</span>
+                                                <input type="color" value={local.colors.text} onChange={e=>setLocal({...local, colors:{...local.colors, text:e.target.value}})} className="w-10 h-10 rounded-lg cursor-pointer border border-border shadow-sm"/>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
@@ -800,7 +884,7 @@
                                 </div>
                             </div>
 
-                            <button onClick={()=>{saveSettings(local); onClose();}} className="w-full bg-accent text-white p-4 rounded-xl font-bold mt-2 shadow-lg shadow-accent/30 text-lg">Guardar Todo y Cerrar</button>
+                            <button onClick={()=>{saveSettings(local); onClose();}} className="w-full bg-accent text-white p-4 rounded-xl font-bold mt-2 shadow-lg shadow-accent/30 text-lg hover:scale-[1.02] transition-transform">Guardar y Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -842,8 +926,10 @@
             };
 
             const zS = (settings.zoom||100)/100; const c = settings.colors || DEFAULT_SETTINGS.colors;
+            
+            // APLICACIÓN DE ESTILOS GLOBALES (Fuente y Colores Dinámicos)
             return (
-                <div className="min-h-screen flex flex-col relative" style={{ '--col-bg':c.bg, '--col-card':c.card, '--col-text':c.text, '--col-secondary':c.secondary, '--col-border':c.border, '--col-accent':c.accent, '--col-nav-bg':c.navBg, '--col-nav-active-bg':c.navActiveBg, '--col-nav-active-text':c.navActiveText }}>
+                <div className="min-h-screen flex flex-col relative" style={{ fontFamily: settings.fontFamily, '--col-bg':c.bg, '--col-card':c.card, '--col-text':c.text, '--col-secondary':c.secondary, '--col-border':c.border, '--col-accent':c.accent, '--col-nav-bg':c.navBg, '--col-nav-active-bg':c.navActiveBg, '--col-nav-active-text':c.navActiveText }}>
                     <div className="flex-1 pb-28" style={{ transform:`scale(${zS})`, transformOrigin:'top center' }}>{renderV()}</div>
                     
                     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-nav-bg/95 backdrop-blur-md rounded-[2rem] flex justify-around px-2 py-3 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-border/50 z-40">
