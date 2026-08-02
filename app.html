@@ -373,7 +373,7 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ TU ID DE CLIENTE DE GOOGLE REAL            */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -680,7 +680,7 @@
             );
         }
 
-        // --- PANTALLA 4: HISTORIAL ---
+        // --- PANTALLA 4: HISTORIAL (AQUÍ ESTÁ EL CAMBIO DE LAS 24 HORAS) ---
         function Historial({ txns, cur, setCur, curList, deleteTxn, updateTxn, t, isVip, user, onOpenSettings, onOpenCountryMenu, settings, formatMoneda, Icons, c }) {
             const currentTxnsAll = txns.filter(txn => txn.currency === cur);
             const [filtro, setFiltro] = useState('Semanal'); 
@@ -776,28 +776,37 @@
 
                     <div className="space-y-3">
                         {displayTxns.length === 0 ? <p className="text-center text-secondary py-10 text-sm font-medium">{t('no_txns')}</p> : 
-                        displayTxns.map(txn => (
-                            <div key={txn.id} className="flex justify-between items-center p-4 bg-card rounded-3xl border shadow-sm group hover:border-accent transition-colors duration-300" style={{borderColor: c.border}}>
-                                <div className="flex items-center gap-4">
-                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${txn.type === 'ingreso' ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>
-                                        {txn.type === 'ingreso' ? <Icons.TrendingUp c="w-6 h-6"/> : <Icons.TrendingDown c="w-6 h-6"/>}
+                        displayTxns.map(txn => {
+                            // --- AQUÍ ESTÁ LA NUEVA LÓGICA DE LAS 24 HORAS ---
+                            const tiempoTranscurrido = new Date() - new Date(txn.date);
+                            const puedeEditar = tiempoTranscurrido <= 86400000;
+
+                            return (
+                                <div key={txn.id} className="flex justify-between items-center p-4 bg-card rounded-3xl border shadow-sm group hover:border-accent transition-colors duration-300" style={{borderColor: c.border}}>
+                                    <div className="flex items-center gap-4">
+                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${txn.type === 'ingreso' ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>
+                                            {txn.type === 'ingreso' ? <Icons.TrendingUp c="w-6 h-6"/> : <Icons.TrendingDown c="w-6 h-6"/>}
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-sm text-primary mb-0.5">{txn.description}</p>
+                                            <p className="text-[10px] text-secondary font-medium uppercase tracking-wider">{txn.category} • {new Date(txn.date).toLocaleDateString()}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="font-bold text-sm text-primary mb-0.5">{txn.description}</p>
-                                        <p className="text-[10px] text-secondary font-medium uppercase tracking-wider">{txn.category} • {new Date(txn.date).toLocaleDateString()}</p>
+                                    <div className="flex flex-col items-end gap-2">
+                                        <span className={`font-bold text-sm ${txn.type==='ingreso'?'text-success':'text-error'}`}>
+                                            {txn.type==='ingreso'?'+':'-'}{formatMoneda(txn.amount, cur)}
+                                        </span>
+                                        <div className="flex items-center gap-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                                            {/* Si pasaron menos de 24h, mostramos el lápiz */}
+                                            {puedeEditar && (
+                                                <button onClick={()=>setEditingTxn(txn)} className="p-1.5 text-secondary hover:text-accent bg-background rounded-lg border shadow-sm" style={{borderColor: c.border}}><Icons.Pencil c="w-3.5 h-3.5"/></button>
+                                            )}
+                                            <button onClick={()=>deleteTxn(txn.id)} className="p-1.5 text-secondary hover:text-error bg-background rounded-lg border shadow-sm" style={{borderColor: c.border}}><Icons.Trash c="w-3.5 h-3.5"/></button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col items-end gap-2">
-                                    <span className={`font-bold text-sm ${txn.type==='ingreso'?'text-success':'text-error'}`}>
-                                        {txn.type==='ingreso'?'+':'-'}{formatMoneda(txn.amount, cur)}
-                                    </span>
-                                    <div className="flex items-center gap-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
-                                        <button onClick={()=>setEditingTxn(txn)} className="p-1.5 text-secondary hover:text-accent bg-background rounded-lg border shadow-sm" style={{borderColor: c.border}}><Icons.Pencil c="w-3.5 h-3.5"/></button>
-                                        <button onClick={()=>deleteTxn(txn.id)} className="p-1.5 text-secondary hover:text-error bg-background rounded-lg border shadow-sm" style={{borderColor: c.border}}><Icons.Trash c="w-3.5 h-3.5"/></button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                     {editingTxn && <EditModal txn={editingTxn} onClose={()=>setEditingTxn(null)} />}
                 </div>
