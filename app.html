@@ -373,7 +373,7 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ TU ID DE CLIENTE DE GOOGLE REAL            */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -404,7 +404,8 @@
 
         // --- COMPONENTE: PESTAÑAS DE MONEDA (FIJAS ARRIBA) ---
         const CurrencyTabs = ({ currencies, activeCurrency, setActiveCurrency, c }) => {
-            const validCurrencies = currencies.filter(curr => curr && curr.trim() !== '');
+            const safeCurrencies = Array.isArray(currencies) ? currencies : [];
+            const validCurrencies = safeCurrencies.filter(curr => curr && curr.trim() !== '');
             if (validCurrencies.length <= 1) return null;
             
             return (
@@ -427,47 +428,50 @@
 
         // --- PANTALLA 1: DASHBOARD ---
         function Dashboard({ txns, cur, setActiveCurrency, settings, t, isVip, user, onOpenSettings, onOpenCountryMenu, expire, formatMoneda, Icons, c }) {
-            const catList = t('categories') || ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
-            const m = txns.filter(x => x.currency === cur);
-            const inC = m.filter(x=>x.type==='ingreso').reduce((a,b)=>a+b.amount,0); 
-            const outC = m.filter(x=>x.type==='gasto').reduce((a,b)=>a+b.amount,0);
-            const fijos = m.filter(x=>x.type==='gasto' && (x.category===catList[3] || x.category===catList[4])).reduce((a,b)=>a+b.amount,0);
+            const catList = Array.isArray(t('categories')) ? t('categories') : ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
+            const safeTxns = Array.isArray(txns) ? txns : [];
+            const m = safeTxns.filter(x => x && x.currency === cur);
+            
+            const inC = m.filter(x=>x.type==='ingreso').reduce((a,b)=>a+(Number(b.amount)||0),0); 
+            const outC = m.filter(x=>x.type==='gasto').reduce((a,b)=>a+(Number(b.amount)||0),0);
+            const fijos = m.filter(x=>x.type==='gasto' && (x.category===catList[3] || x.category===catList[4])).reduce((a,b)=>a+(Number(b.amount)||0),0);
             const bal = inC - outC; const target = inC * 0.2; const pct = target>0 ? Math.min(Math.round((bal/target)*100),100) : (bal>0?100:0);
             
-            const quotesList = t('quotes') || ["Planea tus compras."]; 
+            const quotesList = Array.isArray(t('quotes')) ? t('quotes') : ["Planea tus compras."]; 
             const [quoteIdx, setQuoteIdx] = useState(Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)) % quotesList.length);
             const nextQuote = () => setQuoteIdx((prev) => (prev + 1) % quotesList.length);
 
-            const hasMultipleCurrencies = settings.currencies.filter(curr => curr && curr.trim() !== '').length > 1;
+            const safeCurrencies = Array.isArray(settings.currencies) ? settings.currencies : [];
+            const hasMultipleCurrencies = safeCurrencies.filter(curr => curr && curr.trim() !== '').length > 1;
 
             return (
                 <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
-                    <TopHeader title={t('home')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
+                    <TopHeader title={t('home')||'Inicio'} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
 
                     {isVip && expire && <div className="bg-warning/10 border border-warning/30 rounded-xl p-3 flex justify-between items-center text-xs"><span className="text-warning font-bold flex items-center gap-2"><Icons.Crown c="w-4 h-4"/> Suscripción Activa</span><span className="text-secondary">Vence: {expire === '2099-12-31' ? 'Vitalicio' : expire}</span></div>}
                     
-                    <CurrencyTabs currencies={settings.currencies} activeCurrency={cur} setActiveCurrency={setActiveCurrency} c={c} />
+                    <CurrencyTabs currencies={safeCurrencies} activeCurrency={cur} setActiveCurrency={setActiveCurrency} c={c} />
 
                     <div className="bg-gradient-to-br from-card to-background rounded-3xl p-6 border shadow-lg relative overflow-hidden" style={{borderColor: c.border}}>
                         <div className="absolute top-0 right-0 p-4 opacity-10 w-28 h-28 text-accent"><Icons.Logo/></div>
-                        <p className="text-secondary text-sm font-bold tracking-wider uppercase mb-1">{t('balance')} ({cur})</p>
+                        <p className="text-secondary text-sm font-bold tracking-wider uppercase mb-1">{t('balance')||'Saldo'} ({cur})</p>
                         <p className="text-4xl font-extrabold text-white mb-6">{formatMoneda(bal, cur)}</p>
                         <div className="flex gap-4">
-                            <div className="flex-1 bg-success/10 border border-success/20 rounded-2xl p-3"><p className="text-[10px] text-success font-bold uppercase flex items-center gap-1"><Icons.TrendingUp c="w-3 h-3"/> {t('income')}</p><p className="text-success font-bold text-lg mt-1">+{formatMoneda(inC, cur)}</p></div>
-                            <div className="flex-1 bg-error/10 border border-error/20 rounded-2xl p-3"><p className="text-[10px] text-error font-bold uppercase flex items-center gap-1"><Icons.TrendingDown c="w-3 h-3"/> {t('exp')}</p><p className="text-error font-bold text-lg mt-1">-{formatMoneda(outC, cur)}</p></div>
+                            <div className="flex-1 bg-success/10 border border-success/20 rounded-2xl p-3"><p className="text-[10px] text-success font-bold uppercase flex items-center gap-1"><Icons.TrendingUp c="w-3 h-3"/> {t('income')||'Ingresos'}</p><p className="text-success font-bold text-lg mt-1">+{formatMoneda(inC, cur)}</p></div>
+                            <div className="flex-1 bg-error/10 border border-error/20 rounded-2xl p-3"><p className="text-[10px] text-error font-bold uppercase flex items-center gap-1"><Icons.TrendingDown c="w-3 h-3"/> {t('exp')||'Gastos'}</p><p className="text-error font-bold text-lg mt-1">-{formatMoneda(outC, cur)}</p></div>
                         </div>
                     </div>
 
                     <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}>
-                        <div className="flex justify-between items-center mb-3"><p className="font-bold text-primary text-sm flex items-center gap-1.5"><Icons.PiggyBank c="w-4 h-4 text-accent"/> {t('save')}</p><p className="font-bold text-accent text-sm">{pct}%</p></div>
+                        <div className="flex justify-between items-center mb-3"><p className="font-bold text-primary text-sm flex items-center gap-1.5"><Icons.PiggyBank c="w-4 h-4 text-accent"/> {t('save')||'Ahorro'}</p><p className="font-bold text-accent text-sm">{pct}%</p></div>
                         <div className="w-full bg-background rounded-full h-3 mb-2"><div className="bg-accent h-3 rounded-full transition-all duration-1000" style={{width:`${pct}%`, backgroundColor: c.accent}}></div></div>
-                        <div className="flex justify-between text-[11px] font-bold text-secondary"><p>{t('lbl_actual')}: {formatMoneda(bal, cur)}</p><p>{t('lbl_goal')} (20%): {formatMoneda(target, cur)}</p></div>
+                        <div className="flex justify-between text-[11px] font-bold text-secondary"><p>{t('lbl_actual')||'Actual'}: {formatMoneda(bal, cur)}</p><p>{t('lbl_goal')||'Meta'} (20%): {formatMoneda(target, cur)}</p></div>
                     </div>
 
                     <div className="bg-card rounded-2xl p-5 shadow-sm border flex justify-between items-center" style={{borderColor: c.border}}>
                         <div>
-                            <div className="flex items-center gap-2 mb-1"><Icons.Calendar c="w-4 h-4 text-warning"/><p className="text-sm font-bold text-primary">{t('fixed')}</p></div>
-                            <p className="text-xs text-secondary">{t('fixed_sub')}</p>
+                            <div className="flex items-center gap-2 mb-1"><Icons.Calendar c="w-4 h-4 text-warning"/><p className="text-sm font-bold text-primary">{t('fixed')||'Fijos'}</p></div>
+                            <p className="text-xs text-secondary">{t('fixed_sub')||'Recurrentes'}</p>
                         </div>
                         <p className="text-xl font-bold text-warning">{formatMoneda(fijos, cur)}</p>
                     </div>
@@ -483,7 +487,7 @@
 
         // --- PANTALLA 2: REGISTRO UNIFICADO ---
         function RegistroUnificado({ addTxn, cur, settings, t, isVip, user, onOpenSettings, onOpenCountryMenu, onUpgrade, formatMoneda, Icons, c }) {
-            const catList = t('categories') || ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
+            const catList = Array.isArray(t('categories')) ? t('categories') : ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
             const [tipo, setTipo] = useState('gasto'); const [monto, setMonto] = useState(''); const [cat, setCat] = useState(catList[0]); const [desc, setDesc] = useState('');
             const [iaMode, setIaMode] = useState('texto'); const [iaMsg, setIaMsg] = useState(''); const [escuchando, setEscuchando] = useState(false);
             const recRef = useRef(null);
@@ -512,69 +516,70 @@
 
             const procesarIA = () => {
                 if(!iaMsg) return; const txt = iaMsg.toLowerCase();
-                const incomeKeywords = t('income_words') || ["recib", "ingreso", "gan", "cobr"];
+                const incomeKeywords = Array.isArray(t('income_words')) ? t('income_words') : ["recib", "ingreso", "gan", "cobr"];
                 const isInc = incomeKeywords.some(w => txt.includes(w));
                 const type = isInc ? 'ingreso' : 'gasto';
                 const nums = txt.match(/\d+(\.\d+)?/); const amount = nums ? parseFloat(nums[0]) : 0;
                 if(amount > 0) {
-                    let c = catList[catList.length - 1]; // "Otros"
-                    catList.forEach(x => { if(txt.includes(x.toLowerCase())) c = x; });
-                    addTxn({ id: Date.now(), type, amount, category: c, description: iaMsg, date: new Date().toISOString(), currency: cur });
-                    setIaMsg(''); setIaMode('texto'); alert(`🤖 IA: ${type.toUpperCase()} - ${formatMoneda(amount, cur)} (${c})`);
-                } else alert(t('msg_no_amount'));
+                    let cItem = catList[catList.length - 1]; // "Otros"
+                    catList.forEach(x => { if(txt.includes(x.toLowerCase())) cItem = x; });
+                    addTxn({ id: Date.now(), type, amount, category: cItem, description: iaMsg, date: new Date().toISOString(), currency: cur });
+                    setIaMsg(''); setIaMode('texto'); alert(`🤖 IA: ${type.toUpperCase()} - ${formatMoneda(amount, cur)} (${cItem})`);
+                } else alert(t('msg_no_amount') || "No detecté monto.");
             };
 
-            const hasMultipleCurrencies = settings.currencies.filter(curr => curr && curr.trim() !== '').length > 1;
+            const safeCurrencies = Array.isArray(settings.currencies) ? settings.currencies : [];
+            const hasMultipleCurrencies = safeCurrencies.filter(curr => curr && curr.trim() !== '').length > 1;
 
             return (
                 <div className={`p-4 space-y-6 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
-                    <TopHeader title={t('record')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
+                    <TopHeader title={t('record')||'Registrar'} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
                     
                     <div className="bg-card rounded-3xl p-5 border shadow-lg" style={{borderColor: c.border}}>
-                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Icons.Plus c="w-5 h-5 text-accent"/> {t('manual')}</h2>
+                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Icons.Plus c="w-5 h-5 text-accent"/> {t('manual')||'Manual'}</h2>
                         <form onSubmit={guardarManual} className="space-y-4">
                             <div className="flex bg-background rounded-xl p-1 border" style={{borderColor: c.border}}>
-                                <button type="button" onClick={()=>setTipo('gasto')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${tipo==='gasto'?'bg-error text-white':'text-secondary'}`}>{t('btn_expense')}</button>
-                                <button type="button" onClick={()=>setTipo('ingreso')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${tipo==='ingreso'?'bg-success text-white':'text-secondary'}`}>{t('btn_income')}</button>
+                                <button type="button" onClick={()=>setTipo('gasto')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${tipo==='gasto'?'bg-error text-white':'text-secondary'}`}>{t('btn_expense')||'Gasto'}</button>
+                                <button type="button" onClick={()=>setTipo('ingreso')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${tipo==='ingreso'?'bg-success text-white':'text-secondary'}`}>{t('btn_income')||'Ingreso'}</button>
                             </div>
                             <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} required className="w-full p-4 rounded-xl border bg-background outline-none text-2xl font-bold text-primary text-center" style={{borderColor: c.border}} placeholder="0.00"/>
                             <div className="flex gap-2">
-                                <select value={cat || catList[0]} onChange={e=>setCat(e.target.value)} className="w-1/2 p-3 rounded-xl border bg-background outline-none text-sm text-primary font-bold" style={{borderColor: c.border}}>{catList.map(c=><option key={c} value={c}>{c}</option>)}</select>
-                                <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} className="w-1/2 p-3 rounded-xl border bg-background outline-none text-sm text-primary" style={{borderColor: c.border}} placeholder={t('desc')}/>
+                                <select value={cat || catList[0]} onChange={e=>setCat(e.target.value)} className="w-1/2 p-3 rounded-xl border bg-background outline-none text-sm text-primary font-bold" style={{borderColor: c.border}}>{catList.map(cItem=><option key={cItem} value={cItem}>{cItem}</option>)}</select>
+                                <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} className="w-1/2 p-3 rounded-xl border bg-background outline-none text-sm text-primary" style={{borderColor: c.border}} placeholder={t('desc')||'Descripción'}/>
                             </div>
-                            <button type="submit" className="w-full py-3.5 bg-accent text-white rounded-xl font-bold shadow-lg shadow-accent/30" style={{backgroundColor: c.accent}}>{t('btn_save')}</button>
+                            <button type="submit" className="w-full py-3.5 bg-accent text-white rounded-xl font-bold shadow-lg shadow-accent/30" style={{backgroundColor: c.accent}}>{t('btn_save')||'Guardar'}</button>
                         </form>
                     </div>
 
                     <div className="relative bg-card rounded-3xl p-5 border shadow-lg overflow-hidden" style={{borderColor: c.border}}>
-                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-warning"><Icons.Brain c="w-5 h-5"/> {t('ai')}</h2>
+                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-warning"><Icons.Brain c="w-5 h-5"/> {t('ai')||'IA'}</h2>
                         
                         {!isVip && (
                             <div className="absolute inset-0 z-10 glass-panel flex flex-col items-center justify-center text-center p-6">
                                 <div className="w-12 h-12 bg-warning/20 text-warning rounded-full flex items-center justify-center mb-3"><Icons.Crown c="w-6 h-6"/></div>
                                 <h3 className="font-bold text-white mb-2">Desbloquea la Inteligencia Artificial</h3>
-                                <button onClick={onUpgrade} className="bg-warning text-black font-bold px-6 py-2.5 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:scale-105 transition">{t('btn_see_plans')}</button>
+                                <button onClick={onUpgrade} className="bg-warning text-black font-bold px-6 py-2.5 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:scale-105 transition">{t('btn_see_plans')||'Ver Planes'}</button>
                             </div>
                         )}
 
                         <div className={!isVip ? "opacity-30 pointer-events-none filter blur-sm" : ""}>
                             <div className="flex bg-background rounded-xl p-1 mb-4 border" style={{borderColor: c.border}}>
-                                <button onClick={()=>{setIaMode('texto'); if(escuchando) toggleVoz();}} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='texto'?'bg-card text-primary shadow-sm':'text-secondary'}`}>{t('btn_write')}</button>
-                                <button onClick={()=>setIaMode('voz')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='voz'?'bg-card text-primary shadow-sm':'text-secondary'}`}>{t('btn_speak')}</button>
+                                <button onClick={()=>{setIaMode('texto'); if(escuchando) toggleVoz();}} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='texto'?'bg-card text-primary shadow-sm':'text-secondary'}`}>{t('btn_write')||'Texto'}</button>
+                                <button onClick={()=>setIaMode('voz')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='voz'?'bg-card text-primary shadow-sm':'text-secondary'}`}>{t('btn_speak')||'Voz'}</button>
                             </div>
                             
                             {iaMode === 'texto' ? (
                                 <div>
                                     <textarea value={iaMsg} onChange={e=>setIaMsg(e.target.value)} className="w-full p-4 border rounded-xl mb-3 bg-background outline-none text-sm text-primary font-medium" style={{borderColor: c.border}} rows="3"></textarea>
-                                    <button onClick={procesarIA} className="w-full py-3 bg-[#19191c] border border-warning/50 text-warning rounded-xl font-bold shadow-sm">{t('btn_process_ai')}</button>
+                                    <button onClick={procesarIA} className="w-full py-3 bg-[#19191c] border border-warning/50 text-warning rounded-xl font-bold shadow-sm">{t('btn_process_ai')||'Analizar'}</button>
                                 </div>
                             ) : (
                                 <div className="flex flex-col items-center py-4">
                                     <button onClick={toggleVoz} className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all duration-300 shadow-lg ${escuchando ? 'bg-error/20 border-error text-error scale-110' : 'bg-background border-warning text-warning'}`} style={escuchando ? {} : {borderColor: 'var(--col-warning)', color: 'var(--col-warning)'}}>
                                         {escuchando ? <Icons.MicOff c="w-8 h-8"/> : <Icons.Mic c="w-8 h-8"/>}
                                     </button>
-                                    <p className="text-xs text-secondary mt-4 mb-2">{escuchando ? t('msg_listening') : t('msg_tap_mic')}</p>
-                                    {iaMsg && <div className="w-full mt-2"><div className="p-4 bg-background rounded-xl border text-sm font-medium text-primary mb-3 italic shadow-inner" style={{borderColor: c.border}}>"{iaMsg}"</div>{!escuchando && <button onClick={procesarIA} className="w-full py-3 bg-warning text-black rounded-xl font-bold shadow-lg">{t('btn_analyze_txt')}</button>}</div>}
+                                    <p className="text-xs text-secondary mt-4 mb-2">{escuchando ? (t('msg_listening')||'Escuchando...') : (t('msg_tap_mic')||'Toca para hablar')}</p>
+                                    {iaMsg && <div className="w-full mt-2"><div className="p-4 bg-background rounded-xl border text-sm font-medium text-primary mb-3 italic shadow-inner" style={{borderColor: c.border}}>"{iaMsg}"</div>{!escuchando && <button onClick={procesarIA} className="w-full py-3 bg-warning text-black rounded-xl font-bold shadow-lg">{t('btn_analyze_txt')||'Analizar Texto'}</button>}</div>}
                                 </div>
                             )}
                         </div>
@@ -585,16 +590,17 @@
 
         // --- PANTALLA 3: ANÁLISIS IA (DINÁMICO) ---
         function Analisis({ txns, cur, settings, t, isVip, user, onOpenSettings, onOpenCountryMenu, onUpgrade, formatMoneda, Icons, c }) {
-            const hasMultipleCurrencies = settings.currencies.filter(curr => curr && curr.trim() !== '').length > 1;
+            const safeCurrencies = Array.isArray(settings.currencies) ? settings.currencies : [];
+            const hasMultipleCurrencies = safeCurrencies.filter(curr => curr && curr.trim() !== '').length > 1;
 
             if (!isVip) {
                 return (
                     <div className={`p-4 view-animate h-screen flex flex-col ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
-                        <TopHeader title={t('analysis')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
+                        <TopHeader title={t('analysis')||'Análisis'} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
                         <div className="flex-1 flex flex-col items-center justify-center text-center pb-20">
                             <div className="w-20 h-20 rounded-full bg-warning/10 text-warning flex items-center justify-center mb-6 shadow-lg border border-warning/20"><Icons.Crown c="w-10 h-10" /></div>
                             <h2 className="text-2xl font-bold text-primary mb-3">Evaluación Semanal VIP</h2>
-                            <button onClick={onUpgrade} className="bg-warning text-black text-sm uppercase font-bold px-6 py-3 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:scale-105 transition-transform">{t('btn_see_plans')}</button>
+                            <button onClick={onUpgrade} className="bg-warning text-black text-sm uppercase font-bold px-6 py-3 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:scale-105 transition-transform">{t('btn_see_plans')||'Ver Planes'}</button>
                         </div>
                     </div>
                 );
@@ -603,16 +609,17 @@
             const [isAnalyzing, setIsAnalyzing] = useState(false);
             const [tipsGen, setTipsGen] = useState([]);
 
-            const currentTxnsAll = txns.filter(txn => txn.currency === cur);
+            const safeTxns = Array.isArray(txns) ? txns : [];
+            const currentTxnsAll = safeTxns.filter(txn => txn && txn.currency === cur);
             const today = new Date(); const sevenDaysAgo = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
-            const weeklyTxns = currentTxnsAll.filter(txn => new Date(txn.date) >= sevenDaysAgo);
+            const weeklyTxns = currentTxnsAll.filter(txn => txn.date && new Date(txn.date) >= sevenDaysAgo);
             
-            const ingresos = weeklyTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0);
-            const gastos = weeklyTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
+            const ingresos = weeklyTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + (Number(b.amount)||0), 0);
+            const gastos = weeklyTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + (Number(b.amount)||0), 0);
             const balance = ingresos - gastos;
 
             const gastosPorCat = weeklyTxns.filter(t => t.type === 'gasto').reduce((acc, t) => {
-                acc[t.category] = (acc[t.category] || 0) + t.amount; return acc;
+                acc[t.category] = (acc[t.category] || 0) + (Number(t.amount)||0); return acc;
             }, {});
             const topGasto = Object.entries(gastosPorCat).sort((a,b) => b[1] - a[1])[0];
 
@@ -621,14 +628,14 @@
                 setTimeout(() => {
                     setIsAnalyzing(false);
                     const newTips = [];
-                    if (ingresos > 0) newTips.push(`${t('analisis_sv_1')} ${Math.max(0, Math.round((balance/ingresos)*100))}${t('analisis_sv_2')}`);
-                    if (topGasto) newTips.push(`${t('analisis_leak_1')} ${topGasto[0]} (${formatMoneda(topGasto[1], cur)})${t('analisis_leak_2')}`);
-                    if (gastos > ingresos) newTips.push(t('analisis_warn'));
+                    if (ingresos > 0) newTips.push(`${t('analisis_sv_1')||'Ahorraste'} ${Math.max(0, Math.round((balance/ingresos)*100))}${t('analisis_sv_2')||'%'}`);
+                    if (topGasto) newTips.push(`${t('analisis_leak_1')||'Fuga en'} ${topGasto[0]} (${formatMoneda(topGasto[1], cur)})${t('analisis_leak_2')||'.'}`);
+                    if (gastos > ingresos) newTips.push(t('analisis_warn')||'Gastos superan ingresos.');
                     
-                    const randomExtras = t('tips') || [];
+                    const randomExtras = Array.isArray(t('tips')) ? t('tips') : ["Planifica tus finanzas."];
                     if (randomExtras.length > 0) newTips.push(randomExtras[Math.floor(Math.random() * randomExtras.length)]);
                     
-                    if (gastos === 0 && ingresos === 0) setTipsGen([t('analisis_none')]);
+                    if (gastos === 0 && ingresos === 0) setTipsGen([t('analisis_none')||'Sin datos recientes.']);
                     else setTipsGen(newTips);
                 }, 1500);
             };
@@ -637,17 +644,17 @@
 
             return (
                 <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
-                    <TopHeader title={t('analysis')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
+                    <TopHeader title={t('analysis')||'Análisis'} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
                     
-                    <p className="text-secondary text-sm font-bold uppercase tracking-widest mt-1 mb-6 text-center">{t('last_7')}</p>
+                    <p className="text-secondary text-sm font-bold uppercase tracking-widest mt-1 mb-6 text-center">{t('last_7')||'Últimos 7 días'}</p>
                     
                     <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}><p className="text-[10px] uppercase font-bold text-secondary mb-1">{t('income')}</p><p className="text-xl font-extrabold text-success">{formatMoneda(ingresos, cur)}</p></div>
-                        <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}><p className="text-[10px] uppercase font-bold text-secondary mb-1">{t('exp')}</p><p className="text-xl font-extrabold text-error">{formatMoneda(gastos, cur)}</p></div>
+                        <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}><p className="text-[10px] uppercase font-bold text-secondary mb-1">{t('income')||'Ingresos'}</p><p className="text-xl font-extrabold text-success">{formatMoneda(ingresos, cur)}</p></div>
+                        <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}><p className="text-[10px] uppercase font-bold text-secondary mb-1">{t('exp')||'Gastos'}</p><p className="text-xl font-extrabold text-error">{formatMoneda(gastos, cur)}</p></div>
                     </div>
 
                     <div className={`rounded-3xl p-6 text-center shadow-lg border ${balance >= 0 ? 'bg-success/10 border-success/30' : 'bg-error/10 border-error/30'}`}>
-                        <p className="text-secondary text-xs font-bold uppercase tracking-widest mb-2">{t('weekly_balance')}</p>
+                        <p className="text-secondary text-xs font-bold uppercase tracking-widest mb-2">{t('weekly_balance')||'Balance'}</p>
                         <p className={`text-4xl font-extrabold ${balance >= 0 ? 'text-success' : 'text-error'}`}>{balance >= 0 ? '+' : ''}{formatMoneda(balance, cur)}</p>
                     </div>
 
@@ -656,14 +663,14 @@
                             <h2 className="text-sm font-bold text-warning flex items-center gap-2"><Icons.Brain c="w-6 h-6"/> IA Recomienda</h2>
                             <button onClick={handleAnalyze} disabled={isAnalyzing} className={`bg-warning/20 text-warning px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${isAnalyzing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-warning hover:text-black shadow-md'}`}>
                                 {isAnalyzing ? <Icons.RefreshCw c="w-3 h-3 animate-spin"/> : <Icons.Brain c="w-3 h-3"/>}
-                                {isAnalyzing ? t('btn_analyzing') : t('btn_analyze')}
+                                {isAnalyzing ? (t('btn_analyzing')||'Analizando...') : (t('btn_analyze')||'Analizar')}
                             </button>
                         </div>
 
                         {isAnalyzing ? (
                             <div className="flex flex-col items-center justify-center py-6 space-y-3">
                                 <Icons.RefreshCw c="w-8 h-8 text-warning animate-spin"/>
-                                <p className="text-xs text-secondary animate-pulse">{t('msg_processing')}</p>
+                                <p className="text-xs text-secondary animate-pulse">{t('msg_processing')||'Procesando...'}</p>
                             </div>
                         ) : (
                             <ul className="space-y-4 text-sm text-secondary font-medium leading-relaxed view-animate">
@@ -680,9 +687,12 @@
             );
         }
 
-        // --- PANTALLA 4: HISTORIAL (AQUÍ ESTÁ EL CAMBIO DE LAS 24 HORAS) ---
+        // --- PANTALLA 4: HISTORIAL (SEGURA Y FORTIFICADA) ---
         function Historial({ txns, cur, setCur, curList, deleteTxn, updateTxn, t, isVip, user, onOpenSettings, onOpenCountryMenu, settings, formatMoneda, Icons, c }) {
-            const currentTxnsAll = txns.filter(txn => txn.currency === cur);
+            // Salvavidas 1: Garantizar que txns sea un Array
+            const safeTxns = Array.isArray(txns) ? txns : [];
+            const currentTxnsAll = safeTxns.filter(txn => txn && txn.currency === cur);
+            
             const [filtro, setFiltro] = useState('Semanal'); 
             const [currentDate, setCurrentDate] = useState(new Date());
             const [selectedDay, setSelectedDay] = useState(null);
@@ -692,7 +702,10 @@
             const daysInMonth = new Date(year, month + 1, 0).getDate(); const firstDay = new Date(year, month, 1).getDay();
 
             const changeMonth = (dir) => { setCurrentDate(new Date(year, month + dir, 1)); setSelectedDay(null); };
-            const checkDayHasTxns = (d) => { const dateStr = new Date(year, month, d).toISOString().split('T')[0]; return currentTxnsAll.some(txn => txn.date && txn.date.startsWith(dateStr)); };
+            const checkDayHasTxns = (d) => { 
+                const dateStr = new Date(year, month, d).toISOString().split('T')[0]; 
+                return currentTxnsAll.some(txn => txn.date && txn.date.startsWith(dateStr)); 
+            };
 
             let displayTxns = [...currentTxnsAll].reverse(); let label = "";
             if (filtro === 'Diario' && selectedDay) {
@@ -700,20 +713,20 @@
                 displayTxns = displayTxns.filter(txn => txn.date && txn.date.startsWith(dateStr));
                 label = `${selectedDay} DE ${MESES[month].toUpperCase()} ${year}`;
             } else if (filtro === 'Semanal') {
-                displayTxns = displayTxns.filter(txn => new Date(txn.date).getMonth() === month);
+                displayTxns = displayTxns.filter(txn => txn.date && new Date(txn.date).getMonth() === month);
                 label = `SEM · ${MESES[month].substring(0,3).toUpperCase()}. ${year}`;
             } else {
-                displayTxns = displayTxns.filter(txn => new Date(txn.date).getMonth() === month);
+                displayTxns = displayTxns.filter(txn => txn.date && new Date(txn.date).getMonth() === month);
                 label = `${MESES[month].toUpperCase()} ${year}`;
             }
 
-            const inTotal = displayTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + b.amount, 0);
-            const outTotal = displayTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
+            const inTotal = displayTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + (Number(b.amount)||0), 0);
+            const outTotal = displayTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + (Number(b.amount)||0), 0);
 
             const EditModal = ({ txn, onClose }) => {
-                const catList = t('categories') || ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
-                const [monto, setMonto] = useState(txn.amount); const [cat, setCat] = useState(txn.category); const [desc, setDesc] = useState(txn.description);
-                const handleSave = (e) => { e.preventDefault(); updateTxn({ ...txn, amount: parseFloat(monto), category: cat, description: desc }); onClose(); };
+                const catList = Array.isArray(t('categories')) ? t('categories') : ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
+                const [monto, setMonto] = useState(txn.amount || ''); const [cat, setCat] = useState(txn.category || catList[0]); const [desc, setDesc] = useState(txn.description || '');
+                const handleSave = (e) => { e.preventDefault(); updateTxn({ ...txn, amount: parseFloat(monto)||0, category: cat, description: desc }); onClose(); };
                 return (
                     <div className="fixed inset-0 modal-overlay z-[100] flex items-center justify-center p-4">
                         <div className="bg-card w-full max-w-sm rounded-3xl p-6 border shadow-2xl view-animate relative" style={{borderColor: c.border}}>
@@ -723,21 +736,22 @@
                                 <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} className="w-full p-4 rounded-xl border bg-background outline-none text-primary font-bold text-2xl text-center" style={{borderColor: c.border}}/>
                                 <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3.5 rounded-xl border bg-background outline-none text-primary text-sm font-bold" style={{borderColor: c.border}}>{catList.map(catItem => <option key={catItem} value={catItem}>{catItem}</option>)}</select>
                                 <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} className="w-full p-3.5 rounded-xl border bg-background outline-none text-primary text-sm" style={{borderColor: c.border}}/>
-                                <button type="submit" className="w-full py-4 bg-accent text-white rounded-xl font-bold text-sm shadow-lg shadow-accent/30 mt-4" style={{backgroundColor: c.accent}}>{t('btn_save')}</button>
+                                <button type="submit" className="w-full py-4 bg-accent text-white rounded-xl font-bold text-sm shadow-lg shadow-accent/30 mt-4" style={{backgroundColor: c.accent}}>{t('btn_save')||'Guardar'}</button>
                             </form>
                         </div>
                     </div>
                 );
             };
 
-            const hasMultipleCurrencies = curList && curList.filter(curr => curr && curr.trim() !== '').length > 1;
-            const daysArr = t('days') || ["D","L","M","M","J","V","S"];
+            const safeCurList = Array.isArray(curList) ? curList : [];
+            const hasMultipleCurrencies = safeCurList.filter(curr => curr && curr.trim() !== '').length > 1;
+            const daysArr = Array.isArray(t('days')) ? t('days') : ["D","L","M","M","J","V","S"];
 
             return (
                 <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
-                    <TopHeader title={t('history')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
+                    <TopHeader title={t('history')||'Historial'} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
                     
-                    <CurrencyTabs currencies={curList} activeCurrency={cur} setActiveCurrency={setCur} c={c} />
+                    <CurrencyTabs currencies={safeCurList} activeCurrency={cur} setActiveCurrency={setCur} c={c} />
 
                     <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}>
                         <div className="flex justify-between items-center mb-4">
@@ -763,9 +777,9 @@
                     </div>
 
                     <div className="flex bg-card rounded-xl border p-1 shadow-sm" style={{borderColor: c.border}}>
-                        {[t('tab_daily'), t('tab_weekly'), t('tab_monthly')].map((f, idx) => {
+                        {[t('tab_daily')||'Diario', t('tab_weekly')||'Semanal', t('tab_monthly')||'Mensual'].map((f, idx) => {
                             const rawFilter = ['Diario', 'Semanal', 'Mensual'][idx];
-                            return <button key={f} onClick={() => { setFiltro(rawFilter); if(rawFilter!=='Diario') setSelectedDay(null); }} className={`flex-1 py-2.5 text-xs rounded-lg font-bold transition-all duration-300 ${filtro === rawFilter ? 'bg-background text-primary shadow-sm border' : 'text-secondary hover:text-primary'}`} style={filtro === rawFilter ? {borderColor: c.border} : {}}>{f}</button>
+                            return <button key={rawFilter} onClick={() => { setFiltro(rawFilter); if(rawFilter!=='Diario') setSelectedDay(null); }} className={`flex-1 py-2.5 text-xs rounded-lg font-bold transition-all duration-300 ${filtro === rawFilter ? 'bg-background text-primary shadow-sm border' : 'text-secondary hover:text-primary'}`} style={filtro === rawFilter ? {borderColor: c.border} : {}}>{f}</button>
                         })}
                     </div>
 
@@ -775,11 +789,19 @@
                     </div>
 
                     <div className="space-y-3">
-                        {displayTxns.length === 0 ? <p className="text-center text-secondary py-10 text-sm font-medium">{t('no_txns')}</p> : 
+                        {displayTxns.length === 0 ? <p className="text-center text-secondary py-10 text-sm font-medium">{t('no_txns')||'Sin datos'}</p> : 
                         displayTxns.map(txn => {
-                            // --- AQUÍ ESTÁ LA NUEVA LÓGICA DE LAS 24 HORAS ---
-                            const tiempoTranscurrido = new Date() - new Date(txn.date);
-                            const puedeEditar = tiempoTranscurrido <= 86400000;
+                            // --- Salvavidas de 24 horas seguro contra fechas rotas ---
+                            let puedeEditar = false;
+                            if (txn.date) {
+                                const txnDate = new Date(txn.date);
+                                if (!isNaN(txnDate.getTime())) {
+                                    const tiempoTranscurrido = new Date() - txnDate;
+                                    puedeEditar = tiempoTranscurrido <= 86400000;
+                                }
+                            }
+                            
+                            const validDate = txn.date && !isNaN(new Date(txn.date).getTime()) ? new Date(txn.date).toLocaleDateString() : '';
 
                             return (
                                 <div key={txn.id} className="flex justify-between items-center p-4 bg-card rounded-3xl border shadow-sm group hover:border-accent transition-colors duration-300" style={{borderColor: c.border}}>
@@ -789,17 +811,18 @@
                                         </div>
                                         <div>
                                             <p className="font-bold text-sm text-primary mb-0.5">{txn.description}</p>
-                                            <p className="text-[10px] text-secondary font-medium uppercase tracking-wider">{txn.category} • {new Date(txn.date).toLocaleDateString()}</p>
+                                            <p className="text-[10px] text-secondary font-medium uppercase tracking-wider">{txn.category} • {validDate}</p>
                                         </div>
                                     </div>
                                     <div className="flex flex-col items-end gap-2">
                                         <span className={`font-bold text-sm ${txn.type==='ingreso'?'text-success':'text-error'}`}>
-                                            {txn.type==='ingreso'?'+':'-'}{formatMoneda(txn.amount, cur)}
+                                            {txn.type==='ingreso'?'+':'-'}{formatMoneda(txn.amount||0, cur)}
                                         </span>
                                         <div className="flex items-center gap-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
-                                            {/* Si pasaron menos de 24h, mostramos el lápiz */}
-                                            {puedeEditar && (
+                                            {puedeEditar ? (
                                                 <button onClick={()=>setEditingTxn(txn)} className="p-1.5 text-secondary hover:text-accent bg-background rounded-lg border shadow-sm" style={{borderColor: c.border}}><Icons.Pencil c="w-3.5 h-3.5"/></button>
+                                            ) : (
+                                                <span className="p-1.5 text-secondary/30 bg-background rounded-lg border border-transparent" title="Protegido (Pasaron 24h)"><Icons.Shield c="w-3.5 h-3.5"/></span>
                                             )}
                                             <button onClick={()=>deleteTxn(txn.id)} className="p-1.5 text-secondary hover:text-error bg-background rounded-lg border shadow-sm" style={{borderColor: c.border}}><Icons.Trash c="w-3.5 h-3.5"/></button>
                                         </div>
@@ -1004,7 +1027,8 @@
                 setUser(u); const ud = DB.getUserData(u);
                 if(ud?.vip && ud.expireAt && ud.expireAt >= new Date().toISOString().split('T')[0]) { setVip(true); setExp(ud.expireAt); }
                 else { DB.deactivateVip(u); setVip(false); setExp(null); }
-                setTxns(DB.getTxns(u)); const s = DB.getSettings(u); setSettings(s); setCur(s.currencies[0]||'PEN'); setView('home');
+                setTxns(Array.isArray(DB.getTxns(u)) ? DB.getTxns(u) : []); 
+                const s = DB.getSettings(u); setSettings(s); setCur(s.currencies[0]||'PEN'); setView('home');
             };
 
             const login = (u, p) => { sessionStorage.setItem('billetera_active_user', u); DB.loginOrRegisterGoogle(u, p); loadData(u); };
@@ -1052,7 +1076,7 @@
                     <div className="flex-1 pb-28" style={{ transform:`scale(${zS})`, transformOrigin:'top center' }}>{renderV()}</div>
                     
                     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md backdrop-blur-md rounded-[2rem] flex justify-around px-2 py-3 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border z-40 transition-colors duration-300" style={{backgroundColor: `${c.navBg}F2`, borderColor: c.border}}>
-                        {[{id:'home', I:Icons.Home, l:t('home')},{id:'nueva', I:Icons.Plus, l:t('record')},{id:'analisis', I:Icons.Brain, l:t('analysis')},{id:'historial', I:Icons.List, l:t('history')}].map(x => {
+                        {[{id:'home', I:Icons.Home, l:t('home')||'Inicio'},{id:'nueva', I:Icons.Plus, l:t('record')||'Registrar'},{id:'analisis', I:Icons.Brain, l:t('analysis')||'Análisis'},{id:'historial', I:Icons.List, l:t('history')||'Historial'}].map(x => {
                             const IconComponent = x.I;
                             return (
                                 <button key={x.id} onClick={()=>setView(x.id)} className={`flex flex-col items-center justify-center min-w-[4rem] transition-all duration-300 ${view===x.id?'scale-110 -translate-y-1':'text-secondary hover:text-primary'}`} style={view===x.id ? {color: c.navActiveText} : {}}>
