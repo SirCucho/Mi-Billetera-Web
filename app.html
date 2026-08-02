@@ -12,6 +12,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- CARGA DE LAS 12 TIPOGRAFÍAS DE GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700&family=Open+Sans:wght@300;400;600;700&family=Oswald:wght@300;400;500&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,7 +35,7 @@
 
     <style>
         :root { --col-bg: #18181b; --col-card: #27272a; --col-text: #ffffff; --col-secondary: #a1a1aa; --col-border: #3f3f46; --col-accent: #3b82f6; --col-nav-bg: #18181b; --col-nav-active-bg: #3f3f46; --col-nav-active-text: #60a5fa; }
-        body { background-color: var(--col-bg); color: var(--col-text); overflow: auto; transition: background-color 0.3s ease, color 0.3s ease; }
+        body { background-color: var(--col-bg); color: var(--col-text); overflow: auto; transition: background-color 0.3sEase, color 0.3s ease; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--col-border); border-radius: 4px; }
@@ -56,42 +57,11 @@
         const DICTIONARY = {
             es: { 
                 home: "Inicio", record: "Registrar", analysis: "Análisis", history: "Historial", balance: "Saldo total", income: "Ingresos", exp: "Gastos", save: "Tu ahorro", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Monto", cat: "Categoría", desc: "Descripción", btn_save: "Guardar", settings: "Ajustes", fixed: "Gastos fijos", fixed_sub: "Recurrentes", analysis_title: "Evaluación semanal", last_7: "Últimos 7 días", weekly_balance: "Balance semanal", no_txns: "Sin transacciones.",
-                btn_expense: "Gasto", btn_income: "Ingreso", btn_write: "Escribir", btn_speak: "Hablar", btn_process_ai: "Procesar con IA", btn_analyze_txt: "Analizar Texto", btn_analyze: "Analizar", btn_analyzing: "Analizando...", btn_see_plans: "Ver Planes VIP",
-                tab_daily: "Diario", tab_weekly: "Semanal", tab_monthly: "Mensual",
-                msg_listening: "Escuchando... presiona para detener", msg_tap_mic: "Toca el micro para hablar", msg_processing: "Procesando movimientos con IA...", msg_no_amount: "🤖 IA: No detecté ningún monto en tu frase.",
-                lbl_actual: "Actual", lbl_goal: "Meta",
-                days: ["D","L","M","M","J","V","S"],
-                categories: ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"],
-                income_words: ["recib", "ingreso", "gan", "cobr", "dieron", "tengo", "pagaron", "sueldo", "pago"],
-                quotes: ["Planifica tus compras y evita decisiones impulsivas.", "Ahorrar no es solo guardar, es saber gastar.", "Controla tus gastos antes de que ellos te controlen a ti.", "Págate a ti mismo primero: ahorra antes de gastar.", "Un pequeño agujero hunde un gran barco. Cuida los gastos hormiga.", "El interés compuesto es la octava maravilla del mundo."],
-                analisis_sv_1: "Ahorraste el", analisis_sv_2: "% de tus ingresos esta semana.", analisis_leak_1: "Tu mayor fuga de dinero fue en", analisis_leak_2: ". Evalúa si fue estrictamente necesario.", analisis_warn: "¡Cuidado! Tus gastos superaron tus ingresos. Debes ajustar tu presupuesto urgente.", analisis_none: "No tienes movimientos recientes en los últimos 7 días para analizar.",
-                tips: ["Aplica la regla 50/30/20 (Necesidades/Deseos/Ahorro) para un mejor balance.", "Antes de una compra grande, espera 24 horas para evitar impulsos.", "Revisa tus suscripciones recurrentes, podrías estar pagando por algo que no usas.", "Considera usar la técnica de los sobres para controlar gastos diarios.", "Intenta llevar almuerzo al trabajo 3 veces por semana, notarás la diferencia."]
+                quotes: ["Planifica tus compras y evita decisiones impulsivas.", "Ahorrar no es solo guardar, es saber gastar.", "Controla tus gastos antes de que ellos te controlen a ti.", "Págate a ti mismo primero: ahorra antes de gastar.", "Un pequeño agujero hunde un gran barco. Cuida los gastos hormiga.", "El interés compuesto es la octava maravilla del mundo."]
             },
             en: { 
                 home: "Home", record: "Record", analysis: "Analysis", history: "History", balance: "Total Balance", income: "Income", exp: "Expenses", save: "Savings", manual: "Manual Entry", ai: "Smart Entry (AI)", text_ai: "Text", voice_ai: "Voice", amount: "Amount", cat: "Category", desc: "Description", btn_save: "Save", settings: "Settings", fixed: "Fixed Expenses", fixed_sub: "Recurring", analysis_title: "Weekly Evaluation", last_7: "Last 7 days", weekly_balance: "Weekly Balance", no_txns: "No transactions.",
-                btn_expense: "Expense", btn_income: "Income", btn_write: "Write", btn_speak: "Speak", btn_process_ai: "Process with AI", btn_analyze_txt: "Analyze Text", btn_analyze: "Analyze", btn_analyzing: "Analyzing...", btn_see_plans: "View VIP Plans",
-                tab_daily: "Daily", tab_weekly: "Weekly", tab_monthly: "Monthly",
-                msg_listening: "Listening... press to stop", msg_tap_mic: "Tap mic to speak", msg_processing: "Processing with AI...", msg_no_amount: "🤖 AI: I couldn't detect any amount.",
-                lbl_actual: "Current", lbl_goal: "Goal",
-                days: ["S","M","T","W","T","F","S"],
-                categories: ["Salary", "Food", "Transport", "Utilities", "Housing", "Health", "Education", "Entertainment", "Investment", "Others"],
-                income_words: ["receive", "income", "earn", "got", "have", "paid", "salary", "wage", "pay"],
-                quotes: ["Plan your purchases to avoid impulse buys.", "Saving isn't just storing, it's knowing how to spend.", "Control your expenses before they control you.", "Pay yourself first: save before you spend.", "A small leak will sink a great ship. Watch small expenses."],
-                analisis_sv_1: "You saved", analisis_sv_2: "% of your income this week.", analisis_leak_1: "Your biggest money drain was on", analisis_leak_2: ". Evaluate if it was necessary.", analisis_warn: "Warning! Your expenses exceeded your income. Adjust your budget urgently.", analisis_none: "You have no recent transactions in the last 7 days to analyze.",
-                tips: ["Apply the 50/30/20 rule (Needs/Wants/Savings) for a better balance.", "Before a large purchase, wait 24 hours to avoid impulse buying.", "Check your recurring subscriptions; you might be paying for something you don't use.", "Consider using the envelope budgeting method for daily expenses.", "Try taking your lunch to work 3 times a week, you'll notice the difference."]
-            },
-            pt: { 
-                home: "Início", record: "Registrar", analysis: "Análise", history: "Histórico", balance: "Saldo total", income: "Receitas", exp: "Despesas", save: "Economia", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Valor", cat: "Categoria", desc: "Descrição", btn_save: "Salvar", settings: "Configurações", fixed: "Despesas fixas", fixed_sub: "Recorrentes", analysis_title: "Avaliação semanal", last_7: "Últimos 7 dias", weekly_balance: "Saldo semanal", no_txns: "Sem transações.",
-                btn_expense: "Despesa", btn_income: "Receita", btn_write: "Escrever", btn_speak: "Falar", btn_process_ai: "Processar com IA", btn_analyze_txt: "Analisar Texto", btn_analyze: "Analisar", btn_analyzing: "Analisando...", btn_see_plans: "Ver Planos VIP",
-                tab_daily: "Diário", tab_weekly: "Semanal", tab_monthly: "Mensal",
-                msg_listening: "Ouvindo... pressione para parar", msg_tap_mic: "Toque no microfone para falar", msg_processing: "Processando com IA...", msg_no_amount: "🤖 IA: Não detectei nenhum valor.",
-                lbl_actual: "Atual", lbl_goal: "Meta",
-                days: ["D","S","T","Q","Q","S","S"],
-                categories: ["Salário", "Comida", "Transporte", "Serviços", "Moradia", "Saúde", "Educação", "Entretenimento", "Investimento", "Outros"],
-                income_words: ["receb", "renda", "ganh", "cobr", "deram", "tenho", "pagaram", "salário", "pago"],
-                quotes: ["Planeje suas compras e evite impulsos.", "Economizar é saber gastar.", "Controle seus gastos antes que eles controlem você.", "Pague a si mesmo primeiro.", "Um pequeno vazamento afunda um grande navio."],
-                analisis_sv_1: "Você economizou", analisis_sv_2: "% de sua renda esta semana.", analisis_leak_1: "Seu maior vazamento de dinheiro foi em", analisis_leak_2: ". Avalie se foi estritamente necessário.", analisis_warn: "Cuidado! Suas despesas excederam sua renda. Você precisa ajustar seu orçamento com urgência.", analisis_none: "Você não tem transações recentes nos últimos 7 dias para analisar.",
-                tips: ["Aplique a regra 50/30/20 (Necessidades/Desejos/Poupança) para um melhor equilíbrio.", "Antes de uma compra grande, espere 24 horas para evitar impulsos.", "Revise suas assinaturas recorrentes.", "Considere usar o método dos envelopes para despesas diárias.", "Tente levar o almoço para o trabalho 3 vezes por semana."]
+                quotes: ["Plan your purchases to avoid impulse buys.", "Saving isn't just storing, it's knowing how to spend.", "Control your expenses before they control you.", "Pay yourself first: save before you spend."]
             }
         };
 
@@ -163,10 +133,9 @@
             saveSettings: (user, s) => localStorage.setItem(`settings_${user}`, JSON.stringify(s))
         };
 
-        const ALL_CURRENCIES = { 'PEN': 'S/', 'USD': '$', 'EUR': '€', 'GBP': '£', 'CNY': '¥', 'BRL': 'R$', 'MXN': '$', 'CAD': 'CA$', 'AUD': 'A$', 'ARS': '$', 'COP': '$', 'CLP': '$', 'BOB': 'Bs' };
-        const USD_RATES = { 'PEN': 3.75, 'EUR': 0.92, 'GBP': 0.79, 'BRL': 5.15, 'MXN': 16.8, 'ARS': 1000, 'COP': 3900, 'CLP': 950, 'BOB': 6.9, 'CAD': 1.37, 'AUD': 1.52, 'CNY': 7.24, 'USD': 1 };
-        function formatMoneda(val, currCode) { const sym = ALL_CURRENCIES[currCode] || currCode; return `${sym} ${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
-
+        const CATEGORIAS = ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
+        const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        
         // --- ICONOS COMPLETOS ---
         const Icons = {
             Logo: ({c}) => <svg viewBox="0 0 64 64" className={c || "w-full h-full"}><rect width="64" height="64" rx="16" fill="currentColor"/><path d="M44 14c6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28h40v20a4 4 0 0 1-4 4h-32a4 4 0 0 1-4-4z" fill="#0ea5e9" stroke="#fff" strokeWidth="2"/><path d="M12 28a4 4 0 0 1 4-4h32a4 4 0 0 1 4 4v6h-40z" fill="#38bdf8" stroke="#fff" strokeWidth="2"/><circle cx="26" cy="42" r="3" fill="#fff"/></svg>,
@@ -215,7 +184,7 @@
         }
 
         // --- COMPONENTE: MODAL DE PAGO VIP ---
-        function PaymentModal({ onClose, t }) {
+        function PaymentModal({ onClose }) {
             const redirectWA = (plan) => window.open(`https://wa.me/51930266472?text=Hola%20Carlos,%20quiero%20pagar%20el%20plan%20VIP%20de%20${plan}`, '_blank');
             return (
                 <div className="fixed inset-0 modal-overlay flex items-center justify-center p-4 z-[250]">
@@ -328,7 +297,7 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ TU ID DE CLIENTE DE GOOGLE REAL            */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -357,36 +326,50 @@
             );
         }
 
-        const CurrencyTabs = ({ currencies, activeCurrency, setActiveCurrency }) => {
-            const validCurrencies = currencies.filter(c => c && c.trim() !== '');
+        // --- COMPONENTE: PESTAÑAS DE MONEDA (FIJAS ARRIBA) ---
+        const CurrencyTabs = ({ currencies, activeCurrency, setActiveCurrency, c }) => {
+            const validCurrencies = currencies.filter(curr => curr && curr.trim() !== '');
             if (validCurrencies.length <= 1) return null;
+            
             return (
-                <div className="flex rounded-xl p-1 mb-4 border border-border w-full shadow-inner" style={{backgroundColor: 'var(--col-nav-bg)'}}>
-                    {validCurrencies.map(curr => <button key={curr} onClick={() => setActiveCurrency(curr)} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${activeCurrency===curr?'bg-accent text-white shadow-md':'text-secondary hover:text-primary'}`}>{curr}</button>)}
+                <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-md md:max-w-2xl lg:max-w-4xl px-4 md:px-8 z-50 pt-3 pb-2" style={{ backgroundColor: c.bg }}>
+                    <div className="flex rounded-xl p-1 border shadow-inner" style={{backgroundColor: c.navBg, borderColor: c.border}}>
+                        {validCurrencies.map(curr => (
+                            <button 
+                                key={curr} 
+                                onClick={() => setActiveCurrency(curr)} 
+                                className={`flex-1 py-2.5 rounded-lg font-bold text-xs transition-all duration-300 ${activeCurrency === curr ? 'bg-accent text-white shadow-md' : 'text-secondary hover:text-primary'}`}
+                                style={activeCurrency === curr ? { backgroundColor: c.accent } : {}}
+                            >
+                                {curr}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             );
         };
 
         // --- PANTALLA 1: DASHBOARD ---
-        function Dashboard({ txns, cur, setActiveCurrency, settings, t, isVip, user, onOpenSettings, expire }) {
+        function Dashboard({ txns, cur, settings, t, isVip, user, onOpenSettings, expire, formatMoneda, Icons, c }) {
             const m = txns.filter(x => x.currency === cur);
             const inC = m.filter(x=>x.type==='ingreso').reduce((a,b)=>a+b.amount,0); 
             const outC = m.filter(x=>x.type==='gasto').reduce((a,b)=>a+b.amount,0);
-            const fijos = m.filter(x=>x.type==='gasto' && (x.category===t('categories')[3] || x.category===t('categories')[4])).reduce((a,b)=>a+b.amount,0);
+            const fijos = m.filter(x=>x.type==='gasto' && (x.category==='Servicios' || x.category==='Vivienda')).reduce((a,b)=>a+b.amount,0);
             const bal = inC - outC; const target = inC * 0.2; const pct = target>0 ? Math.min(Math.round((bal/target)*100),100) : (bal>0?100:0);
             
             const quotesList = t('quotes'); 
             const [quoteIdx, setQuoteIdx] = useState(Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)) % quotesList.length);
             const nextQuote = () => setQuoteIdx((prev) => (prev + 1) % quotesList.length);
 
+            const hasMultipleCurrencies = settings.currencies.filter(curr => curr && curr.trim() !== '').length > 1;
+
             return (
-                <div className="p-4 space-y-4 view-animate">
-                    <TopHeader title={t('home')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
+                <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
+                    <TopHeader title="Mi Resumen" user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
 
                     {isVip && expire && <div className="bg-warning/10 border border-warning/30 rounded-xl p-3 flex justify-between items-center text-xs"><span className="text-warning font-bold flex items-center gap-2"><Icons.Crown c="w-4 h-4"/> Suscripción Activa</span><span className="text-secondary">Vence: {expire === '2099-12-31' ? 'Vitalicio' : expire}</span></div>}
-                    <CurrencyTabs currencies={settings.currencies} activeCurrency={cur} setActiveCurrency={setActiveCurrency} />
 
-                    <div className="bg-gradient-to-br from-card to-background rounded-3xl p-6 border border-border shadow-lg relative overflow-hidden">
+                    <div className="bg-gradient-to-br from-card to-background rounded-3xl p-6 border shadow-lg relative overflow-hidden" style={{borderColor: c.border}}>
                         <div className="absolute top-0 right-0 p-4 opacity-10 w-28 h-28 text-accent"><Icons.Logo/></div>
                         <p className="text-secondary text-sm font-bold tracking-wider uppercase mb-1">{t('balance')} ({cur})</p>
                         <p className="text-4xl font-extrabold text-white mb-6">{formatMoneda(bal, cur)}</p>
@@ -396,13 +379,13 @@
                         </div>
                     </div>
 
-                    <div className="bg-card rounded-3xl p-5 border border-border shadow-md">
+                    <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}>
                         <div className="flex justify-between items-center mb-3"><p className="font-bold text-primary text-sm flex items-center gap-1.5"><Icons.PiggyBank c="w-4 h-4 text-accent"/> {t('save')}</p><p className="font-bold text-accent text-sm">{pct}%</p></div>
-                        <div className="w-full bg-background rounded-full h-3 mb-2"><div className="bg-accent h-3 rounded-full transition-all duration-1000" style={{width:`${pct}%`}}></div></div>
-                        <div className="flex justify-between text-[11px] font-bold text-secondary"><p>{t('lbl_actual')}: {formatMoneda(bal, cur)}</p><p>{t('lbl_goal')} (20%): {formatMoneda(target, cur)}</p></div>
+                        <div className="w-full bg-background rounded-full h-3 mb-2"><div className="bg-accent h-3 rounded-full transition-all duration-1000" style={{width:`${pct}%`, backgroundColor: c.accent}}></div></div>
+                        <div className="flex justify-between text-[11px] font-bold text-secondary"><p>Actual: {formatMoneda(bal, cur)}</p><p>Meta (20%): {formatMoneda(target, cur)}</p></div>
                     </div>
 
-                    <div className="bg-card rounded-2xl p-5 shadow-sm border border-border flex justify-between items-center">
+                    <div className="bg-card rounded-2xl p-5 shadow-sm border flex justify-between items-center" style={{borderColor: c.border}}>
                         <div>
                             <div className="flex items-center gap-2 mb-1"><Icons.Calendar c="w-4 h-4 text-warning"/><p className="text-sm font-bold text-primary">{t('fixed')}</p></div>
                             <p className="text-xs text-secondary">{t('fixed_sub')}</p>
@@ -410,7 +393,7 @@
                         <p className="text-xl font-bold text-warning">{formatMoneda(fijos, cur)}</p>
                     </div>
 
-                    <div className="bg-background border border-border rounded-xl p-4 flex items-start gap-3 shadow-inner relative group">
+                    <div className="bg-background border rounded-xl p-4 flex items-start gap-3 shadow-inner relative group" style={{borderColor: c.border}}>
                         <div className="bg-accent/20 p-2 rounded-lg text-accent shrink-0"><Icons.Lightbulb c="w-5 h-5"/></div>
                         <p className="text-sm text-primary italic leading-snug flex-1">"{quotesList[quoteIdx]}"</p>
                         <button onClick={nextQuote} className="text-secondary hover:text-accent p-1.5 rounded-lg border border-transparent hover:border-border transition-colors"><Icons.RefreshCw c="w-4 h-4"/></button>
@@ -420,15 +403,10 @@
         }
 
         // --- PANTALLA 2: REGISTRO UNIFICADO ---
-        function RegistroUnificado({ addTxn, cur, t, isVip, settings, user, onOpenSettings, onUpgrade }) {
-            const catList = t('categories');
-            const [tipo, setTipo] = useState('gasto'); const [monto, setMonto] = useState(''); const [cat, setCat] = useState(catList[0]); const [desc, setDesc] = useState('');
+        function RegistroUnificado({ addTxn, cur, settings, t, isVip, user, onOpenSettings, onUpgrade, formatMoneda, Icons, c }) {
+            const [tipo, setTipo] = useState('gasto'); const [monto, setMonto] = useState(''); const [cat, setCat] = useState(CATEGORIAS[0]); const [desc, setDesc] = useState('');
             const [iaMode, setIaMode] = useState('texto'); const [iaMsg, setIaMsg] = useState(''); const [escuchando, setEscuchando] = useState(false);
             const recRef = useRef(null);
-
-            useEffect(() => {
-                if(!catList.includes(cat)) setCat(catList[0]);
-            }, [settings.lang]);
 
             const guardarManual = (e) => {
                 e.preventDefault(); if(!monto || isNaN(monto) || monto<=0) return;
@@ -440,9 +418,7 @@
                 if(escuchando) { recRef.current?.stop(); setEscuchando(false); return; }
                 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
                 if(!SR) return alert("Navegador no soporta voz.");
-                const rec = new SR(); 
-                rec.lang = settings.lang === 'en' ? 'en-US' : settings.lang === 'pt' ? 'pt-BR' : 'es-ES';
-                rec.interimResults = true;
+                const rec = new SR(); rec.lang = 'es-ES'; rec.interimResults = true;
                 rec.onresult = (e) => { let txt=""; for(let i=0;i<e.results.length;i++) txt+=e.results[i][0].transcript; setIaMsg(txt); };
                 rec.onerror = () => setEscuchando(false); rec.onend = () => setEscuchando(false);
                 recRef.current = rec; rec.start(); setEscuchando(true);
@@ -450,67 +426,68 @@
 
             const procesarIA = () => {
                 if(!iaMsg) return; const txt = iaMsg.toLowerCase();
-                const incomeKeywords = t('income_words');
-                const isInc = incomeKeywords.some(w => txt.includes(w));
+                const isInc = /recib[íi]|ingreso|gan[é\e]|cobr[é\e]|dieron|tengo|pagaron|sueldo/i.test(txt);
                 const type = isInc ? 'ingreso' : 'gasto';
                 const nums = txt.match(/\d+(\.\d+)?/); const amount = nums ? parseFloat(nums[0]) : 0;
                 if(amount > 0) {
-                    let c = catList[catList.length - 1]; // "Otros"
-                    catList.forEach(x => { if(txt.includes(x.toLowerCase())) c = x; });
+                    let c = "Otros"; CATEGORIAS.forEach(x => { if(txt.includes(x.toLowerCase())) c = x; });
                     addTxn({ id: Date.now(), type, amount, category: c, description: iaMsg, date: new Date().toISOString(), currency: cur });
-                    setIaMsg(''); setIaMode('texto'); alert(`🤖 IA: ${type.toUpperCase()} - ${formatMoneda(amount, cur)} (${c})`);
-                } else alert(t('msg_no_amount'));
+                    setIaMsg(''); setIaMode('texto'); alert(`🤖 IA: ${type.toUpperCase()} - ${formatMoneda(amount, cur)} (${c}) guardado.`);
+                } else alert("🤖 IA: No detecté ningún monto en tu frase.");
             };
 
+            const hasMultipleCurrencies = settings.currencies.filter(curr => curr && curr.trim() !== '').length > 1;
+
             return (
-                <div className="p-4 space-y-6 view-animate">
-                    <TopHeader title={t('record')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
+                <div className={`p-4 space-y-6 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
+                    <TopHeader title="Registro" user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
                     
-                    <div className="bg-card rounded-3xl p-5 border border-border shadow-lg">
+                    <div className="bg-card rounded-3xl p-5 border shadow-lg" style={{borderColor: c.border}}>
                         <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Icons.Plus c="w-5 h-5 text-accent"/> {t('manual')}</h2>
                         <form onSubmit={guardarManual} className="space-y-4">
-                            <div className="flex bg-background rounded-xl p-1 border border-border">
-                                <button type="button" onClick={()=>setTipo('gasto')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${tipo==='gasto'?'bg-error text-white':'text-secondary'}`}>{t('btn_expense')}</button>
-                                <button type="button" onClick={()=>setTipo('ingreso')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${tipo==='ingreso'?'bg-success text-white':'text-secondary'}`}>{t('btn_income')}</button>
+                            <div className="flex bg-background rounded-xl p-1 border" style={{borderColor: c.border}}>
+                                <button type="button" onClick={()=>setTipo('gasto')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${tipo==='gasto'?'bg-error text-white':'text-secondary'}`}>Gasto</button>
+                                <button type="button" onClick={()=>setTipo('ingreso')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${tipo==='ingreso'?'bg-success text-white':'text-secondary'}`}>Ingreso</button>
                             </div>
-                            <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} required className="w-full p-4 rounded-xl border border-border bg-background outline-none text-2xl font-bold text-primary text-center" placeholder="0.00"/>
+                            <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} required className="w-full p-4 rounded-xl border bg-background outline-none text-2xl font-bold text-primary text-center" style={{borderColor: c.border}} placeholder="0.00"/>
                             <div className="flex gap-2">
-                                <select value={cat || catList[0]} onChange={e=>setCat(e.target.value)} className="w-1/2 p-3 rounded-xl border border-border bg-background outline-none text-sm text-primary font-bold">{catList.map(c=><option key={c} value={c}>{c}</option>)}</select>
-                                <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} className="w-1/2 p-3 rounded-xl border border-border bg-background outline-none text-sm text-primary" placeholder={t('desc')}/>
+                                <select value={cat} onChange={e=>setCat(e.target.value)} className="w-1/2 p-3 rounded-xl border bg-background outline-none text-sm text-primary font-bold" style={{borderColor: c.border}}>{CATEGORIAS.map(c=><option key={c} value={c}>{c}</option>)}</select>
+                                <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} className="w-1/2 p-3 rounded-xl border bg-background outline-none text-sm text-primary" style={{borderColor: c.border}} placeholder="Nota"/>
                             </div>
-                            <button type="submit" className="w-full py-3.5 bg-accent text-white rounded-xl font-bold shadow-lg shadow-accent/30">{t('btn_save')}</button>
+                            <button type="submit" className="w-full py-3.5 bg-accent text-white rounded-xl font-bold shadow-lg shadow-accent/30" style={{backgroundColor: c.accent}}>{t('btn_save')}</button>
                         </form>
                     </div>
 
-                    <div className="relative bg-card rounded-3xl p-5 border border-border shadow-lg overflow-hidden">
+                    <div className="relative bg-card rounded-3xl p-5 border shadow-lg overflow-hidden" style={{borderColor: c.border}}>
                         <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-warning"><Icons.Brain c="w-5 h-5"/> {t('ai')}</h2>
                         
                         {!isVip && (
                             <div className="absolute inset-0 z-10 glass-panel flex flex-col items-center justify-center text-center p-6">
                                 <div className="w-12 h-12 bg-warning/20 text-warning rounded-full flex items-center justify-center mb-3"><Icons.Crown c="w-6 h-6"/></div>
                                 <h3 className="font-bold text-white mb-2">Desbloquea la Inteligencia Artificial</h3>
-                                <button onClick={onUpgrade} className="bg-warning text-black font-bold px-6 py-2.5 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:scale-105 transition">{t('btn_see_plans')}</button>
+                                <p className="text-xs text-secondary mb-4">Registra tus gastos hablándole a tu teléfono. Súper rápido.</p>
+                                <button onClick={onUpgrade} className="bg-warning text-black font-bold px-6 py-2.5 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:scale-105 transition">Ver Planes VIP</button>
                             </div>
                         )}
 
                         <div className={!isVip ? "opacity-30 pointer-events-none filter blur-sm" : ""}>
-                            <div className="flex bg-background rounded-xl p-1 mb-4 border border-border">
-                                <button onClick={()=>{setIaMode('texto'); if(escuchando) toggleVoz();}} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='texto'?'bg-card text-primary shadow-sm':'text-secondary'}`}>{t('btn_write')}</button>
-                                <button onClick={()=>setIaMode('voz')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='voz'?'bg-card text-primary shadow-sm':'text-secondary'}`}>{t('btn_speak')}</button>
+                            <div className="flex bg-background rounded-xl p-1 mb-4 border" style={{borderColor: c.border}}>
+                                <button onClick={()=>{setIaMode('texto'); if(escuchando) toggleVoz();}} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='texto'?'bg-card text-primary shadow-sm':'text-secondary'}`}>{t('text_ai')}</button>
+                                <button onClick={()=>setIaMode('voz')} className={`flex-1 py-2 rounded-lg font-bold text-sm ${iaMode==='voz'?'bg-card text-primary shadow-sm':'text-secondary'}`}>{t('voice_ai')}</button>
                             </div>
                             
                             {iaMode === 'texto' ? (
                                 <div>
-                                    <textarea value={iaMsg} onChange={e=>setIaMsg(e.target.value)} className="w-full p-4 border border-border rounded-xl mb-3 bg-background outline-none text-sm text-primary font-medium" rows="3"></textarea>
+                                    <textarea value={iaMsg} onChange={e=>setIaMsg(e.target.value)} className="w-full p-4 border rounded-xl mb-3 bg-background outline-none text-sm text-primary font-medium" style={{borderColor: c.border}} rows="3" placeholder="Ej: Me pagaron 1500 de salario..."></textarea>
                                     <button onClick={procesarIA} className="w-full py-3 bg-[#19191c] border border-warning/50 text-warning rounded-xl font-bold shadow-sm">{t('btn_process_ai')}</button>
                                 </div>
                             ) : (
                                 <div className="flex flex-col items-center py-4">
-                                    <button onClick={toggleVoz} className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all duration-300 shadow-lg ${escuchando ? 'bg-error/20 border-error text-error scale-110' : 'bg-background border-warning text-warning'}`}>
+                                    <button onClick={toggleVoz} className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all duration-300 shadow-lg ${escuchando ? 'bg-error/20 border-error text-error scale-110' : 'bg-background border-warning text-warning'}`} style={escuchando ? {} : {borderColor: 'var(--col-warning)', color: 'var(--col-warning)'}}>
                                         {escuchando ? <Icons.MicOff c="w-8 h-8"/> : <Icons.Mic c="w-8 h-8"/>}
                                     </button>
-                                    <p className="text-xs text-secondary mt-4 mb-2">{escuchando ? t('msg_listening') : t('msg_tap_mic')}</p>
-                                    {iaMsg && <div className="w-full mt-2"><div className="p-4 bg-background rounded-xl border border-border text-sm font-medium text-primary mb-3 italic shadow-inner">"{iaMsg}"</div>{!escuchando && <button onClick={procesarIA} className="w-full py-3 bg-warning text-black rounded-xl font-bold shadow-lg">{t('btn_analyze_txt')}</button>}</div>}
+                                    <p className="text-xs text-secondary mt-4 mb-2">{escuchando ? "Escuchando... presiona para detener" : "Toca el micro para hablar"}</p>
+                                    {iaMsg && <div className="w-full mt-2"><div className="p-4 bg-background rounded-xl border text-sm font-medium text-primary mb-3 italic shadow-inner" style={{borderColor: c.border}}>"{iaMsg}"</div>{!escuchando && <button onClick={procesarIA} className="w-full py-3 bg-warning text-black rounded-xl font-bold shadow-lg">Analizar Texto</button>}</div>}
                                 </div>
                             )}
                         </div>
@@ -519,16 +496,19 @@
             );
         }
 
-        // --- PANTALLA 3: ANÁLISIS IA ---
-        function Analisis({ txns, cur, t, isVip, user, onOpenSettings, onUpgrade }) {
+        // --- PANTALLA 3: ANÁLISIS IA (DINÁMICO) ---
+        function Analisis({ txns, cur, settings, t, isVip, user, onOpenSettings, onUpgrade, formatMoneda, Icons, c }) {
+            const hasMultipleCurrencies = settings.currencies.filter(curr => curr && curr.trim() !== '').length > 1;
+
             if (!isVip) {
                 return (
-                    <div className="p-4 view-animate h-screen flex flex-col">
-                        <TopHeader title={t('analysis')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
+                    <div className={`p-4 view-animate h-screen flex flex-col ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
+                        <TopHeader title="Análisis IA" user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
                         <div className="flex-1 flex flex-col items-center justify-center text-center pb-20">
                             <div className="w-20 h-20 rounded-full bg-warning/10 text-warning flex items-center justify-center mb-6 shadow-lg border border-warning/20"><Icons.Crown c="w-10 h-10" /></div>
                             <h2 className="text-2xl font-bold text-primary mb-3">Evaluación Semanal VIP</h2>
-                            <button onClick={onUpgrade} className="bg-warning text-black text-sm uppercase font-bold px-6 py-3 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:scale-105 transition-transform">{t('btn_see_plans')}</button>
+                            <p className="text-secondary text-sm mb-6 max-w-xs leading-relaxed">Analiza tus gastos automáticamente y recibe recomendaciones inteligentes para ahorrar más.</p>
+                            <button onClick={onUpgrade} className="bg-warning text-black text-sm uppercase font-bold px-6 py-3 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:scale-105 transition-transform">Ver Planes</button>
                         </div>
                     </div>
                 );
@@ -555,29 +535,36 @@
                 setTimeout(() => {
                     setIsAnalyzing(false);
                     const newTips = [];
-                    if (ingresos > 0) newTips.push(`${t('analisis_sv_1')} ${Math.max(0, Math.round((balance/ingresos)*100))}${t('analisis_sv_2')}`);
-                    if (topGasto) newTips.push(`${t('analisis_leak_1')} ${topGasto[0]} (${formatMoneda(topGasto[1], cur)})${t('analisis_leak_2')}`);
-                    if (gastos > ingresos) newTips.push(t('analisis_warn'));
+                    if (ingresos > 0) newTips.push(`Ahorraste el ${Math.max(0, Math.round((balance/ingresos)*100))}% de tus ingresos esta semana.`);
+                    if (topGasto) newTips.push(`Tu mayor fuga de dinero fue en ${topGasto[0]} (${formatMoneda(topGasto[1], cur)}). Evalúa si fue estrictamente necesario.`);
+                    if (gastos > ingresos) newTips.push(`¡Cuidado! Tus gastos superaron tus ingresos. Debes ajustar tu presupuesto urgente.`);
                     
-                    const randomExtras = t('tips');
+                    const randomExtras = [
+                        "Aplica la regla 50/30/20 (Necesidades/Deseos/Ahorro) para un mejor balance.",
+                        "Antes de una compra grande, espera 24 horas para evitar impulsos.",
+                        "Revisa tus suscripciones recurrentes, podrías estar pagando por algo que no usas.",
+                        "Considera usar la técnica de los sobres para controlar gastos diarios.",
+                        "Intenta llevar almuerzo al trabajo 3 veces por semana, notarás la diferencia."
+                    ];
                     newTips.push(randomExtras[Math.floor(Math.random() * randomExtras.length)]);
                     
-                    if (gastos === 0 && ingresos === 0) setTipsGen([t('analisis_none')]);
+                    if (gastos === 0 && ingresos === 0) setTipsGen(["No tienes movimientos recientes en los últimos 7 días para analizar."]);
                     else setTipsGen(newTips);
                 }, 1500);
             };
 
+            // Analizar al cargar la primera vez
             useEffect(() => { handleAnalyze(); }, []);
 
             return (
-                <div className="p-4 space-y-4 view-animate">
-                    <TopHeader title={t('analysis')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
+                <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
+                    <TopHeader title="Análisis IA" user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
                     
                     <p className="text-secondary text-sm font-bold uppercase tracking-widest mt-1 mb-6 text-center">{t('last_7')}</p>
                     
                     <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-card rounded-3xl p-5 border border-border shadow-md"><p className="text-[10px] uppercase font-bold text-secondary mb-1">{t('income')}</p><p className="text-xl font-extrabold text-success">{formatMoneda(ingresos, cur)}</p></div>
-                        <div className="bg-card rounded-3xl p-5 border border-border shadow-md"><p className="text-[10px] uppercase font-bold text-secondary mb-1">{t('exp')}</p><p className="text-xl font-extrabold text-error">{formatMoneda(gastos, cur)}</p></div>
+                        <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}><p className="text-[10px] uppercase font-bold text-secondary mb-1">Ingresos</p><p className="text-xl font-extrabold text-success">{formatMoneda(ingresos, cur)}</p></div>
+                        <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}><p className="text-[10px] uppercase font-bold text-secondary mb-1">Gastos</p><p className="text-xl font-extrabold text-error">{formatMoneda(gastos, cur)}</p></div>
                     </div>
 
                     <div className={`rounded-3xl p-6 text-center shadow-lg border ${balance >= 0 ? 'bg-success/10 border-success/30' : 'bg-error/10 border-error/30'}`}>
@@ -585,26 +572,26 @@
                         <p className={`text-4xl font-extrabold ${balance >= 0 ? 'text-success' : 'text-error'}`}>{balance >= 0 ? '+' : ''}{formatMoneda(balance, cur)}</p>
                     </div>
 
-                    <div className="bg-card rounded-3xl p-6 border border-border shadow-lg mt-6 relative overflow-hidden">
+                    <div className="bg-card rounded-3xl p-6 border shadow-lg mt-6 relative overflow-hidden" style={{borderColor: c.border}}>
                         <div className="flex justify-between items-center mb-5">
                             <h2 className="text-sm font-bold text-warning flex items-center gap-2"><Icons.Brain c="w-6 h-6"/> IA Recomienda</h2>
                             <button onClick={handleAnalyze} disabled={isAnalyzing} className={`bg-warning/20 text-warning px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${isAnalyzing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-warning hover:text-black shadow-md'}`}>
                                 {isAnalyzing ? <Icons.RefreshCw c="w-3 h-3 animate-spin"/> : <Icons.Brain c="w-3 h-3"/>}
-                                {isAnalyzing ? t('btn_analyzing') : t('btn_analyze')}
+                                {isAnalyzing ? 'Analizando...' : 'Analizar'}
                             </button>
                         </div>
 
                         {isAnalyzing ? (
                             <div className="flex flex-col items-center justify-center py-6 space-y-3">
                                 <Icons.RefreshCw c="w-8 h-8 text-warning animate-spin"/>
-                                <p className="text-xs text-secondary animate-pulse">{t('msg_processing')}</p>
+                                <p className="text-xs text-secondary animate-pulse">Procesando movimientos con IA...</p>
                             </div>
                         ) : (
                             <ul className="space-y-4 text-sm text-secondary font-medium leading-relaxed view-animate">
                                 {tipsGen.map((tip, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
-                                        <span className={`${tip.includes('!') ? 'text-error' : 'text-accent'} mt-0.5 font-bold`}>●</span>
-                                        <span className={tip.includes('!') ? 'text-error font-bold' : ''}>{tip}</span>
+                                        <span className={`${tip.includes('Cuidado') ? 'text-error' : 'text-accent'} mt-0.5 font-bold`}>●</span>
+                                        <span className={tip.includes('Cuidado') ? 'text-error font-bold' : ''}>{tip}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -615,7 +602,7 @@
         }
 
         // --- PANTALLA 4: HISTORIAL ---
-        function Historial({ txns, cur, setCur, curList, deleteTxn, updateTxn, t, isVip, user, onOpenSettings }) {
+        function Historial({ txns, cur, settings, deleteTxn, updateTxn, t, isVip, user, onOpenSettings, formatMoneda, Icons, c }) {
             const currentTxnsAll = txns.filter(txn => txn.currency === cur);
             const [filtro, setFiltro] = useState('Semanal'); 
             const [currentDate, setCurrentDate] = useState(new Date());
@@ -645,40 +632,38 @@
             const outTotal = displayTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
 
             const EditModal = ({ txn, onClose }) => {
-                const catList = t('categories');
                 const [monto, setMonto] = useState(txn.amount); const [cat, setCat] = useState(txn.category); const [desc, setDesc] = useState(txn.description);
                 const handleSave = (e) => { e.preventDefault(); updateTxn({ ...txn, amount: parseFloat(monto), category: cat, description: desc }); onClose(); };
                 return (
                     <div className="fixed inset-0 modal-overlay z-[100] flex items-center justify-center p-4">
-                        <div className="bg-card w-full max-w-sm rounded-3xl p-6 border border-border shadow-2xl view-animate relative">
-                            <button onClick={onClose} className="absolute top-4 right-4 bg-background border border-border rounded-full p-1.5 text-secondary hover:text-white transition z-10"><Icons.X c="w-5 h-5"/></button>
+                        <div className="bg-card w-full max-w-sm rounded-3xl p-6 border shadow-2xl view-animate relative" style={{borderColor: c.border}}>
+                            <button onClick={onClose} className="absolute top-4 right-4 bg-background border rounded-full p-1.5 text-secondary hover:text-white transition z-10" style={{borderColor: c.border}}><Icons.X c="w-5 h-5"/></button>
                             <h2 className="text-xl font-bold mb-6 text-primary flex items-center gap-2"><Icons.Pencil c="w-5 h-5 text-accent"/> Editar</h2>
                             <form onSubmit={handleSave} className="space-y-4">
-                                <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} className="w-full p-4 rounded-xl border border-border bg-background outline-none text-primary font-bold text-2xl text-center"/>
-                                <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-primary text-sm font-bold">{catList.map(c => <option key={c} value={c}>{c}</option>)}</select>
-                                <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} className="w-full p-3.5 rounded-xl border border-border bg-background outline-none text-primary text-sm"/>
-                                <button type="submit" className="w-full py-4 bg-accent text-white rounded-xl font-bold text-sm shadow-lg shadow-accent/30 mt-4">{t('btn_save')}</button>
+                                <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} className="w-full p-4 rounded-xl border bg-background outline-none text-primary font-bold text-2xl text-center" style={{borderColor: c.border}}/>
+                                <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3.5 rounded-xl border bg-background outline-none text-primary text-sm font-bold" style={{borderColor: c.border}}>{CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}</select>
+                                <input type="text" value={desc} onChange={e=>setDesc(e.target.value)} className="w-full p-3.5 rounded-xl border bg-background outline-none text-primary text-sm" style={{borderColor: c.border}}/>
+                                <button type="submit" className="w-full py-4 bg-accent text-white rounded-xl font-bold text-sm shadow-lg shadow-accent/30 mt-4" style={{backgroundColor: c.accent}}>{t('btn_save')}</button>
                             </form>
                         </div>
                     </div>
                 );
             };
 
-            const daysArr = t('days');
+            const hasMultipleCurrencies = settings.currencies.filter(curr => curr && curr.trim() !== '').length > 1;
 
             return (
-                <div className="p-4 space-y-4 view-animate">
-                    <TopHeader title={t('history')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
-                    <CurrencyTabs currencies={curList} activeCurrency={cur} setActiveCurrency={setCur} />
+                <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
+                    <TopHeader title="Historial" user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
 
-                    <div className="bg-card rounded-3xl p-5 border border-border shadow-md">
+                    <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}>
                         <div className="flex justify-between items-center mb-4">
-                            <button onClick={() => changeMonth(-1)} className="text-secondary hover:text-primary p-2 bg-background rounded-full border border-border"><Icons.ChevronLeft c="w-4 h-4"/></button>
+                            <button onClick={() => changeMonth(-1)} className="text-secondary hover:text-primary p-2 bg-background border rounded-full" style={{borderColor: c.border}}><Icons.ChevronLeft c="w-4 h-4"/></button>
                             <span className="font-bold text-primary tracking-wide">{MESES[month]} {year}</span>
-                            <button onClick={() => changeMonth(1)} className="text-secondary hover:text-primary p-2 bg-background rounded-full border border-border"><Icons.ChevronRight c="w-4 h-4"/></button>
+                            <button onClick={() => changeMonth(1)} className="text-secondary hover:text-primary p-2 bg-background border rounded-full" style={{borderColor: c.border}}><Icons.ChevronRight c="w-4 h-4"/></button>
                         </div>
                         <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-secondary mb-2 uppercase">
-                            {daysArr.map((d, i) => <span key={i}>{d}</span>)}
+                            <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
                         </div>
                         <div className="grid grid-cols-7 gap-y-2 gap-x-1 text-center text-sm font-medium">
                             {Array.from({length: firstDay}).map((_, i) => <div key={`blank-${i}`}></div>)}
@@ -686,22 +671,21 @@
                                 const d = i + 1; const hasDot = checkDayHasTxns(d); const isSelected = selectedDay === d;
                                 return (
                                     <div key={d} onClick={() => { setSelectedDay(d); setFiltro('Diario'); }} className="relative flex justify-center cursor-pointer group py-1">
-                                        <div className={`w-8 h-8 flex items-center justify-center rounded-full transition-all ${isSelected ? 'bg-accent text-white font-bold shadow-lg scale-110' : 'text-secondary group-hover:bg-border group-hover:text-white'}`}>{d}</div>
-                                        {hasDot && <span className={`absolute bottom-0 w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white' : 'bg-accent'}`}></span>}
+                                        <div className={`w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 ${isSelected ? 'bg-accent text-white font-bold shadow-lg scale-110' : 'text-secondary group-hover:bg-border group-hover:text-white'}`} style={isSelected ? {backgroundColor: c.accent} : {}}>{d}</div>
+                                        {hasDot && <span className={`absolute bottom-0 w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white' : 'bg-accent'}`} style={isSelected ? {backgroundColor: 'white'} : {backgroundColor: c.accent}}></span>}
                                     </div>
                                 );
                             })}
                         </div>
                     </div>
 
-                    <div className="flex bg-card rounded-xl border border-border p-1 shadow-sm">
-                        {[t('tab_daily'), t('tab_weekly'), t('tab_monthly')].map((f, idx) => {
-                            const rawFilter = ['Diario', 'Semanal', 'Mensual'][idx];
-                            return <button key={f} onClick={() => { setFiltro(rawFilter); if(rawFilter!=='Diario') setSelectedDay(null); }} className={`flex-1 py-2.5 text-xs rounded-lg font-bold transition-all ${filtro === rawFilter ? 'bg-background text-primary shadow-sm border border-border' : 'text-secondary hover:text-primary'}`}>{f}</button>
-                        })}
+                    <div className="flex bg-card rounded-xl border p-1 shadow-sm" style={{borderColor: c.border}}>
+                        {['Diario', 'Semanal', 'Mensual'].map(f => (
+                            <button key={f} onClick={() => { setFiltro(f); if(f!=='Diario') setSelectedDay(null); }} className={`flex-1 py-2.5 text-xs rounded-lg font-bold transition-all duration-300 ${filtro === f ? 'bg-background text-primary shadow-sm border' : 'text-secondary hover:text-primary'}`} style={filtro === f ? {borderColor: c.border} : {}}>{f}</button>
+                        ))}
                     </div>
 
-                    <div className="flex justify-between items-center text-[10px] font-bold text-secondary uppercase tracking-widest mt-6 mb-2 bg-background p-2.5 rounded-lg border border-border">
+                    <div className="flex justify-between items-center text-[10px] font-bold text-secondary uppercase tracking-widest mt-6 mb-2 bg-background p-2.5 rounded-lg border" style={{borderColor: c.border}}>
                         <span>{label}</span>
                         <div className="flex gap-4"><span className="text-success">+{formatMoneda(inTotal, cur)}</span><span className="text-error">-{formatMoneda(outTotal, cur)}</span></div>
                     </div>
@@ -709,7 +693,7 @@
                     <div className="space-y-3">
                         {displayTxns.length === 0 ? <p className="text-center text-secondary py-10 text-sm font-medium">{t('no_txns')}</p> : 
                         displayTxns.map(txn => (
-                            <div key={txn.id} className="flex justify-between items-center p-4 bg-card rounded-3xl border border-border shadow-sm group hover:border-accent transition-colors">
+                            <div key={txn.id} className="flex justify-between items-center p-4 bg-card rounded-3xl border shadow-sm group hover:border-accent transition-colors duration-300" style={{borderColor: c.border}}>
                                 <div className="flex items-center gap-4">
                                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${txn.type === 'ingreso' ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>
                                         {txn.type === 'ingreso' ? <Icons.TrendingUp c="w-6 h-6"/> : <Icons.TrendingDown c="w-6 h-6"/>}
@@ -724,8 +708,8 @@
                                         {txn.type==='ingreso'?'+':'-'}{formatMoneda(txn.amount, cur)}
                                     </span>
                                     <div className="flex items-center gap-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
-                                        <button onClick={()=>setEditingTxn(txn)} className="p-1.5 text-secondary hover:text-accent bg-background rounded-lg border border-border shadow-sm"><Icons.Pencil c="w-3.5 h-3.5"/></button>
-                                        <button onClick={()=>deleteTxn(txn.id)} className="p-1.5 text-secondary hover:text-error bg-background rounded-lg border border-border shadow-sm"><Icons.Trash c="w-3.5 h-3.5"/></button>
+                                        <button onClick={()=>setEditingTxn(txn)} className="p-1.5 text-secondary hover:text-accent bg-background rounded-lg border shadow-sm" style={{borderColor: c.border}}><Icons.Pencil c="w-3.5 h-3.5"/></button>
+                                        <button onClick={()=>deleteTxn(txn.id)} className="p-1.5 text-secondary hover:text-error bg-background rounded-lg border shadow-sm" style={{borderColor: c.border}}><Icons.Trash c="w-3.5 h-3.5"/></button>
                                     </div>
                                 </div>
                             </div>
@@ -736,14 +720,17 @@
             );
         }
 
-        // --- PANTALLA 5: AJUSTES (MODAL FLOTANTE Y VISTA PREVIA EN TIEMPO REAL) ---
-        function AjustesModal({ onClose, onPreview, settings, saveSettings, user, isVip, onLogout, onUpgrade }) {
+        // --- PANTALLA 5: AJUSTES (MODAL FLOTANTE VIP) ---
+        function AjustesModal({ onClose, onPreview, settings, saveSettings, user, isVip, onLogout, onUpgrade, Icons, c }) {
             const [local, setLocal] = useState(settings);
             const [code, setCode] = useState(''); const [crm, setCrm] = useState(false);
             const [customTab, setCustomTab] = useState('temas');
             const prof = DB.getUserData(user)?.profile;
 
-            useEffect(() => { onPreview(local); }, [local]);
+            // VISTA PREVIA: Actualiza la app completa mientras juegas con los colores
+            useEffect(() => {
+                if (isVip && onPreview) onPreview(local);
+            }, [local]);
 
             const chgCountry = (e) => {
                 const cName = e.target.value; const cData = COUNTRIES.find(x => x.name === cName);
@@ -791,20 +778,20 @@
 
             return (
                 <div className="fixed inset-0 modal-overlay flex items-center justify-center p-4 z-[200]">
-                    <div className="bg-card w-full max-w-lg rounded-3xl p-6 border border-border shadow-2xl relative max-h-[90vh] overflow-y-auto flex flex-col view-animate">
-                        <button onClick={onClose} className="absolute top-4 right-4 bg-background border border-border rounded-full p-1.5 text-secondary hover:text-white transition z-10 shadow-md"><Icons.X c="w-5 h-5"/></button>
+                    <div className="bg-card w-full max-w-lg rounded-3xl p-6 border shadow-2xl relative max-h-[90vh] overflow-y-auto flex flex-col view-animate" style={{borderColor: c.border}}>
+                        <button onClick={onClose} className="absolute top-4 right-4 bg-background border rounded-full p-1.5 text-secondary hover:text-white transition z-10 shadow-md" style={{borderColor: c.border}}><Icons.X c="w-5 h-5"/></button>
                         
                         {crm && <AdminCRMModal onClose={()=>setCrm(false)} cur={local.currencies[0]}/>}
                         
                         <h1 className="text-2xl font-extrabold text-primary mb-6">Ajustes Globales</h1>
                         
-                        <div className="bg-background p-6 rounded-3xl border border-border shadow-inner mb-6">
+                        <div className="bg-background p-6 rounded-3xl border shadow-inner mb-6" style={{borderColor: c.border}}>
                             <div className="flex items-center gap-4 mb-6">
-                                {prof?.picture ? <img src={prof.picture} className="w-14 h-14 rounded-full border-2 border-border shadow-md" alt="Avatar"/> : <div className="w-14 h-14 bg-card rounded-full border border-border flex items-center justify-center font-bold text-xl shadow-md">U</div>}
+                                {prof?.picture ? <img src={prof.picture} className="w-14 h-14 rounded-full border-2 shadow-md" style={{borderColor: c.border}} alt="Avatar"/> : <div className="w-14 h-14 bg-card rounded-full border flex items-center justify-center font-bold text-xl shadow-md" style={{borderColor: c.border}}>U</div>}
                                 <div>
                                     <p className="font-bold text-primary text-lg leading-tight">{prof?.name||user}</p>
                                     <p className="text-xs text-secondary mb-2">{user}</p>
-                                    {isVip ? <span className="bg-warning/20 text-warning px-2 py-0.5 rounded text-[10px] font-bold tracking-widest border border-warning/30">USUARIO VIP</span> : <span className="bg-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-bold tracking-widest border border-accent/30">USUARIO FREE</span>}
+                                    {isVip ? <span className="bg-warning/20 text-warning px-2 py-0.5 rounded text-[10px] font-bold tracking-widest border border-warning/30">USUARIO VIP</span> : <span className="bg-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-bold tracking-widest border border-accent/30" style={{color: c.accent, borderColor: `${c.accent}4D`}}>USUARIO FREE</span>}
                                 </div>
                             </div>
                             
@@ -812,19 +799,19 @@
                                 👑 {isVip ? 'Renovar / Ingresar Nuevo Código VIP' : 'Canjear Código VIP'}
                             </button>
                             
-                            <button onClick={onLogout} className="w-full bg-card border border-error/50 text-error p-3.5 rounded-xl font-bold text-sm hover:bg-error hover:text-white transition flex items-center justify-center gap-2 shadow-sm"><Icons.LogOut c="w-4 h-4"/> Cerrar Sesión</button>
+                            <button onClick={onLogout} className="w-full bg-card border border-error/50 text-error p-3.5 rounded-xl font-bold text-sm hover:bg-error hover:text-white transition flex items-center justify-center gap-2 shadow-sm" style={{borderColor: '#ef444480'}}><Icons.LogOut c="w-4 h-4"/> Cerrar Sesión</button>
                         </div>
 
                         <div className="space-y-6">
                             <div className="grid grid-cols-1 gap-4">
                                 <div>
                                     <label className="text-[10px] font-bold text-secondary uppercase mb-2 block tracking-widest">País de Residencia y Monedas</label>
-                                    <select value={local.country} onChange={chgCountry} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm font-bold shadow-inner mb-3">
+                                    <select value={local.country} onChange={chgCountry} className="w-full p-3 rounded-xl border bg-background outline-none text-primary text-sm font-bold shadow-inner mb-3" style={{borderColor: c.border}}>
                                         {COUNTRIES.map(c=><option key={c.name} value={c.name}>{c.name}</option>)}
                                     </select>
                                     <div className="grid grid-cols-3 gap-3">
                                         {[0, 1, 2].map(i => (
-                                            <select key={i} value={local.currencies[i] || ''} onChange={e => { const nc = [...local.currencies]; nc[i] = e.target.value; setLocal({...local, currencies: nc}); }} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-xs font-bold text-center appearance-none shadow-inner">
+                                            <select key={i} value={local.currencies[i] || ''} onChange={e => { const nc = [...local.currencies]; nc[i] = e.target.value; setLocal({...local, currencies: nc}); }} className="w-full p-3 rounded-xl border bg-background outline-none text-primary text-xs font-bold text-center appearance-none shadow-inner" style={{borderColor: c.border}}>
                                                 <option value="">{i===0?'Principal':`Opción ${i+1}`}</option>
                                                 {Object.keys(ALL_CURRENCIES).map(code => <option key={code} value={code}>{code}</option>)}
                                             </select>
@@ -833,8 +820,7 @@
                                 </div>
                             </div>
 
-                            {/* --- SECCIÓN VIP: PERSONALIZACIÓN TOTAL --- */}
-                            <div className="pt-4 border-t border-border relative">
+                            <div className="pt-4 border-t relative" style={{borderColor: c.border}}>
                                 {!isVip && <div className="absolute inset-0 glass-panel z-10 flex justify-center items-center rounded-2xl"><button onClick={() => { onClose(); onUpgrade(); }} className="bg-warning text-black font-bold px-4 py-2 rounded-lg text-xs shadow-[0_0_15px_rgba(234,179,8,0.5)] flex items-center gap-1"><Icons.Crown c="w-4 h-4"/> Solo VIP</button></div>}
                                 
                                 <div className="flex justify-between items-center mb-4">
@@ -842,19 +828,19 @@
                                     <button onClick={()=>{setLocal({...local, colors: DEFAULT_SETTINGS.colors, themeName: DEFAULT_SETTINGS.themeName, fontFamily: DEFAULT_SETTINGS.fontFamily});}} className="text-[10px] text-accent font-bold hover:underline flex items-center gap-1"><Icons.RefreshCw c="w-3 h-3"/> Restaurar Default</button>
                                 </div>
 
-                                <div className="flex bg-background rounded-xl p-1 mb-4 border border-border shadow-inner">
-                                    <button onClick={()=>setCustomTab('temas')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${customTab==='temas'?'bg-card text-primary shadow border border-border':'text-secondary hover:text-primary'}`}>🎨 1. Temas</button>
-                                    <button onClick={()=>setCustomTab('fondos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${customTab==='fondos'?'bg-card text-primary shadow border border-border':'text-secondary hover:text-primary'}`}>🖼️ 2. Fondos</button>
-                                    <button onClick={()=>setCustomTab('textos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${customTab==='textos'?'bg-card text-primary shadow border border-border':'text-secondary hover:text-primary'}`}>Aa 3. Textos</button>
+                                <div className="flex bg-background rounded-xl p-1 mb-4 border shadow-inner" style={{backgroundColor: c.navBg, borderColor: c.border}}>
+                                    <button onClick={()=>setCustomTab('temas')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all duration-300 ${customTab==='temas'?'bg-card text-primary shadow border':'text-secondary hover:text-primary'}`} style={customTab==='temas'?{borderColor: c.border}:{}}>🎨 1. Temas</button>
+                                    <button onClick={()=>setCustomTab('fondos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all duration-300 ${customTab==='fondos'?'bg-card text-primary shadow border':'text-secondary hover:text-primary'}`} style={customTab==='fondos'?{borderColor: c.border}:{}}>🖼️ 2. Fondos</button>
+                                    <button onClick={()=>setCustomTab('textos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all duration-300 ${customTab==='textos'?'bg-card text-primary shadow border':'text-secondary hover:text-primary'}`} style={customTab==='textos'?{borderColor: c.border}:{}}>Aa 3. Textos</button>
                                 </div>
 
-                                <div className="bg-card border border-border rounded-xl p-4 shadow-sm min-h-[220px]">
+                                <div className="bg-card rounded-xl p-4 shadow-sm min-h-[220px]">
                                     {customTab === 'temas' && (
                                         <div>
                                             <p className="text-[10px] text-secondary mb-3 text-center">12 Personalidades diseñadas para ti</p>
                                             <div className="grid grid-cols-2 gap-2 max-h-[160px] overflow-y-auto pr-1">
                                                 {PREDEFINED_THEMES.map(t => (
-                                                    <button key={t.name} onClick={()=>setLocal({ ...local, themeName: t.name, colors: t.colors })} className={`p-2 rounded-lg text-xs font-bold transition-all border ${local.themeName === t.name ? 'border-accent ring-1 ring-accent' : 'border-border hover:border-secondary'}`} style={{backgroundColor: t.colors.card, color: t.colors.text}}>
+                                                    <button key={t.name} onClick={()=>setLocal({ ...local, themeName: t.name, colors: t.colors })} className={`p-2 rounded-lg text-xs font-bold transition-all border ${local.themeName === t.name ? 'border-accent ring-1' : 'hover:border-secondary'}`} style={{backgroundColor: t.colors.card, color: t.colors.text, borderColor: local.themeName === t.name ? t.colors.accent : 'transparent', '--tw-ring-color': t.colors.accent }}>
                                                         {t.name}
                                                     </button>
                                                 ))}
@@ -867,11 +853,11 @@
                                             <p className="text-[10px] text-secondary mb-4 text-center">Personaliza el fondo de la app libremente</p>
                                             <div className="flex justify-around gap-4">
                                                 <div className="flex flex-col items-center gap-2">
-                                                    <input type="color" value={local.colors.bg} onChange={e=>setLocal({...local, colors:{...local.colors, bg:e.target.value}})} className="w-16 h-16 rounded-xl cursor-pointer border-2 border-border shadow-sm"/>
+                                                    <input type="color" value={local.colors.bg} onChange={e=>setLocal({...local, colors:{...local.colors, bg:e.target.value}})} className="w-16 h-16 rounded-xl cursor-pointer border-2 shadow-sm" style={{borderColor: c.border}}/>
                                                     <span className="text-[10px] font-bold uppercase text-secondary">Fondo Global</span>
                                                 </div>
                                                 <div className="flex flex-col items-center gap-2">
-                                                    <input type="color" value={local.colors.card} onChange={e=>setLocal({...local, colors:{...local.colors, card:e.target.value}})} className="w-16 h-16 rounded-xl cursor-pointer border-2 border-border shadow-sm"/>
+                                                    <input type="color" value={local.colors.card} onChange={e=>setLocal({...local, colors:{...local.colors, card:e.target.value}})} className="w-16 h-16 rounded-xl cursor-pointer border-2 shadow-sm" style={{borderColor: c.border}}/>
                                                     <span className="text-[10px] font-bold uppercase text-secondary">Tarjetas</span>
                                                 </div>
                                             </div>
@@ -881,115 +867,27 @@
                                     {customTab === 'textos' && (
                                         <div>
                                             <p className="text-[10px] text-secondary mb-4 text-center">Elige tu tipografía favorita de 12 estilos</p>
-                                            <select value={local.fontFamily} onChange={e=>setLocal({...local, fontFamily: e.target.value})} className="w-full p-3 rounded-xl border border-border bg-background outline-none text-primary text-sm font-bold shadow-inner mb-4" style={{fontFamily: local.fontFamily}}>
+                                            <select value={local.fontFamily} onChange={e=>setLocal({...local, fontFamily: e.target.value})} className="w-full p-3 rounded-xl border bg-background outline-none text-primary text-sm font-bold shadow-inner mb-4" style={{fontFamily: local.fontFamily, borderColor: c.border}}>
                                                 {PREDEFINED_FONTS.map(f => <option key={f.name} value={f.value} style={{fontFamily: f.value}}>{f.name}</option>)}
                                             </select>
                                             <div className="flex justify-center items-center gap-4">
                                                 <span className="text-[10px] font-bold uppercase text-secondary">Color de texto principal:</span>
-                                                <input type="color" value={local.colors.text} onChange={e=>setLocal({...local, colors:{...local.colors, text:e.target.value}})} className="w-10 h-10 rounded-lg cursor-pointer border border-border shadow-sm"/>
+                                                <input type="color" value={local.colors.text} onChange={e=>setLocal({...local, colors:{...local.colors, text:e.target.value}})} className="w-10 h-10 rounded-lg cursor-pointer border shadow-sm" style={{borderColor: c.border}}/>
                                             </div>
                                         </div>
                                     )}
                                 </div>
                             </div>
 
-                            <div className="pt-4 border-t border-border">
+                            <div className="pt-4 border-t" style={{borderColor: c.border}}>
                                 <label className="text-[10px] font-bold text-success uppercase mb-3 flex items-center gap-1.5 tracking-widest"><Icons.Shield c="w-4 h-4"/> Respaldo Cifrado (AES-256)</label>
                                 <button onClick={backup} className="w-full bg-success/10 text-success border border-success/30 p-3.5 rounded-xl font-bold text-sm mb-4 shadow-sm hover:bg-success hover:text-white transition">↑ Enviar a WhatsApp</button>
-                                <div className="bg-background p-2 rounded-xl border border-border flex items-center gap-2 shadow-inner">
+                                <div className="bg-background p-2 rounded-xl border flex items-center gap-2 shadow-inner" style={{borderColor: c.border}}>
                                     <input type="text" value={code} onChange={e=>setCode(e.target.value)} className="flex-1 p-2 bg-transparent outline-none text-xs text-primary font-mono" placeholder="Pega el código aquí"/>
-                                    <button onClick={restore} className="bg-card border border-border text-primary px-4 py-2 rounded-lg font-bold text-xs hover:bg-accent hover:text-white transition shadow-sm">↓ Restaurar</button>
-                                </div>
-                            </div>
-
-                            <button onClick={()=>{saveSettings(local); onClose();}} className="w-full bg-accent text-white p-4 rounded-xl font-bold mt-2 shadow-lg shadow-accent/30 text-lg hover:scale-[1.02] transition-transform">Guardar y Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-
-        // --- APP PRINCIPAL ---
-        function App() {
-            const [user, setUser] = useState(null);
-            const [vip, setVip] = useState(false); const [exp, setExp] = useState(null);
-            const [view, setView] = useState('home'); const [showPay, setShowPay] = useState(false);
-            const [showSettings, setShowSettings] = useState(false);
-            const [txns, setTxns] = useState([]); const [settings, setSettings] = useState(DEFAULT_SETTINGS);
-            const [previewSettings, setPreviewSettings] = useState(null); 
-            const [cur, setCur] = useState('PEN');
-
-            useEffect(() => { const sUser = sessionStorage.getItem('billetera_active_user'); if(sUser) loadData(sUser); }, []);
-
-            const loadData = (u) => {
-                setUser(u); const ud = DB.getUserData(u);
-                if(ud?.vip && ud.expireAt && ud.expireAt >= new Date().toISOString().split('T')[0]) { setVip(true); setExp(ud.expireAt); }
-                else { DB.deactivateVip(u); setVip(false); setExp(null); }
-                setTxns(DB.getTxns(u)); const s = DB.getSettings(u); setSettings(s); setCur(s.currencies[0]||'PEN'); setView('home');
-            };
-
-            const login = (u, p) => { sessionStorage.setItem('billetera_active_user', u); DB.loginOrRegisterGoogle(u, p); loadData(u); };
-            
-            const handleCloseSettings = () => { setPreviewSettings(null); setShowSettings(false); };
-
-            const handleSaveSettings = (newSettings) => {
-                setSettings(newSettings); DB.saveSettings(user, newSettings); setCur(newSettings.currencies[0]);
-                setPreviewSettings(null); setShowSettings(false);
-            };
-
-            const logout = () => { sessionStorage.removeItem('billetera_active_user'); setUser(null); handleCloseSettings(); };
-
-            // INYECCIÓN GLOBAL DE VARIABLES CSS
-            const activeSettings = previewSettings || settings;
-            useEffect(() => {
-                const root = document.documentElement; const c = activeSettings.colors;
-                root.style.setProperty('--col-bg', c.bg); root.style.setProperty('--col-card', c.card);
-                root.style.setProperty('--col-text', c.text); root.style.setProperty('--col-secondary', c.secondary);
-                root.style.setProperty('--col-border', c.border); root.style.setProperty('--col-accent', c.accent);
-                root.style.setProperty('--col-nav-bg', c.navBg); root.style.setProperty('--col-nav-active-bg', c.navActiveBg);
-                root.style.setProperty('--col-nav-active-text', c.navActiveText);
-                document.body.style.fontFamily = activeSettings.fontFamily;
-            }, [activeSettings]);
-
-            if(!user) return <div style={{'--col-bg':'#18181b','--col-card':'#27272a','--col-border':'#3f3f46'}}><AuthView onLogin={login}/></div>;
-
-            const t = (k) => DICTIONARY[activeSettings.lang]?.[k] || DICTIONARY['es'][k];
-            
-            const renderV = () => {
-                switch(view) {
-                    case 'home': return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} expire={exp}/>;
-                    case 'nueva': return <RegistroUnificado addTxn={x=>{const nw=[...txns,x];setTxns(nw);DB.saveTxns(user,nw);}} cur={cur} t={t} isVip={vip} settings={activeSettings} user={user} onOpenSettings={()=>setShowSettings(true)} onUpgrade={()=>setShowPay(true)}/>;
-                    case 'analisis': return <Analisis txns={txns} cur={cur} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onUpgrade={()=>setShowPay(true)}/>;
-                    case 'historial': return <Historial txns={txns} cur={cur} setCur={setCur} curList={activeSettings.currencies} deleteTxn={id=>{if(confirm("¿Borrar?")){const nw=txns.filter(x=>x.id!==id);setTxns(nw);DB.saveTxns(user,nw);}}} updateTxn={x=>{const nw=txns.map(t=>t.id===x.id?x:t);setTxns(nw);DB.saveTxns(user,nw);}} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)}/>;
-                    default: return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} expire={exp}/>;
-                }
-            };
-
-            const zS = (activeSettings.zoom||100)/100; 
-            
-            return (
-                <div className="min-h-screen flex flex-col relative" style={{ fontFamily: activeSettings.fontFamily }}>
-                    <div className="flex-1 pb-28" style={{ transform:`scale(${zS})`, transformOrigin:'top center' }}>{renderV()}</div>
-                    
-                    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-nav-bg/95 backdrop-blur-md rounded-[2rem] flex justify-around px-2 py-3 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-border/50 z-40">
-                        {[{id:'home', I:Icons.Home, l:t('home')},{id:'nueva', I:Icons.Plus, l:t('record')},{id:'analisis', I:Icons.Brain, l:t('analysis')},{id:'historial', I:Icons.List, l:t('history')}].map(x => {
-                            const IconComponent = x.I;
-                            return (
-                                <button key={x.id} onClick={()=>setView(x.id)} className={`flex flex-col items-center justify-center min-w-[4rem] transition-all duration-300 ${view===x.id?'text-nav-active-text scale-110 -translate-y-1':'text-secondary hover:text-primary'}`}>
-                                    <IconComponent c="w-6 h-6"/>
-                                    <span className={`text-[10px] mt-1.5 font-bold tracking-wide ${view===x.id?'opacity-100':'opacity-0 h-0 overflow-hidden'}`}>{x.l}</span>
-                                </button>
-                            );
-                        })}
-                    </div>
-                    
-                    {showSettings && <AjustesModal settings={activeSettings} saveSettings={handleSaveSettings} onPreview={setPreviewSettings} user={user} isVip={vip} onLogout={logout} onUpgrade={()=>setShowPay(true)} onClose={handleCloseSettings}/>}
-                    {showPay && <PaymentModal onClose={()=>setShowPay(false)} t={t} />}
-                </div>
-            );
-        }
-
-        const root = ReactDOM.createRoot(document.getElementById('root')); root.render(<App />);
-    </script>
-</body>
-</html>
+                                    <button onClick={restore} className="bg-card border text-primary px-4 py-2 rounded-lg font-bold text-xs hover:bg-accent hover:text-white transition shadow-sm" style={{borderColor: c.border}}>↓ Restaurar</button>
+                               }
+                           </div>
+                       </div>
+               </div>
+           );
+       }
