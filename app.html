@@ -167,6 +167,11 @@
         const USD_RATES = { 'PEN': 3.75, 'EUR': 0.92, 'GBP': 0.79, 'BRL': 5.15, 'MXN': 16.8, 'ARS': 1000, 'COP': 3900, 'CLP': 950, 'BOB': 6.9, 'CAD': 1.37, 'AUD': 1.52, 'CNY': 7.24, 'USD': 1 };
         function formatMoneda(val, currCode) { const sym = ALL_CURRENCIES[currCode] || currCode; return `${sym} ${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
 
+        const getFlag = (country) => {
+            const flags = { 'Perú':'🇵🇪', 'México':'🇲🇽', 'Colombia':'🇨🇴', 'Argentina':'🇦🇷', 'Chile':'🇨🇱', 'España':'🇪🇸', 'Estados Unidos':'🇺🇸', 'Brasil':'🇧🇷', 'Ecuador':'🇪🇨', 'Bolivia':'🇧🇴', 'Uruguay':'🇺🇾', 'Paraguay':'🇵🇾', 'Venezuela':'🇻🇪', 'Costa Rica':'🇨🇷', 'Guatemala':'🇬🇹', 'Honduras':'🇭🇳', 'El Salvador':'🇸🇻', 'Nicaragua':'🇳🇮', 'Panamá':'🇵🇦', 'República Dominicana':'🇩🇴', 'Cuba':'🇨🇺', 'Puerto Rico':'🇵🇷', 'Canadá':'🇨🇦', 'Reino Unido':'🇬🇧', 'Francia':'🇫🇷', 'Alemania':'🇩🇪', 'Italia':'🇮🇹', 'Portugal':'🇵🇹' };
+            return flags[country] || '🌐';
+        };
+
         // --- ICONOS COMPLETOS ---
         const Icons = {
             Logo: ({c}) => <svg viewBox="0 0 64 64" className={c || "w-full h-full"}><rect width="64" height="64" rx="16" fill="currentColor"/><path d="M44 14c6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28h40v20a4 4 0 0 1-4 4h-32a4 4 0 0 1-4-4z" fill="#0ea5e9" stroke="#fff" strokeWidth="2"/><path d="M12 28a4 4 0 0 1 4-4h32a4 4 0 0 1 4 4v6h-40z" fill="#38bdf8" stroke="#fff" strokeWidth="2"/><circle cx="26" cy="42" r="3" fill="#fff"/></svg>,
@@ -182,6 +187,7 @@
             Pencil: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>,
             ChevronLeft: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>,
             ChevronRight: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>,
+            ChevronDown: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>,
             LogOut: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>,
             Shield: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
             X: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>,
@@ -195,7 +201,7 @@
         };
 
         // --- CABECERA UNIVERSAL ---
-        function TopHeader({ title, user, isVip, onOpenSettings }) {
+        function TopHeader({ title, user, isVip, onOpenSettings, country, onOpenCountryMenu, c }) {
             const prof = DB.getUserData(user)?.profile;
             return (
                 <div className="flex justify-between items-center mb-6 pt-2">
@@ -206,10 +212,49 @@
                             <h1 className="text-xl font-extrabold text-primary">{title}</h1>
                         </div>
                     </div>
-                    <button onClick={onOpenSettings} className="w-10 h-10 rounded-full border-2 border-border overflow-hidden relative shadow-md">
-                        {prof?.picture ? <img src={prof.picture} className="w-full h-full object-cover" alt="Perfil"/> : <div className="w-full h-full bg-accent flex items-center justify-center font-bold">U</div>}
-                        {isVip ? <div className="absolute -bottom-1 -right-1 bg-warning text-black rounded-full w-4 h-4 flex items-center justify-center border border-card"><Icons.Crown c="w-2.5 h-2.5"/></div> : <div className="absolute -bottom-1 -right-1 bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center border border-card"><Icons.Star c="w-2.5 h-2.5"/></div>}
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <button onClick={onOpenCountryMenu} className="flex items-center gap-1.5 bg-background border px-2.5 py-1.5 rounded-xl shadow-sm hover:border-accent transition-colors" style={{borderColor: c?.border}}>
+                            <span className="text-lg">{getFlag(country)}</span>
+                            <Icons.ChevronDown c="w-3 h-3 text-secondary"/>
+                        </button>
+                        <button onClick={onOpenSettings} className="w-10 h-10 rounded-full border-2 overflow-hidden relative shadow-md hover:opacity-80 transition-opacity" style={{borderColor: c?.border}}>
+                            {prof?.picture ? <img src={prof.picture} className="w-full h-full object-cover" alt="Perfil"/> : <div className="w-full h-full bg-accent flex items-center justify-center font-bold">U</div>}
+                            {isVip ? <div className="absolute -bottom-1 -right-1 bg-warning text-black rounded-full w-4 h-4 flex items-center justify-center border border-card"><Icons.Crown c="w-2.5 h-2.5"/></div> : <div className="absolute -bottom-1 -right-1 bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center border border-card"><Icons.Star c="w-2.5 h-2.5"/></div>}
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        // --- COMPONENTE: MODAL SELECCIÓN DE PAÍS RÁPIDO ---
+        function CountryModal({ onClose, settings, saveSettings, c }) {
+            const [search, setSearch] = useState('');
+            const filtered = COUNTRIES.filter(x => x.name.toLowerCase().includes(search.toLowerCase()));
+
+            const selectCountry = (cName) => {
+                const cData = COUNTRIES.find(x => x.name === cName);
+                if(cData) {
+                    const nc = [...settings.currencies]; nc[0] = cData.defaultCurr;
+                    saveSettings({...settings, country: cName, lang: cData.lang, currencies: nc});
+                    onClose();
+                }
+            };
+
+            return (
+                <div className="fixed inset-0 modal-overlay flex items-center justify-center p-4 z-[300]">
+                    <div className="bg-card w-full max-w-sm rounded-3xl p-6 border shadow-2xl view-animate relative flex flex-col max-h-[80vh]" style={{borderColor: c.border}}>
+                        <button onClick={onClose} className="absolute top-4 right-4 bg-background border rounded-full p-1.5 text-secondary hover:text-white transition z-10" style={{borderColor: c.border}}><Icons.X c="w-5 h-5"/></button>
+                        <h2 className="text-xl font-bold mb-4 text-primary">Seleccionar País</h2>
+                        <input type="text" placeholder="Buscar país..." value={search} onChange={e=>setSearch(e.target.value)} className="w-full p-3 rounded-xl border bg-background outline-none text-primary text-sm mb-4" style={{borderColor: c.border}} />
+                        <div className="flex-1 overflow-y-auto space-y-2 pr-2">
+                            {filtered.map(ct => (
+                                <button key={ct.name} onClick={()=>selectCountry(ct.name)} className={`w-full flex items-center justify-between p-3 rounded-xl border transition-colors ${settings.country === ct.name ? 'bg-accent/10' : 'bg-background hover:border-secondary'}`} style={{borderColor: settings.country === ct.name ? c.accent : c.border}}>
+                                    <span className="flex items-center gap-3 text-sm font-bold text-primary"><span className="text-xl">{getFlag(ct.name)}</span> {ct.name}</span>
+                                    <span className="text-xs text-secondary font-mono">{ct.defaultCurr}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -328,7 +373,7 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ TU ID DE CLIENTE DE GOOGLE REAL            */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -381,14 +426,15 @@
         };
 
         // --- PANTALLA 1: DASHBOARD ---
-        function Dashboard({ txns, cur, setActiveCurrency, settings, t, isVip, user, onOpenSettings, expire, formatMoneda, Icons, c }) {
+        function Dashboard({ txns, cur, setActiveCurrency, settings, t, isVip, user, onOpenSettings, onOpenCountryMenu, expire, formatMoneda, Icons, c }) {
+            const catList = t('categories') || ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
             const m = txns.filter(x => x.currency === cur);
             const inC = m.filter(x=>x.type==='ingreso').reduce((a,b)=>a+b.amount,0); 
             const outC = m.filter(x=>x.type==='gasto').reduce((a,b)=>a+b.amount,0);
-            const fijos = m.filter(x=>x.type==='gasto' && (x.category===t('categories')[3] || x.category===t('categories')[4])).reduce((a,b)=>a+b.amount,0);
+            const fijos = m.filter(x=>x.type==='gasto' && (x.category===catList[3] || x.category===catList[4])).reduce((a,b)=>a+b.amount,0);
             const bal = inC - outC; const target = inC * 0.2; const pct = target>0 ? Math.min(Math.round((bal/target)*100),100) : (bal>0?100:0);
             
-            const quotesList = t('quotes'); 
+            const quotesList = t('quotes') || ["Planea tus compras."]; 
             const [quoteIdx, setQuoteIdx] = useState(Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)) % quotesList.length);
             const nextQuote = () => setQuoteIdx((prev) => (prev + 1) % quotesList.length);
 
@@ -396,7 +442,7 @@
 
             return (
                 <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
-                    <TopHeader title={t('home')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
+                    <TopHeader title={t('home')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
 
                     {isVip && expire && <div className="bg-warning/10 border border-warning/30 rounded-xl p-3 flex justify-between items-center text-xs"><span className="text-warning font-bold flex items-center gap-2"><Icons.Crown c="w-4 h-4"/> Suscripción Activa</span><span className="text-secondary">Vence: {expire === '2099-12-31' ? 'Vitalicio' : expire}</span></div>}
                     
@@ -436,8 +482,8 @@
         }
 
         // --- PANTALLA 2: REGISTRO UNIFICADO ---
-        function RegistroUnificado({ addTxn, cur, settings, t, isVip, user, onOpenSettings, onUpgrade, formatMoneda, Icons, c }) {
-            const catList = t('categories');
+        function RegistroUnificado({ addTxn, cur, settings, t, isVip, user, onOpenSettings, onOpenCountryMenu, onUpgrade, formatMoneda, Icons, c }) {
+            const catList = t('categories') || ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
             const [tipo, setTipo] = useState('gasto'); const [monto, setMonto] = useState(''); const [cat, setCat] = useState(catList[0]); const [desc, setDesc] = useState('');
             const [iaMode, setIaMode] = useState('texto'); const [iaMsg, setIaMsg] = useState(''); const [escuchando, setEscuchando] = useState(false);
             const recRef = useRef(null);
@@ -466,7 +512,7 @@
 
             const procesarIA = () => {
                 if(!iaMsg) return; const txt = iaMsg.toLowerCase();
-                const incomeKeywords = t('income_words');
+                const incomeKeywords = t('income_words') || ["recib", "ingreso", "gan", "cobr"];
                 const isInc = incomeKeywords.some(w => txt.includes(w));
                 const type = isInc ? 'ingreso' : 'gasto';
                 const nums = txt.match(/\d+(\.\d+)?/); const amount = nums ? parseFloat(nums[0]) : 0;
@@ -482,7 +528,7 @@
 
             return (
                 <div className={`p-4 space-y-6 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
-                    <TopHeader title={t('record')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
+                    <TopHeader title={t('record')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
                     
                     <div className="bg-card rounded-3xl p-5 border shadow-lg" style={{borderColor: c.border}}>
                         <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Icons.Plus c="w-5 h-5 text-accent"/> {t('manual')}</h2>
@@ -538,13 +584,13 @@
         }
 
         // --- PANTALLA 3: ANÁLISIS IA (DINÁMICO) ---
-        function Analisis({ txns, cur, settings, t, isVip, user, onOpenSettings, onUpgrade, formatMoneda, Icons, c }) {
+        function Analisis({ txns, cur, settings, t, isVip, user, onOpenSettings, onOpenCountryMenu, onUpgrade, formatMoneda, Icons, c }) {
             const hasMultipleCurrencies = settings.currencies.filter(curr => curr && curr.trim() !== '').length > 1;
 
             if (!isVip) {
                 return (
                     <div className={`p-4 view-animate h-screen flex flex-col ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
-                        <TopHeader title={t('analysis')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
+                        <TopHeader title={t('analysis')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
                         <div className="flex-1 flex flex-col items-center justify-center text-center pb-20">
                             <div className="w-20 h-20 rounded-full bg-warning/10 text-warning flex items-center justify-center mb-6 shadow-lg border border-warning/20"><Icons.Crown c="w-10 h-10" /></div>
                             <h2 className="text-2xl font-bold text-primary mb-3">Evaluación Semanal VIP</h2>
@@ -579,8 +625,8 @@
                     if (topGasto) newTips.push(`${t('analisis_leak_1')} ${topGasto[0]} (${formatMoneda(topGasto[1], cur)})${t('analisis_leak_2')}`);
                     if (gastos > ingresos) newTips.push(t('analisis_warn'));
                     
-                    const randomExtras = t('tips');
-                    newTips.push(randomExtras[Math.floor(Math.random() * randomExtras.length)]);
+                    const randomExtras = t('tips') || [];
+                    if (randomExtras.length > 0) newTips.push(randomExtras[Math.floor(Math.random() * randomExtras.length)]);
                     
                     if (gastos === 0 && ingresos === 0) setTipsGen([t('analisis_none')]);
                     else setTipsGen(newTips);
@@ -591,7 +637,7 @@
 
             return (
                 <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
-                    <TopHeader title={t('analysis')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
+                    <TopHeader title={t('analysis')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
                     
                     <p className="text-secondary text-sm font-bold uppercase tracking-widest mt-1 mb-6 text-center">{t('last_7')}</p>
                     
@@ -623,8 +669,8 @@
                             <ul className="space-y-4 text-sm text-secondary font-medium leading-relaxed view-animate">
                                 {tipsGen.map((tip, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
-                                        <span className={`${tip.includes('!') ? 'text-error' : 'text-accent'} mt-0.5 font-bold`}>●</span>
-                                        <span className={tip.includes('!') ? 'text-error font-bold' : ''}>{tip}</span>
+                                        <span className={`${tip.includes('!') || tip.includes('Cuidado') || tip.includes('Warning') ? 'text-error' : 'text-accent'} mt-0.5 font-bold`}>●</span>
+                                        <span className={tip.includes('!') || tip.includes('Cuidado') || tip.includes('Warning') ? 'text-error font-bold' : ''}>{tip}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -635,7 +681,7 @@
         }
 
         // --- PANTALLA 4: HISTORIAL ---
-        function Historial({ txns, cur, setCur, curList, deleteTxn, updateTxn, t, isVip, user, onOpenSettings, formatMoneda, Icons, c }) {
+        function Historial({ txns, cur, setCur, curList, deleteTxn, updateTxn, t, isVip, user, onOpenSettings, onOpenCountryMenu, settings, formatMoneda, Icons, c }) {
             const currentTxnsAll = txns.filter(txn => txn.currency === cur);
             const [filtro, setFiltro] = useState('Semanal'); 
             const [currentDate, setCurrentDate] = useState(new Date());
@@ -665,7 +711,7 @@
             const outTotal = displayTxns.filter(txn => txn.type === 'gasto').reduce((a, b) => a + b.amount, 0);
 
             const EditModal = ({ txn, onClose }) => {
-                const catList = t('categories');
+                const catList = t('categories') || ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"];
                 const [monto, setMonto] = useState(txn.amount); const [cat, setCat] = useState(txn.category); const [desc, setDesc] = useState(txn.description);
                 const handleSave = (e) => { e.preventDefault(); updateTxn({ ...txn, amount: parseFloat(monto), category: cat, description: desc }); onClose(); };
                 return (
@@ -685,11 +731,11 @@
             };
 
             const hasMultipleCurrencies = curList && curList.filter(curr => curr && curr.trim() !== '').length > 1;
-            const daysArr = t('days');
+            const daysArr = t('days') || ["D","L","M","M","J","V","S"];
 
             return (
                 <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
-                    <TopHeader title={t('history')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} />
+                    <TopHeader title={t('history')} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
                     
                     <CurrencyTabs currencies={curList} activeCurrency={cur} setActiveCurrency={setCur} c={c} />
 
@@ -938,6 +984,7 @@
             const [vip, setVip] = useState(false); const [exp, setExp] = useState(null);
             const [view, setView] = useState('home'); const [showPay, setShowPay] = useState(false);
             const [showSettings, setShowSettings] = useState(false);
+            const [showCountryModal, setShowCountryModal] = useState(false);
             const [txns, setTxns] = useState([]); const [settings, setSettings] = useState(DEFAULT_SETTINGS);
             const [previewSettings, setPreviewSettings] = useState(null); 
             const [cur, setCur] = useState('PEN');
@@ -980,11 +1027,11 @@
             
             const renderV = () => {
                 switch(view) {
-                    case 'home': return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} expire={exp} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
-                    case 'nueva': return <RegistroUnificado addTxn={x=>{const nw=[...txns,x];setTxns(nw);DB.saveTxns(user,nw);}} cur={cur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onUpgrade={()=>setShowPay(true)} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
-                    case 'analisis': return <Analisis txns={txns} cur={cur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onUpgrade={()=>setShowPay(true)} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
-                    case 'historial': return <Historial txns={txns} cur={cur} setCur={setCur} curList={activeSettings.currencies} deleteTxn={id=>{if(confirm("¿Borrar?")){const nw=txns.filter(x=>x.id!==id);setTxns(nw);DB.saveTxns(user,nw);}}} updateTxn={x=>{const nw=txns.map(t=>t.id===x.id?x:t);setTxns(nw);DB.saveTxns(user,nw);}} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
-                    default: return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} expire={exp} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
+                    case 'home': return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} expire={exp} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
+                    case 'nueva': return <RegistroUnificado addTxn={x=>{const nw=[...txns,x];setTxns(nw);DB.saveTxns(user,nw);}} cur={cur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} onUpgrade={()=>setShowPay(true)} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
+                    case 'analisis': return <Analisis txns={txns} cur={cur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} onUpgrade={()=>setShowPay(true)} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
+                    case 'historial': return <Historial txns={txns} cur={cur} setCur={setCur} curList={activeSettings.currencies} deleteTxn={id=>{if(confirm("¿Borrar?")){const nw=txns.filter(x=>x.id!==id);setTxns(nw);DB.saveTxns(user,nw);}}} updateTxn={x=>{const nw=txns.map(t=>t.id===x.id?x:t);setTxns(nw);DB.saveTxns(user,nw);}} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} settings={activeSettings} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
+                    default: return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} expire={exp} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
                 }
             };
 
@@ -1008,6 +1055,7 @@
                     </div>
                     
                     {showSettings && <AjustesModal settings={activeSettings} saveSettings={handleSaveSettings} onPreview={setPreviewSettings} user={user} isVip={vip} onLogout={logout} onUpgrade={()=>setShowPay(true)} onClose={handleCloseSettings} Icons={Icons} c={c}/>}
+                    {showCountryModal && <CountryModal onClose={()=>setShowCountryModal(false)} settings={activeSettings} saveSettings={handleSaveSettings} c={c} />}
                     {showPay && <PaymentModal onClose={()=>setShowPay(false)} t={t} />}
                 </div>
             );
