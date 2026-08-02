@@ -33,7 +33,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
-        :root { --col-bg: #111111; --col-card: #1e1e1e; --col-text: #ffffff; --col-secondary: #a1a1aa; --col-border: #27272a; --col-accent: #3b82f6; --col-nav-bg: #19191c; --col-nav-active-bg: #2b3144; --col-nav-active-text: #5a86ff; }
+        :root { --col-bg: #18181b; --col-card: #27272a; --col-text: #ffffff; --col-secondary: #a1a1aa; --col-border: #3f3f46; --col-accent: #3b82f6; --col-nav-bg: #18181b; --col-nav-active-bg: #3f3f46; --col-nav-active-text: #60a5fa; }
         body { background-color: var(--col-bg); color: var(--col-text); overflow: auto; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -54,12 +54,25 @@
         const COUNTRIES = RAW_COUNTRIES.split(',').map(item => { const [name, curr, lang] = item.split('|'); return { name, defaultCurr: curr, lang }; });
 
         const DICTIONARY = {
-            es: { home: "Inicio", record: "Registrar", analysis: "Análisis", history: "Historial", balance: "Saldo total", income: "Ingresos", exp: "Gastos", save: "Tu ahorro", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Monto", cat: "Categoría", desc: "Descripción", btn_save: "Guardar", settings: "Ajustes", fixed: "Gastos fijos", fixed_sub: "Recurrentes", analysis_title: "Evaluación semanal", last_7: "Últimos 7 días", weekly_balance: "Balance semanal", no_txns: "Sin transacciones." },
-            en: { home: "Home", record: "Record", analysis: "Analysis", history: "History", balance: "Total Balance", income: "Income", exp: "Expenses", save: "Savings", manual: "Manual Entry", ai: "Smart Entry (AI)", text_ai: "Text", voice_ai: "Voice", amount: "Amount", cat: "Category", desc: "Description", btn_save: "Save", settings: "Settings", fixed: "Fixed Expenses", fixed_sub: "Recurring", analysis_title: "Weekly Evaluation", last_7: "Last 7 days", weekly_balance: "Weekly Balance", no_txns: "No transactions." },
-            pt: { home: "Início", record: "Registrar", analysis: "Análise", history: "Histórico", balance: "Saldo total", income: "Receitas", exp: "Despesas", save: "Economia", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Valor", cat: "Categoria", desc: "Descrição", btn_save: "Salvar", settings: "Configurações", fixed: "Despesas fixas", fixed_sub: "Recorrentes", analysis_title: "Avaliação semanal", last_7: "Últimos 7 dias", weekly_balance: "Saldo semanal", no_txns: "Sem transações." }
+            es: { 
+                home: "Inicio", record: "Registrar", analysis: "Análisis", history: "Historial", balance: "Saldo total", income: "Ingresos", exp: "Gastos", save: "Tu ahorro", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Monto", cat: "Categoría", desc: "Descripción", btn_save: "Guardar", settings: "Ajustes", fixed: "Gastos fijos", fixed_sub: "Recurrentes", analysis_title: "Evaluación semanal", last_7: "Últimos 7 días", weekly_balance: "Balance semanal", no_txns: "Sin transacciones.",
+                quotes: ["Planifica tus compras y evita decisiones impulsivas.", "Ahorrar no es solo guardar, es saber gastar.", "Controla tus gastos antes de que ellos te controlen a ti.", "Págate a ti mismo primero: ahorra antes de gastar.", "Un pequeño agujero hunde un gran barco. Cuida los gastos hormiga.", "El interés compuesto es la octava maravilla del mundo.", "No ahorres lo que sobra después de gastar, gasta lo que sobra después de ahorrar."]
+            },
+            en: { 
+                home: "Home", record: "Record", analysis: "Analysis", history: "History", balance: "Total Balance", income: "Income", exp: "Expenses", save: "Savings", manual: "Manual Entry", ai: "Smart Entry (AI)", text_ai: "Text", voice_ai: "Voice", amount: "Amount", cat: "Category", desc: "Description", btn_save: "Save", settings: "Settings", fixed: "Fixed Expenses", fixed_sub: "Recurring", analysis_title: "Weekly Evaluation", last_7: "Last 7 days", weekly_balance: "Weekly Balance", no_txns: "No transactions.",
+                quotes: ["Plan your purchases to avoid impulse buys.", "Saving isn't just storing, it's knowing how to spend.", "Control your expenses before they control you.", "Pay yourself first: save before you spend."]
+            },
+            pt: { 
+                home: "Início", record: "Registrar", analysis: "Análise", history: "Histórico", balance: "Saldo total", income: "Receitas", exp: "Despesas", save: "Economia", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Valor", cat: "Categoria", desc: "Descrição", btn_save: "Salvar", settings: "Configurações", fixed: "Despesas fixas", fixed_sub: "Recorrentes", analysis_title: "Avaliação semanal", last_7: "Últimos 7 dias", weekly_balance: "Saldo semanal", no_txns: "Sem transações.",
+                quotes: ["Planeje suas compras e evite impulsos.", "Economizar é saber gastar.", "Controle seus gastos antes que eles controlem você.", "Pague a si mesmo primeiro."]
+            }
         };
 
-        const DEFAULT_SETTINGS = { country: 'Perú', lang: 'es', currencies: ['PEN', '', ''], zoom: 100, theme: 'dark', colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', navBg: '#19191c', navActiveBg: '#2b3144', navActiveText: '#5a86ff' }};
+        // TEMA POR DEFECTO MÁS SIMPLE (ZINC / SLATE en lugar de negro puro)
+        const DEFAULT_SETTINGS = { 
+            country: 'Perú', lang: 'es', currencies: ['PEN', '', ''], zoom: 100, theme: 'dark', 
+            colors: { bg: '#18181b', card: '#27272a', text: '#ffffff', secondary: '#a1a1aa', border: '#3f3f46', accent: '#3b82f6', navBg: '#18181b', navActiveBg: '#3f3f46', navActiveText: '#60a5fa' }
+        };
 
         const DB = {
             getUsers: () => JSON.parse(localStorage.getItem('billetera_users_v8') || '{}'),
@@ -95,7 +108,7 @@
         const USD_RATES = { 'PEN': 3.75, 'EUR': 0.92, 'GBP': 0.79, 'BRL': 5.15, 'MXN': 16.8, 'ARS': 1000, 'COP': 3900, 'CLP': 950, 'BOB': 6.9, 'CAD': 1.37, 'AUD': 1.52, 'CNY': 7.24, 'USD': 1 };
         function formatMoneda(val, currCode) { const sym = ALL_CURRENCIES[currCode] || currCode; return `${sym} ${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
 
-        // --- ICONOS COMPLETOS Y SEGUROS ---
+        // --- ICONOS COMPLETOS ---
         const Icons = {
             Logo: ({c}) => <svg viewBox="0 0 64 64" className={c || "w-full h-full"}><rect width="64" height="64" rx="16" fill="currentColor"/><path d="M44 14c6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28h40v20a4 4 0 0 1-4 4h-32a4 4 0 0 1-4-4z" fill="#0ea5e9" stroke="#fff" strokeWidth="2"/><path d="M12 28a4 4 0 0 1 4-4h32a4 4 0 0 1 4 4v6h-40z" fill="#38bdf8" stroke="#fff" strokeWidth="2"/><circle cx="26" cy="42" r="3" fill="#fff"/></svg>,
             Home: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>,
@@ -110,7 +123,6 @@
             Pencil: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>,
             ChevronLeft: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>,
             ChevronRight: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>,
-            User: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
             LogOut: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>,
             Shield: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
             X: ({c}) => <svg className={c || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>,
@@ -256,7 +268,7 @@
                             /* ---------------------------------------------------- */
                             /* PEGA AQUÍ TU ID DE CLIENTE DE GOOGLE REAL            */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -302,8 +314,11 @@
             const outC = m.filter(x=>x.type==='gasto').reduce((a,b)=>a+b.amount,0);
             const fijos = m.filter(x=>x.type==='gasto' && (x.category==='Servicios' || x.category==='Vivienda')).reduce((a,b)=>a+b.amount,0);
             const bal = inC - outC; const target = inC * 0.2; const pct = target>0 ? Math.min(Math.round((bal/target)*100),100) : (bal>0?100:0);
-            const quotesList = t('quotes') || ["Planea tus compras."]; const diaDelAnio = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-            const fraseDiaria = Array.isArray(quotesList) ? quotesList[diaDelAnio % quotesList.length] : quotesList;
+            
+            // Botón actualizar frase
+            const quotesList = t('quotes') || ["Planea tus compras."]; 
+            const [quoteIdx, setQuoteIdx] = useState(Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)) % quotesList.length);
+            const nextQuote = () => setQuoteIdx((prev) => (prev + 1) % quotesList.length);
 
             return (
                 <div className="p-4 space-y-4 view-animate">
@@ -336,9 +351,10 @@
                         <p className="text-xl font-bold text-warning">{formatMoneda(fijos, cur)}</p>
                     </div>
 
-                    <div className="bg-background border border-border rounded-xl p-4 flex items-start gap-3 shadow-inner">
+                    <div className="bg-background border border-border rounded-xl p-4 flex items-start gap-3 shadow-inner relative group">
                         <div className="bg-accent/20 p-2 rounded-lg text-accent shrink-0"><Icons.Lightbulb c="w-5 h-5"/></div>
-                        <p className="text-sm text-primary italic leading-snug">"{fraseDiaria}"</p>
+                        <p className="text-sm text-primary italic leading-snug flex-1">"{quotesList[quoteIdx]}"</p>
+                        <button onClick={nextQuote} className="text-secondary hover:text-accent p-1.5 rounded-lg border border-transparent hover:border-border transition-colors"><Icons.RefreshCw c="w-4 h-4"/></button>
                     </div>
                 </div>
             );
@@ -368,7 +384,9 @@
 
             const procesarIA = () => {
                 if(!iaMsg) return; const txt = iaMsg.toLowerCase();
-                const isInc = txt.includes('recibi')||txt.includes('ingreso')||txt.includes('gane'); const type = isInc ? 'ingreso' : 'gasto';
+                // Nuevo Regex de Ingresos (Reconoce: recibí, ingreso, gané, cobré, me dieron, tengo, me pagaron, sueldo)
+                const isInc = /recib[íi]|ingreso|gan[é\e]|cobr[é\e]|dieron|tengo|pagaron|sueldo/i.test(txt);
+                const type = isInc ? 'ingreso' : 'gasto';
                 const nums = txt.match(/\d+(\.\d+)?/); const amount = nums ? parseFloat(nums[0]) : 0;
                 if(amount > 0) {
                     let c = "Otros"; CATEGORIAS.forEach(x => { if(txt.includes(x.toLowerCase())) c = x; });
@@ -435,7 +453,7 @@
             );
         }
 
-        // --- PANTALLA 3: ANÁLISIS IA (CON BOTÓN ANALIZAR) ---
+        // --- PANTALLA 3: ANÁLISIS IA ---
         function Analisis({ txns, cur, t, isVip, user, onOpenSettings, onUpgrade }) {
             if (!isVip) {
                 return (
@@ -452,7 +470,7 @@
             }
 
             const [isAnalyzing, setIsAnalyzing] = useState(false);
-            const [lastAnalysis, setLastAnalysis] = useState(Date.now());
+            const [tipsGen, setTipsGen] = useState([]);
 
             const currentTxnsAll = txns.filter(txn => txn.currency === cur);
             const today = new Date(); const sevenDaysAgo = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
@@ -471,19 +489,27 @@
                 setIsAnalyzing(true);
                 setTimeout(() => {
                     setIsAnalyzing(false);
-                    setLastAnalysis(Date.now());
+                    const newTips = [];
+                    if (ingresos > 0) newTips.push(`Ahorraste el ${Math.max(0, Math.round((balance/ingresos)*100))}% de tus ingresos esta semana.`);
+                    if (topGasto) newTips.push(`Tu mayor fuga de dinero fue en ${topGasto[0]} (${formatMoneda(topGasto[1], cur)}). Evalúa si fue estrictamente necesario.`);
+                    if (gastos > ingresos) newTips.push(`¡Cuidado! Tus gastos superaron tus ingresos. Debes ajustar tu presupuesto urgente.`);
+                    
+                    const randomExtras = [
+                        "Aplica la regla 50/30/20 (Necesidades/Deseos/Ahorro) para un mejor balance.",
+                        "Antes de una compra grande, espera 24 horas para evitar impulsos.",
+                        "Revisa tus suscripciones recurrentes, podrías estar pagando por algo que no usas.",
+                        "Considera usar la técnica de los sobres para controlar gastos diarios.",
+                        "Intenta llevar almuerzo al trabajo 3 veces por semana, notarás la diferencia."
+                    ];
+                    newTips.push(randomExtras[Math.floor(Math.random() * randomExtras.length)]);
+                    
+                    if (gastos === 0 && ingresos === 0) setTipsGen(["No tienes movimientos recientes en los últimos 7 días para analizar."]);
+                    else setTipsGen(newTips);
                 }, 1500);
             };
 
-            const EXTRA_TIPS = [
-                "Evita compras impulsivas en fines de semana.",
-                "Cancela suscripciones que no hayas usado en el último mes.",
-                "Antes de una compra grande, aplica la regla de las 24 horas.",
-                "Considera usar el método de sobres para tus gastos diarios.",
-                "Intenta llevar tu almuerzo al trabajo 3 veces a la semana.",
-                "Revisa tus facturas de servicios para detectar cobros inusuales."
-            ];
-            const randomTip = EXTRA_TIPS[lastAnalysis % EXTRA_TIPS.length];
+            // Analizar al cargar la primera vez
+            useEffect(() => { handleAnalyze(); }, []);
 
             return (
                 <div className="p-4 space-y-4 view-animate">
@@ -517,12 +543,12 @@
                             </div>
                         ) : (
                             <ul className="space-y-4 text-sm text-secondary font-medium leading-relaxed view-animate">
-                                <li className="flex items-start gap-3"><span className="text-accent mt-0.5 font-bold">●</span><span>Ahorraste el {Math.max(0, ingresos > 0 ? Math.round((balance/ingresos)*100) : 0)}% de tus ingresos esta semana.</span></li>
-                                {topGasto && <li className="flex items-start gap-3"><span className="text-accent mt-0.5 font-bold">●</span><span>Tu mayor fuga de dinero fue en <strong>{topGasto[0]}</strong> ({formatMoneda(topGasto[1], cur)}). Intenta reducirlo.</span></li>}
-                                <li className="flex items-start gap-3"><span className="text-accent mt-0.5 font-bold">●</span><span>Aplica la regla 50/30/20 (Necesidades/Deseos/Ahorro) para un mejor balance.</span></li>
-                                <li className="flex items-start gap-3"><span className="text-accent mt-0.5 font-bold">●</span><span>{randomTip}</span></li>
-                                {gastos > ingresos && <li className="flex items-start gap-3"><span className="text-error mt-0.5 font-bold">●</span><span className="text-error font-bold">Cuidado: Tus gastos superaron tus ingresos esta semana.</span></li>}
-                                {gastos === 0 && ingresos === 0 && <li className="flex items-start gap-3"><span className="text-accent mt-0.5 font-bold">●</span><span>No tienes movimientos recientes para analizar.</span></li>}
+                                {tipsGen.map((tip, idx) => (
+                                    <li key={idx} className="flex items-start gap-3">
+                                        <span className={`${tip.includes('Cuidado') ? 'text-error' : 'text-accent'} mt-0.5 font-bold`}>●</span>
+                                        <span className={tip.includes('Cuidado') ? 'text-error font-bold' : ''}>{tip}</span>
+                                    </li>
+                                ))}
                             </ul>
                         )}
                     </div>
@@ -658,13 +684,7 @@
                 const cName = e.target.value; const cData = COUNTRIES.find(x => x.name === cName);
                 if(cData) { const nc = [...local.currencies]; nc[0] = cData.defaultCurr; setLocal({...local, country: cName, lang: cData.lang, currencies: nc}); }
             };
-
             const chgCurr = (index, val) => { const nc = [...local.currencies]; nc[index] = val; setLocal({...local, currencies: nc}); };
-
-            const chgTheme = (t) => {
-                if(t==='dark') setLocal({...local, theme:'dark', colors: DEFAULT_SETTINGS.colors});
-                else setLocal({...local, theme:'light', colors: { bg:'#f4f4f5', card:'#ffffff', text:'#18181b', secondary:'#71717a', border:'#e4e4e7', accent:'#2563eb', navBg:'#ffffff', navActiveBg:'#e4e4e7', navActiveText:'#2563eb' }});
-            };
 
             const backup = async () => {
                 const p = prompt("Crea una clave para encriptar tu respaldo:"); if(!p) return;
@@ -741,9 +761,9 @@
                                 </div>
                                 <div>
                                     <label className="text-[10px] font-bold text-secondary uppercase mb-2 block tracking-widest">Tema Visual</label>
-                                    <div className="flex bg-background border border-border p-1 rounded-xl shadow-inner">
-                                        <button onClick={()=>chgTheme('dark')} className={`flex-1 p-2 rounded-lg font-bold text-xs ${local.theme==='dark'?'bg-accent text-white shadow-md':'text-secondary'}`}>Oscuro</button>
-                                        <button onClick={()=>chgTheme('light')} className={`flex-1 p-2 rounded-lg font-bold text-xs ${local.theme==='light'?'bg-accent text-white shadow-md':'text-secondary'}`}>Claro</button>
+                                    <div className="flex bg-background border border-border p-1 rounded-xl shadow-inner h-[46px] items-center">
+                                        <button onClick={()=>setLocal({...local, theme:'dark', colors: DEFAULT_SETTINGS.colors})} className={`flex-1 p-2 rounded-lg font-bold text-xs h-full ${local.theme==='dark'?'bg-accent text-white shadow-md':'text-secondary'}`}>Oscuro</button>
+                                        <button onClick={()=>setLocal({...local, theme:'light', colors: { bg:'#f4f4f5', card:'#ffffff', text:'#18181b', secondary:'#71717a', border:'#e4e4e7', accent:'#2563eb', navBg:'#ffffff', navActiveBg:'#e4e4e7', navActiveText:'#2563eb' }})} className={`flex-1 p-2 rounded-lg font-bold text-xs h-full ${local.theme==='light'?'bg-accent text-white shadow-md':'text-secondary'}`}>Claro</button>
                                     </div>
                                 </div>
                             </div>
@@ -762,7 +782,10 @@
 
                             <div className="pt-4 border-t border-border relative">
                                 {!isVip && <div className="absolute inset-0 glass-panel z-10 flex justify-center items-center rounded-2xl"><button onClick={() => { onClose(); onUpgrade(); }} className="bg-warning text-black font-bold px-4 py-2 rounded-lg text-xs shadow-[0_0_15px_rgba(234,179,8,0.5)] flex items-center gap-1"><Icons.Crown c="w-4 h-4"/> Solo VIP</button></div>}
-                                <label className="text-[10px] font-bold text-secondary uppercase mb-3 block tracking-widest">Personalizar Colores</label>
+                                <div className="flex justify-between items-center mb-3">
+                                    <label className="text-[10px] font-bold text-secondary uppercase tracking-widest">Personalizar Colores</label>
+                                    <button onClick={()=>setLocal({...local, colors: DEFAULT_SETTINGS.colors})} className="text-[10px] text-accent font-bold hover:underline">Restaurar Default</button>
+                                </div>
                                 <div className="flex justify-between gap-3">
                                     {['bg','card','accent'].map(k => <div key={k} className="flex-1"><input type="color" value={local.colors[k]} onChange={e=>setLocal({...local, colors:{...local.colors, [k]:e.target.value}})} className="w-full h-10 rounded-lg cursor-pointer border border-border shadow-sm"/><p className="text-[9px] font-bold uppercase text-center mt-1 text-secondary">{k}</p></div>)}
                                 </div>
@@ -805,7 +828,7 @@
             const login = (u, p) => { sessionStorage.setItem('billetera_active_user', u); DB.loginOrRegisterGoogle(u, p); loadData(u); };
             const logout = () => { sessionStorage.removeItem('billetera_active_user'); setUser(null); setShowSettings(false); };
 
-            if(!user) return <div style={{'--col-bg':'#111111','--col-card':'#1e1e1e','--col-border':'#27272a'}}><AuthView onLogin={login}/></div>;
+            if(!user) return <div style={{'--col-bg':'#18181b','--col-card':'#27272a','--col-border':'#3f3f46'}}><AuthView onLogin={login}/></div>;
 
             const t = (k) => DICTIONARY[settings.lang]?.[k] || DICTIONARY['es'][k];
             const renderV = () => {
