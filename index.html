@@ -26,10 +26,39 @@
         .table-row-hover:hover { background-color: #19191c; transition: background-color 0.2s; }
         [dir="rtl"] .text-left { text-align: right; }
         [dir="rtl"] .flex-row-reverse { flex-direction: row; }
-        @media (max-width: 768px) { .hero-img-container { order: -1; margin-bottom: 2rem; } }
-        /* Efecto premium para las imágenes generadas */
-        .img-overlay { opacity: 0.85; mix-blend-mode: luminosity; transition: all 0.5s ease; }
-        .img-overlay:hover { opacity: 1; mix-blend-mode: normal; transform: scale(1.05); }
+        
+        /* Animaciones para los celulares */
+        .phone-mockup {
+            border: 12px solid #27272a;
+            border-radius: 2.5rem;
+            position: relative;
+            background-color: #27272a;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35%;
+            height: 24px;
+            background-color: #27272a;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            z-index: 20;
+        }
+        .phone-screen {
+            background-color: #1e1e1e;
+            border-radius: 1.8rem;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        @media (max-width: 768px) { 
+            .hero-img-container { order: -1; margin-bottom: 2rem; } 
+        }
     </style>
 </head>
 <body class="font-sans antialiased" dir="ltr">
@@ -62,7 +91,7 @@
     <!-- SECCIÓN HERO (PORTADA) -->
     <header class="pt-28 md:pt-36 pb-16 md:pb-24 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-center">
-            <div class="w-full md:w-1/2 space-y-6 text-center md:text-left">
+            <div class="w-full md:w-1/2 space-y-6 text-center md:text-left relative z-10">
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight" data-i18n="hero_title">Tu dinero, <br><span class="gradient-text">bajo control total.</span></h1>
                 <p class="text-secondary text-base lg:text-lg leading-relaxed max-w-2xl mx-auto md:mx-0" data-i18n="hero_sub">Registra tus ingresos y gastos en segundos, analiza tus finanzas y obtén recomendaciones de ahorro. Todo desde tu celular, sin comprometer tu privacidad.</p>
                 <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-4">
@@ -75,9 +104,17 @@
                 </div>
             </div>
             
-            <div class="w-full md:w-1/2 hero-img-container flex justify-center md:justify-end">
-                <div class="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[1/2] bg-card rounded-[2.5rem] border-[10px] border-[#27272a] shadow-2xl overflow-hidden flex items-center justify-center">
-                    <img src="https://images.unsplash.com/photo-1616077168079-7e09a6a7ce04?auto=format&fit=crop&w=600&q=80" alt="App Dashboard Mockup" class="absolute inset-0 w-full h-full object-cover z-10 img-overlay">
+            <div class="w-full md:w-1/2 hero-img-container flex justify-center md:justify-end relative">
+                <!-- Resplandor de fondo -->
+                <div class="absolute inset-0 bg-accent/20 blur-[100px] rounded-full transform scale-75 z-0"></div>
+                
+                <!-- Mockup de Celular CSS con la Imagen 1 -->
+                <div class="phone-mockup w-full max-w-[280px] aspect-[9/19] transform md:-rotate-2 hover:rotate-0 transition-transform duration-500 z-10">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <!-- IMAGEN 1 (Inicio) -->
+                        <img src="image_ad49da.png" alt="App Dashboard" class="w-full h-full object-cover object-top">
+                    </div>
                 </div>
             </div>
         </div>
@@ -186,6 +223,8 @@
             </div>
 
             <div class="space-y-16 md:space-y-24">
+                
+                <!-- PASO 1 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                     <div class="order-2 md:order-1 text-center md:text-left">
                         <div class="bg-accent text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mb-4 md:mb-6 text-xl mx-auto md:mx-0 shadow-lg shadow-accent/30">1</div>
@@ -196,14 +235,29 @@
                             <li class="flex items-center gap-3"><div class="bg-success/20 p-1.5 rounded-md text-success"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> <span data-i18n="t1_b2">Sincroniza tu foto de perfil automáticamente</span></li>
                         </ul>
                     </div>
-                    <div class="order-1 md:order-2 bg-card rounded-[2rem] border border-border aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex items-center justify-center shadow-xl relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1555421689-d68471e189f2?auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Autenticación Segura" class="absolute inset-0 w-full h-full object-cover z-10 img-overlay">
+                    <div class="order-1 md:order-2 bg-card/40 rounded-[2rem] border border-border flex items-center justify-center py-8 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-accent/5 to-transparent z-0"></div>
+                        <!-- Mockup de Celular CSS con la Imagen 2 -->
+                        <div class="phone-mockup w-full max-w-[240px] aspect-[9/19] z-10">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <img src="image_ad461b.png" loading="lazy" alt="Paso 1: Login" class="w-full h-full object-cover object-top">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- PASO 2 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center md:flex-row-reverse">
-                    <div class="bg-card rounded-[2rem] border border-border aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex items-center justify-center shadow-xl relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Panel Financiero IA" class="absolute inset-0 w-full h-full object-cover z-10 img-overlay">
+                    <div class="bg-card/40 rounded-[2rem] border border-border flex items-center justify-center py-8 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-success/5 to-transparent z-0"></div>
+                        <!-- Mockup de Celular CSS con la Imagen 3 -->
+                        <div class="phone-mockup w-full max-w-[240px] aspect-[9/19] z-10">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <img src="image_ad453c.png" loading="lazy" alt="Paso 2: Registrar" class="w-full h-full object-cover object-top">
+                            </div>
+                        </div>
                     </div>
                     <div class="text-center md:text-left">
                         <div class="bg-accent text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mb-4 md:mb-6 text-xl mx-auto md:mx-0 shadow-lg shadow-accent/30">2</div>
@@ -213,6 +267,7 @@
                     </div>
                 </div>
 
+                <!-- PASO 3 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                     <div class="order-2 md:order-1 text-center md:text-left">
                         <div class="bg-accent text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mb-4 md:mb-6 text-xl mx-auto md:mx-0 shadow-lg shadow-accent/30">3</div>
@@ -223,11 +278,28 @@
                             <li class="flex items-center gap-3"><div class="bg-accent/20 p-1.5 rounded-md text-accent"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></div> <span data-i18n="t3_b2">Restaura pegando el código y la contraseña</span></li>
                         </ul>
                     </div>
-                    <div class="order-1 md:order-2 bg-card rounded-[2rem] border border-border aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex items-center justify-center shadow-xl relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1614064641913-630f84a4a5bb?auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Seguridad Criptográfica" class="absolute inset-0 w-full h-full object-cover z-10 img-overlay">
+                    <div class="order-1 md:order-2 bg-card/40 rounded-[2rem] border border-border flex items-center justify-center py-8 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-warning/5 to-transparent z-0"></div>
+                        <!-- Mockup de Celular CSS con la Imagen 4 -->
+                        <div class="phone-mockup w-full max-w-[240px] aspect-[9/19] z-10">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <img src="image_ad4234.png" loading="lazy" alt="Paso 3: Ajustes" class="w-full h-full object-cover object-top">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- BOTÓN PARA TUTORIAL DETALLADO -->
+            <div class="mt-20 text-center">
+                <a href="tutorial.html" target="_blank" class="inline-flex items-center gap-3 bg-card border border-border text-white px-8 md:px-10 py-4 rounded-xl font-bold hover:bg-border hover:text-accent transition-all shadow-lg hover:scale-105">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    <span data-i18n="btn_full_tutorial">Ver Tutorial Detallado Interactivo</span>
+                </a>
+                <p class="text-secondary text-sm mt-4" data-i18n="btn_full_tutorial_sub">Explora minuciosamente cada pantalla y opción que ofrece la aplicación.</p>
+            </div>
+            
         </div>
     </section>
 
@@ -274,7 +346,8 @@
                 t1_title: "Inicia Sesión con Google", t1_desc: "Olvídate de contraseñas complicadas. Ingresa de forma 100% segura utilizando tu cuenta oficial de Google con un solo clic.", t1_b1: "Autenticación blindada por Google", t1_b2: "Sincroniza tu foto de perfil automáticamente",
                 t2_title: "Registra con o sin IA", t2_desc: "Ve a la pestaña central 'Registrar'. Puedes escribir el monto y categoría manualmente, o simplemente dictarle a tu teléfono si eres usuario VIP. ¡El panel de inicio se actualizará al instante!", t2_link: "Ir a la app y probar →",
                 t3_title: "Respalda tus datos en WhatsApp", t3_desc: "Tus datos nunca se suben a la nube. Ve a Ajustes, crea una contraseña y haz clic en 'Respaldar'. La app encriptará tu información y te la enviará a tu propio WhatsApp.", t3_b1: "Nadie más tiene tus datos (Cifrado AES-256)", t3_b2: "Restaura pegando el código y la contraseña",
-                foot_priv: "Política de Privacidad (Legal)", foot_enter: "Ingresar a la App →", only_vip: "SOLO VIP"
+                foot_priv: "Política de Privacidad (Legal)", foot_enter: "Ingresar a la App →", only_vip: "SOLO VIP",
+                btn_full_tutorial: "Ver Tutorial Detallado Interactivo", btn_full_tutorial_sub: "Explora minuciosamente cada pantalla y opción que ofrece la aplicación."
             },
             en: {
                 nav_feat: "Features", nav_how: "How it works", nav_prem: "Premium", nav_open: "Open App",
@@ -292,7 +365,8 @@
                 t1_title: "Sign in with Google", t1_desc: "Forget about passwords. Log in securely using your official Google account.", t1_b1: "Bulletproof authentication", t1_b2: "Sync your profile picture automatically",
                 t2_title: "Record with or without AI", t2_desc: "Go to the 'Record' tab. Enter the amount manually or just speak to your phone if you are VIP.", t2_link: "Go to the app and try →",
                 t3_title: "Backup your data on WhatsApp", t3_desc: "Your data is never uploaded to the cloud. Go to Settings, click 'Backup', and the app will encrypt your info and send it to your WhatsApp.", t3_b1: "No one else has your data (AES-256)", t3_b2: "Restore by pasting the code and password",
-                foot_priv: "Privacy Policy (Legal)", foot_enter: "Enter the App →", only_vip: "VIP ONLY"
+                foot_priv: "Privacy Policy (Legal)", foot_enter: "Enter the App →", only_vip: "VIP ONLY",
+                btn_full_tutorial: "View Detailed Interactive Tutorial", btn_full_tutorial_sub: "Explore every screen and option the application offers step-by-step."
             }
         };
 
