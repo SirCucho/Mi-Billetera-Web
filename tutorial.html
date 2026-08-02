@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial Detallado - Mi Billetera</title>
+    <title>Tutorial Detallado y Guía de Uso - Mi Billetera</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- FAVICON (LOGO) -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMzYjgyZjYiLz48cGF0aCBkPSJNNDQgMTRjNiA0IDggMTIgNCAxOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwb2x5Z29uIHBvaW50cz0iNDgsMTIgNDMsMTYgNTAsMTYiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTIgMjhoNDB2MjBhNCA0IDAgMCAxLTQgNGgtMzJhNCA0IDAgMCAxLTQtNHoiIGZpbGw9IiMwZWE1ZTkiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTEyIDI4YTQgNCAwIDAgMSA0LTRoMzJhNCA0IDAgMCAxIDQgNHY2aC00MHoiIGZpbGw9IiMzOGJkZjgiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iMjYiIGN5PSI0MiIgcj0iMyIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMzYjgyZjYiLz48cGF0aCBkPSJNNDQgMTRjNiA0IDggMTIgNCAxOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwb2x5Z29uIHBvaW50cz0iNDgsMTIgNDMsMTYgNTAsMTYiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTIgMjhoNDB2MjBhNCA0IDAgMCAxLTQgNGgtMzJhNCA0IDAgMCAxLTQtNHoiIGZpbGw9IiMwZWE1ZTkiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTEyIDI4YTQgNCAwIDAgMSA0LTRoMzJhNCA0IDAgMCAxIDQgNHY2aC00MHoiIGZpbGw9IiMzOGJkZjgiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iMjYi cy0iNDIigcj0iMyIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==">
 
     <script>
         tailwind.config = {
@@ -23,6 +23,8 @@
     <style>
         body { background-color: #111111; color: #ffffff; scroll-behavior: smooth; }
         .gradient-text { background: linear-gradient(to right, #3b82f6, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tutorial-card { transition: all 0.3s ease; }
+        .tutorial-card:hover { border-color: #3b82f6; transform: translateY(-2px); }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -35,106 +37,244 @@
                     <div class="w-8 h-8 rounded-lg bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-md">
                         <svg viewBox="0 0 64 64" class="w-5 h-5"><path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" stroke-width="3" stroke-linejoin="round"/><path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" stroke-width="3" stroke-linejoin="round"/><circle cx="26" cy="42" r="2" fill="#0f172a"/></svg>
                     </div>
-                    <span class="font-bold text-lg tracking-wide">Mi Billetera - Tutorial</span>
+                    <span class="font-bold text-lg tracking-wide hidden sm:block">Mi Billetera - Guía Definitiva</span>
                 </a>
             </div>
-            <div>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-sm text-secondary hover:text-white transition">← Inicio</a>
                 <a href="app.html" class="bg-accent text-white px-4 py-2 rounded-xl font-bold text-sm hover:scale-105 transition-transform shadow-lg shadow-accent/30">Abrir App</a>
             </div>
         </div>
     </nav>
 
-    <!-- ENCABEZADO TUTORIAL -->
-    <header class="pt-32 pb-12 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto">
-        <h1 class="text-3xl sm:text-5xl font-extrabold mb-4">Guía de Uso <span class="gradient-text">Minuciosa</span></h1>
-        <p class="text-secondary text-base sm:text-lg">Conoce a detalle cada pantalla, botón y función oculta para exprimir al máximo el potencial de tu gestor financiero.</p>
+    <!-- ENCABEZADO Y BUSCADOR -->
+    <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto">
+        <h1 class="text-3xl sm:text-5xl font-extrabold mb-4">Tutorial Minucioso y <span class="gradient-text">Buscador de Funciones</span></h1>
+        <p class="text-secondary text-base sm:text-lg mb-8">Encuentra al instante cualquier pantalla, opción de configuración o proceso de activación.</p>
+        
+        <!-- CUADRO DE BÚSQUEDA INTERACTIVO -->
+        <div class="relative max-w-xl mx-auto">
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-secondary">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
+            <input type="text" id="searchBox" onkeyup="filterTutorial()" placeholder="Busca una función (ej: VIP, Respaldo, Historial, Voz...)" class="w-full pl-12 pr-4 py-3.5 bg-card border border-border rounded-2xl text-white outline-none focus:border-accent text-sm md:text-base shadow-xl">
+        </div>
     </header>
 
-    <!-- CONTENIDO DE LAS SECCIONES DEL TUTORIAL -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-16">
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-12">
 
-        <!-- 1. INICIO DE SESIÓN -->
-        <section class="bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl">
-            <div class="flex flex-col md:flex-row gap-8 items-center">
-                <div class="w-full md:w-1/2 space-y-4">
-                    <span class="bg-accent/10 text-accent text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Paso 01</span>
-                    <h2 class="text-2xl sm:text-3xl font-bold">Pantalla de Acceso Seguro</h2>
-                    <p class="text-secondary text-sm leading-relaxed">Al abrir la aplicación por primera vez, verás el panel de autenticación. Utiliza el botón oficial de Google para registrar tus credenciales de forma cifrada.</p>
-                    <ul class="text-sm space-y-2 text-secondary">
-                        <li class="flex items-center gap-2">🟢 <strong>Privacidad local:</strong> Tus datos se resguardan en la memoria interna de tu dispositivo.</li>
-                        <li class="flex items-center gap-2">🟢 <strong>Sesión persistente:</strong> Recordará tu usuario de manera segura mediante tokens de sesión.</li>
-                    </ul>
-                </div>
-                <div class="w-full md:w-1/2 flex justify-center">
-                    <div class="w-64 aspect-[9/19] bg-[#27272a] rounded-[2rem] border-8 border-[#3f3f46] overflow-hidden shadow-2xl">
-                        <img src="image_ad461b.png" alt="Login" class="w-full h-full object-cover object-top">
-                    </div>
-                </div>
+        <!-- ÁRBOL / ÍNDICE DE CONTENIDOS -->
+        <section class="bg-card/60 border border-border rounded-3xl p-6 sm:p-8 backdrop-blur-md">
+            <h2 class="text-lg font-bold mb-4 text-accent flex items-center gap-2">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+                Árbol de Contenidos del Tutorial
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-secondary">
+                <ul class="space-y-2 border-l-2 border-border pl-4">
+                    <li><a href="#sec-login" class="hover:text-white transition">1. Inicio de Sesión (Google)</a></li>
+                    <li><a href="#sec-dashboard" class="hover:text-white transition">2. Panel Principal / Dashboard (Inicio)</a></li>
+                    <li><a href="#sec-registrar" class="hover:text-white transition">3. Módulo de Registro (Manual e IA)</a></li>
+                    <li><a href="#sec-analisis" class="hover:text-white transition">4. Análisis Inteligente de IA</a></li>
+                </ul>
+                <ul class="space-y-2 border-l-2 border-border pl-4">
+                    <li><a href="#sec-historial" class="hover:text-white transition">5. Historial y Calendario de Movimientos</a></li>
+                    <li><a href="#sec-vip" class="hover:text-white transition">6. Guía: Cómo Activar la Cuenta VIP</a></li>
+                    <li><a href="#sec-backup" class="hover:text-white transition">7. Guía: Generar y Restaurar Respaldos (AES-256)</a></li>
+                    <li><a href="#sec-ajustes" class="hover:text-white transition">8. Ajustes Generales y Personalización</a></li>
+                </ul>
             </div>
         </section>
 
-        <!-- 2. PANEL DE INICIO (DASHBOARD) -->
-        <section class="bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl">
-            <div class="flex flex-col md:flex-row-reverse gap-8 items-center">
-                <div class="w-full md:w-1/2 space-y-4">
-                    <span class="bg-success/10 text-success text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Paso 02</span>
-                    <h2 class="text-2xl sm:text-3xl font-bold">Panel Principal (Inicio)</h2>
-                    <p class="text-secondary text-sm leading-relaxed">Tu centro de mando financiero. Aquí visualizas el resumen general de tus cuentas:</p>
-                    <ul class="text-sm space-y-2 text-secondary">
-                        <li class="flex items-center gap-2">📊 <strong>Saldo Total:</strong> Balance en tiempo real según la moneda activa.</li>
-                        <li class="flex items-center gap-2">📈 <strong>Ingresos vs Gastos:</strong> Desglose rápido de entradas y salidas de dinero.</li>
-                        <li class="flex items-center gap-2">🎯 <strong>Barra de Ahorro:</strong> Mide tu progreso hacia la meta sugerida del 20%.</li>
-                        <li class="flex items-center gap-2">💡 <strong>Frases de sabiduría:</strong> Consejos financieros diarios aleatorios.</li>
-                    </ul>
-                </div>
-                <div class="w-full md:w-1/2 flex justify-center">
-                    <div class="w-64 aspect-[9/19] bg-[#27272a] rounded-[2rem] border-8 border-[#3f3f46] overflow-hidden shadow-2xl">
-                        <img src="image_ad49da.png" alt="Dashboard" class="w-full h-full object-cover object-top">
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- SECCIONES DETALLADAS -->
+        <div id="tutorial-container" class="space-y-10">
 
-        <!-- 3. MÓDULO DE REGISTRO (MANUAL E INTELIGENTE) -->
-        <section class="bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl">
-            <div class="flex flex-col md:flex-row gap-8 items-center">
-                <div class="w-full md:w-1/2 space-y-4">
-                    <span class="bg-warning/10 text-warning text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Paso 03</span>
-                    <h2 class="text-2xl sm:text-3xl font-bold">Registrar Movimientos</h2>
-                    <p class="text-secondary text-sm leading-relaxed">Accede mediante el botón central (+) de la barra de navegación para registrar dinero:</p>
-                    <ul class="text-sm space-y-2 text-secondary">
-                        <li class="flex items-center gap-2">✍️ <strong>Registro Manual:</strong> Selecciona si es Gasto o Ingreso, ingresa el monto, categoría y descripción opcional.</li>
-                        <li class="flex items-center gap-2">🤖 <strong>Registro Inteligente (IA - VIP):</strong> Escribe de forma natural (ej. "Compré café por 12 soles") o utiliza el micrófono para dictar tus gastos mediante comandos de voz.</li>
-                    </ul>
-                </div>
-                <div class="w-full md:w-1/2 flex justify-center">
-                    <div class="w-64 aspect-[9/19] bg-[#27272a] rounded-[2rem] border-8 border-[#3f3f46] overflow-hidden shadow-2xl">
-                        <img src="image_ad453c.png" alt="Registrar" class="w-full h-full object-cover object-top">
+            <!-- 1. LOGIN -->
+            <div id="sec-login" class="tutorial-card bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl search-item" data-keywords="login google inicio de sesion cuenta acceso">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <span class="bg-accent/10 text-accent text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Pantalla 01</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold">Inicio de Sesión con Google</h2>
+                        <p class="text-secondary text-sm leading-relaxed">Al abrir la aplicación, te recibirá una pantalla limpia enfocada en la seguridad.</p>
+                        <ul class="text-sm space-y-2 text-secondary">
+                            <li>🟢 <strong>Botón oficial:</strong> Enlaza de forma transparente tu cuenta de Google.</li>
+                            <li>🟢 <strong>Privacidad:</strong> Los datos se gestionan localmente en tu navegador.</li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <div class="w-56 aspect-[9/19] bg-[#27272a] rounded-[2rem] border-8 border-[#3f3f46] overflow-hidden shadow-2xl">
+                            <img src="image_ad461b.png" alt="Login" class="w-full h-full object-cover object-top">
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- 4. AJUSTES Y SEGURIDAD -->
-        <section class="bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl">
-            <div class="flex flex-col md:flex-row-reverse gap-8 items-center">
-                <div class="w-full md:w-1/2 space-y-4">
-                    <span class="bg-success/10 text-success text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Paso 04</span>
-                    <h2 class="text-2xl sm:text-3xl font-bold">Ajustes, Temas y Respaldos</h2>
-                    <p class="text-secondary text-sm leading-relaxed">Personaliza por completo tu experiencia y protege tus datos personales:</p>
-                    <ul class="text-sm space-y-2 text-secondary">
-                        <li class="flex items-center gap-2">🌍 <strong>Moneda y País:</strong> Cambia tu región predeterminada y habilita hasta 3 monedas simultáneas.</li>
-                        <li class="flex items-center gap-2">🎨 <strong>Personalización VIP:</strong> Elige entre 12 temas visuales, tipografías y colores personalizados.</li>
-                        <li class="flex items-center gap-2">🔒 <strong>Copia de Seguridad AES-256:</strong> Encripta tu base de datos con contraseña y expórtala directamente a tu WhatsApp.</li>
-                    </ul>
-                </div>
-                <div class="w-full md:w-1/2 flex justify-center">
-                    <div class="w-64 aspect-[9/19] bg-[#27272a] rounded-[2rem] border-8 border-[#3f3f46] overflow-hidden shadow-2xl">
-                        <img src="image_ad4234.png" alt="Ajustes" class="w-full h-full object-cover object-top">
+            <!-- 2. DASHBOARD -->
+            <div id="sec-dashboard" class="tutorial-card bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl search-item" data-keywords="inicio dashboard saldo total ingresos gastos ahorro fijos">
+                <div class="flex flex-col md:flex-row-reverse gap-8 items-center">
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <span class="bg-success/10 text-success text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Pantalla 02</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold">Panel Principal (Inicio)</h2>
+                        <p class="text-secondary text-sm leading-relaxed">Tu centro de control financiero diario:</p>
+                        <ul class="text-sm space-y-2 text-secondary">
+                            <li>📊 <strong>Saldo Total:</strong> Visualiza tu balance actual con cambio rápido de moneda en la barra superior.</li>
+                            <li>📈 <strong>Ingresos / Gastos:</strong> Tarjetas detalladas de flujos de dinero recientes.</li>
+                            <li>🎯 <strong>Meta de Ahorro:</strong> Barra indicadora basada en el estándar del 20%.</li>
+                            <li>💡 <strong>Gastos Fijos & Frases:</strong> Control de pagos recurrentes y motivación financiera diaria.</li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <div class="w-56 aspect-[9/19] bg-[#27272a] rounded-[2rem] border-8 border-[#3f3f46] overflow-hidden shadow-2xl">
+                            <img src="image_ad49da.png" alt="Dashboard" class="w-full h-full object-cover object-top">
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+
+            <!-- 3. REGISTRAR -->
+            <div id="sec-registrar" class="tutorial-card bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl search-item" data-keywords="registrar gastos ingresos manual inteligencia artificial voz ia">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <span class="bg-warning/10 text-warning text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Pantalla 03</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold">Registrar Movimientos</h2>
+                        <p class="text-secondary text-sm leading-relaxed">Accesible desde el icono central <strong>(+)</strong>:</p>
+                        <ul class="text-sm space-y-2 text-secondary">
+                            <li>✍️ <strong>Registro Manual:</strong> Elige Gasto o Ingreso, escribe el monto, selecciona la categoría preestablecida (Salarios, Comida, Transporte, etc.) y añade una descripción.</li>
+                            <li>🤖 <strong>Registro Inteligente (IA - VIP):</strong> Dicta por voz o escribe oraciones cotidianas para que la IA extraiga los datos de forma automática.</li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <div class="w-56 aspect-[9/19] bg-[#27272a] rounded-[2rem] border-8 border-[#3f3f46] overflow-hidden shadow-2xl">
+                            <img src="image_ad453c.png" alt="Registrar" class="w-full h-full object-cover object-top">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. ANÁLISIS (NUEVO) -->
+            <div id="sec-analisis" class="tutorial-card bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl search-item" data-keywords="analisis inteligencia artificial semanal fuga de dinero recomendaciones vip">
+                <div class="flex flex-col md:flex-row-reverse gap-8 items-center">
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <span class="bg-warning/10 text-warning text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Pantalla 04 (Exclusiva VIP)</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold">Análisis Inteligente Semanal</h2>
+                        <p class="text-secondary text-sm leading-relaxed">Una evaluación automatizada de tus últimos 7 días de finanzas:</p>
+                        <ul class="text-sm space-y-2 text-secondary">
+                            <li>📊 <strong>Balance de la Semana:</strong> Comparativa visual de ingresos vs. egresos recientes.</li>
+                            <li>🔍 <strong>Detección de Fugas:</strong> Identifica automáticamente en qué categoría gastaste más dinero.</li>
+                            <li>💡 <strong>Consejos de IA:</strong> Recomendaciones personalizadas para ajustar tu presupuesto de inmediato.</li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <div class="bg-[#27272a]/50 border-2 border-dashed border-border rounded-2xl p-12 text-center text-secondary w-56 aspect-[9/19] flex flex-col items-center justify-center">
+                            <svg class="w-12 h-12 mb-3 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/></svg>
+                            <p class="text-xs font-bold text-white">Módulo de Análisis IA</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. HISTORIAL (NUEVO) -->
+            <div id="sec-historial" class="tutorial-card bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl search-item" data-keywords="historial calendario transacciones diario semanal mensual editar eliminar">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <span class="bg-accent/10 text-accent text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Pantalla 05</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold">Historial y Calendario</h2>
+                        <p class="text-secondary text-sm leading-relaxed">Gestiona todas tus transacciones pasadas con total flexibilidad:</p>
+                        <ul class="text-sm space-y-2 text-secondary">
+                            <li>📅 <strong>Calendario Interactivo:</strong> Toca cualquier día con indicador de punto para filtrar transacciones de esa fecha exacta.</li>
+                            <li>⚙️ <strong>Filtros Temporales:</strong> Cambia rápidamente entre vistas Diaria, Semanal o Mensual.</li>
+                            <li>✏️ <strong>Edición Protegida:</strong> Modifica transacciones hechas en las últimas 24 horas o bórralas cuando lo necesites.</li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <div class="bg-[#27272a]/50 border-2 border-dashed border-border rounded-2xl p-12 text-center text-secondary w-56 aspect-[9/19] flex flex-col items-center justify-center">
+                            <svg class="w-12 h-12 mb-3 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/></svg>
+                            <p class="text-xs font-bold text-white">Módulo de Historial</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. GUÍA DE ACTIVACIÓN VIP (NUEVO) -->
+            <div id="sec-vip" class="tutorial-card bg-card border border-warning/40 rounded-3xl p-6 sm:p-10 shadow-xl search-item" data-keywords="activar vip cuenta codigo planes whatsapp renovar">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-warning text-black text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Guía Paso a Paso</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-warning">Cómo Activar tu Cuenta VIP</h2>
+                    </div>
+                    <p class="text-secondary text-sm leading-relaxed">Desbloquea la Inteligencia Artificial de voz y texto, junto con la personalización total siguiendo este proceso:</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                        <div class="bg-bg p-5 rounded-2xl border border-border">
+                            <div class="text-warning font-extrabold text-lg mb-2">Paso 1</div>
+                            <p class="text-xs text-secondary leading-relaxed">Haz clic en el icono de corona o planes VIP dentro de la app para ver las opciones (1 Mes, 1 Año o Vitalicio).</p>
+                        </div>
+                        <div class="bg-bg p-5 rounded-2xl border border-border">
+                            <div class="text-warning font-extrabold text-lg mb-2">Paso 2</div>
+                            <p class="text-xs text-secondary leading-relaxed">Realiza el pago seguro vía WhatsApp o escaneando el código QR proporcionado en pantalla.</p>
+                        </div>
+                        <div class="bg-bg p-5 rounded-2xl border border-border">
+                            <div class="text-warning font-extrabold text-lg mb-2">Paso 3</div>
+                            <p class="text-xs text-secondary leading-relaxed">Recibe tu código alfanumérico único, ve a Ajustes > Canjear Código VIP y pégalo para activarlo de inmediato.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. GUÍA RESPALDOS AES-256 (NUEVO) -->
+            <div id="sec-backup" class="tutorial-card bg-card border border-success/40 rounded-3xl p-6 sm:p-10 shadow-xl search-item" data-keywords="respaldo backup restaurar encriptado aes 256 whatsapp clave">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-success text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Guía de Seguridad</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-success">Generar y Restaurar Respaldos</h2>
+                    </div>
+                    <p class="text-secondary text-sm leading-relaxed">Tus datos están protegidos bajo cifrado militar AES-256. Sigue estos pasos para respaldar o recuperar tu información:</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                        <div class="bg-bg p-6 rounded-2xl border border-border space-y-3">
+                            <h3 class="font-bold text-white flex items-center gap-2">📤 Cómo Respaldar:</h3>
+                            <ol class="text-xs text-secondary space-y-2 list-decimal pl-4">
+                                <li>Abre el panel de <strong>Ajustes</strong> en la esquina superior derecha.</li>
+                                <li>Desplázate hasta la sección de <strong>Respaldo Cifrado</strong>.</li>
+                                <li>Haz clic en <strong>"Enviar a WhatsApp"</strong> e ingresa una clave secreta propia para cifrar tus datos.</li>
+                                <li>Guarda el mensaje cifrado resultante en tu chat personal de WhatsApp.</li>
+                            </ol>
+                        </div>
+                        <div class="bg-bg p-6 rounded-2xl border border-border space-y-3">
+                            <h3 class="font-bold text-white flex items-center gap-2">📥 Cómo Restaurar:</h3>
+                            <ol class="text-xs text-secondary space-y-2 list-decimal pl-4">
+                                <li>Copia el código encriptado guardado en tu WhatsApp.</li>
+                                <li>Ingresa a la sección de <strong>Ajustes</strong> de la app en cualquier dispositivo.</li>
+                                <li>Pega el código en el cuadro inferior y haz clic en <strong>"Restaurar"</strong>.</li>
+                                <li>Introduce la clave de cifrado original que creaste y ¡listo!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. AJUSTES -->
+            <div id="sec-ajustes" class="tutorial-card bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl search-item" data-keywords="ajustes configuracion pais moneda temas colores tipografia">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <span class="bg-success/10 text-success text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Pantalla 06</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold">Ajustes Globales y Personalización</h2>
+                        <p class="text-secondary text-sm leading-relaxed">Controla el comportamiento general de la plataforma:</p>
+                        <ul class="text-sm space-y-2 text-secondary">
+                            <li>🌍 <strong>Región y Moneda:</strong> Cambia de país para adaptar automáticamente los formatos y monedas secundarias.</li>
+                            <li>🎨 <strong>Personalización Visual (VIP):</strong> Selecciona entre 12 temas de color predefinidos (Pizarra, Neón Cyberpunk, Océano, etc.) y tipografías únicas.</li>
+                            <li>🚪 <strong>Sesión:</strong> Cierra sesión de forma segura cuando lo requieras.</li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <div class="w-56 aspect-[9/19] bg-[#27272a] rounded-[2rem] border-8 border-[#3f3f46] overflow-hidden shadow-2xl">
+                            <img src="image_ad4234.png" alt="Ajustes" class="w-full h-full object-cover object-top">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
     </main>
 
@@ -146,5 +286,23 @@
         </div>
     </footer>
 
+    <!-- SCRIPT DEL BUSCADOR EN TIEMPO REAL -->
+    <script>
+        function filterTutorial() {
+            let input = document.getElementById('searchBox').value.toLowerCase();
+            let items = document.getElementsByClassName('search-item');
+
+            for (let i = 0; i < items.length; i++) {
+                let keywords = items[i].getAttribute('data-keywords').toLowerCase();
+                let text = items[i].innerText.toLowerCase();
+
+                if (keywords.includes(input) || text.includes(input)) {
+                    items[i].style.display = "block";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 </body>
 </html>
