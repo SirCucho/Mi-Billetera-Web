@@ -23,12 +23,13 @@
     <style>
         body { background-color: #111111; color: #ffffff; scroll-behavior: smooth; transition: all 0.3s ease; }
         .gradient-text { background: linear-gradient(to right, #3b82f6, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .img-placeholder { background: linear-gradient(45deg, #1e1e1e, #27272a); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #a1a1aa; font-size: 0.8rem; padding: 20px;}
         .table-row-hover:hover { background-color: #19191c; transition: background-color 0.2s; }
         [dir="rtl"] .text-left { text-align: right; }
         [dir="rtl"] .flex-row-reverse { flex-direction: row; }
-        /* Ajustes responsivos adicionales */
         @media (max-width: 768px) { .hero-img-container { order: -1; margin-bottom: 2rem; } }
+        /* Efecto premium para las imágenes generadas */
+        .img-overlay { opacity: 0.85; mix-blend-mode: luminosity; transition: all 0.5s ease; }
+        .img-overlay:hover { opacity: 1; mix-blend-mode: normal; transform: scale(1.05); }
     </style>
 </head>
 <body class="font-sans antialiased" dir="ltr">
@@ -48,7 +49,6 @@
                 <a href="#vip" class="hover:text-warning transition flex items-center gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> <span data-i18n="nav_prem">Premium</span></a>
                 <a href="#tutorial" data-i18n="nav_how" class="hidden md:block hover:text-white transition">Cómo Funciona</a>
                 
-                <!-- SELECTOR DE PAÍS GLOBAL (Ajusta idioma y precios) -->
                 <div class="flex items-center gap-1.5 bg-[#1e1e1e] border border-[#27272a] rounded-lg px-2 py-1 hover:border-accent transition-colors">
                     <svg class="w-3.5 h-3.5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
                     <select id="countrySwitcher" onchange="updateLocalization(this.value)" class="bg-transparent text-white text-xs outline-none cursor-pointer w-20 sm:w-auto overflow-hidden text-ellipsis whitespace-nowrap"></select>
@@ -76,12 +76,8 @@
             </div>
             
             <div class="w-full md:w-1/2 hero-img-container flex justify-center md:justify-end">
-                <div class="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[1/2] bg-card rounded-[2.5rem] border-[10px] border-[#27272a] shadow-2xl overflow-hidden flex items-center justify-center img-placeholder">
-                    <img src="portada.png" alt="App" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none'">
-                    <div class="z-0">
-                        <svg class="w-10 h-10 mx-auto mb-2 text-[#3b82f6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-                        <p data-i18n="img_portada">Sube la captura<br><strong class="text-accent">portada.png</strong><br>a tu GitHub</p>
-                    </div>
+                <div class="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[1/2] bg-card rounded-[2.5rem] border-[10px] border-[#27272a] shadow-2xl overflow-hidden flex items-center justify-center">
+                    <img src="https://images.unsplash.com/photo-1616077168079-7e09a6a7ce04?auto=format&fit=crop&w=600&q=80" alt="App Dashboard Mockup" class="absolute inset-0 w-full h-full object-cover z-10 img-overlay">
                 </div>
             </div>
         </div>
@@ -118,7 +114,7 @@
         </div>
     </section>
 
-    <!-- SECCIÓN: TABLA COMPARATIVA VIP (CON PRECIOS DINÁMICOS) -->
+    <!-- SECCIÓN: TABLA COMPARATIVA VIP -->
     <section id="vip" class="py-16 md:py-24 bg-bg px-4 sm:px-6 lg:px-8">
         <div class="max-w-5xl mx-auto">
             <div class="text-center mb-12">
@@ -200,16 +196,14 @@
                             <li class="flex items-center gap-3"><div class="bg-success/20 p-1.5 rounded-md text-success"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> <span data-i18n="t1_b2">Sincroniza tu foto de perfil automáticamente</span></li>
                         </ul>
                     </div>
-                    <div class="order-1 md:order-2 bg-card rounded-[2rem] border border-border aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex items-center justify-center img-placeholder shadow-xl relative overflow-hidden">
-                        <img src="paso1.png" alt="Paso 1" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none'">
-                        <div class="z-0"><p data-i18n="img_paso1">Sube la captura<br><strong class="text-accent">paso1.png</strong></p></div>
+                    <div class="order-1 md:order-2 bg-card rounded-[2rem] border border-border aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex items-center justify-center shadow-xl relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1555421689-d68471e189f2?auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Autenticación Segura" class="absolute inset-0 w-full h-full object-cover z-10 img-overlay">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center md:flex-row-reverse">
-                    <div class="bg-card rounded-[2rem] border border-border aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex items-center justify-center img-placeholder shadow-xl relative overflow-hidden">
-                        <img src="paso2.png" alt="Paso 2" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none'">
-                        <div class="z-0"><p data-i18n="img_paso2">Sube la captura<br><strong class="text-accent">paso2.png</strong></p></div>
+                    <div class="bg-card rounded-[2rem] border border-border aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex items-center justify-center shadow-xl relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Panel Financiero IA" class="absolute inset-0 w-full h-full object-cover z-10 img-overlay">
                     </div>
                     <div class="text-center md:text-left">
                         <div class="bg-accent text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mb-4 md:mb-6 text-xl mx-auto md:mx-0 shadow-lg shadow-accent/30">2</div>
@@ -229,9 +223,8 @@
                             <li class="flex items-center gap-3"><div class="bg-accent/20 p-1.5 rounded-md text-accent"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></div> <span data-i18n="t3_b2">Restaura pegando el código y la contraseña</span></li>
                         </ul>
                     </div>
-                    <div class="order-1 md:order-2 bg-card rounded-[2rem] border border-border aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex items-center justify-center img-placeholder shadow-xl relative overflow-hidden">
-                        <img src="paso3.png" alt="Paso 3" class="absolute inset-0 w-full h-full object-cover z-10" onerror="this.style.display='none'">
-                        <div class="z-0"><p data-i18n="img_paso3">Sube la captura<br><strong class="text-accent">paso3.png</strong></p></div>
+                    <div class="order-1 md:order-2 bg-card rounded-[2rem] border border-border aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex items-center justify-center shadow-xl relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1614064641913-630f84a4a5bb?auto=format&fit=crop&w=800&q=80" loading="lazy" alt="Seguridad Criptográfica" class="absolute inset-0 w-full h-full object-cover z-10 img-overlay">
                     </div>
                 </div>
             </div>
@@ -246,7 +239,6 @@
                 <span class="font-bold text-primary tracking-wide">Mi Billetera &copy; 2026</span>
             </div>
             <div class="flex flex-col sm:flex-row gap-4 sm:gap-8 items-center text-sm font-medium">
-                <!-- ENLACE A LA POLÍTICA DE PRIVACIDAD EXTERNA (GITHUB) -->
                 <a href="Politica%20de%20privacidad.html" target="_blank" class="text-secondary hover:text-white transition decoration-border underline-offset-4 hover:underline" data-i18n="foot_priv">Política de Privacidad (Legal)</a>
                 <a href="app.html" class="text-accent hover:text-white bg-accent/10 hover:bg-accent px-4 py-2 rounded-lg transition-colors" data-i18n="foot_enter">Ingresar a la App →</a>
             </div>
@@ -255,7 +247,6 @@
 
     <!-- SCRIPT DE TRADUCCIÓN, PAÍSES Y PRECIOS DINÁMICOS -->
     <script>
-        // DATOS DE PAÍSES, MONEDAS E IDIOMAS (IGUAL QUE EN LA APP)
         const RAW_COUNTRIES = "Afganistán|AFN|ar,Albania|ALL|sq,Argelia|DZD|ar,Andorra|ALL|ca,Angola|DZD|ar,Antigua y Barbuda|EUR|ca,Argentina|ARS|es,Armenia|AMD|sq,Australia|AUD|en,Austria|EUR|de,Azerbaiyán|AZN|ru,Bahamas|XCD|en,Bahréin|BHD|ar,Bangladesh|BDT|en,Barbados|BSD|en,Bielorrusia|BYN|ru,Bélgica|EUR|de,Belice|BZD|en,Benín|AOA|fr,Bhután|BDT|en,Bolivia|BOB|es,Bosnia y Herzegovina|BAM|ru,Botsuana|BWP|en,Brasil|BRL|pt,Brunéi|BTN|en,Bulgaria|EUR|fr,Burkina Faso|XOF|fr,Burundi|XOF|fr,Cabo Verde|CVE|pt,Camboya|BND|en,Camerún|XAF|fr,Canadá|CAD|en,República Centroafricana|XAF|fr,Chad|XAF|fr,Chile|CLP|es,China|CNY|zh,Colombia|COP|es,Comoras|KHR|fr,Congo|XAF|fr,Costa Rica|COP|es,Croacia|BGN|ru,Cuba|CLP|es,Chipre|HRK|en,República Checa|EUR|en,Dinamarca|CZK|en,Yibuti|KMF|ar,Dominica|XCD|en,República Dominicana|DOP|es,Ecuador|USD|es,Egipto|EGP|ar,El Salvador|CRC|es,Guinea Ecuatorial|XAF|es,Eritrea|DJF|ar,Estonia|DKK|en,Eswatini|ERN|en,Etiopía|EGP|ar,Fiji|FJD|en,Finlandia|EUR|en,Francia|EUR|fr,Gabón|XAF|fr,Gambia|GMD|en,Georgia|GEL|ru,Alemania|EUR|de,Ghana|GHS|en,Grecia|EUR|en,Granada|XCD|en,Guatemala|CRC|es,Guinea|GNF|fr,Guinea-Bisáu|XOF|pt,Guyana|GYD|en,Haití|HTG|fr,Honduras|HNL|es,Hungría|HUF|en,Islandia|EUR|en,India|INR|hi,Indonesia|IDR|en,Irán|IRR|ar,Irak|IQD|ar,Irlanda|EUR|en,Israel|ILS|ar,Italia|EUR|it,Jamaica|JMD|en,Japón|JPY|ja,Jordania|JOD|ar,Kazajistán|KZT|ru,Kenia|KES|en,Kiribati|KWD|en,Kuwait|KWD|ar,Kirguistán|KGS|ru,Laos|LAK|fr,Letonia|EUR|ru,Líbano|LBP|ar,Lesoto|LSL|en,Liberia|LRD|en,Libia|LYD|ar,Liechtenstein|EUR|ca,Lituania|EUR|ru,Luxemburgo|CHF|de,Madagascar|MGA|fr,Malaui|MWK|en,Malasia|MYR|en,Maldivas|MVR|en,Malí|XOF|fr,Malta|EUR|fr,Islas Marshall|AUD|en,Mauritania|MRU|ar,Mauricio|MUR|en,México|MXN|es,Micronesia|AUD|en,Moldavia|EUR|ru,Mónaco|EUR|fr,Mongolia|MDL|ru,Montenegro|EUR|en,Marruecos|MAD|ar,Mozambique|MZN|fr,Myanmar|MNT|zh,Namibia|NAD|pt,Nauru|AUD|en,Nepal|NPR|hi,Países Bajos|EUR|fr,Nueva Zelanda|NZD|en,Nicaragua|NIO|es,Níger|XOF|fr,Nigeria|XOF|fr,Macedonia del Norte|EUR|ru,Noruega|NZD|en,Omán|OMR|ar,Pakistán|NPR|hi,Palaos|AUD|en,Panamá|NIO|es,Papúa Nueva Guinea|USD|en,Paraguay|NIO|es,Perú|PEN|es,Filipinas|PHP|en,Polonia|EUR|en,Portugal|EUR|pt,Catar|QAR|ar,Corea del Sur|KRW|ja,Rumania|RON|en,Rusia|RUB|ru,Ruanda|ZAR|en,San Cristóbal y Nieves|XCD|en,Santa Lucía|XCD|en,San Vicente y las Granadinas|XCD|en,Samoa|AUD|en,San Marino|EUR|fr,Santo Tomé y Príncipe|XCD|en,Arabia Saudita|SAR|ar,Senegal|XOF|fr,Serbia|RSD|ru,Seychelles|STN|en,Sierra Leona|XOF|fr,Singapur|SGD|en,Eslovaquia|EUR|en,Eslovenia|EUR|en,Islas Salomón|AUD|en,Somalia|SOS|ar,Sudáfrica|ZAR|en,Sudán del Sur|SOS|ar,España|EUR|es,Sri Lanka|LKR|en,Sudán|SDG|ar,Surinam|PYG|es,Suecia|SEK|en,Suiza|CHF|de,Siria|SYP|ar,Tayikistán|TJS|ru,Tanzania|TZS|en,Tailandia|THB|en,Timor Oriental|USD|pt,Togo|XOF|fr,Tonga|TOP|en,Trinidad y Tobago|TTD|en,Túnez|TND|ar,Turquía|TRY|en,Turkmenistán|TMT|ru,Tuvalu|TOP|en,Uganda|UGX|en,Ucrania|UAH|ru,Emiratos Árabes Unidos|AED|ar,Reino Unido|GBP|en,Estados Unidos|USD|en,Uruguay|UYU|es,Uzbekistán|UZS|ru,Vanuatu|AUD|en,Ciudad del Vaticano|EUR|it,Venezuela|UYU|es,Vietnam|VND|en,Yemen|YER|ar,Zambia|UGX|en,Zimbabue|ZWL|en";
         const COUNTRIES = RAW_COUNTRIES.split(',').map(item => { const [name, curr, lang] = item.split('|'); return { name, defaultCurr: curr, lang }; });
         
@@ -283,8 +274,7 @@
                 t1_title: "Inicia Sesión con Google", t1_desc: "Olvídate de contraseñas complicadas. Ingresa de forma 100% segura utilizando tu cuenta oficial de Google con un solo clic.", t1_b1: "Autenticación blindada por Google", t1_b2: "Sincroniza tu foto de perfil automáticamente",
                 t2_title: "Registra con o sin IA", t2_desc: "Ve a la pestaña central 'Registrar'. Puedes escribir el monto y categoría manualmente, o simplemente dictarle a tu teléfono si eres usuario VIP. ¡El panel de inicio se actualizará al instante!", t2_link: "Ir a la app y probar →",
                 t3_title: "Respalda tus datos en WhatsApp", t3_desc: "Tus datos nunca se suben a la nube. Ve a Ajustes, crea una contraseña y haz clic en 'Respaldar'. La app encriptará tu información y te la enviará a tu propio WhatsApp.", t3_b1: "Nadie más tiene tus datos (Cifrado AES-256)", t3_b2: "Restaura pegando el código y la contraseña",
-                foot_priv: "Política de Privacidad (Legal)", foot_enter: "Ingresar a la App →", only_vip: "SOLO VIP",
-                img_portada: "Sube la captura<br><strong class='text-accent'>portada.png</strong>", img_paso1: "Sube la captura<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "Sube la captura<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "Sube la captura<br><strong class='text-accent'>paso3.png</strong>"
+                foot_priv: "Política de Privacidad (Legal)", foot_enter: "Ingresar a la App →", only_vip: "SOLO VIP"
             },
             en: {
                 nav_feat: "Features", nav_how: "How it works", nav_prem: "Premium", nav_open: "Open App",
@@ -302,14 +292,11 @@
                 t1_title: "Sign in with Google", t1_desc: "Forget about passwords. Log in securely using your official Google account.", t1_b1: "Bulletproof authentication", t1_b2: "Sync your profile picture automatically",
                 t2_title: "Record with or without AI", t2_desc: "Go to the 'Record' tab. Enter the amount manually or just speak to your phone if you are VIP.", t2_link: "Go to the app and try →",
                 t3_title: "Backup your data on WhatsApp", t3_desc: "Your data is never uploaded to the cloud. Go to Settings, click 'Backup', and the app will encrypt your info and send it to your WhatsApp.", t3_b1: "No one else has your data (AES-256)", t3_b2: "Restore by pasting the code and password",
-                foot_priv: "Privacy Policy (Legal)", foot_enter: "Enter the App →", only_vip: "VIP ONLY",
-                img_portada: "Upload image<br><strong class='text-accent'>portada.png</strong>", img_paso1: "Upload image<br><strong class='text-accent'>paso1.png</strong>", img_paso2: "Upload image<br><strong class='text-accent'>paso2.png</strong>", img_paso3: "Upload image<br><strong class='text-accent'>paso3.png</strong>"
+                foot_priv: "Privacy Policy (Legal)", foot_enter: "Enter the App →", only_vip: "VIP ONLY"
             }
-            // (La función de traducción tiene un fallback (respaldo) a Inglés o Español si el idioma del país no está en el diccionario para ahorrar espacio y mantener la velocidad).
         };
 
         function changeLanguage(langCode) {
-            // Fallback a inglés si el idioma no está definido en el pequeño diccionario
             const safeLang = i18n[langCode] ? langCode : (i18n[langCode.split('-')[0]] ? langCode.split('-')[0] : 'en');
             
             document.getElementById('html-tag').lang = safeLang;
@@ -328,10 +315,8 @@
             const lang = countryData.lang;
             const currencyCode = countryData.defaultCurr;
             
-            // 1. Cambiar Idioma
             changeLanguage(lang);
             
-            // 2. Actualizar Precios Dinámicos ($3, $15, $45 base USD)
             const rate = USD_RATES[currencyCode] || 1;
             const sym = ALL_CURRENCIES[currencyCode] || currencyCode;
             
@@ -343,31 +328,26 @@
             document.getElementById('price-2').innerText = `${sym} ${p2}`;
             document.getElementById('price-3').innerText = `${sym} ${p3}`;
             
-            // Actualizar etiquetas de moneda debajo de los precios
             document.querySelectorAll('[data-i18n="plan_sub"], [data-i18n="plan_3_sub"]').forEach(el => {
                 const originalText = i18n[document.getElementById('html-tag').lang][el.getAttribute('data-i18n')];
                 el.innerHTML = `${originalText} ${currencyCode}`;
             });
 
-            // 3. Actualizar Enlace de WhatsApp con el país y moneda correcta
             const waBtn = document.getElementById('wa-btn');
             const waMsg = `Hola Carlos, vengo de la página web. Me interesa comprar el plan VIP desde ${countryName} en ${currencyCode}.`;
             waBtn.href = `https://wa.me/51930266472?text=${encodeURIComponent(waMsg)}`;
         }
 
         window.onload = () => {
-            // Cargar selector de países
             const select = document.getElementById('countrySwitcher');
             COUNTRIES.forEach(c => {
                 const option = document.createElement('option');
                 option.value = c.name;
                 option.textContent = `${c.name} (${c.defaultCurr})`;
-                // Aplicar estilos para que el dropdown se vea bien en fondos oscuros
                 option.className = "bg-[#1e1e1e] text-white";
                 select.appendChild(option);
             });
             
-            // Seleccionar por defecto Perú (o detectar geolocalización en un entorno real)
             select.value = 'Perú';
             updateLocalization('Perú');
         };
