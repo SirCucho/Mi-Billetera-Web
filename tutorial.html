@@ -55,9 +55,10 @@
             height: 100%;
             position: relative;
         }
+        [dir="rtl"] { text-align: right; }
     </style>
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased" dir="ltr">
 
     <!-- BARRA DE NAVEGACIÓN -->
     <nav class="fixed w-full top-0 z-50 bg-[#111111]/90 backdrop-blur-md border-b border-border">
@@ -135,7 +136,7 @@
                         <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
                             <div class="phone-notch"></div>
                             <div class="phone-screen">
-                                <img src="paso1.png" alt="Login" class="w-full h-full object-cover object-top">
+                                <img src="paso1.png" alt="Login" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
                             </div>
                         </div>
                     </div>
@@ -161,7 +162,7 @@
                         <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
                             <div class="phone-notch"></div>
                             <div class="phone-screen">
-                                <img src="portada.png" alt="Dashboard" class="w-full h-full object-cover object-top">
+                                <img src="portada.png" alt="Dashboard" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
                             </div>
                         </div>
                     </div>
@@ -186,7 +187,7 @@
                         <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
                             <div class="phone-notch"></div>
                             <div class="phone-screen">
-                                <img src="paso2.png" alt="Registrar" class="w-full h-full object-cover object-top">
+                                <img src="paso2.png" alt="Registrar" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
                             </div>
                         </div>
                     </div>
@@ -212,7 +213,7 @@
                         <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
                             <div class="phone-notch"></div>
                             <div class="phone-screen">
-                                <img src="analisis.png" alt="Análisis IA" class="w-full h-full object-cover object-top" onerror="this.src='portada.png'">
+                                <img src="analisis.png" alt="Análisis IA" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
                             </div>
                         </div>
                     </div>
@@ -237,7 +238,7 @@
                         <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
                             <div class="phone-notch"></div>
                             <div class="phone-screen">
-                                <img src="historial.png" alt="Historial" class="w-full h-full object-cover object-top" onerror="this.src='portada.png'">
+                                <img src="historial.png" alt="Historial" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
                             </div>
                         </div>
                     </div>
@@ -256,15 +257,15 @@
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                         <div class="bg-bg p-5 rounded-2xl border border-border">
                             <div class="text-warning font-extrabold text-lg mb-2" data-i18n="t6_p1">Paso 1</div>
-                            <p class="text-xs text-secondary leading-relaxed" data-i18n="t6_d1">Toca tu foto de perfil (Ajustes) y haz clic en el banner 'Ver Planes'.</p>
+                            <p class="text-xs text-secondary leading-relaxed" data-i18n="t6_d1">Toca tu foto de perfil (Ajustes) y haz clic en el banner 'Ver Planes' o en el banner amarillo de renovación.</p>
                         </div>
                         <div class="bg-bg p-5 rounded-2xl border border-border">
                             <div class="text-warning font-extrabold text-lg mb-2" data-i18n="t6_p2">Paso 2</div>
-                            <p class="text-xs text-secondary leading-relaxed" data-i18n="t6_d2">Serás redirigido a WhatsApp. Solicita tu plan y realiza el pago. Recibirás un código seguro.</p>
+                            <p class="text-xs text-secondary leading-relaxed" data-i18n="t6_d2">Serás redirigido a WhatsApp. Solicita tu plan y realiza el pago. Recibirás un código seguro (ej. 20261231-A4F8B).</p>
                         </div>
                         <div class="bg-bg p-5 rounded-2xl border border-border">
                             <div class="text-warning font-extrabold text-lg mb-2" data-i18n="t6_p3">Paso 3</div>
-                            <p class="text-xs text-secondary leading-relaxed" data-i18n="t6_d3">Vuelve a los Ajustes de la App, pega tu código y la app se reiniciará en modo VIP automáticamente.</p>
+                            <p class="text-xs text-secondary leading-relaxed" data-i18n="t6_d3">Vuelve a los Ajustes de la App, pega tu código en "Canjear Código" y la app se reiniciará en modo VIP automáticamente.</p>
                         </div>
                     </div>
                 </div>
@@ -277,25 +278,25 @@
                         <span class="bg-success text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="tag_7">Tutorial de Seguridad</span>
                         <h2 class="text-2xl sm:text-3xl font-bold text-success" data-i18n="t7_title">Generar y Restaurar Respaldos (AES-256)</h2>
                     </div>
-                    <p class="text-secondary text-sm leading-relaxed" data-i18n="t7_desc">Si cambias de teléfono o borras el navegador, necesitas tu información. Como no usamos servidores para espiarte, tú mismo guardas tu copia de seguridad.</p>
+                    <p class="text-secondary text-sm leading-relaxed" data-i18n="t7_desc">Si cambias de teléfono o borras el navegador, necesitas tu información. Como no usamos servidores para espiarte, tú mismo guardas tu copia de seguridad cifrada.</p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
                         <div class="bg-bg p-6 rounded-2xl border border-border space-y-3">
                             <h3 class="font-bold text-white flex items-center gap-2" data-i18n="t7_h1">📤 Cómo Respaldar (Guardar Datos):</h3>
                             <ol class="text-xs text-secondary space-y-2 list-decimal pl-4">
                                 <li data-i18n="t7_b1_1">Abre el panel de Ajustes.</li>
-                                <li data-i18n="t7_b1_2">Busca la sección 'Respaldo Cifrado'.</li>
+                                <li data-i18n="t7_b1_2">Busca la sección verde 'Respaldo Cifrado'.</li>
                                 <li data-i18n="t7_b1_3">Presiona 'Enviar a WhatsApp' y crea una clave secreta.</li>
-                                <li data-i18n="t7_b1_4">Guarda el código gigante en tu chat personal.</li>
+                                <li data-i18n="t7_b1_4">Guarda el bloque de código gigante en tu chat personal.</li>
                             </ol>
                         </div>
                         <div class="bg-bg p-6 rounded-2xl border border-border space-y-3">
                             <h3 class="font-bold text-white flex items-center gap-2" data-i18n="t7_h2">📥 Cómo Restaurar (Recuperar Datos):</h3>
                             <ol class="text-xs text-secondary space-y-2 list-decimal pl-4">
                                 <li data-i18n="t7_b2_1">Copia el bloque gigante desde tu WhatsApp.</li>
-                                <li data-i18n="t7_b2_2">Inicia sesión en la app desde tu nuevo teléfono.</li>
+                                <li data-i18n="t7_b2_2">Inicia sesión en la app desde tu nuevo teléfono con el mismo Google.</li>
                                 <li data-i18n="t7_b2_3">Pega el código en Ajustes y pulsa Restaurar.</li>
-                                <li data-i18n="t7_b2_4">Introduce tu clave secreta original para descifrar.</li>
+                                <li data-i18n="t7_b2_4">Introduce tu clave secreta original para descifrar todo.</li>
                             </ol>
                         </div>
                     </div>
@@ -310,9 +311,9 @@
                         <h2 class="text-2xl sm:text-3xl font-bold" data-i18n="t8_title">Ajustes Globales y Personalización</h2>
                         <p class="text-secondary text-sm leading-relaxed" data-i18n="t8_desc">El engranaje detrás de la app. Aquí controlas cómo se ve y cómo calcula la app.</p>
                         <ul class="text-sm space-y-3 text-secondary border-l-2 border-border pl-4">
-                            <li data-i18n="t8_l1"><strong>País y Monedas:</strong> Puedes configurar hasta 3 monedas distintas.</li>
-                            <li data-i18n="t8_l2"><strong>Temas VIP (Pestaña 1):</strong> Selecciona con un clic entre 12 estilos visuales.</li>
-                            <li data-i18n="t8_l3"><strong>Fondos VIP (Pestaña 2):</strong> Selecciona un color hexadecimal exacto.</li>
+                            <li data-i18n="t8_l1"><strong>País y Monedas:</strong> Configura tu región base y hasta 3 monedas distintas (ideal para separar ahorros en dólares).</li>
+                            <li data-i18n="t8_l2"><strong>Temas VIP (Pestaña 1):</strong> Selecciona con un clic entre 12 estilos visuales profesionales.</li>
+                            <li data-i18n="t8_l3"><strong>Fondos VIP (Pestaña 2):</strong> Selecciona un color hexadecimal exacto para tu fondo o el color de tus tarjetas.</li>
                             <li data-i18n="t8_l4"><strong>Textos VIP (Pestaña 3):</strong> Cambia la tipografía de la app y el color de tus letras.</li>
                         </ul>
                     </div>
@@ -321,7 +322,7 @@
                         <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
                             <div class="phone-notch"></div>
                             <div class="phone-screen">
-                                <img src="ajustes.png" alt="Ajustes App" class="w-full h-full object-cover object-top" onerror="this.src='paso3.png'">
+                                <img src="ajustes.png" alt="Ajustes App" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
                             </div>
                         </div>
                     </div>
@@ -367,14 +368,14 @@
                 t5_l1: "<strong>Puntos en el Calendario:</strong> Indican días con actividad financiera.", t5_l2: "<strong>Filtros Temporales:</strong> Agrupa la lista inferior por Día, Semana o Mes.", t5_l3: "<strong>Edición de 24 horas:</strong> Modifica registros usando el lápiz (solo transacciones recientes).",
                 
                 tag_6: "Tutorial de Activación", t6_title: "Cómo Activar tu Cuenta VIP", t6_desc: "Sigue estos pasos para obtener acceso a la IA, colores ilimitados y análisis avanzado.",
-                t6_p1: "Paso 1", t6_d1: "Toca tu foto de perfil y haz clic en 'Ver Planes'.", t6_p2: "Paso 2", t6_d2: "Realiza el pago vía WhatsApp. Recibirás un código seguro.", t6_p3: "Paso 3", t6_d3: "Vuelve a Ajustes, pega tu código y la app se volverá VIP.",
+                t6_p1: "Paso 1", t6_d1: "Toca tu foto de perfil y haz clic en 'Ver Planes' o en el banner amarillo de renovación.", t6_p2: "Paso 2", t6_d2: "Paga vía WhatsApp. Recibirás un código seguro (ej. 20261231-A4F8B).", t6_p3: "Paso 3", t6_d3: "Vuelve a Ajustes, pega tu código en 'Canjear Código' y la app se volverá VIP.",
                 
                 tag_7: "Tutorial de Seguridad", t7_title: "Generar y Restaurar Respaldos (AES-256)", t7_desc: "Protege tus datos cifrándolos y enviándolos a WhatsApp.",
-                t7_h1: "📤 Cómo Respaldar:", t7_b1_1: "Abre el panel de Ajustes.", t7_b1_2: "Busca la sección 'Respaldo Cifrado'.", t7_b1_3: "Presiona 'Enviar a WhatsApp' y crea una clave secreta.", t7_b1_4: "Guarda el código gigante en tu chat.",
-                t7_h2: "📥 Cómo Restaurar:", t7_b2_1: "Copia el bloque gigante desde tu WhatsApp.", t7_b2_2: "Inicia sesión en la app desde tu nuevo teléfono.", t7_b2_3: "Pega el código en Ajustes y pulsa Restaurar.", t7_b2_4: "Introduce tu clave secreta para descifrar.",
+                t7_h1: "📤 Cómo Respaldar:", t7_b1_1: "Abre el panel de Ajustes.", t7_b1_2: "Busca la sección verde 'Respaldo Cifrado'.", t7_b1_3: "Presiona 'Enviar a WhatsApp' y crea una clave secreta.", t7_b1_4: "Guarda el código gigante en tu chat personal.",
+                t7_h2: "📥 Cómo Restaurar:", t7_b2_1: "Copia el bloque gigante desde tu WhatsApp.", t7_b2_2: "Inicia sesión en la app en tu nuevo teléfono.", t7_b2_3: "Pega el código en Ajustes y pulsa Restaurar.", t7_b2_4: "Introduce tu clave secreta original para descifrar.",
                 
                 tag_8: "Tu Foto de Perfil", t8_title: "Ajustes Globales y Personalización", t8_desc: "Controla cómo se ve y cómo calcula la app.",
-                t8_l1: "<strong>País y Monedas:</strong> Configura hasta 3 monedas distintas.", t8_l2: "<strong>Temas VIP:</strong> 12 estilos visuales creados para ti.", t8_l3: "<strong>Fondos VIP:</strong> Selecciona un color hexadecimal exacto.", t8_l4: "<strong>Textos VIP:</strong> Cambia la tipografía y el color de las letras.",
+                t8_l1: "<strong>País y Monedas:</strong> Configura tu región base y hasta 3 monedas distintas.", t8_l2: "<strong>Temas VIP:</strong> 12 estilos visuales profesionales.", t8_l3: "<strong>Fondos VIP:</strong> Selecciona un color hexadecimal exacto.", t8_l4: "<strong>Textos VIP:</strong> Cambia la tipografía y el color de las letras.",
                 
                 foot_back: "← Volver a la página principal"
             },
@@ -412,39 +413,29 @@
                 t8_l1: "<strong>Country & Currencies:</strong> Set up to 3 different currencies.", t8_l2: "<strong>VIP Themes:</strong> 12 pre-designed visual styles.", t8_l3: "<strong>VIP Backgrounds:</strong> Pick exact hex colors.", t8_l4: "<strong>VIP Fonts:</strong> Change typography and text colors.",
                 
                 foot_back: "← Back to Home Page"
-            }
+            },
+            pt: { nav_title:"Tutorial", nav_home:"← Início", nav_app:"App", hero_title:"Guia Detalhado", hero_sub:"Encontre tudo minuciosamente.", search_ph:"Buscar...", tree_title:"Conteúdos", tree_1:"1. Login", tree_2:"2. Painel", tree_3:"3. Registro", tree_4:"4. Análise", tree_5:"5. Histórico", tree_6:"6. VIP", tree_7:"7. Backups", tree_8:"8. Configurações", tag_1:"Passo 01", t1_title:"Login Seguro", t1_desc:"Autenticação do Google, 100% Local.", t1_l1:"<strong>Botão:</strong> Apenas email e foto.", t1_l2:"<strong>Local:</strong> Sem servidores.", tag_2:"Painel", t2_title:"Painel de Controle", t2_desc:"Visão da economia.", t2_l1:"<strong>Saldo:</strong> Receitas menos despesas.", t2_l2:"<strong>Poupança:</strong> Meta 20%.", t2_l3:"<strong>Fixos:</strong> Casa e serviços.", tag_3:"Botão (+)", t3_title:"Registro", t3_desc:"Manual ou IA.", t3_l1:"<strong>Manual:</strong> Digite e salve.", t3_l2:"<strong>Voz:</strong> Fale seus gastos.", t3_l3:"<strong>Texto IA:</strong> Escreva a frase.", tag_4:"VIP", t4_title:"Análise", t4_desc:"Avalia últimos 7 dias.", t4_l1:"<strong>Cálculo:</strong> Entradas e saídas.", t4_l2:"<strong>Vazamentos:</strong> Maiores gastos.", t4_l3:"<strong>Alertas:</strong> Avisos de gastos.", tag_5:"Lista", t5_title:"Histórico", t5_desc:"Ver transações.", t5_l1:"<strong>Calendário:</strong> Pontos de atividade.", t5_l2:"<strong>Filtros:</strong> Dia, Semana, Mês.", t5_l3:"<strong>Edição:</strong> Apenas 24h.", t6_title:"Ativação VIP", t6_desc:"1. Ver Planos. 2. Pagar WhatsApp. 3. Colar código.", t7_title:"Backups AES", t7_desc:"Criptografe e envie para o WhatsApp.", tag_8:"Perfil", t8_title:"Configurações", t8_desc:"Personalize.", t8_l1:"<strong>Moedas:</strong> Até 3.", t8_l2:"<strong>Temas:</strong> 12 estilos VIP." },
+            fr: { nav_title:"Tutoriel", nav_home:"← Accueil", nav_app:"App", hero_title:"Guide Détaillé", hero_sub:"Trouvez tout en détail.", search_ph:"Recherche...", tree_title:"Contenu", tree_1:"1. Login", tree_2:"2. Dashboard", tree_3:"3. Enregistrer", tree_4:"4. Analyse", tree_5:"5. Historique", tree_6:"6. VIP", tree_7:"7. Backups", tree_8:"8. Paramètres", tag_1:"01", t1_title:"Login", t1_desc:"Local.", t1_l1:"Email", t1_l2:"Local", tag_2:"Dash", t2_title:"Dashboard", t2_desc:"Contrôle.", t2_l1:"Solde", t2_l2:"Épargne", t2_l3:"Fixe", tag_3:"+", t3_title:"Enregistrer", t3_desc:"IA.", t3_l1:"Manuel", t3_l2:"Voix", t3_l3:"Texte", tag_4:"VIP", t4_title:"Analyse", t4_desc:"Fuites.", t4_l1:"Calcul", t4_l2:"Fuites", t4_l3:"Alertes", tag_5:"Liste", t5_title:"Historique", t5_desc:"Calendrier.", t5_l1:"Points", t5_l2:"Filtres", t5_l3:"24h", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES-256", t7_desc:"Sûr.", tag_8:"Profil", t8_title:"Paramètres", t8_desc:"Couleurs.", t8_l1:"Devises", t8_l2:"Thèmes" },
+            de: { nav_title:"Tutorial", nav_home:"← Start", nav_app:"App", hero_title:"Detaillierte Anleitung", hero_sub:"Alles genau finden.", search_ph:"Suchen...", tree_title:"Inhalt", tree_1:"1. Login", tree_2:"2. Dashboard", tree_3:"3. Erfassen", tree_4:"4. Analyse", tree_5:"5. Historie", tree_6:"6. VIP", tree_7:"7. Backups", tree_8:"8. Einstellungen", tag_1:"01", t1_title:"Login", t1_desc:"Lokal.", t1_l1:"Email", t1_l2:"Lokal", tag_2:"Dash", t2_title:"Dashboard", t2_desc:"Kontrolle.", t2_l1:"Saldo", t2_l2:"Sparen", t2_l3:"Fix", tag_3:"+", t3_title:"Erfassen", t3_desc:"KI.", t3_l1:"Manuell", t3_l2:"Stimme", t3_l3:"Text", tag_4:"VIP", t4_title:"Analyse", t4_desc:"Lecks.", t4_l1:"Berechnung", t4_l2:"Lecks", t4_l3:"Alarme", tag_5:"Liste", t5_title:"Historie", t5_desc:"Kalender.", t5_l1:"Punkte", t5_l2:"Filter", t5_l3:"24h", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES-256", t7_desc:"Sicher.", tag_8:"Profil", t8_title:"Einstellungen", t8_desc:"Farben.", t8_l1:"Währung", t8_l2:"Themen" },
+            it: { nav_title:"Tutorial", nav_home:"← Inizio", nav_app:"App", hero_title:"Guida Dettagliata", hero_sub:"Trova tutto nei dettagli.", search_ph:"Cerca...", tree_title:"Contenuti", tree_1:"1. Login", tree_2:"2. Dashboard", tree_3:"3. Registro", tree_4:"4. Analisi", tree_5:"5. Storico", tree_6:"6. VIP", tree_7:"7. Backups", tree_8:"8. Impostazioni", tag_1:"01", t1_title:"Login", t1_desc:"Locale.", t1_l1:"Email", t1_l2:"Locale", tag_2:"Dash", t2_title:"Dashboard", t2_desc:"Controllo.", t2_l1:"Saldo", t2_l2:"Risparmio", t2_l3:"Fissi", tag_3:"+", t3_title:"Registro", t3_desc:"IA.", t3_l1:"Manuale", t3_l2:"Voce", t3_l3:"Testo", tag_4:"VIP", t4_title:"Analisi", t4_desc:"Perdite.", t4_l1:"Calcolo", t4_l2:"Perdite", t4_l3:"Allarmi", tag_5:"Lista", t5_title:"Storico", t5_desc:"Calendario.", t5_l1:"Punti", t5_l2:"Filtri", t5_l3:"24h", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES", t7_desc:"Sicuro.", tag_8:"Profilo", t8_title:"Impostazioni", t8_desc:"Colori.", t8_l1:"Valute", t8_l2:"Temi" },
+            ru: { nav_title:"Туториал", nav_home:"← Домой", nav_app:"App", hero_title:"Подробный Гид", hero_sub:"Найдите всё детально.", search_ph:"Поиск...", tree_title:"Содержание", tree_1:"1. Вход", tree_2:"2. Панель", tree_3:"3. Запись", tree_4:"4. Анализ", tree_5:"5. История", tree_6:"6. VIP", tree_7:"7. Бэкап", tree_8:"8. Настройки", tag_1:"01", t1_title:"Вход", t1_desc:"Локально.", t1_l1:"Почта", t1_l2:"Локально", tag_2:"Dash", t2_title:"Панель", t2_desc:"Контроль.", t2_l1:"Баланс", t2_l2:"Копилка", t2_l3:"Фикс", tag_3:"+", t3_title:"Запись", t3_desc:"ИИ.", t3_l1:"Ручная", t3_l2:"Голос", t3_l3:"Текст", tag_4:"VIP", t4_title:"Анализ", t4_desc:"Утечки.", t4_l1:"Расчет", t4_l2:"Утечки", t4_l3:"Тревоги", tag_5:"Список", t5_title:"История", t5_desc:"Календарь.", t5_l1:"Точки", t5_l2:"Фильтры", t5_l3:"24ч", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES", t7_desc:"Безопасно.", tag_8:"Профиль", t8_title:"Настройки", t8_desc:"Цвета.", t8_l1:"Валюты", t8_l2:"Темы" },
+            zh: { nav_title:"教程", nav_home:"← 首页", nav_app:"App", hero_title:"详细指南", hero_sub:"查找所有细节。", search_ph:"搜索...", tree_title:"内容", tree_1:"1. 登录", tree_2:"2. 面板", tree_3:"3. 记录", tree_4:"4. 分析", tree_5:"5. 历史", tree_6:"6. VIP", tree_7:"7. 备份", tree_8:"8. 设置", tag_1:"01", t1_title:"登录", t1_desc:"本地。", t1_l1:"邮箱", t1_l2:"本地", tag_2:"Dash", t2_title:"面板", t2_desc:"控制。", t2_l1:"余额", t2_l2:"储蓄", t2_l3:"固定", tag_3:"+", t3_title:"记录", t3_desc:"AI。", t3_l1:"手动", t3_l2:"语音", t3_l3:"文本", tag_4:"VIP", t4_title:"分析", t4_desc:"泄漏。", t4_l1:"计算", t4_l2:"泄漏", t4_l3:"警报", tag_5:"列表", t5_title:"历史", t5_desc:"日历。", t5_l1:"点", t5_l2:"过滤器", t5_l3:"24小时", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES", t7_desc:"安全。", tag_8:"简介", t8_title:"设置", t8_desc:"颜色。", t8_l1:"货币", t8_l2:"主题" },
+            ja: { nav_title:"チュートリアル", nav_home:"← ホーム", nav_app:"アプリ", hero_title:"詳細ガイド", hero_sub:"詳細を検索。", search_ph:"検索...", tree_title:"内容", tree_1:"1. ログイン", tree_2:"2. パネル", tree_3:"3. 記録", tree_4:"4. 分析", tree_5:"5. 履歴", tree_6:"6. VIP", tree_7:"7. バックアップ", tree_8:"8. 設定", tag_1:"01", t1_title:"ログイン", t1_desc:"ローカル。", t1_l1:"メール", t1_l2:"ローカル", tag_2:"Dash", t2_title:"パネル", t2_desc:"コントロール。", t2_l1:"残高", t2_l2:"貯蓄", t2_l3:"固定", tag_3:"+", t3_title:"記録", t3_desc:"AI。", t3_l1:"手動", t3_l2:"音声", t3_l3:"テキスト", tag_4:"VIP", t4_title:"分析", t4_desc:"漏れ。", t4_l1:"計算", t4_l2:"漏れ", t4_l3:"アラート", tag_5:"リスト", t5_title:"履歴", t5_desc:"カレンダー。", t5_l1:"ドット", t5_l2:"フィルター", t5_l3:"24時間", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES", t7_desc:"安全。", tag_8:"プロフィール", t8_title:"設定", t8_desc:"色。", t8_l1:"通貨", t8_l2:"テーマ" },
+            ar: { nav_title:"دليل", nav_home:"← الرئيسية", nav_app:"تطبيق", hero_title:"دليل مفصل", hero_sub:"ابحث عن كل التفاصيل.", search_ph:"بحث...", tree_title:"المحتويات", tree_1:"1. دخول", tree_2:"2. لوحة", tree_3:"3. تسجيل", tree_4:"4. تحليل", tree_5:"5. سجل", tree_6:"6. VIP", tree_7:"7. نسخ", tree_8:"8. إعدادات", tag_1:"01", t1_title:"دخول", t1_desc:"محلي.", t1_l1:"بريد", t1_l2:"محلي", tag_2:"Dash", t2_title:"لوحة", t2_desc:"تحكم.", t2_l1:"رصيد", t2_l2:"توفير", t2_l3:"ثابت", tag_3:"+", t3_title:"تسجيل", t3_desc:"ذكاء.", t3_l1:"يدوي", t3_l2:"صوت", t3_l3:"نص", tag_4:"VIP", t4_title:"تحليل", t4_desc:"تسريب.", t4_l1:"حساب", t4_l2:"تسريب", t4_l3:"تنبيه", tag_5:"قائمة", t5_title:"سجل", t5_desc:"تقويم.", t5_l1:"نقاط", t5_l2:"فلاتر", t5_l3:"24س", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES", t7_desc:"آمن.", t8_title:"إعدادات", t8_desc:"ألوان." }
         };
 
         window.onload = () => {
-            const savedLang = localStorage.getItem('billetera_web_lang') || 'es';
-            const safeLang = i18n[savedLang] ? savedLang : 'es';
-            
+            const savedLang = localStorage.getItem('billetera_web_lang') || 'es'; const safeLang = i18n[savedLang] ? savedLang : 'en';
             document.getElementById('html-tag').lang = safeLang;
-            if(safeLang === 'ar') document.body.setAttribute('dir', 'rtl'); else document.body.setAttribute('dir', 'ltr');
-
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if(i18n[safeLang][key]) el.innerHTML = i18n[safeLang][key];
-            });
-
-            const searchBox = document.getElementById('searchBox');
-            if(searchBox) {
-                const phKey = searchBox.getAttribute('data-i18n-ph');
-                if(i18n[safeLang][phKey]) searchBox.placeholder = i18n[safeLang][phKey];
-            }
+            if(safeLang === 'ar') document.body.setAttribute('dir', 'rtl');
+            document.querySelectorAll('[data-i18n]').forEach(el => { if(i18n[safeLang][el.getAttribute('data-i18n')]) el.innerHTML = i18n[safeLang][el.getAttribute('data-i18n')]; });
+            if(document.getElementById('searchBox')) document.getElementById('searchBox').placeholder = i18n[safeLang].search_ph;
         };
 
         function filterTutorial() {
-            let input = document.getElementById('searchBox').value.toLowerCase();
-            let items = document.getElementsByClassName('search-item');
+            let input = document.getElementById('searchBox').value.toLowerCase(); let items = document.getElementsByClassName('search-item');
             for (let i = 0; i < items.length; i++) {
-                let keywords = items[i].getAttribute('data-keywords').toLowerCase();
-                let text = items[i].innerText.toLowerCase();
-                if (keywords.includes(input) || text.includes(input)) {
-                    items[i].style.display = "block";
-                } else {
-                    items[i].style.display = "none";
-                }
+                if (items[i].getAttribute('data-keywords').toLowerCase().includes(input) || items[i].innerText.toLowerCase().includes(input)) items[i].style.display = "block"; else items[i].style.display = "none";
             }
         }
     </script>
