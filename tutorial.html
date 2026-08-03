@@ -5,120 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutorial Detallado y Guía de Uso - Mi Billetera</title>
     
-    <!-- FAVICON (Unificado) -->
-    <link rel="icon" href="favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="favicon.png">
+    <!-- FAVICON (SVG Integrado Original) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMzYjgyZjYiLz48cGF0aCBkPSJNNDQgMTRjNiA0IDggMTIgNCAxOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwb2x5Z29uIHBvaW50cz0iNDgsMTIgNDMsMTYgNTAsMTYiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTIgMjhoNDB2MjBhNCA0IDAgMCAxLTQgNGgtMzJhNCA0IDAgMCAxLTQtNHoiIGZpbGw9IiMwZWE1ZTkiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTEyIDI4YTQgNCAwIDAgMSA0LTRoMzJhNCA0IDAgMCAxIDQgNHY2aC00MHoiIGZpbGw9IiMzOGJkZjgiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iMjYiIGN5PSI0MiIgcj0iMyIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+    
     <script>
         tailwind.config = {
             theme: {
-                extend: {
-                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
-                    colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', success: '#10b981', warning: '#eab308' }
-                }
+                extend: { fontFamily: { sans: ['Outfit', 'sans-serif'] }, colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', success: '#10b981', warning: '#eab308' } }
             }
         }
     </script>
     <style>
         body { background-color: #111111; color: #ffffff; scroll-behavior: smooth; }
         .gradient-text { background: linear-gradient(to right, #3b82f6, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .tutorial-card { transition: all 0.3s ease; }
-        .tutorial-card:hover { border-color: #3b82f6; transform: translateY(-2px); }
-        
-        /* Mockup de Celular Estilo Pixel Avanzado */
-        .phone-mockup {
-            border: 8px solid #1c1c1e;
-            border-radius: 2.8rem;
-            position: relative;
-            background-color: #1c1c1e;
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8), 0 0 40px rgba(59, 130, 246, 0.15);
-        }
-        .phone-notch {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 14px;
-            height: 14px;
-            background-color: #000000;
-            border-radius: 50%;
-            z-index: 30;
-        }
-        .phone-screen {
-            background-color: #1e1e1e;
-            border-radius: 2.2rem;
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
+        .tutorial-card { transition: all 0.3s ease; } .tutorial-card:hover { border-color: #3b82f6; transform: translateY(-2px); }
+        .phone-mockup { border: 8px solid #1c1c1e; border-radius: 2.8rem; position: relative; background-color: #1c1c1e; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.8); }
+        .phone-notch { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 14px; height: 14px; background-color: #000000; border-radius: 50%; z-index: 30; }
+        .phone-screen { background-color: #1e1e1e; border-radius: 2.2rem; overflow: hidden; width: 100%; height: 100%; position: relative; }
         [dir="rtl"] { text-align: right; }
     </style>
 </head>
 <body class="font-sans antialiased" dir="ltr">
 
-    <!-- BARRA DE NAVEGACIÓN -->
+    <!-- NAV -->
     <nav class="fixed w-full top-0 z-50 bg-[#111111]/90 backdrop-blur-md border-b border-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-md">
-                        <svg viewBox="0 0 64 64" class="w-5 h-5"><path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" stroke-width="3" stroke-linejoin="round"/><path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" stroke-width="3" stroke-linejoin="round"/><circle cx="26" cy="42" r="2" fill="#0f172a"/></svg>
-                    </div>
-                    <span class="font-bold text-lg tracking-wide hidden sm:block" data-i18n="nav_title">Mi Billetera - Guía Definitiva</span>
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-md"><svg viewBox="0 0 64 64" class="w-5 h-5"><path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" stroke-width="3"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" stroke-width="3"/><path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" stroke-width="3"/><circle cx="26" cy="42" r="2" fill="#0f172a"/></svg></div>
+                    <span class="font-bold text-lg hidden sm:block" data-i18n="nav_title">Mi Billetera - Tutorial</span>
                 </a>
             </div>
-            <div class="flex items-center gap-4">
+            
+            <div class="flex gap-4 md:gap-6 text-xs md:text-sm font-medium text-secondary items-center">
                 <a href="index.html" class="text-sm text-secondary hover:text-white transition" data-i18n="nav_home">← Inicio</a>
-                <a href="app.html" class="bg-accent text-white px-4 py-2 rounded-xl font-bold text-sm shadow-md" data-i18n="nav_app">Abrir App</a>
+                <!-- SELECTOR DE PAÍS GLOBAL -->
+                <div class="flex items-center gap-1.5 bg-[#1e1e1e] border border-[#27272a] rounded-lg px-2 py-1 hover:border-accent transition-colors">
+                    <svg class="w-3.5 h-3.5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+                    <select id="countrySwitcher" onchange="updateLocalization(this.value)" class="bg-transparent text-white text-xs outline-none cursor-pointer w-20 sm:w-auto overflow-hidden text-ellipsis whitespace-nowrap"></select>
+                </div>
+                <a href="app.html" class="bg-accent text-white px-4 md:px-5 py-2 rounded-xl font-bold text-xs md:text-sm hover:scale-105 transition-transform shadow-md" data-i18n="nav_app">Abrir App</a>
             </div>
         </div>
     </nav>
 
-    <!-- ENCABEZADO Y BUSCADOR -->
-    <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto">
-        <h1 class="text-3xl sm:text-5xl font-extrabold mb-4" data-i18n="hero_title">Tutorial Minucioso y <br><span class="gradient-text">Manual de Uso</span></h1>
-        <p class="text-secondary text-base sm:text-lg mb-8" data-i18n="hero_sub">Encuentra al instante cualquier pantalla, opción de configuración o proceso detallado.</p>
-        
+    <!-- HEADER & SEARCH -->
+    <header class="pt-32 pb-10 px-4 text-center max-w-4xl mx-auto">
+        <h1 class="text-3xl sm:text-5xl font-extrabold mb-4" id="hero-title">Tutorial Minucioso y <br><span class="gradient-text">Manual de Uso</span></h1>
+        <p class="text-secondary mb-8 text-lg" data-i18n="hero_sub">Encuentra al instante cualquier pantalla, opción de configuración o proceso detallado.</p>
         <div class="relative max-w-xl mx-auto">
-            <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-secondary">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            </span>
-            <input type="text" id="searchBox" onkeyup="filterTutorial()" data-i18n-ph="search_ph" placeholder="Busca una función (ej: VIP, Respaldo, Voz...)" class="w-full pl-12 pr-4 py-3.5 bg-card border border-border rounded-2xl text-white outline-none focus:border-accent text-sm md:text-base shadow-xl">
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-secondary"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+            <input type="text" id="searchBox" onkeyup="filterTutorial()" data-i18n-ph="search_ph" placeholder="Busca una función (ej: VIP, Respaldo, Voz...)" class="w-full pl-12 pr-4 py-3.5 bg-card border border-border rounded-xl text-white outline-none shadow-xl">
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-12">
-
-        <!-- ÁRBOL DE CONTENIDOS -->
+    <!-- MAIN -->
+    <main class="max-w-5xl mx-auto px-4 pb-24 space-y-12">
         <section class="bg-card/60 border border-border rounded-3xl p-6 sm:p-8 backdrop-blur-md">
-            <h2 class="text-lg font-bold mb-4 text-accent flex items-center gap-2">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
-                <span data-i18n="tree_title">Árbol de Contenidos del Tutorial</span>
-            </h2>
+            <h2 class="text-lg font-bold mb-4 text-accent flex items-center gap-2"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg> <span data-i18n="tree_title">Árbol de Contenidos del Tutorial</span></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-secondary">
                 <ul class="space-y-2 border-l-2 border-border pl-4">
-                    <li><a href="#sec-login" class="hover:text-white transition" data-i18n="tree_1">1. Inicio de Sesión (Google)</a></li>
-                    <li><a href="#sec-dashboard" class="hover:text-white transition" data-i18n="tree_2">2. Panel Principal / Dashboard</a></li>
-                    <li><a href="#sec-registrar" class="hover:text-white transition" data-i18n="tree_3">3. Módulo de Registro (Manual e IA)</a></li>
-                    <li><a href="#sec-analisis" class="hover:text-white transition" data-i18n="tree_4">4. Análisis Inteligente de IA</a></li>
+                    <li><a href="#sec-login" class="hover:text-white" data-i18n="tree_1">1. Inicio de Sesión (Google)</a></li>
+                    <li><a href="#sec-dashboard" class="hover:text-white" data-i18n="tree_2">2. Panel Principal / Dashboard</a></li>
+                    <li><a href="#sec-registrar" class="hover:text-white" data-i18n="tree_3">3. Módulo de Registro (Manual e IA)</a></li>
+                    <li><a href="#sec-analisis" class="hover:text-white" data-i18n="tree_4">4. Análisis Inteligente de IA</a></li>
                 </ul>
                 <ul class="space-y-2 border-l-2 border-border pl-4">
-                    <li><a href="#sec-historial" class="hover:text-white transition" data-i18n="tree_5">5. Historial y Calendario</a></li>
-                    <li><a href="#sec-vip" class="hover:text-white transition" data-i18n="tree_6">6. Guía: Activar Cuenta VIP</a></li>
-                    <li><a href="#sec-backup" class="hover:text-white transition" data-i18n="tree_7">7. Guía: Respaldos (AES-256)</a></li>
-                    <li><a href="#sec-ajustes" class="hover:text-white transition" data-i18n="tree_8">8. Ajustes y Personalización</a></li>
+                    <li><a href="#sec-historial" class="hover:text-white" data-i18n="tree_5">5. Historial y Calendario</a></li>
+                    <li><a href="#sec-vip" class="hover:text-white" data-i18n="tree_6">6. Guía: Activar Cuenta VIP</a></li>
+                    <li><a href="#sec-backup" class="hover:text-white" data-i18n="tree_7">7. Guía: Respaldos (AES-256)</a></li>
+                    <li><a href="#sec-ajustes" class="hover:text-white" data-i18n="tree_8">8. Ajustes y Personalización</a></li>
                 </ul>
             </div>
         </section>
 
-        <!-- SECCIONES DETALLADAS -->
+        <!-- SECTIONS -->
         <div id="tutorial-container" class="space-y-10">
-
             <!-- 1. LOGIN -->
             <div id="sec-login" class="tutorial-card bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl search-item" data-keywords="login google inicio de sesion cuenta acceso paso1">
                 <div class="flex flex-col md:flex-row gap-8 items-center">
@@ -133,12 +98,7 @@
                     </div>
                     <div class="w-full md:w-1/2 flex justify-center relative">
                         <div class="absolute w-40 h-40 bg-blue-600/20 blur-[80px] rounded-full pointer-events-none"></div>
-                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
-                            <div class="phone-notch"></div>
-                            <div class="phone-screen">
-                                <img src="paso1.png" alt="Login" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
-                            </div>
-                        </div>
+                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10"><div class="phone-notch"></div><div class="phone-screen"><img src="paso1.png" alt="Login" class="w-full h-full object-cover object-top" onerror="this.style.display='none'"></div></div>
                     </div>
                 </div>
             </div>
@@ -153,18 +113,13 @@
                         <ul class="text-sm space-y-3 text-secondary border-l-2 border-border pl-4">
                             <li data-i18n="t2_l1"><strong>Pestañas de Moneda:</strong> Cambia de billetera instantáneamente en la barra superior.</li>
                             <li data-i18n="t2_l2"><strong>Saldo Total:</strong> La resta exacta entre todos tus ingresos menos tus gastos.</li>
-                            <li data-i18n="t2_l3"><strong>Barra de Ahorro:</strong> Mide tu progreso para alcanzar la meta sugerida del 20%.</li>
-                            <li data-i18n="t2_l4"><strong>Gastos Fijos:</strong> Suma automáticamente todo lo categorizado como "Vivienda" y "Servicios".</li>
+                            <li data-i18n="t2_l3"><strong>Barra de Ahorro:</strong> Mide tu progreso para alcançar a meta do 20%.</li>
+                            <li data-i18n="t2_l4"><strong>Gastos Fijos:</strong> Suma automaticamente tudo que é categorizado como Moradia e Serviços.</li>
                         </ul>
                     </div>
                     <div class="w-full md:w-1/2 flex justify-center relative">
                         <div class="absolute w-40 h-40 bg-emerald-600/20 blur-[80px] rounded-full pointer-events-none"></div>
-                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
-                            <div class="phone-notch"></div>
-                            <div class="phone-screen">
-                                <img src="portada.png" alt="Dashboard" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
-                            </div>
-                        </div>
+                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10"><div class="phone-notch"></div><div class="phone-screen"><img src="portada.png" alt="Dashboard" class="w-full h-full object-cover object-top" onerror="this.style.display='none'"></div></div>
                     </div>
                 </div>
             </div>
@@ -184,12 +139,7 @@
                     </div>
                     <div class="w-full md:w-1/2 flex justify-center relative">
                         <div class="absolute w-40 h-40 bg-yellow-600/20 blur-[80px] rounded-full pointer-events-none"></div>
-                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
-                            <div class="phone-notch"></div>
-                            <div class="phone-screen">
-                                <img src="paso2.png" alt="Registrar" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
-                            </div>
-                        </div>
+                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10"><div class="phone-notch"></div><div class="phone-screen"><img src="paso2.png" alt="Registrar" class="w-full h-full object-cover object-top" onerror="this.style.display='none'"></div></div>
                     </div>
                 </div>
             </div>
@@ -210,12 +160,7 @@
                     </div>
                     <div class="w-full md:w-1/2 flex justify-center relative">
                         <div class="absolute w-40 h-40 bg-orange-500/20 blur-[80px] rounded-full pointer-events-none"></div>
-                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
-                            <div class="phone-notch"></div>
-                            <div class="phone-screen">
-                                <img src="analisis.png" alt="Análisis IA" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
-                            </div>
-                        </div>
+                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10"><div class="phone-notch"></div><div class="phone-screen"><img src="analisis.png" alt="Análisis IA" class="w-full h-full object-cover object-top" onerror="this.style.display='none'"></div></div>
                     </div>
                 </div>
             </div>
@@ -229,18 +174,13 @@
                         <p class="text-secondary text-sm leading-relaxed" data-i18n="t5_desc">Aquí es donde navegas por el tiempo para ver en qué gastaste hace días, semanas o meses.</p>
                         <ul class="text-sm space-y-3 text-secondary border-l-2 border-border pl-4">
                             <li data-i18n="t5_l1"><strong>Puntos en el Calendario:</strong> Cada día que registres un movimiento, aparecerá un punto de color bajo ese número en el calendario.</li>
-                            <li data-i18n="t5_l2"><strong>Filtros (Diario/Semanal/Mensual):</strong> Usa los botones debajo del calendario para agrupar los datos.</li>
+                            <li data-i18n="t5_l2"><strong>Filtros Temporales:</strong> Agrupa la lista inferior por Día, Semana o Mes.</li>
                             <li data-i18n="t5_l3"><strong>Edición de 24 horas:</strong> Modifica registros usando el lápiz (solo transacciones recientes por seguridad contable).</li>
                         </ul>
                     </div>
                     <div class="w-full md:w-1/2 flex justify-center relative">
                         <div class="absolute w-40 h-40 bg-teal-500/20 blur-[80px] rounded-full pointer-events-none"></div>
-                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
-                            <div class="phone-notch"></div>
-                            <div class="phone-screen">
-                                <img src="historial.png" alt="Historial" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
-                            </div>
-                        </div>
+                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10"><div class="phone-notch"></div><div class="phone-screen"><img src="historial.png" alt="Historial" class="w-full h-full object-cover object-top" onerror="this.style.display='none'"></div></div>
                     </div>
                 </div>
             </div>
@@ -252,7 +192,7 @@
                         <span class="bg-warning text-black text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider" data-i18n="tag_6">Tutorial de Activación</span>
                         <h2 class="text-2xl sm:text-3xl font-bold text-warning" data-i18n="t6_title">Cómo Activar tu Cuenta VIP</h2>
                     </div>
-                    <p class="text-secondary text-sm leading-relaxed" data-i18n="t6_desc">Sigue estos pasos para obtener acceso a la IA, colores ilimitados y análisis avanzado.</p>
+                    <p class="text-secondary text-sm leading-relaxed" data-i18n="t6_desc">Sigue estos pasos para obtener acesso a la IA, colores ilimitados y análisis avanzado.</p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                         <div class="bg-bg p-5 rounded-2xl border border-border">
@@ -319,12 +259,7 @@
                     </div>
                     <div class="w-full md:w-1/2 flex justify-center relative">
                         <div class="absolute w-40 h-40 bg-purple-600/20 blur-[80px] rounded-full pointer-events-none"></div>
-                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10">
-                            <div class="phone-notch"></div>
-                            <div class="phone-screen">
-                                <img src="ajustes.png" alt="Ajustes App" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
-                            </div>
-                        </div>
+                        <div class="phone-mockup w-full max-w-[220px] aspect-[9/19] z-10"><div class="phone-notch"></div><div class="phone-screen"><img src="ajustes.png" alt="Ajustes App" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='"></div></div>
                     </div>
                 </div>
             </div>
@@ -335,107 +270,248 @@
 
     <!-- FOOTER -->
     <footer class="bg-card border-t border-border py-10 px-4 text-center">
-        <p class="text-secondary text-sm">Mi Billetera &copy; 2026 — Todos los derechos reservados.</p>
-        <div class="mt-4">
-            <a href="index.html" class="text-accent hover:underline text-sm font-semibold" data-i18n="foot_back">← Volver a la página principal</a>
-        </div>
+        <p class="text-secondary text-sm mb-4">Mi Billetera &copy; 2026 — Todos los derechos reservados.</p>
+        <a href="index.html" class="text-accent hover:underline text-sm font-semibold" data-i18n="foot_back">← Volver a la página principal</a>
     </footer>
 
-    <!-- SCRIPT DE IDIOMAS Y BUSCADOR -->
+    <!-- LÓGICA DE IDIOMAS Y BUSCADOR (Textos completos en 7 Idiomas) -->
     <script>
+        const RAW_COUNTRIES = "Alemania|EUR|de,Argentina|ARS|es,Australia|AUD|en,Brasil|BRL|pt,Canadá|CAD|en,Chile|CLP|es,Colombia|COP|es,España|EUR|es,Estados Unidos|USD|en,Francia|EUR|fr,Italia|EUR|it,Japón|JPY|ja,México|MXN|es,Perú|PEN|es,Reino Unido|GBP|en,Suiza|CHF|de";
+        const COUNTRIES = RAW_COUNTRIES.split(',').map(item => { const [name, curr, lang] = item.split('|'); return { name, defaultCurr: curr, lang }; });
+        
         const i18n = {
             es: {
-                nav_title: "Mi Billetera - Guía Definitiva", nav_home: "← Inicio", nav_app: "Abrir App",
+                page_title: "Tutorial Detallado y Guía de Uso - Mi Billetera", nav_title: "Mi Billetera - Guía Definitiva", nav_home: "← Inicio", nav_app: "Abrir App",
                 hero_title: "Tutorial Minucioso y <br><span class='gradient-text'>Manual de Uso</span>",
                 hero_sub: "Encuentra al instante cualquier pantalla, opción de configuración o proceso detallado.", search_ph: "Busca una función (ej: VIP, Respaldo, Voz...)",
                 tree_title: "Árbol de Contenidos del Tutorial",
                 tree_1: "1. Inicio de Sesión (Google)", tree_2: "2. Panel Principal / Dashboard", tree_3: "3. Módulo de Registro (Manual e IA)", tree_4: "4. Análisis Inteligente de IA",
                 tree_5: "5. Historial y Calendario", tree_6: "6. Guía: Activar Cuenta VIP", tree_7: "7. Guía: Respaldos (AES-256)", tree_8: "8. Ajustes y Personalización",
-                
                 tag_1: "Pantalla 01", t1_title: "Inicio de Sesión Seguro", t1_desc: "La aplicación no utiliza contraseñas tradicionales vulnerables. Funciona exclusivamente con la infraestructura de autenticación de Google.",
                 t1_l1: "<strong>Botón Continuar con Google:</strong> Al hacer clic, Google verifica tu identidad y nos proporciona únicamente tu correo y foto de perfil.", t1_l2: "<strong>Datos Locales:</strong> Al acceder, la app crea una base de datos interna en la memoria de tu celular. Ningún registro viaja por internet.",
-                
                 tag_2: "Pantalla Principal", t2_title: "Panel de Control (Dashboard)", t2_desc: "Aquí obtienes una radiografía inmediata de tu economía. Todo se recalcula en tiempo real.",
-                t2_l1: "<strong>Pestañas de Moneda:</strong> Cambia de billetera instantáneamente en la barra superior.", t2_l2: "<strong>Saldo Total:</strong> La resta exacta entre ingresos y gastos.", t2_l3: "<strong>Barra de Ahorro:</strong> Mide tu progreso para alcanzar el 20%.", t2_l4: "<strong>Gastos Fijos:</strong> Suma lo categorizado como Vivienda y Servicios.",
-                
+                t2_l1: "<strong>Pestañas de Moneda:</strong> Cambia de billetera instantáneamente en la barra superior.", t2_l2: "<strong>Saldo Total:</strong> La resta exacta entre ingresos y gastos.", t2_l3: "<strong>Barra de Ahorro:</strong> Mide tu progreso para alcanzar la meta sugerida del 20%.", t2_l4: "<strong>Gastos Fijos:</strong> Suma automáticamente todo lo categorizado como 'Vivienda' y 'Servicios'.",
                 tag_3: "Botón Central (+)", t3_title: "Registro de Movimientos", t3_desc: "Tienes dos formas de ingresar dinero: la tradicional (Manual) o la automatizada (IA).",
-                t3_l1: "<strong>Registro Manual:</strong> Selecciona Gasto/Ingreso, escribe el número y elige categoría.", t3_l2: "<strong>Registro por Voz (VIP):</strong> Presiona el micrófono y di tu gasto naturalmente.", t3_l3: "<strong>Análisis de Texto:</strong> Escribe la oración y la IA clasificará todo automáticamente.",
-                
+                t3_l1: "<strong>Registro Manual:</strong> Selecciona el botón Gasto (Rojo) o Ingreso (Verde). Escribe el número exacto, despliega la lista de categorías y presiona Guardar.", t3_l2: "<strong>Registro Inteligente (IA):</strong> Requiere cuenta VIP. Presiona el micrófono y di 'Me pagaron 50 dólares de sueldo'. La IA detectará que es un Ingreso, el monto (50) y la categoría (Salario).", t3_l3: "<strong>Análisis de Texto:</strong> Si no puedes hablar, escribe la oración natural en la pestaña 'Texto' y la IA hará el mismo trabajo de clasificación.",
                 tag_4: "Módulo VIP", t4_title: "Análisis Semanal IA", t4_desc: "Tu asesor financiero personal. Este módulo evalúa matemáticamente tus últimos 7 días.",
-                t4_l1: "<strong>Cálculo Automático:</strong> Muestra cuánto ingresó y salió en la semana.", t4_l2: "<strong>Botón Analizar:</strong> Genera un reporte instantáneo.", t4_l3: "<strong>Detección de Fugas:</strong> Identifica en qué categoría gastaste de más.", t4_l4: "<strong>Alertas Rojas:</strong> Advierte si gastas más de lo que ganas.",
-                
-                tag_5: "Icono de Lista", t5_title: "Historial y Calendario", t5_desc: "Aquí navegas por el tiempo para ver tus transacciones pasadas.",
-                t5_l1: "<strong>Puntos en el Calendario:</strong> Indican días con actividad financiera.", t5_l2: "<strong>Filtros Temporales:</strong> Agrupa la lista inferior por Día, Semana o Mes.", t5_l3: "<strong>Edición de 24 horas:</strong> Modifica registros usando el lápiz (solo transacciones recientes).",
-                
+                t4_l1: "<strong>Cálculo Automático:</strong> Muestra exactamente cuánto ingresó y salió en la semana actual.", t4_l2: "<strong>Botón 'Analizar':</strong> Al pulsarlo, el algoritmo genera un reporte en viñetas.", t4_l3: "<strong>Detección de Fugas:</strong> Te dirá explícitamente en qué categoría gastaste más dinero.", t4_l4: "<strong>Alertas Rojas:</strong> Si tus gastos superan a tus ingresos, la IA emitirá una advertencia crítica para que detengas las compras.",
+                tag_5: "Icono de Lista", t5_title: "Historial y Calendario", t5_desc: "Aquí es donde navegas por el tiempo para ver en qué gastaste hace días, semanas o meses.",
+                t5_l1: "<strong>Puntos en el Calendario:</strong> Cada día que registres un movimiento, aparecerá un punto de color bajo ese número en el calendario.", t5_l2: "<strong>Filtros Temporales:</strong> Usa los botones debajo del calendario para agrupar los datos por Día, Semana o Mes.", t5_l3: "<strong>Edición de 24 horas:</strong> Modifica registros usando el lápiz (solo transacciones recientes por seguridad contable).",
                 tag_6: "Tutorial de Activación", t6_title: "Cómo Activar tu Cuenta VIP", t6_desc: "Sigue estos pasos para obtener acceso a la IA, colores ilimitados y análisis avanzado.",
-                t6_p1: "Paso 1", t6_d1: "Toca tu foto de perfil y haz clic en 'Ver Planes' o en el banner amarillo de renovación.", t6_p2: "Paso 2", t6_d2: "Paga vía WhatsApp. Recibirás un código seguro (ej. 20261231-A4F8B).", t6_p3: "Paso 3", t6_d3: "Vuelve a Ajustes, pega tu código en 'Canjear Código' y la app se volverá VIP.",
-                
-                tag_7: "Tutorial de Seguridad", t7_title: "Generar y Restaurar Respaldos (AES-256)", t7_desc: "Protege tus datos cifrándolos y enviándolos a WhatsApp.",
-                t7_h1: "📤 Cómo Respaldar:", t7_b1_1: "Abre el panel de Ajustes.", t7_b1_2: "Busca la sección verde 'Respaldo Cifrado'.", t7_b1_3: "Presiona 'Enviar a WhatsApp' y crea una clave secreta.", t7_b1_4: "Guarda el código gigante en tu chat personal.",
-                t7_h2: "📥 Cómo Restaurar:", t7_b2_1: "Copia el bloque gigante desde tu WhatsApp.", t7_b2_2: "Inicia sesión en la app en tu nuevo teléfono.", t7_b2_3: "Pega el código en Ajustes y pulsa Restaurar.", t7_b2_4: "Introduce tu clave secreta original para descifrar.",
-                
-                tag_8: "Tu Foto de Perfil", t8_title: "Ajustes Globales y Personalización", t8_desc: "Controla cómo se ve y cómo calcula la app.",
-                t8_l1: "<strong>País y Monedas:</strong> Configura tu región base y hasta 3 monedas distintas.", t8_l2: "<strong>Temas VIP:</strong> 12 estilos visuales profesionales.", t8_l3: "<strong>Fondos VIP:</strong> Selecciona un color hexadecimal exacto.", t8_l4: "<strong>Textos VIP:</strong> Cambia la tipografía y el color de las letras.",
-                
+                t6_p1: "Paso 1", t6_d1: "Toca tu foto de perfil (Ajustes) y haz clic en el banner 'Ver Planes' o en el banner amarillo de renovación.", t6_p2: "Paso 2", t6_d2: "Serás redirigido a WhatsApp. Solicita tu plan y realiza el pago. Recibirás un código seguro (ej. 20261231-A4F8B).", t6_p3: "Paso 3", t6_d3: "Vuelve a los Ajustes de la App, pega tu código en 'Canjear Código' y la app se reiniciará en modo VIP automáticamente.",
+                tag_7: "Tutorial de Seguridad", t7_title: "Generar y Restaurar Respaldos (AES-256)", t7_desc: "Si cambias de teléfono o borras el navegador, necesitas tu información. Como no usamos servidores para espiarte, tú mismo guardas tu copia de seguridad cifrada.",
+                t7_h1: "📤 Cómo Respaldar (Guardar Datos):", t7_b1_1: "Abre el panel de Ajustes.", t7_b1_2: "Busca la sección verde 'Respaldo Cifrado'.", t7_b1_3: "Presiona 'Enviar a WhatsApp' y crea una clave secreta.", t7_b1_4: "Guarda el bloque de código gigante en tu chat personal.",
+                t7_h2: "📥 Cómo Restaurar (Recuperar Datos):", t7_b2_1: "Copia el bloque gigante desde tu WhatsApp.", t7_b2_2: "Inicia sesión en la app desde tu nuevo teléfono con el mismo Google.", t7_b2_3: "Pega el código en Ajustes y pulsa Restaurar.", t7_b2_4: "Introduce tu clave secreta original para descifrar todo.",
+                tag_8: "Tu Foto de Perfil", t8_title: "Ajustes Globales y Personalización", t8_desc: "El engranaje detrás de la app. Aquí controlas cómo se ve y cómo calcula la app.",
+                t8_l1: "<strong>País y Monedas:</strong> Configura tu región base y hasta 3 monedas distintas (ideal para separar ahorros en dólares).", t8_l2: "<strong>Temas VIP (Pestaña 1):</strong> Selecciona con un clic entre 12 estilos visuales profesionales.", t8_l3: "<strong>Fondos VIP (Pestaña 2):</strong> Selecciona un color hexadecimal exacto para tu fondo o el color de tus tarjetas.", t8_l4: "<strong>Textos VIP (Pestaña 3):</strong> Cambia la tipografía de la app y el color de tus letras.",
                 foot_back: "← Volver a la página principal"
             },
             en: {
-                nav_title: "Mi Billetera - Ultimate Guide", nav_home: "← Home", nav_app: "Open App",
+                page_title: "Detailed Tutorial and User Guide - Mi Billetera", nav_title: "Mi Billetera - Ultimate Guide", nav_home: "← Home", nav_app: "Open App",
                 hero_title: "Detailed Tutorial and <br><span class='gradient-text'>User Manual</span>",
                 hero_sub: "Instantly find any screen, configuration option, or detailed process.", search_ph: "Search for a feature (e.g., VIP, Backup, Voice...)",
-                tree_title: "Tutorial Table of Contents",
-                tree_1: "1. Google Login", tree_2: "2. Main Dashboard", tree_3: "3. Registration Module (Manual & AI)", tree_4: "4. Smart AI Analysis",
-                tree_5: "5. History and Calendar", tree_6: "6. Guide: Activate VIP Account", tree_7: "7. Guide: Backups (AES-256)", tree_8: "8. Settings & Customization",
-                
-                tag_1: "Screen 01", t1_title: "Secure Login", t1_desc: "The app uses Google's secure authentication infrastructure, avoiding vulnerable passwords.",
-                t1_l1: "<strong>Continue with Google:</strong> Securely links your profile photo and email.", t1_l2: "<strong>Local Data:</strong> Your data is saved internally on your device. Nothing goes to the web.",
-                
-                tag_2: "Main Screen", t2_title: "Dashboard", t2_desc: "Get an immediate X-ray of your economy recalculated in real-time.",
-                t2_l1: "<strong>Currency Tabs:</strong> Switch wallets instantly at the top.", t2_l2: "<strong>Total Balance:</strong> Exact difference between income and expenses.", t2_l3: "<strong>Savings Bar:</strong> Measures your progress to reach the 20% savings goal.", t2_l4: "<strong>Fixed Expenses:</strong> Auto-sums Housing and Utilities categories.",
-                
-                tag_3: "Center Button (+)", t3_title: "Record Transactions", t3_desc: "Input money traditionally (Manual) or automated (AI).",
-                t3_l1: "<strong>Manual Entry:</strong> Select type, write amount, and pick a category.", t3_l2: "<strong>Voice Entry (VIP):</strong> Press the mic and speak your expense naturally.", t3_l3: "<strong>Text Analysis:</strong> Write a sentence and AI categorizes it.",
-                
-                tag_4: "VIP Module", t4_title: "Weekly AI Analysis", t4_desc: "Your personal advisor. Evaluates your last 7 days mathematically.",
-                t4_l1: "<strong>Auto-Calculation:</strong> Shows exactly what came in and out this week.", t4_l2: "<strong>Analyze Button:</strong> Generates an instant report.", t4_l3: "<strong>Leak Detection:</strong> Identifies where you spent the most.", t4_l4: "<strong>Red Alerts:</strong> Warns you if you spend more than you earn.",
-                
-                tag_5: "List Icon", t5_title: "History and Calendar", t5_desc: "Navigate through time to view past transactions.",
-                t5_l1: "<strong>Calendar Dots:</strong> Indicate days with financial activity.", t5_l2: "<strong>Time Filters:</strong> Group bottom list by Day, Week, or Month.", t5_l3: "<strong>24-Hour Edit:</strong> Modify recent records using the pencil icon.",
-                
-                tag_6: "Activation Tutorial", t6_title: "How to Activate VIP", t6_desc: "Unlock AI, colors, and advanced analysis.",
-                t6_p1: "Step 1", t6_d1: "Tap your profile picture and click 'View Plans'.", t6_p2: "Step 2", t6_d2: "Pay via WhatsApp. You will receive a secure code.", t6_p3: "Step 3", t6_d3: "Go back to Settings, paste your code, and enjoy VIP.",
-                
-                tag_7: "Security Tutorial", t7_title: "Generate and Restore Backups", t7_desc: "Protect your data by encrypting and sending it to WhatsApp.",
-                t7_h1: "📤 How to Backup:", t7_b1_1: "Open the Settings panel.", t7_b1_2: "Find 'Encrypted Backup'.", t7_b1_3: "Press 'Send to WhatsApp' and create a secret key.", t7_b1_4: "Save the giant code in your chat.",
-                t7_h2: "📥 How to Restore:", t7_b2_1: "Copy the giant block from WhatsApp.", t7_b2_2: "Log into the app on your new phone.", t7_b2_3: "Paste the code in Settings and press Restore.", t7_b2_4: "Enter your secret key to decrypt.",
-                
-                tag_8: "Profile Picture", t8_title: "Settings and Customization", t8_desc: "Control how the app looks and calculates.",
-                t8_l1: "<strong>Country & Currencies:</strong> Set up to 3 different currencies.", t8_l2: "<strong>VIP Themes:</strong> 12 pre-designed visual styles.", t8_l3: "<strong>VIP Backgrounds:</strong> Pick exact hex colors.", t8_l4: "<strong>VIP Fonts:</strong> Change typography and text colors.",
-                
+                tree_title: "Tutorial Table of Contents", tree_1: "1. Google Login", tree_2: "2. Main Dashboard", tree_3: "3. Registration Module (Manual & AI)", tree_4: "4. Smart AI Analysis", tree_5: "5. History and Calendar", tree_6: "6. Guide: Activate VIP Account", tree_7: "7. Guide: Backups (AES-256)", tree_8: "8. Settings & Customization",
+                tag_1: "Screen 01", t1_title: "Secure Login", t1_desc: "The app uses Google's secure authentication infrastructure, avoiding vulnerable traditional passwords.",
+                t1_l1: "<strong>Continue with Google Button:</strong> By clicking, Google verifies your identity and only provides us with your email and profile picture.", t1_l2: "<strong>Local Data:</strong> Upon access, the app creates an internal database in your phone's memory. No records travel over the internet.",
+                tag_2: "Main Screen", t2_title: "Control Panel (Dashboard)", t2_desc: "Here you get an immediate X-ray of your economy. Everything is recalculated in real-time.",
+                t2_l1: "<strong>Currency Tabs:</strong> Switch wallets instantly on the top bar.", t2_l2: "<strong>Total Balance:</strong> The exact subtraction between all your income minus your expenses.", t2_l3: "<strong>Savings Bar:</strong> Measures your progress to reach the suggested 20% goal.", t2_l4: "<strong>Fixed Expenses:</strong> Automatically sums everything categorized as 'Housing' and 'Services'.",
+                tag_3: "Center Button (+)", t3_title: "Record Transactions", t3_desc: "You have two ways to input money: traditional (Manual) or automated (AI).",
+                t3_l1: "<strong>Manual Entry:</strong> Select the Expense (Red) or Income (Green) button. Write the exact number, open the category list, and press Save.", t3_l2: "<strong>Voice Entry (VIP):</strong> Requires VIP account. Press the microphone and say 'I got paid 50 dollars'. The AI will detect it's an Income, the amount (50), and the category (Salary).", t3_l3: "<strong>Text Analysis:</strong> If you can't speak, write the natural sentence in the 'Text' tab and the AI will do the same classification job.",
+                tag_4: "VIP Module", t4_title: "Weekly AI Analysis", t4_desc: "Your personal financial advisor. This module mathematically evaluates your last 7 days.",
+                t4_l1: "<strong>Auto-Calculation:</strong> Shows exactly how much came in and out in the current week.", t4_l2: "<strong>'Analyze' Button:</strong> When pressed, the algorithm generates a bulleted report.", t4_l3: "<strong>Leak Detection:</strong> It will explicitly tell you in which category you spent the most money.", t4_l4: "<strong>Red Alerts:</strong> If your expenses exceed your income, the AI will issue a critical warning for you to stop buying.",
+                tag_5: "List Icon", t5_title: "History and Calendar", t5_desc: "This is where you navigate through time to see what you spent days, weeks, or months ago.",
+                t5_l1: "<strong>Calendar Dots:</strong> Every day you log a movement, a colored dot will appear under that number in the calendar.", t5_l2: "<strong>Time Filters:</strong> Use the buttons below the calendar to group data by Day, Week, or Month.", t5_l3: "<strong>24-Hour Edit:</strong> Modify logs using the pencil icon (only recent transactions for accounting security).",
+                tag_6: "Activation Tutorial", t6_title: "How to Activate your VIP Account", t6_desc: "Follow these steps to get access to AI, unlimited colors, and advanced analysis.",
+                t6_p1: "Step 1", t6_d1: "Tap your profile picture (Settings) and click the 'View Plans' banner or the yellow renewal banner.", t6_p2: "Step 2", t6_d2: "You will be redirected to WhatsApp. Request your plan and make the payment. You will receive a secure code (e.g. 20261231-A4F8B).", t6_p3: "Step 3", t6_d3: "Go back to App Settings, paste your code in 'Redeem Code' and the app will restart in VIP mode automatically.",
+                tag_7: "Security Tutorial", t7_title: "Generate and Restore Backups (AES-256)", t7_desc: "If you change phones or clear the browser, you need your info. Since we don't use servers to spy on you, you save your own encrypted backup.",
+                t7_h1: "📤 How to Backup (Save Data):", t7_b1_1: "Open the Settings panel.", t7_b1_2: "Find the green 'Encrypted Backup' section.", t7_b1_3: "Press 'Send to WhatsApp' and create a secret key.", t7_b1_4: "Save the giant code block in your personal chat.",
+                t7_h2: "📥 How to Restore (Recover Data):", t7_b2_1: "Copy the giant block from your WhatsApp.", t7_b2_2: "Log into the app from your new phone with the same Google account.", t7_b2_3: "Paste the code in Settings and press Restore.", t7_b2_4: "Enter your original secret key to decrypt everything.",
+                tag_8: "Profile Picture", t8_title: "Global Settings and Customization", t8_desc: "The gears behind the app. Here you control how the app looks and calculates.",
+                t8_l1: "<strong>Country and Currencies:</strong> Set your base region and up to 3 different currencies (ideal for separating savings in dollars).", t8_l2: "<strong>VIP Themes (Tab 1):</strong> Select with one click among 12 professional visual styles.", t8_l3: "<strong>VIP Backgrounds (Tab 2):</strong> Select an exact hex color for your background or your cards' color.", t8_l4: "<strong>VIP Fonts (Tab 3):</strong> Change the app's typography and the color of your letters.",
                 foot_back: "← Back to Home Page"
             },
-            pt: { nav_title:"Tutorial", nav_home:"← Início", nav_app:"App", hero_title:"Guia Detalhado", hero_sub:"Encontre tudo minuciosamente.", search_ph:"Buscar...", tree_title:"Conteúdos", tree_1:"1. Login", tree_2:"2. Painel", tree_3:"3. Registro", tree_4:"4. Análise", tree_5:"5. Histórico", tree_6:"6. VIP", tree_7:"7. Backups", tree_8:"8. Configurações", tag_1:"Passo 01", t1_title:"Login Seguro", t1_desc:"Autenticação do Google, 100% Local.", t1_l1:"<strong>Botão:</strong> Apenas email e foto.", t1_l2:"<strong>Local:</strong> Sem servidores.", tag_2:"Painel", t2_title:"Painel de Controle", t2_desc:"Visão da economia.", t2_l1:"<strong>Saldo:</strong> Receitas menos despesas.", t2_l2:"<strong>Poupança:</strong> Meta 20%.", t2_l3:"<strong>Fixos:</strong> Casa e serviços.", tag_3:"Botão (+)", t3_title:"Registro", t3_desc:"Manual ou IA.", t3_l1:"<strong>Manual:</strong> Digite e salve.", t3_l2:"<strong>Voz:</strong> Fale seus gastos.", t3_l3:"<strong>Texto IA:</strong> Escreva a frase.", tag_4:"VIP", t4_title:"Análise", t4_desc:"Avalia últimos 7 dias.", t4_l1:"<strong>Cálculo:</strong> Entradas e saídas.", t4_l2:"<strong>Vazamentos:</strong> Maiores gastos.", t4_l3:"<strong>Alertas:</strong> Avisos de gastos.", tag_5:"Lista", t5_title:"Histórico", t5_desc:"Ver transações.", t5_l1:"<strong>Calendário:</strong> Pontos de atividade.", t5_l2:"<strong>Filtros:</strong> Dia, Semana, Mês.", t5_l3:"<strong>Edição:</strong> Apenas 24h.", t6_title:"Ativação VIP", t6_desc:"1. Ver Planos. 2. Pagar WhatsApp. 3. Colar código.", t7_title:"Backups AES", t7_desc:"Criptografe e envie para o WhatsApp.", tag_8:"Perfil", t8_title:"Configurações", t8_desc:"Personalize.", t8_l1:"<strong>Moedas:</strong> Até 3.", t8_l2:"<strong>Temas:</strong> 12 estilos VIP." },
-            fr: { nav_title:"Tutoriel", nav_home:"← Accueil", nav_app:"App", hero_title:"Guide Détaillé", hero_sub:"Trouvez tout en détail.", search_ph:"Recherche...", tree_title:"Contenu", tree_1:"1. Login", tree_2:"2. Dashboard", tree_3:"3. Enregistrer", tree_4:"4. Analyse", tree_5:"5. Historique", tree_6:"6. VIP", tree_7:"7. Backups", tree_8:"8. Paramètres", tag_1:"01", t1_title:"Login", t1_desc:"Local.", t1_l1:"Email", t1_l2:"Local", tag_2:"Dash", t2_title:"Dashboard", t2_desc:"Contrôle.", t2_l1:"Solde", t2_l2:"Épargne", t2_l3:"Fixe", tag_3:"+", t3_title:"Enregistrer", t3_desc:"IA.", t3_l1:"Manuel", t3_l2:"Voix", t3_l3:"Texte", tag_4:"VIP", t4_title:"Analyse", t4_desc:"Fuites.", t4_l1:"Calcul", t4_l2:"Fuites", t4_l3:"Alertes", tag_5:"Liste", t5_title:"Historique", t5_desc:"Calendrier.", t5_l1:"Points", t5_l2:"Filtres", t5_l3:"24h", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES-256", t7_desc:"Sûr.", tag_8:"Profil", t8_title:"Paramètres", t8_desc:"Couleurs.", t8_l1:"Devises", t8_l2:"Thèmes" },
-            de: { nav_title:"Tutorial", nav_home:"← Start", nav_app:"App", hero_title:"Detaillierte Anleitung", hero_sub:"Alles genau finden.", search_ph:"Suchen...", tree_title:"Inhalt", tree_1:"1. Login", tree_2:"2. Dashboard", tree_3:"3. Erfassen", tree_4:"4. Analyse", tree_5:"5. Historie", tree_6:"6. VIP", tree_7:"7. Backups", tree_8:"8. Einstellungen", tag_1:"01", t1_title:"Login", t1_desc:"Lokal.", t1_l1:"Email", t1_l2:"Lokal", tag_2:"Dash", t2_title:"Dashboard", t2_desc:"Kontrolle.", t2_l1:"Saldo", t2_l2:"Sparen", t2_l3:"Fix", tag_3:"+", t3_title:"Erfassen", t3_desc:"KI.", t3_l1:"Manuell", t3_l2:"Stimme", t3_l3:"Text", tag_4:"VIP", t4_title:"Analyse", t4_desc:"Lecks.", t4_l1:"Berechnung", t4_l2:"Lecks", t4_l3:"Alarme", tag_5:"Liste", t5_title:"Historie", t5_desc:"Kalender.", t5_l1:"Punkte", t5_l2:"Filter", t5_l3:"24h", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES-256", t7_desc:"Sicher.", tag_8:"Profil", t8_title:"Einstellungen", t8_desc:"Farben.", t8_l1:"Währung", t8_l2:"Themen" },
-            it: { nav_title:"Tutorial", nav_home:"← Inizio", nav_app:"App", hero_title:"Guida Dettagliata", hero_sub:"Trova tutto nei dettagli.", search_ph:"Cerca...", tree_title:"Contenuti", tree_1:"1. Login", tree_2:"2. Dashboard", tree_3:"3. Registro", tree_4:"4. Analisi", tree_5:"5. Storico", tree_6:"6. VIP", tree_7:"7. Backups", tree_8:"8. Impostazioni", tag_1:"01", t1_title:"Login", t1_desc:"Locale.", t1_l1:"Email", t1_l2:"Locale", tag_2:"Dash", t2_title:"Dashboard", t2_desc:"Controllo.", t2_l1:"Saldo", t2_l2:"Risparmio", t2_l3:"Fissi", tag_3:"+", t3_title:"Registro", t3_desc:"IA.", t3_l1:"Manuale", t3_l2:"Voce", t3_l3:"Testo", tag_4:"VIP", t4_title:"Analisi", t4_desc:"Perdite.", t4_l1:"Calcolo", t4_l2:"Perdite", t4_l3:"Allarmi", tag_5:"Lista", t5_title:"Storico", t5_desc:"Calendario.", t5_l1:"Punti", t5_l2:"Filtri", t5_l3:"24h", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES", t7_desc:"Sicuro.", tag_8:"Profilo", t8_title:"Impostazioni", t8_desc:"Colori.", t8_l1:"Valute", t8_l2:"Temi" },
-            ru: { nav_title:"Туториал", nav_home:"← Домой", nav_app:"App", hero_title:"Подробный Гид", hero_sub:"Найдите всё детально.", search_ph:"Поиск...", tree_title:"Содержание", tree_1:"1. Вход", tree_2:"2. Панель", tree_3:"3. Запись", tree_4:"4. Анализ", tree_5:"5. История", tree_6:"6. VIP", tree_7:"7. Бэкап", tree_8:"8. Настройки", tag_1:"01", t1_title:"Вход", t1_desc:"Локально.", t1_l1:"Почта", t1_l2:"Локально", tag_2:"Dash", t2_title:"Панель", t2_desc:"Контроль.", t2_l1:"Баланс", t2_l2:"Копилка", t2_l3:"Фикс", tag_3:"+", t3_title:"Запись", t3_desc:"ИИ.", t3_l1:"Ручная", t3_l2:"Голос", t3_l3:"Текст", tag_4:"VIP", t4_title:"Анализ", t4_desc:"Утечки.", t4_l1:"Расчет", t4_l2:"Утечки", t4_l3:"Тревоги", tag_5:"Список", t5_title:"История", t5_desc:"Календарь.", t5_l1:"Точки", t5_l2:"Фильтры", t5_l3:"24ч", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES", t7_desc:"Безопасно.", tag_8:"Профиль", t8_title:"Настройки", t8_desc:"Цвета.", t8_l1:"Валюты", t8_l2:"Темы" },
-            zh: { nav_title:"教程", nav_home:"← 首页", nav_app:"App", hero_title:"详细指南", hero_sub:"查找所有细节。", search_ph:"搜索...", tree_title:"内容", tree_1:"1. 登录", tree_2:"2. 面板", tree_3:"3. 记录", tree_4:"4. 分析", tree_5:"5. 历史", tree_6:"6. VIP", tree_7:"7. 备份", tree_8:"8. 设置", tag_1:"01", t1_title:"登录", t1_desc:"本地。", t1_l1:"邮箱", t1_l2:"本地", tag_2:"Dash", t2_title:"面板", t2_desc:"控制。", t2_l1:"余额", t2_l2:"储蓄", t2_l3:"固定", tag_3:"+", t3_title:"记录", t3_desc:"AI。", t3_l1:"手动", t3_l2:"语音", t3_l3:"文本", tag_4:"VIP", t4_title:"分析", t4_desc:"泄漏。", t4_l1:"计算", t4_l2:"泄漏", t4_l3:"警报", tag_5:"列表", t5_title:"历史", t5_desc:"日历。", t5_l1:"点", t5_l2:"过滤器", t5_l3:"24小时", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES", t7_desc:"安全。", tag_8:"简介", t8_title:"设置", t8_desc:"颜色。", t8_l1:"货币", t8_l2:"主题" },
-            ja: { nav_title:"チュートリアル", nav_home:"← ホーム", nav_app:"アプリ", hero_title:"詳細ガイド", hero_sub:"詳細を検索。", search_ph:"検索...", tree_title:"内容", tree_1:"1. ログイン", tree_2:"2. パネル", tree_3:"3. 記録", tree_4:"4. 分析", tree_5:"5. 履歴", tree_6:"6. VIP", tree_7:"7. バックアップ", tree_8:"8. 設定", tag_1:"01", t1_title:"ログイン", t1_desc:"ローカル。", t1_l1:"メール", t1_l2:"ローカル", tag_2:"Dash", t2_title:"パネル", t2_desc:"コントロール。", t2_l1:"残高", t2_l2:"貯蓄", t2_l3:"固定", tag_3:"+", t3_title:"記録", t3_desc:"AI。", t3_l1:"手動", t3_l2:"音声", t3_l3:"テキスト", tag_4:"VIP", t4_title:"分析", t4_desc:"漏れ。", t4_l1:"計算", t4_l2:"漏れ", t4_l3:"アラート", tag_5:"リスト", t5_title:"履歴", t5_desc:"カレンダー。", t5_l1:"ドット", t5_l2:"フィルター", t5_l3:"24時間", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES", t7_desc:"安全。", tag_8:"プロフィール", t8_title:"設定", t8_desc:"色。", t8_l1:"通貨", t8_l2:"テーマ" },
-            ar: { nav_title:"دليل", nav_home:"← الرئيسية", nav_app:"تطبيق", hero_title:"دليل مفصل", hero_sub:"ابحث عن كل التفاصيل.", search_ph:"بحث...", tree_title:"المحتويات", tree_1:"1. دخول", tree_2:"2. لوحة", tree_3:"3. تسجيل", tree_4:"4. تحليل", tree_5:"5. سجل", tree_6:"6. VIP", tree_7:"7. نسخ", tree_8:"8. إعدادات", tag_1:"01", t1_title:"دخول", t1_desc:"محلي.", t1_l1:"بريد", t1_l2:"محلي", tag_2:"Dash", t2_title:"لوحة", t2_desc:"تحكم.", t2_l1:"رصيد", t2_l2:"توفير", t2_l3:"ثابت", tag_3:"+", t3_title:"تسجيل", t3_desc:"ذكاء.", t3_l1:"يدوي", t3_l2:"صوت", t3_l3:"نص", tag_4:"VIP", t4_title:"تحليل", t4_desc:"تسريب.", t4_l1:"حساب", t4_l2:"تسريب", t4_l3:"تنبيه", tag_5:"قائمة", t5_title:"سجل", t5_desc:"تقويم.", t5_l1:"نقاط", t5_l2:"فلاتر", t5_l3:"24س", t6_title:"VIP", t6_desc:"Whatsapp.", t7_title:"AES", t7_desc:"آمن.", t8_title:"إعدادات", t8_desc:"ألوان." }
+            pt: {
+                page_title: "Tutorial Detalhado e Guia de Uso - Mi Billetera", nav_title: "Mi Billetera - Guia Definitiva", nav_home: "← Início", nav_app: "Abrir App",
+                hero_title: "Tutorial Minucioso e <br><span class='gradient-text'>Manual de Uso</span>",
+                hero_sub: "Encontre instantaneamente qualquer tela, opção de configuração ou processo detalhado.", search_ph: "Buscar uma função (ex: VIP, Backup, Voz...)",
+                tree_title: "Árvore de Conteúdos do Tutorial", tree_1: "1. Login Seguro (Google)", tree_2: "2. Painel Principal / Dashboard", tree_3: "3. Módulo de Registro (Manual e IA)", tree_4: "4. Análise Inteligente de IA", tree_5: "5. Histórico e Calendário", tree_6: "6. Guia: Ativar Conta VIP", tree_7: "7. Guia: Backups (AES-256)", tree_8: "8. Configurações e Personalização",
+                tag_1: "Tela 01", t1_title: "Login Seguro", t1_desc: "O aplicativo não utiliza senhas tradicionais vulneráveis. Funciona exclusivamente com a infraestrutura de autenticação do Google.",
+                t1_l1: "<strong>Botão Continuar com Google:</strong> Ao clicar, o Google verifica sua identidade e nos fornece apenas seu e-mail e foto de perfil.", t1_l2: "<strong>Dados Locais:</strong> Ao acessar, o app cria um banco de dados interno na memória do seu celular. Nenhum registro viaja pela internet.",
+                tag_2: "Tela Principal", t2_title: "Painel de Controle (Dashboard)", t2_desc: "Aqui você obtém uma radiografia imediata da sua economia. Tudo é recalculado em tempo real.",
+                t2_l1: "<strong>Abas de Moeda:</strong> Troque de carteira instantaneamente na barra superior.", t2_l2: "<strong>Saldo Total:</strong> A subtração exata entre todas as suas receitas menos suas despesas.", t2_l3: "<strong>Barra de Poupança:</strong> Meça seu progresso para atingir a meta sugerida de 20%.", t2_l4: "<strong>Gastos Fixos:</strong> Soma automaticamente tudo que é categorizado como 'Moradia' e 'Serviços'.",
+                tag_3: "Botão Central (+)", t3_title: "Registro de Movimentos", t3_desc: "Você tem duas formas de inserir dinheiro: a tradicional (Manual) ou a automatizada (IA).",
+                t3_l1: "<strong>Registro Manual:</strong> Selecione o botão Despesa (Vermelho) ou Receita (Verde). Escreva o número exato, abra a lista de categorias e pressione Salvar.", t3_l2: "<strong>Registro por Voz (VIP):</strong> Requer conta VIP. Pressione o microfone e diga 'Recebi 50 dólares de salário'. A IA detectará que é uma Receita, o valor (50) e a categoria (Salário).", t3_l3: "<strong>Análise de Texto:</strong> Se você não pode falar, escreva a frase natural na aba 'Texto' e a IA fará o mesmo trabalho de classificação.",
+                tag_4: "Módulo VIP", t4_title: "Análise Semanal IA", t4_desc: "Seu consultor financeiro pessoal. Este módulo avalia matematicamente seus últimos 7 dias.",
+                t4_l1: "<strong>Cálculo Automático:</strong> Mostra exatamente quanto entrou e saiu na semana atual.", t4_l2: "<strong>Botão 'Analisar':</strong> Ao pressioná-lo, o algoritmo gera um relatório em tópicos.", t4_l3: "<strong>Detecção de Vazamentos:</strong> Dirá explicitamente em qual categoria você gastou mais dinheiro.", t4_l4: "<strong>Alertas Vermelhos:</strong> Se suas despesas superarem suas receitas, a IA emitirá um aviso crítico para que você pare de comprar.",
+                tag_5: "Ícone de Lista", t5_title: "Histórico e Calendário", t5_desc: "É aqui que você navega no tempo para ver com o que gastou dias, semanas ou meses atrás.",
+                t5_l1: "<strong>Pontos no Calendário:</strong> Todo dia que você registrar um movimento, um ponto colorido aparecerá sob aquele número no calendário.", t5_l2: "<strong>Filtros Temporais:</strong> Use os botões abaixo do calendário para agrupar os dados por Dia, Semana ou Mês.", t5_l3: "<strong>Edição de 24 horas:</strong> Modifique registros usando o lápis (apenas transações recentes para segurança contábil).",
+                tag_6: "Tutorial de Ativação", t6_title: "Como Ativar sua Conta VIP", t6_desc: "Siga estes passos para obter acesso à IA, cores ilimitadas e análise avançada.",
+                t6_p1: "Passo 1", t6_d1: "Toque na sua foto de perfil (Configurações) e clique no banner 'Ver Planos' ou no banner amarelo de renovação.", t6_p2: "Passo 2", t6_d2: "Você será redirecionado para o WhatsApp. Solicite seu plano e faça o pagamento. Você receberá um código seguro (ex. 20261231-A4F8B).", t6_p3: "Passo 3", t6_d3: "Volte para Configurações, cole seu código em 'Resgatar Código' e o app reiniciará no modo VIP automaticamente.",
+                tag_7: "Tutorial de Segurança", t7_title: "Gerar e Restaurar Backups (AES-256)", t7_desc: "Se você trocar de telefone ou limpar o navegador, precisará das suas informações. Como não usamos servidores para espionar você, você mesmo guarda seu backup criptografado.",
+                t7_h1: "📤 Como Fazer Backup (Salvar Dados):", t7_b1_1: "Abra o painel de Configurações.", t7_b1_2: "Procure a seção verde 'Backup Criptografado'.", t7_b1_3: "Pressione 'Enviar para WhatsApp' e crie uma chave secreta.", t7_b1_4: "Salve o bloco gigante de código no seu chat pessoal.",
+                t7_h2: "📥 Como Restaurar (Recuperar Dados):", t7_b2_1: "Copie o bloco gigante do seu WhatsApp.", t7_b2_2: "Faça login no app do seu novo telefone com a mesma conta do Google.", t7_b2_3: "Cole o código em Configurações e pressione Restaurar.", t7_b2_4: "Insira sua chave secreta original para descriptografar tudo.",
+                tag_8: "Sua Foto de Perfil", t8_title: "Configurações Globais e Personalização", t8_desc: "A engrenagem por trás do app. Aqui você controla como o app se parece e calcula.",
+                t8_l1: "<strong>País e Moedas:</strong> Configure sua região base e até 3 moedas diferentes (ideal para separar economias em dólares).", t8_l2: "<strong>Temas VIP (Aba 1):</strong> Selecione com um clique entre 12 estilos visuais profissionais.", t8_l3: "<strong>Fundos VIP (Aba 2):</strong> Selecione uma cor hexadecimal exata para seu fundo ou a cor dos seus cartões.", t8_l4: "<strong>Textos VIP (Aba 3):</strong> Mude a tipografia do app e a cor das suas letras.",
+                foot_back: "← Voltar à página principal"
+            },
+            fr: {
+                page_title: "Tutoriel Détaillé et Guide d'Utilisation - Mi Billetera", nav_title: "Mi Billetera - Guide Ultime", nav_home: "← Accueil", nav_app: "Ouvrir l'App",
+                hero_title: "Tutoriel Minutieux et <br><span class='gradient-text'>Manuel d'Utilisation</span>",
+                hero_sub: "Trouvez instantanément n'importe quel écran, option de configuration ou processus détaillé.", search_ph: "Rechercher une fonction (ex: VIP, Sauvegarde, Voix...)",
+                tree_title: "Arborescence du Tutoriel", tree_1: "1. Connexion Sécurisée (Google)", tree_2: "2. Panneau Principal / Dashboard", tree_3: "3. Module d'Enregistrement (Manuel et IA)", tree_4: "4. Analyse Intelligente IA", tree_5: "5. Historique et Calendrier", tree_6: "6. Guide: Activer le Compte VIP", tree_7: "7. Guide: Sauvegardes (AES-256)", tree_8: "8. Paramètres et Personnalisation",
+                tag_1: "Écran 01", t1_title: "Connexion Sécurisée", t1_desc: "L'application n'utilise pas de mots de passe traditionnels vulnérables. Elle fonctionne exclusivement avec l'infrastructure d'authentification de Google.",
+                t1_l1: "<strong>Bouton Continuer avec Google:</strong> En cliquant, Google vérifie votre identité et ne nous fournit que votre email et votre photo de profil.", t1_l2: "<strong>Données Locales:</strong> Lors de l'accès, l'application crée une base de données interne dans la mémoire de votre téléphone. Aucun registre ne voyage sur internet.",
+                tag_2: "Écran Principal", t2_title: "Panneau de Contrôle (Dashboard)", t2_desc: "Ici vous obtenez une radiographie immédiate de votre économie. Tout est recalculé en temps réel.",
+                t2_l1: "<strong>Onglets de Devise:</strong> Changez de portefeuille instantanément dans la barre supérieure.", t2_l2: "<strong>Solde Total:</strong> La soustraction exacte entre tous vos revenus moins vos dépenses.", t2_l3: "<strong>Barre d'Épargne:</strong> Mesurez votre progression pour atteindre l'objectif suggéré de 20%.", t2_l4: "<strong>Dépenses Fixes:</strong> Additionne automatiquement tout ce qui est catégorisé comme 'Logement' et 'Services'.",
+                tag_3: "Bouton Central (+)", t3_title: "Enregistrement des Mouvements", t3_desc: "Vous avez deux façons d'entrer de l'argent : la traditionnelle (Manuelle) ou l'automatisée (IA).",
+                t3_l1: "<strong>Enregistrement Manuel:</strong> Sélectionnez le bouton Dépense (Rouge) ou Revenu (Vert). Écrivez le chiffre exact, ouvrez la liste des catégories et appuyez sur Sauvegarder.", t3_l2: "<strong>Enregistrement Vocal (VIP):</strong> Nécessite un compte VIP. Appuyez sur le micro et dites 'On m'a payé 50 dollars'. L'IA détectera que c'est un Revenu, le montant (50) et la catégorie (Salaire).", t3_l3: "<strong>Analyse de Texte:</strong> Si vous ne pouvez pas parler, écrivez la phrase naturelle dans l'onglet 'Texte' et l'IA fera le même travail de classification.",
+                tag_4: "Module VIP", t4_title: "Analyse Hebdomadaire IA", t4_desc: "Votre conseiller financier personnel. Ce module évalue mathématiquement vos 7 derniers jours.",
+                t4_l1: "<strong>Calcul Automatique:</strong> Montre exactement combien est entré et sorti dans la semaine en cours.", t4_l2: "<strong>Bouton 'Analyser':</strong> En appuyant dessus, l'algorithme génère un rapport sous forme de puces.", t4_l3: "<strong>Détection de Fuites:</strong> Vous dira explicitement dans quelle catégorie vous avez dépensé le plus d'argent.", t4_l4: "<strong>Alertes Rouges:</strong> Si vos dépenses dépassent vos revenus, l'IA émettra un avertissement critique pour que vous arrêtiez d'acheter.",
+                tag_5: "Icône de Liste", t5_title: "Historique et Calendrier", t5_desc: "C'est ici que vous naviguez dans le temps pour voir ce que vous avez dépensé il y a des jours, des semaines ou des mois.",
+                t5_l1: "<strong>Points sur le Calendrier:</strong> Chaque jour où vous enregistrez un mouvement, un point de couleur apparaîtra sous ce numéro dans le calendrier.", t5_l2: "<strong>Filtres Temporels:</strong> Utilisez les boutons sous le calendrier pour regrouper les données par Jour, Semaine ou Mois.", t5_l3: "<strong>Édition de 24 heures:</strong> Modifiez les registres en utilisant le crayon (uniquement les transactions récentes pour la sécurité comptable).",
+                tag_6: "Tutoriel d'Activation", t6_title: "Comment Activer votre Compte VIP", t6_desc: "Suivez ces étapes pour accéder à l'IA, aux couleurs illimitées et à l'analyse avancée.",
+                t6_p1: "Étape 1", t6_d1: "Touchez votre photo de profil (Paramètres) et cliquez sur la bannière 'Voir les Plans' ou la bannière jaune de renouvellement.", t6_p2: "Étape 2", t6_d2: "Vous serez redirigé vers WhatsApp. Demandez votre plan et effectuez le paiement. Vous recevrez un code sécurisé (ex. 20261231-A4F8B).", t6_p3: "Étape 3", t6_d3: "Retournez aux Paramètres de l'App, collez votre code dans 'Échanger Code' et l'application redémarrera en mode VIP automatiquement.",
+                tag_7: "Tutoriel de Sécurité", t7_title: "Générer et Restaurer des Sauvegardes (AES-256)", t7_desc: "Si vous changez de téléphone ou effacez le navigateur, vous avez besoin de vos informations. Puisque nous n'utilisons pas de serveurs pour vous espionner, vous gardez vous-même votre sauvegarde cryptée.",
+                t7_h1: "📤 Comment Sauvegarder (Enregistrer les Données):", t7_b1_1: "Ouvrez le panneau des Paramètres.", t7_b1_2: "Cherchez la section verte 'Sauvegarde Cryptée'.", t7_b1_3: "Appuyez sur 'Envoyer à WhatsApp' et créez une clé secrète.", t7_b1_4: "Gardez le bloc de code géant dans votre chat personnel.",
+                t7_h2: "📥 Comment Restaurer (Récupérer les Données):", t7_b2_1: "Copiez le bloc géant depuis votre WhatsApp.", t7_b2_2: "Connectez-vous à l'application depuis votre nouveau téléphone avec le même Google.", t7_b2_3: "Collez le code dans Paramètres et appuyez sur Restaurer.", t7_b2_4: "Saisissez votre clé secrète originale pour tout décrypter.",
+                tag_8: "Votre Photo de Profil", t8_title: "Paramètres Globaux et Personnalisation", t8_desc: "L'engrenage derrière l'application. Ici, vous contrôlez l'apparence et les calculs de l'application.",
+                t8_l1: "<strong>Pays et Devises:</strong> Configurez votre région de base et jusqu'à 3 devises différentes (idéal pour séparer les économies en dollars).", t8_l2: "<strong>Thèmes VIP (Onglet 1):</strong> Sélectionnez d'un clic parmi 12 styles visuels professionnels.", t8_l3: "<strong>Fonds VIP (Onglet 2):</strong> Sélectionnez une couleur hexadécimale exacte pour votre fond ou la couleur de vos cartes.", t8_l4: "<strong>Textes VIP (Onglet 3):</strong> Changez la typographie de l'application et la couleur de vos lettres.",
+                foot_back: "← Retour à la page d'accueil"
+            },
+            de: {
+                page_title: "Detailliertes Tutorial und Benutzerhandbuch - Mi Billetera", nav_title: "Mi Billetera - Ultimativer Guide", nav_home: "← Start", nav_app: "App öffnen",
+                hero_title: "Detailliertes Tutorial und <br><span class='gradient-text'>Benutzerhandbuch</span>",
+                hero_sub: "Finden Sie sofort jeden Bildschirm, jede Konfigurationsoption oder jeden detaillierten Prozess.", search_ph: "Suchen Sie nach einer Funktion (z.B. VIP, Backup, Sprache...)",
+                tree_title: "Tutorial-Inhaltsverzeichnis", tree_1: "1. Sicherer Login (Google)", tree_2: "2. Hauptpanel / Dashboard", tree_3: "3. Erfassungsmodul (Manuell & KI)", tree_4: "4. Intelligente KI-Analyse", tree_5: "5. Historie und Kalender", tree_6: "6. Anleitung: VIP-Konto aktivieren", tree_7: "7. Anleitung: Backups (AES-256)", tree_8: "8. Einstellungen und Personalisierung",
+                tag_1: "Bildschirm 01", t1_title: "Sicherer Login", t1_desc: "Die App verwendet keine angreifbaren herkömmlichen Passwörter. Sie funktioniert ausschließlich mit der Authentifizierungsinfrastruktur von Google.",
+                t1_l1: "<strong>Mit Google fortfahren:</strong> Durch Klicken verifiziert Google Ihre Identität und übermittelt uns nur Ihre E-Mail und Ihr Profilbild.", t1_l2: "<strong>Lokale Daten:</strong> Beim Zugriff erstellt die App eine interne Datenbank im Speicher Ihres Telefons. Es werden keine Daten über das Internet übertragen.",
+                tag_2: "Hauptbildschirm", t2_title: "Kontrollzentrum (Dashboard)", t2_desc: "Hier erhalten Sie ein sofortiges Röntgenbild Ihrer Wirtschaft. Alles wird in Echtzeit neu berechnet.",
+                t2_l1: "<strong>Währungs-Tabs:</strong> Wechseln Sie die Brieftasche sofort in der oberen Leiste.", t2_l2: "<strong>Gesamtsaldo:</strong> Die genaue Subtraktion zwischen all Ihren Einnahmen abzüglich Ihrer Ausgaben.", t2_l3: "<strong>Sparleiste:</strong> Misst Ihren Fortschritt, um das vorgeschlagene 20%-Ziel zu erreichen.", t2_l4: "<strong>Fixkosten:</strong> Summiert automatisch alles, was als 'Wohnen' und 'Dienstleistungen' kategorisiert ist.",
+                tag_3: "Zentrale Taste (+)", t3_title: "Bewegungen erfassen", t3_desc: "Sie haben zwei Möglichkeiten, Geld einzugeben: die traditionelle (Manuell) oder die automatisierte (KI).",
+                t3_l1: "<strong>Manuelle Eingabe:</strong> Wählen Sie die Schaltfläche Ausgaben (Rot) oder Einnahmen (Grün). Schreiben Sie die genaue Zahl, öffnen Sie die Kategorieliste und drücken Sie auf Speichern.", t3_l2: "<strong>Spracheingabe (VIP):</strong> Erfordert VIP-Konto. Drücken Sie das Mikrofon und sagen Sie 'Ich habe 50 Dollar Gehalt bekommen'. Die KI erkennt, dass es ein Einkommen ist, den Betrag (50) und die Kategorie (Gehalt).", t3_l3: "<strong>Textanalyse:</strong> Wenn Sie nicht sprechen können, schreiben Sie den natürlichen Satz in den Tab 'Text' und die KI übernimmt die gleiche Klassifizierungsaufgabe.",
+                tag_4: "VIP-Modul", t4_title: "Wöchentliche KI-Analyse", t4_desc: "Ihr persönlicher Finanzberater. Dieses Modul wertet Ihre letzten 7 Tage mathematisch aus.",
+                t4_l1: "<strong>Automatische Berechnung:</strong> Zeigt genau, wie viel in der aktuellen Woche ein- und ausgegangen ist.", t4_l2: "<strong>'Analysieren' Button:</strong> Wenn gedrückt, generiert der Algorithmus einen Bericht in Aufzählungszeichen.", t4_l3: "<strong>Leck-Erkennung:</strong> Es wird Ihnen explizit mitgeteilt, in welcher Kategorie Sie das meiste Geld ausgegeben haben.", t4_l4: "<strong>Rote Alarme:</strong> Wenn Ihre Ausgaben Ihre Einnahmen übersteigen, gibt die KI eine kritische Warnung aus, damit Sie aufhören zu kaufen.",
+                tag_5: "Listen-Symbol", t5_title: "Historie und Kalender", t5_desc: "Hier navigieren Sie durch die Zeit, um zu sehen, wofür Sie vor Tagen, Wochen oder Monaten Geld ausgegeben haben.",
+                t5_l1: "<strong>Kalenderpunkte:</strong> Jeden Tag, an dem Sie eine Bewegung protokollieren, erscheint ein farbiger Punkt unter dieser Zahl im Kalender.", t5_l2: "<strong>Zeitfilter:</strong> Verwenden Sie die Tasten unter dem Kalender, um die Daten nach Tag, Woche oder Monat zu gruppieren.", t5_l3: "<strong>24-Stunden-Bearbeitung:</strong> Ändern Sie Protokolle mit dem Stiftsymbol (aus Gründen der Buchhaltungssicherheit nur aktuelle Transaktionen).",
+                tag_6: "Aktivierungs-Tutorial", t6_title: "So aktivieren Sie Ihr VIP-Konto", t6_desc: "Befolgen Sie diese Schritte, um Zugriff auf KI, unbegrenzte Farben und erweiterte Analysen zu erhalten.",
+                t6_p1: "Schritt 1", t6_d1: "Tippen Sie auf Ihr Profilbild (Einstellungen) und klicken Sie auf das Banner 'Pläne ansehen' oder das gelbe Erneuerungsbanner.", t6_p2: "Schritt 2", t6_d2: "Sie werden zu WhatsApp weitergeleitet. Fordern Sie Ihren Plan an und tätigen Sie die Zahlung. Sie erhalten einen sicheren Code (z.B. 20261231-A4F8B).", t6_p3: "Schritt 3", t6_d3: "Gehen Sie zurück zu den App-Einstellungen, fügen Sie Ihren Code unter 'Code einlösen' ein und die App startet automatisch im VIP-Modus neu.",
+                tag_7: "Sicherheits-Tutorial", t7_title: "Backups generieren und wiederherstellen (AES-256)", t7_desc: "Wenn Sie das Telefon wechseln oder den Browser löschen, benötigen Sie Ihre Informationen. Da wir keine Server verwenden, um Sie auszuspionieren, speichern Sie Ihr eigenes verschlüsseltes Backup.",
+                t7_h1: "📤 So sichern Sie (Daten speichern):", t7_b1_1: "Öffnen Sie das Einstellungsfeld.", t7_b1_2: "Suchen Sie den grünen Abschnitt 'Verschlüsseltes Backup'.", t7_b1_3: "Drücken Sie 'An WhatsApp senden' und erstellen Sie einen geheimen Schlüssel.", t7_b1_4: "Speichern Sie den riesigen Codeblock in Ihrem persönlichen Chat.",
+                t7_h2: "📥 So stellen Sie wieder her (Daten wiederherstellen):", t7_b2_1: "Kopieren Sie den riesigen Block aus Ihrem WhatsApp.", t7_b2_2: "Melden Sie sich über Ihr neues Telefon mit demselben Google-Konto bei der App an.", t7_b2_3: "Fügen Sie den Code in den Einstellungen ein und drücken Sie auf Wiederherstellen.", t7_b2_4: "Geben Sie Ihren ursprünglichen geheimen Schlüssel ein, um alles zu entschlüsseln.",
+                tag_8: "Ihr Profilbild", t8_title: "Globale Einstellungen und Personalisierung", t8_desc: "Das Getriebe hinter der App. Hier steuern Sie, wie die App aussieht und berechnet.",
+                t8_l1: "<strong>Land und Währungen:</strong> Richten Sie Ihre Basisregion und bis zu 3 verschiedene Währungen ein (ideal zur Trennung von Ersparnissen in Dollar).", t8_l2: "<strong>VIP-Themen (Tab 1):</strong> Wählen Sie mit einem Klick aus 12 professionellen visuellen Stilen.", t8_l3: "<strong>VIP-Hintergründe (Tab 2):</strong> Wählen Sie eine genaue Hex-Farbe für Ihren Hintergrund oder die Farbe Ihrer Karten aus.", t8_l4: "<strong>VIP-Schriftarten (Tab 3):</strong> Ändern Sie die Typografie der App und die Farbe Ihrer Buchstaben.",
+                foot_back: "← Zurück zur Startseite"
+            },
+            it: {
+                page_title: "Tutorial Dettagliato e Manuale Utente - Mi Billetera", nav_title: "Mi Billetera - Guida Definitiva", nav_home: "← Inizio", nav_app: "Apri App",
+                hero_title: "Tutorial Minuzioso e <br><span class='gradient-text'>Manuale Utente</span>",
+                hero_sub: "Trova istantaneamente qualsiasi schermata, opzione di configurazione o processo dettagliato.", search_ph: "Cerca una funzione (es: VIP, Backup, Voce...)",
+                tree_title: "Sommario del Tutorial", tree_1: "1. Login Sicuro (Google)", tree_2: "2. Pannello Principale / Dashboard", tree_3: "3. Modulo di Registrazione (Manuale e IA)", tree_4: "4. Analisi Intelligente IA", tree_5: "5. Storico e Calendario", tree_6: "6. Guida: Attivare Account VIP", tree_7: "7. Guida: Backup (AES-256)", tree_8: "8. Impostazioni e Personalizzazione",
+                tag_1: "Schermo 01", t1_title: "Login Sicuro", t1_desc: "L'applicazione non utilizza password tradizionali vulnerabili. Funziona esclusivamente con l'infrastruttura di autenticazione di Google.",
+                t1_l1: "<strong>Pulsante Continua con Google:</strong> Cliccando, Google verifica la tua identità e ci fornisce solo la tua email e l'immagine del profilo.", t1_l2: "<strong>Dati Locali:</strong> Al momento dell'accesso, l'app crea un database interno nella memoria del telefono. Nessun record viaggia su Internet.",
+                tag_2: "Schermo Principale", t2_title: "Pannello di Controllo (Dashboard)", t2_desc: "Qui ottieni una radiografia immediata della tua economia. Tutto viene ricalcolato in tempo reale.",
+                t2_l1: "<strong>Schede Valuta:</strong> Cambia portafoglio istantaneamente nella barra superiore.", t2_l2: "<strong>Saldo Totale:</strong> La sottrazione esatta tra tutte le tue entrate meno le tue uscite.", t2_l3: "<strong>Barra di Risparmio:</strong> Misura i tuoi progressi per raggiungere l'obiettivo suggerito del 20%.", t2_l4: "<strong>Spese Fisse:</strong> Somma automaticamente tutto ciò che è categorizzato come 'Casa' e 'Servizi'.",
+                tag_3: "Pulsante Centrale (+)", t3_title: "Registrazione dei Movimenti", t3_desc: "Hai due modi per inserire denaro: tradizionale (Manuale) o automatizzato (IA).",
+                t3_l1: "<strong>Inserimento Manuale:</strong> Seleziona il pulsante Spesa (Rosso) o Entrata (Verde). Scrivi il numero esatto, apri l'elenco delle categorie e premi Salva.", t3_l2: "<strong>Inserimento Vocale (VIP):</strong> Richiede account VIP. Premi il microfono e dì 'Mi hanno pagato 50 dollari'. L'IA rileverà che è un'Entrata, l'importo (50) e la categoria (Stipendio).", t3_l3: "<strong>Analisi del Testo:</strong> Se non puoi parlare, scrivi la frase naturale nella scheda 'Testo' e l'IA farà lo stesso lavoro di classificazione.",
+                tag_4: "Modulo VIP", t4_title: "Analisi Settimanale IA", t4_desc: "Il tuo consulente finanziario personale. Questo modulo valuta matematicamente i tuoi ultimi 7 giorni.",
+                t4_l1: "<strong>Calcolo Automatico:</strong> Mostra esattamente quanto è entrato e uscito nella settimana in corso.", t4_l2: "<strong>Pulsante 'Analizza':</strong> Se premuto, l'algoritmo genera un rapporto a punti.", t4_l3: "<strong>Rilevamento Perdite:</strong> Ti dirà esplicitamente in quale categoria hai speso più soldi.", t4_l4: "<strong>Avvisi Rossi:</strong> Se le tue spese superano le tue entrate, l'IA emetterà un avviso critico per farti smettere di comprare.",
+                tag_5: "Icona Elenco", t5_title: "Storico e Calendario", t5_desc: "Questo è il luogo in cui navighi nel tempo per vedere cosa hai speso giorni, settimane o mesi fa.",
+                t5_l1: "<strong>Punti Calendario:</strong> Ogni giorno che registri un movimento, apparirà un punto colorato sotto quel numero nel calendario.", t5_l2: "<strong>Filtri Temporali:</strong> Usa i pulsanti sotto il calendario per raggruppare i dati per Giorno, Settimana o Mese.", t5_l3: "<strong>Modifica di 24 ore:</strong> Modifica i log utilizzando l'icona della matita (solo transazioni recenti per sicurezza contabile).",
+                tag_6: "Tutorial di Attivazione", t6_title: "Come Attivare il tuo Account VIP", t6_desc: "Segui questi passaggi per accedere all'IA, ai colori illimitati e all'analisi avanzata.",
+                t6_p1: "Passo 1", t6_d1: "Tocca la tua immagine del profilo (Impostazioni) e fai clic sul banner 'Vedi Piani' o sul banner giallo di rinnovo.", t6_p2: "Passo 2", t6_d2: "Verrai reindirizzato a WhatsApp. Richiedi il tuo piano ed effettua il pagamento. Riceverai un codice sicuro (es. 20261231-A4F8B).", t6_p3: "Passo 3", t6_d3: "Torna alle Impostazioni dell'App, incolla il tuo codice in 'Riscatta Codice' e l'app si riavvierà automaticamente in modalità VIP.",
+                tag_7: "Tutorial di Sicurezza", t7_title: "Generare e Ripristinare Backup (AES-256)", t7_desc: "Se cambi telefono o cancelli il browser, hai bisogno delle tue informazioni. Poiché non utilizziamo server per spiarti, salvi il tuo backup crittografato.",
+                t7_h1: "📤 Come eseguire il backup (Salvare i dati):", t7_b1_1: "Apri il pannello Impostazioni.", t7_b1_2: "Trova la sezione verde 'Backup Crittografato'.", t7_b1_3: "Premi 'Invia a WhatsApp' e crea una chiave segreta.", t7_b1_4: "Salva il gigantesco blocco di codice nella tua chat personale.",
+                t7_h2: "📥 Come ripristinare (Recuperare i dati):", t7_b2_1: "Copia il blocco gigantesco dal tuo WhatsApp.", t7_b2_2: "Accedi all'app dal tuo nuovo telefono con lo stesso account Google.", t7_b2_3: "Incolla il codice in Impostazioni e premi Ripristina.", t7_b2_4: "Inserisci la tua chiave segreta originale per decrittografare tutto.",
+                tag_8: "Immagine Profilo", t8_title: "Impostazioni Globali e Personalizzazione", t8_desc: "Gli ingranaggi dietro l'app. Qui controlli l'aspetto e i calcoli dell'app.",
+                t8_l1: "<strong>Paese e Valute:</strong> Imposta la tua regione di base e fino a 3 diverse valute (ideale per separare i risparmi in dollari).", t8_l2: "<strong>Temi VIP (Scheda 1):</strong> Seleziona con un clic tra 12 stili visivi professionali.", t8_l3: "<strong>Sfondi VIP (Scheda 2):</strong> Seleziona un colore esadecimale esatto per il tuo sfondo o per il colore delle tue carte.", t8_l4: "<strong>Testi VIP (Scheda 3):</strong> Cambia la tipografia dell'app e il colore delle tue lettere.",
+                foot_back: "← Torna alla home page"
+            },
+            ja: {
+                page_title: "詳細チュートリアルとユーザーガイド - Mi Billetera", nav_title: "Mi Billetera - 究極のガイド", nav_home: "← ホーム", nav_app: "アプリを開く",
+                hero_title: "詳細なチュートリアルと <br><span class='gradient-text'>ユーザーマニュアル</span>",
+                hero_sub: "任意の画面、設定オプション、または詳細なプロセスを即座に見つけます。", search_ph: "機能を検索 (例: VIP, バックアップ, 音声...)",
+                tree_title: "チュートリアルの目次", tree_1: "1. 安全なログイン (Google)", tree_2: "2. メインダッシュボード", tree_3: "3. 記録モジュール (手動 & AI)", tree_4: "4. スマートAI分析", tree_5: "5. 履歴とカレンダー", tree_6: "6. ガイド: VIPアカウントの有効化", tree_7: "7. ガイド: バックアップ (AES-256)", tree_8: "8. 設定とカスタマイズ",
+                tag_1: "画面 01", t1_title: "安全なログイン", t1_desc: "このアプリはGoogleの安全な認証インフラストラクチャを使用しており、脆弱な従来のパスワードを回避します。",
+                t1_l1: "<strong>Googleで続行ボタン:</strong> クリックすると、Googleが本人確認を行い、メールアドレスとプロフィール写真のみを当社に提供します。", t1_l2: "<strong>ローカルデータ:</strong> アクセスすると、アプリはスマホのメモリに内部データベースを作成します。記録がインターネット上を移動することはありません。",
+                tag_2: "メイン画面", t2_title: "コントロールパネル (ダッシュボード)", t2_desc: "ここであなたの経済状態の即時X線写真を入手できます。すべてがリアルタイムで再計算されます。",
+                t2_l1: "<strong>通貨タブ:</strong> 上部のバーでウォレットを瞬時に切り替えます。", t2_l2: "<strong>総残高:</strong> すべての収入から支出を引いた正確な金額。", t2_l3: "<strong>貯蓄バー:</strong> 提案された20%の目標を達成するための進捗状況を測定します。", t2_l4: "<strong>固定費:</strong> 「住居」と「サービス」に分類されるすべてを自動的に合計します。",
+                tag_3: "中央ボタン (+)", t3_title: "トランザクションの記録", t3_desc: "お金を入力するには、従来の方法（手動）と自動化された方法（AI）の2つの方法があります。",
+                t3_l1: "<strong>手動入力:</strong> 支出（赤）または収入（緑）ボタンを選択します。正確な数値を書き、カテゴリリストを開いて保存を押します。", t3_l2: "<strong>音声入力 (VIP):</strong> VIPアカウントが必要です。マイクを押して「給料を50ドルもらった」と言います。AIはそれが収入であること、金額（50）、およびカテゴリ（給与）を検出します。", t3_l3: "<strong>テキスト分析:</strong> 話せない場合は、「テキスト」タブに自然な文を書くと、AIが同じ分類作業を行います。",
+                tag_4: "VIPモジュール", t4_title: "週次AI分析", t4_desc: "あなたの個人的な財務アドバイザー。このモジュールは過去7日間を数学的に評価します。",
+                t4_l1: "<strong>自動計算:</strong> 今週どれだけ入ってきて出ていったかを正確に示します。", t4_l2: "<strong>「分析」ボタン:</strong> 押すと、アルゴリズムが箇条書きのレポートを生成します。", t4_l3: "<strong>漏れの検出:</strong> どのカテゴリで最もお金を使ったかを明示的に教えてくれます。", t4_l4: "<strong>赤いアラート:</strong> 支出が収入を上回った場合、AIは購入を中止するように重大な警告を発します。",
+                tag_5: "リストアイコン", t5_title: "履歴とカレンダー", t5_desc: "ここは、数日前、数週間前、または数ヶ月前に何に費やしたかを確認するために時間をナビゲートする場所です。",
+                t5_l1: "<strong>カレンダードット:</strong> 動きを記録する毎日、カレンダーのその数字の下に色付きのドットが表示されます。", t5_l2: "<strong>時間フィルター:</strong> カレンダーの下にあるボタンを使用して、日、週、または月ごとにデータをグループ化します。", t5_l3: "<strong>24時間編集:</strong> 鉛筆アイコンを使用してログを変更します（会計上のセキュリティのため、最近の取引のみ）。",
+                tag_6: "有効化チュートリアル", t6_title: "VIPアカウントの有効化方法", t6_desc: "AI、無制限の色、および高度な分析にアクセスするには、次の手順に従ってください。",
+                t6_p1: "ステップ 1", t6_d1: "プロフィール写真（設定）をタップし、「プランを表示」バナーまたは黄色の更新バナーをクリックします。", t6_p2: "ステップ 2", t6_d2: "WhatsAppにリダイレクトされます。プランをリクエストして支払いを済ませます。安全なコード（例：20261231-A4F8B）を受け取ります。", t6_p3: "ステップ 3", t6_d3: "アプリの設定に戻り、「コードを利用」にコードを貼り付けると、アプリは自動的にVIPモードで再起動します。",
+                tag_7: "セキュリティチュートリアル", t7_title: "バックアップの生成と復元 (AES-256)", t7_desc: "スマホを変更したり、ブラウザをクリアしたりする場合は、情報が必要です。あなたをスパイするためのサーバーを使用していないため、独自の暗号化されたバックアップを保存します。",
+                t7_h1: "📤 バックアップ（データの保存）方法:", t7_b1_1: "設定パネルを開きます。", t7_b1_2: "緑色の「暗号化バックアップ」セクションを探します。", t7_b1_3: "「WhatsAppに送信」を押し、シークレットキーを作成します。", t7_b1_4: "巨大なコードブロックを個人のチャットに保存します。",
+                t7_h2: "📥 復元（データの回復）方法:", t7_b2_1: "WhatsAppから巨大なブロックをコピーします。", t7_b2_2: "同じGoogleアカウントを使用して、新しいスマホからアプリにログインします。", t7_b2_3: "設定にコードを貼り付け、復元を押します。", t7_b2_4: "元のシークレットキーを入力してすべてを復号化します。",
+                tag_8: "プロフィール写真", t8_title: "グローバル設定とカスタマイズ", t8_desc: "アプリの背後にある歯車。ここでは、アプリの外観と計算方法を制御します。",
+                t8_l1: "<strong>国と通貨:</strong> ベースの地域と最大3つの異なる通貨を設定します（ドルでの貯蓄を分けるのに最適です）。", t8_l2: "<strong>VIPテーマ (タブ 1):</strong> 12のプロフェッショナルな視覚スタイルからワンクリックで選択します。", t8_l3: "<strong>VIP背景 (タブ 2):</strong> 背景またはカードの色に正確な16進数の色を選択します。", t8_l4: "<strong>VIPフォント (タブ 3):</strong> アプリのタイポグラフィと文字の色を変更します。",
+                foot_back: "← ホームに戻る"
+            }
         };
 
-        window.onload = () => {
-            const savedLang = localStorage.getItem('billetera_web_lang') || 'es'; const safeLang = i18n[savedLang] ? savedLang : 'en';
+        function changeLanguage(langCode) {
+            const safeLang = i18n[langCode] ? langCode : 'en';
             document.getElementById('html-tag').lang = safeLang;
-            if(safeLang === 'ar') document.body.setAttribute('dir', 'rtl');
-            document.querySelectorAll('[data-i18n]').forEach(el => { if(i18n[safeLang][el.getAttribute('data-i18n')]) el.innerHTML = i18n[safeLang][el.getAttribute('data-i18n')]; });
-            if(document.getElementById('searchBox')) document.getElementById('searchBox').placeholder = i18n[safeLang].search_ph;
+            document.title = i18n[safeLang].page_title;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(i18n[safeLang][key]) el.innerHTML = i18n[safeLang][key];
+            });
+
+            const searchBox = document.getElementById('searchBox');
+            if(searchBox) {
+                const phKey = searchBox.getAttribute('data-i18n-ph');
+                if(i18n[safeLang][phKey]) searchBox.placeholder = i18n[safeLang][phKey];
+            }
+            if(document.getElementById('hero-title')) {
+                document.getElementById('hero-title').innerHTML = i18n[safeLang].hero_title;
+            }
+        }
+
+        function updateLocalization(countryName) {
+            let countryData = COUNTRIES.find(c => c.name === countryName);
+            if (!countryData) {
+                countryName = 'Perú';
+                countryData = COUNTRIES.find(c => c.name === 'Perú');
+            }
+            changeLanguage(countryData.lang);
+            localStorage.setItem('billetera_web_lang', countryData.lang);
+            localStorage.setItem('billetera_web_country', countryName);
+        }
+
+        window.onload = () => {
+            const select = document.getElementById('countrySwitcher');
+            COUNTRIES.sort((a, b) => a.name.localeCompare(b.name)).forEach(c => {
+                const option = document.createElement('option');
+                option.value = c.name;
+                option.textContent = `${c.name} (${c.defaultCurr})`;
+                option.className = "bg-[#1e1e1e] text-white";
+                select.appendChild(option);
+            });
+            
+            let savedCountry = localStorage.getItem('billetera_web_country');
+            if (!savedCountry || !COUNTRIES.find(c => c.name === savedCountry)) {
+                savedCountry = 'Perú';
+            }
+            select.value = savedCountry;
+            updateLocalization(savedCountry);
         };
 
         function filterTutorial() {
-            let input = document.getElementById('searchBox').value.toLowerCase(); let items = document.getElementsByClassName('search-item');
+            let input = document.getElementById('searchBox').value.toLowerCase();
+            let items = document.getElementsByClassName('search-item');
             for (let i = 0; i < items.length; i++) {
-                if (items[i].getAttribute('data-keywords').toLowerCase().includes(input) || items[i].innerText.toLowerCase().includes(input)) items[i].style.display = "block"; else items[i].style.display = "none";
+                let keywords = items[i].getAttribute('data-keywords').toLowerCase();
+                let text = items[i].innerText.toLowerCase();
+                if (keywords.includes(input) || text.includes(input)) {
+                    items[i].style.display = "block";
+                } else {
+                    items[i].style.display = "none";
+                }
             }
         }
     </script>

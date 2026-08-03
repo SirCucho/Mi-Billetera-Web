@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Billetera - Controla tus Finanzas</title>
     
-    <!-- FAVICON -->
-    <link rel="icon" href="favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="favicon.png">
+    <!-- FAVICON (SVG Integrado Original) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMzYjgyZjYiLz48cGF0aCBkPSJNNDQgMTRjNiA0IDggMTIgNCAxOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwb2x5Z29uIHBvaW50cz0iNDgsMTIgNDMsMTYgNTAsMTYiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTIgMjhoNDB2MjBhNCA0IDAgMCAxLTQgNGgtMzJhNCA0IDAgMCAxLTQtNHoiIGZpbGw9IiMwZWE1ZTkiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTEyIDI4YTQgNCAwIDAgMSA0LTRoMzJhNCA0IDAgMCAxIDQgNHY2aC00MHoiIGZpbGw9IiMzOGJkZjgiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iMjYiIGN5PSI0MiIgcj0iMyIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,10 +14,7 @@
     <script>
         tailwind.config = {
             theme: {
-                extend: {
-                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
-                    colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', success: '#10b981', warning: '#eab308' }
-                }
+                extend: { fontFamily: { sans: ['Outfit', 'sans-serif'] }, colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', success: '#10b981', warning: '#eab308' } }
             }
         }
     </script>
@@ -82,6 +78,7 @@
                 <a href="#vip" class="hover:text-warning transition flex items-center gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> <span data-i18n="nav_prem">Premium</span></a>
                 <a href="tutorial.html" data-i18n="nav_how" class="hidden md:block hover:text-white transition">Cómo Funciona</a>
                 
+                <!-- SELECTOR DE PAÍSES GLOBALES -->
                 <div class="flex items-center gap-1.5 bg-[#1e1e1e] border border-[#27272a] rounded-lg px-2 py-1 hover:border-accent transition-colors">
                     <svg class="w-3.5 h-3.5 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
                     <select id="countrySwitcher" onchange="updateLocalization(this.value)" class="bg-transparent text-white text-xs outline-none cursor-pointer w-20 sm:w-auto overflow-hidden text-ellipsis whitespace-nowrap"></select>
@@ -92,7 +89,7 @@
         </div>
     </nav>
 
-    <!-- HERO -->
+    <!-- SECCIÓN HERO -->
     <header class="pt-28 md:pt-36 pb-16 md:pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-center justify-between">
             <div class="w-full md:w-1/2 space-y-6 text-center md:text-left z-10">
@@ -138,7 +135,7 @@
                 <div class="bg-bg p-6 rounded-3xl border border-border hover:border-accent transition-colors shadow-lg">
                     <div class="w-14 h-14 bg-accent/10 text-accent rounded-xl flex items-center justify-center mb-5"><svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
                     <h3 class="text-xl font-bold mb-3" data-i18n="f2_title">Privacidad Total</h3>
-                    <p class="text-secondary text-sm leading-relaxed" data-i18n="f2_desc">Tu seguridad es lo primero. Tus datos nunca tocan nuestros servidores ni se exponen a terceros. Todo se procesa y almacena en la memoria interna de tu celular de forma cifrada. Si lo deseas, puedes crear respaldos encriptados con seguridad AES-256 enviados directamente a tu próprio chat de WhatsApp.</p>
+                    <p class="text-secondary text-sm leading-relaxed" data-i18n="f2_desc">Tu seguridad es lo primero. Tus datos nunca tocan nuestros servidores ni se exponen a terceros. Todo se procesa y almacena en la memoria interna de tu celular de forma cifrada. Si lo deseas, puedes crear respaldos encriptados con seguridad AES-256 enviados directamente a tu propio chat de WhatsApp.</p>
                 </div>
 
                 <div class="bg-bg p-6 rounded-3xl border border-warning/30 hover:border-warning transition-colors relative overflow-hidden sm:col-span-2 lg:col-span-1 shadow-lg">
@@ -166,20 +163,20 @@
                 <div class="bg-card p-6 md:p-8 rounded-[2rem] border border-border text-center shadow-lg hover:border-warning/50 transition duration-300 flex flex-col justify-center">
                     <h3 class="font-bold text-secondary uppercase text-xs tracking-widest mb-3" data-i18n="plan_1_title">1 Mes</h3>
                     <p id="price-1" class="text-4xl md:text-5xl font-extrabold text-white mb-2">$3.00</p>
-                    <p class="text-xs text-secondary mt-auto" data-i18n="plan_sub">USD</p>
+                    <p class="text-xs text-secondary mt-auto" data-i18n="plan_sub">MENSUAL</p>
                 </div>
                 
                 <div class="bg-card p-6 md:p-8 rounded-[2rem] border border-warning/50 text-center shadow-[0_0_25px_rgba(234,179,8,0.15)] relative transform sm:scale-105 z-10 flex flex-col justify-center">
                     <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-warning text-black text-[10px] font-bold px-4 py-1 rounded-full tracking-widest shadow-md" data-i18n="plan_pop">POPULAR</div>
                     <h3 class="font-bold text-warning uppercase text-xs tracking-widest mb-3" data-i18n="plan_2_title">1 Año</h3>
                     <p id="price-2" class="text-5xl md:text-6xl font-extrabold text-white mb-2 drop-shadow-md">$15.00</p>
-                    <p class="text-xs text-warning/80 mt-auto font-medium" data-i18n="plan_sub">USD</p>
+                    <p class="text-xs text-warning/80 mt-auto font-medium" data-i18n="plan_sub">ANUAL</p>
                 </div>
                 
                 <div class="bg-card p-6 md:p-8 rounded-[2rem] border border-border text-center shadow-lg hover:border-warning/50 transition duration-300 flex flex-col justify-center">
                     <h3 class="font-bold text-secondary uppercase text-xs tracking-widest mb-3" data-i18n="plan_3_title">Vitalicio</h3>
                     <p id="price-3" class="text-4xl md:text-5xl font-extrabold text-white mb-2">$45.00</p>
-                    <p class="text-xs text-secondary mt-auto" data-i18n="plan_3_sub">Único pago USD</p>
+                    <p class="text-xs text-secondary mt-auto" data-i18n="plan_3_sub">PAGO ÚNICO</p>
                 </div>
             </div>
 
@@ -307,9 +304,8 @@
                         <div class="phone-mockup w-full max-w-[240px] aspect-[9/19] z-10"><div class="phone-notch"></div><div class="phone-screen"><img src="paso3.png" loading="lazy" alt="Paso 3" class="w-full h-full object-cover object-top" onerror="this.style.display='none'"></div></div>
                     </div>
                 </div>
-
             </div>
-
+            
             <div class="mt-20 text-center">
                 <a href="tutorial.html" class="inline-flex items-center gap-3 bg-card border border-border text-white px-8 md:px-10 py-4 rounded-xl font-bold hover:bg-border hover:text-accent transition-all shadow-lg hover:scale-105">
                     <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
@@ -322,36 +318,144 @@
     <!-- FOOTER -->
     <footer class="bg-card border-t border-border py-10 px-4 text-center">
         <p class="text-secondary text-sm mb-4">Mi Billetera &copy; 2026 — Todos los derechos reservados.</p>
-        <a href="Politica de privacidad.html" class="text-secondary hover:text-white transition" data-i18n="foot_priv">Política de Privacidad</a>
+        <a href="Politica%20de%20privacidad.html" class="text-secondary hover:text-white transition" data-i18n="foot_priv">Política de Privacidad</a>
     </footer>
 
-    <!-- LÓGICA DE IDIOMAS Y 195 PAÍSES -->
+    <!-- LÓGICA DE IDIOMAS GLOBAL -->
     <script>
-        const RAW_COUNTRIES = "Afganistán|AFN|ar,Albania|ALL|en,Alemania|EUR|de,Andorra|EUR|es,Angola|AOA|pt,Antigua y Barbuda|XCD|en,Arabia Saudita|SAR|ar,Argelia|DZD|ar,Argentina|ARS|es,Armenia|AMD|ru,Australia|AUD|en,Austria|EUR|de,Azerbaiyán|AZN|ru,Bahamas|BSD|en,Bahréin|BHD|ar,Bangladesh|BDT|en,Barbados|BBD|en,Bélgica|EUR|fr,Belice|BZD|en,Benín|XOF|fr,Bielorrusia|BYN|ru,Bolivia|BOB|es,Bosnia y Herzegovina|BAM|en,Botsuana|BWP|en,Brasil|BRL|pt,Brunéi|BND|en,Bulgaria|BGN|en,Burkina Faso|XOF|fr,Burundi|BIF|fr,Cabo Verde|CVE|pt,Camboya|KHR|en,Camerún|XAF|fr,Canadá|CAD|en,Catar|QAR|ar,Chad|XAF|fr,Chile|CLP|es,China|CNY|zh,Chipre|EUR|en,Colombia|COP|es,Corea del Sur|KRW|en,Costa Rica|CRC|es,Croacia|EUR|en,Cuba|CUP|es,Dinamarca|DKK|en,Ecuador|USD|es,Egipto|EGP|ar,El Salvador|USD|es,Emiratos Árabes|AED|ar,Eslovaquia|EUR|en,Eslovenia|EUR|en,España|EUR|es,Estados Unidos|USD|en,Estonia|EUR|en,Filipinas|PHP|en,Finlandia|EUR|en,Francia|EUR|fr,Georgia|GEL|ru,Grecia|EUR|en,Guatemala|GTQ|es,Guinea Ecuatorial|XAF|es,Haití|HTG|fr,Honduras|HNL|es,Hungría|HUF|en,India|INR|en,Indonesia|IDR|en,Irak|IQD|ar,Irán|IRR|ar,Irlanda|EUR|en,Islandia|ISK|en,Israel|ILS|en,Italia|EUR|it,Jamaica|JMD|en,Japón|JPY|ja,Jordania|JOD|ar,Kazajistán|KZT|ru,Kenia|KES|en,Kuwait|KWD|ar,Letonia|EUR|en,Líbano|LBP|ar,Lituania|EUR|en,Luxemburgo|EUR|fr,Macedonia|MKD|en,Madagascar|MGA|fr,Malasia|MYR|en,Malta|EUR|en,Marruecos|MAD|ar,México|MXN|es,Moldavia|MDL|ru,Mónaco|EUR|fr,Nicaragua|NIO|es,Nigeria|NGN|en,Noruega|NOK|en,Nueva Zelanda|NZD|en,Omán|OMR|ar,Países Bajos|EUR|en,Pakistán|PKR|en,Panamá|PAB|es,Paraguay|PYG|es,Perú|PEN|es,Polonia|PLN|en,Portugal|EUR|pt,Reino Unido|GBP|en,República Checa|CZK|en,República Dominicana|DOP|es,Rumania|RON|en,Rusia|RUB|ru,Senegal|XOF|fr,Serbia|RSD|en,Singapur|SGD|en,Siria|SYP|ar,Sudáfrica|ZAR|en,Suecia|SEK|en,Suiza|CHF|de,Tailandia|THB|en,Taiwán|TWD|zh,Tanzania|TZS|en,Turquía|TRY|en,Ucrania|UAH|ru,Uruguay|UYU|es,Venezuela|VES|es,Vietnam|VND|en";
+        const RAW_COUNTRIES = "Alemania|EUR|de,Argentina|ARS|es,Australia|AUD|en,Brasil|BRL|pt,Canadá|CAD|en,Chile|CLP|es,Colombia|COP|es,España|EUR|es,Estados Unidos|USD|en,Francia|EUR|fr,Italia|EUR|it,Japón|JPY|ja,México|MXN|es,Perú|PEN|es,Reino Unido|GBP|en,Suiza|CHF|de";
         const COUNTRIES = RAW_COUNTRIES.split(',').map(item => { const [name, curr, lang] = item.split('|'); return { name, defaultCurr: curr, lang }; });
-        const USD_RATES = { 'PEN': 3.75, 'EUR': 0.92, 'GBP': 0.79, 'BRL': 5.15, 'MXN': 16.8, 'ARS': 1000, 'COP': 3900, 'CLP': 950, 'BOB': 6.9, 'CAD': 1.37, 'AUD': 1.52, 'CNY': 7.24, 'JPY': 150, 'RUB': 90, 'USD': 1 };
-        const ALL_CURRENCIES = { 'PEN': 'S/', 'USD': '$', 'EUR': '€', 'GBP': '£', 'CNY': '¥', 'BRL': 'R$', 'MXN': '$', 'CAD': 'CA$', 'AUD': 'A$', 'ARS': '$', 'COP': '$', 'CLP': '$', 'BOB': 'Bs', 'JPY': '¥', 'RUB': '₽' };
+        
+        const USD_RATES = { 'PEN': 3.75, 'EUR': 0.92, 'GBP': 0.79, 'BRL': 5.15, 'MXN': 16.8, 'ARS': 1000, 'COP': 3900, 'CLP': 950, 'CAD': 1.37, 'AUD': 1.52, 'JPY': 150, 'CHF': 0.88, 'USD': 1 };
+        const ALL_CURRENCIES = { 'PEN': 'S/', 'USD': '$', 'EUR': '€', 'GBP': '£', 'BRL': 'R$', 'MXN': '$', 'CAD': 'CA$', 'ARS': '$', 'COP': '$', 'CLP': '$', 'JPY': '¥', 'AUD': 'A$', 'CHF': 'CHF' };
 
         const i18n = {
-            es: { nav_feat:"Características", nav_prem:"Premium", nav_how:"Cómo Funciona", nav_open:"Abrir App", hero_title:"Tu dinero, <br><span class='gradient-text'>bajo control total.</span>", hero_sub:"Registra tus ingresos y gastos en segundos, analiza tus finanzas y obtén recomendaciones de ahorro. Todo desde tu celular, sin comprometer tu privacidad.", hero_btn1:"Comenzar Gratis", hero_btn2:"Ver paso a paso", feat_title:"Descubre lo que puedes lograr", feat_sub:"Diseñada para ser rápida, segura y fácil de entender.", f1_title:"Control Detallado", f1_desc:"Registra gastos e ingresos en segundos. Visualiza tu balance semanal, mensual o anual mediante gráficos claros y entiende exactamente en qué se va tu dinero con nuestro sistema de categorización inteligente. Nunca más llegarás a fin de mes preguntándote dónde quedó tu sueldo.", f2_title:"Privacidad Total", f2_desc:"Tu seguridad es lo primero. Tus datos nunca tocan nuestros servidores ni se exponen a terceros. Todo se procesa y almacena en la memoria interna de tu celular de forma cifrada. Si lo deseas, puedes crear respaldos encriptados con seguridad AES-256 enviados directamente a tu propio chat de WhatsApp.", f3_title:"Asistente de Voz IA", f3_desc:"Solo di 'Ayer gasté 15 dólares en comida' o 'Me pagaron mi sueldo de 500'. Nuestra Inteligencia Artificial detectará el monto, la fecha y la categoría automáticamente sin que tengas que teclear absolutamente nada. Simplifica tu rutina y ahorra tiempo.", vip_title:"Planes y Beneficios", vip_sub:"Elige el plan que mejor se adapte a tus necesidades financieras. Los precios se ajustan a tu moneda local.", plan_1_title:"1 Mes", plan_2_title:"1 Año", plan_3_title:"Vitalicio", plan_pop:"POPULAR", plan_sub:"USD", plan_3_sub:"ÚNICO PAGO USD", tbl_feat:"Características de la App", f_reg:"Registro de ingresos y gastos ilimitados", f_sec:"Almacenamiento local seguro y privado", f_back:"Copia de seguridad vía WhatsApp (AES-256)", f_ai_anal:"Evaluación Semanal Inteligente (IA)", f_voice:"Asistente de Registro por Voz (IA)", f_color:"Personalización total de colores", btn_upgrade:"Hacerme VIP por WhatsApp", btn_sub:"También puedes pagar escaneando el código QR directamente dentro de la App.", tut_title:"Aprende a usarla en 3 pasos", tut_sub:"Es tan fácil que no necesitarás manual de instrucciones.", t1_title:"Inicia Sesión con Google", t1_desc:"Olvídate de recordar y gestionar contraseñas complicadas que pueden ser vulneradas. Ingresa de forma 100% segura, rápida y transparente utilizando tu cuenta oficial de Google con un solo clic. Tu sesión estará protegida por la infraestructura de seguridad más avanzada del mundo.", t1_b1:"Autenticación blindada", t2_title:"Registra con o sin IA", t2_desc:"Navega a la pestaña central 'Registrar'. Puedes escribir el monto y elegir la categoría manualmente como en las apps tradicionales, o usar tu voz y dictarle a tu teléfono si eres usuario VIP. ¡El panel de inicio y tu balance se actualizarán al instante de forma automática!", t2_link:"Ir a la app →", t3_title:"Respalda en WhatsApp", t3_desc:"Tus datos son completamente tuyos y nunca se suben a la nube. Dirígete a Ajustes, crea una contraseña única y la app encriptará toda tu información para enviarla en un mensaje seguro a tu propio WhatsApp. Así, puedes cambiar de celular y restaurar tus datos cuando quieras.", t3_b1:"Cifrado de Grado Militar AES-256", btn_full_tutorial:"Ver Tutorial Detallado Interactivo", foot_priv:"Política de Privacidad", only_vip:"SOLO VIP", modal_title:"Elige tu Plan VIP", modal_btn:"Continuar a WhatsApp" },
-            
-            en: { nav_feat:"Features", nav_prem:"Premium", nav_how:"How it works", nav_open:"Open App", hero_title:"Your money, <br><span class='gradient-text'>under total control.</span>", hero_sub:"Record your income and expenses in seconds, analyze your finances, and get savings recommendations. All from your phone, keeping your privacy intact.", hero_btn1:"Start Free", hero_btn2:"Step by step", feat_title:"Discover what you can achieve", feat_sub:"Designed to be fast, secure, and easy to understand.", f1_title:"Detailed Control", f1_desc:"Log expenses and income in seconds. View your weekly or monthly balance with clear insights, and understand exactly where your money goes using smart categories. Never wonder where your paycheck went again.", f2_title:"Total Privacy", f2_desc:"Your security comes first. Your data never touches our servers. Everything is processed and encrypted strictly on your phone's internal memory. You can create AES-256 encrypted backups sent directly to your WhatsApp.", f3_title:"AI Voice Assistant", f3_desc:"Just say 'I spent 15 on food' or 'Got my 500 salary'. Our AI will detect the amount, date, and category automatically so you don't have to type anything. Save time and simplify your routine.", vip_title:"Plans & Benefits", vip_sub:"Choose the plan that best fits your financial needs. Prices adjust to your local currency.", plan_1_title:"1 Month", plan_2_title:"1 Year", plan_3_title:"Lifetime", plan_pop:"POPULAR", plan_sub:"USD", plan_3_sub:"ONE-TIME USD", tbl_feat:"App Features", f_reg:"Unlimited tracking", f_sec:"Secure local storage", f_back:"Data backup via WhatsApp (AES-256)", f_ai_anal:"Smart Weekly Evaluation (AI)", f_voice:"Voice Recording Assistant (AI)", f_color:"Full color customization", btn_upgrade:"Become VIP via WhatsApp", btn_sub:"You can also pay by scanning the QR code directly inside the App.", tut_title:"Learn to use it in 3 steps", tut_sub:"It's so easy you won't need a manual.", t1_title:"Sign in with Google", t1_desc:"Forget about complicated passwords that can be breached. Log in securely, quickly, and transparently using your official Google account with a single click. Supported by world-class security infrastructure.", t1_b1:"Bulletproof auth", t2_title:"Record with or without AI", t2_desc:"Go to the 'Record' tab. Enter amounts manually and pick categories like traditional apps, or just dictate them to your phone if you're a VIP user. The dashboard and your total balance will update instantly!", t2_link:"Go to app →", t3_title:"Backup to WhatsApp", t3_desc:"Your data is yours and is never uploaded to the cloud. Go to Settings, create a unique password, and the app will encrypt your info to send it securely to your own WhatsApp. Easily restore it if you change phones.", t3_b1:"AES-256 Military Encryption", btn_full_tutorial:"View Detailed Tutorial", foot_priv:"Privacy Policy", only_vip:"VIP ONLY", modal_title:"Choose your VIP Plan", modal_btn:"Continue to WhatsApp" },
-            
-            pt: { nav_feat:"Recursos", nav_prem:"Premium", nav_how:"Como funciona", nav_open:"Abrir App", hero_title:"Seu dinheiro, <br><span class='gradient-text'>sob controle total.</span>", hero_sub:"Registre receitas e despesas em segundos. Tudo do seu celular, sem comprometer a privacidade.", hero_btn1:"Começar Grátis", hero_btn2:"Ver passo a passo", feat_title:"Descubra o que você pode alcançar", feat_sub:"Rápido, seguro e fácil de entender.", f1_title:"Controle Detalhado", f1_desc:"Visualize seu saldo semanal ou mensal com gráficos claros e entenda exatamente para onde vai seu dinheiro com categorias inteligentes.", f2_title:"Privacidade Total", f2_desc:"Sua segurança em primeiro lugar. Seus dados nunca tocam nossos servidores. Crie backups criptografados com AES-256 direto no seu WhatsApp.", f3_title:"Assistente de Voz IA", f3_desc:"Apenas diga 'Gastei 15 em comida'. Nossa IA detecta valor, data e categoria automaticamente. Economize tempo.", vip_title:"Planos e Benefícios", vip_sub:"Preços ajustados à sua moeda local.", plan_1_title:"1 Mês", plan_2_title:"1 Ano", plan_3_title:"Vitalício", plan_pop:"POPULAR", plan_sub:"USD", plan_3_sub:"PAGAMENTO ÚNICO", tbl_feat:"Recursos", f_reg:"Registros ilimitados", f_sec:"Armazenamento local privado", f_back:"Backup no WhatsApp (AES-256)", f_ai_anal:"Avaliação Semanal Inteligente", f_voice:"Assistente de Voz (IA)", f_color:"Cores VIP", btn_upgrade:"Ser VIP via WhatsApp", btn_sub:"Você também pode pagar pelo App.", tut_title:"Aprenda em 3 passos", tut_sub:"Fácil e direto.", t1_title:"Login com Google", t1_desc:"Esqueça senhas complicadas. Entre de forma rápida e segura.", t1_b1:"Autenticação blindada", t2_title:"Registre com IA", t2_desc:"Digite ou fale. Seu saldo é atualizado instantaneamente!", t2_link:"Ir para o app →", t3_title:"Backup no WhatsApp", t3_desc:"Seus dados são seus. Criptografe e envie para seu WhatsApp.", t3_b1:"Criptografia AES-256", btn_full_tutorial:"Ver Tutorial Interativo", foot_priv:"Política de Privacidade", only_vip:"SÓ VIP", modal_title:"Escolha seu Plano", modal_btn:"Continuar para WhatsApp" },
-            
-            fr: { nav_feat:"Fonctions", nav_prem:"Premium", nav_how:"Guide", nav_open:"Ouvrir l'App", hero_title:"Votre argent, <br><span class='gradient-text'>sous contrôle.</span>", hero_sub:"Suivez vos dépenses en quelques secondes. 100% privé.", hero_btn1:"Commencer", hero_btn2:"Pas à pas", feat_title:"Découvrez", feat_sub:"Rapide, sûr et facile.", f1_title:"Contrôle détaillé", f1_desc:"Consultez votre solde avec des graphiques clairs.", f2_title:"Confidentialité Totale", f2_desc:"Vos données ne touchent jamais nos serveurs. Sauvegardez via WhatsApp.", f3_title:"Assistant Vocal", f3_desc:"Dites simplement 'J'ai dépensé 15'. Notre IA détectera tout.", vip_title:"Plans", vip_sub:"Prix dans votre devise locale.", plan_1_title:"1 Mois", plan_2_title:"1 An", plan_3_title:"À vie", plan_pop:"POPULAIRE", plan_sub:"USD", plan_3_sub:"UNIQUE", tbl_feat:"Caractéristiques", f_reg:"Suivi illimité", f_sec:"Stockage privé", f_back:"Sauvegarde WhatsApp", f_ai_anal:"Analyse IA", f_voice:"Voix IA", f_color:"Couleurs", btn_upgrade:"Devenir VIP", btn_sub:"Paiement in-app disponible.", tut_title:"3 étapes", tut_sub:"Pas besoin de manuel.", t1_title:"Connexion Google", t1_desc:"Connectez-vous en toute sécurité avec Google.", t1_b1:"Auth blindée", t2_title:"Enregistrer avec IA", t2_desc:"Saisissez manuellement ou dictez à votre téléphone.", t2_link:"Aller à l'app →", t3_title:"Sauvegarde WhatsApp", t3_desc:"Cryptez vos informations pour les envoyer à WhatsApp.", t3_b1:"Cryptage AES-256", btn_full_tutorial:"Voir le Tutoriel", foot_priv:"Confidentialité", only_vip:"VIP UNIQUEMENT", modal_title:"Choisir un plan", modal_btn:"Continuer vers WhatsApp" },
-            
-            de: { nav_feat:"Funktionen", nav_prem:"Premium", nav_how:"Guide", nav_open:"App öffnen", hero_title:"Dein Geld, <br><span class='gradient-text'>volle Kontrolle.</span>", hero_sub:"Erfassen Sie Ausgaben in Sekunden. Alles privat.", hero_btn1:"Kostenlos starten", hero_btn2:"Schritt für Schritt", feat_title:"Entdecken", feat_sub:"Schnell, sicher und einfach.", f1_title:"Detailkontrolle", f1_desc:"Sehen Sie sich Ihren Saldo mit klaren Grafiken an.", f2_title:"Privatsphäre", f2_desc:"Ihre Daten bleiben verschlüsselt auf Ihrem Handy.", f3_title:"KI-Sprache", f3_desc:"Sagen Sie einfach 'Ich habe 15 ausgegeben'.", vip_title:"Pläne", vip_sub:"Preise in Ihrer Währung.", plan_1_title:"1 Monat", plan_2_title:"1 Jahr", plan_3_title:"Lebenslang", plan_pop:"BELIEBT", plan_sub:"USD", plan_3_sub:"EINMALIG", tbl_feat:"Funktionen", f_reg:"Unbegrenzt", f_sec:"Privater Speicher", f_back:"WhatsApp Backup", f_ai_anal:"KI-Analyse", f_voice:"KI-Stimme", f_color:"Farben", btn_upgrade:"VIP werden", btn_sub:"In-App Zahlung möglich.", tut_title:"3 Schritte", tut_sub:"Kein Handbuch nötig.", t1_title:"Google Login", t1_desc:"Sicher und schnell mit Google einloggen.", t1_b1:"Sicherer Login", t2_title:"Mit KI erfassen", t2_desc:"Tippen Sie Beträge ein oder diktieren Sie.", t2_link:"Zur App →", t3_title:"WhatsApp Backup", t3_desc:"Verschlüsselt an WhatsApp senden.", t3_b1:"AES-256", btn_full_tutorial:"Zum Tutorial", foot_priv:"Datenschutz", only_vip:"NUR VIP", modal_title:"Plan wählen", modal_btn:"Zu WhatsApp" },
-
-            it: { nav_feat:"Funzioni", nav_prem:"Premium", nav_how:"Guida", nav_open:"Apri App", hero_title:"I tuoi soldi, <br><span class='gradient-text'>controllo totale.</span>", hero_sub:"Registra spese in pochi secondi. 100% privato.", hero_btn1:"Inizia", hero_btn2:"Passo dopo passo", feat_title:"Scopri", feat_sub:"Veloce, sicuro.", f1_title:"Controllo", f1_desc:"Visualizza il tuo saldo con grafici chiari.", f2_title:"Privacy", f2_desc:"I tuoi dati non toccano mai i nostri server.", f3_title:"Assistente Vocale", f3_desc:"Dì solo 'Ho speso 15'. L'IA farà il resto.", vip_title:"Piani", vip_sub:"Prezzi nella tua valuta.", plan_1_title:"1 Mese", plan_2_title:"1 Anno", plan_3_title:"A vita", plan_pop:"POPOLARE", plan_sub:"USD", plan_3_sub:"UNA TANTUM", tbl_feat:"Caratteristiche", f_reg:"Illimitato", f_sec:"Privato", f_back:"Backup WhatsApp", f_ai_anal:"Analisi IA", f_voice:"Voce IA", f_color:"Colori", btn_upgrade:"Diventa VIP", btn_sub:"Pagamento in-app.", tut_title:"3 Passaggi", tut_sub:"Facile.", t1_title:"Login Google", t1_desc:"Accedi in modo sicuro con Google.", t1_b1:"Sicuro", t2_title:"Registra IA", t2_desc:"Scrivi l'importo o dittalo.", t2_link:"Vai all'app →", t3_title:"Backup", t3_desc:"Criptato su WhatsApp.", t3_b1:"AES-256", btn_full_tutorial:"Vedi Tutorial", foot_priv:"Privacy Policy", only_vip:"SOLO VIP", modal_title:"Scegli Piano", modal_btn:"Continua su WhatsApp" },
-            
-            ru: { nav_feat:"Функции", nav_prem:"Премиум", nav_how:"Гид", nav_open:"Открыть", hero_title:"Ваши деньги, <br><span class='gradient-text'>полный контроль.</span>", hero_sub:"Отслеживайте расходы приватно.", hero_btn1:"Начать", hero_btn2:"Шаг за шагом", feat_title:"Откройте", feat_sub:"Быстро, безопасно.", f1_title:"Контроль", f1_desc:"Смотрите баланс и понимайте свои расходы.", f2_title:"Приватность", f2_desc:"Без серверов. Всё на телефоне.", f3_title:"Голосовой ИИ", f3_desc:"Скажите: 'Потратил 15'. ИИ всё поймет.", vip_title:"Планы", vip_sub:"В вашей валюте.", plan_1_title:"1 Месяц", plan_2_title:"1 Год", plan_3_title:"Навсегда", plan_pop:"ТОП", plan_sub:"USD", plan_3_sub:"РАЗОВО", tbl_feat:"Функции", f_reg:"Безлимит", f_sec:"Локально", f_back:"WhatsApp", f_ai_anal:"ИИ Анализ", f_voice:"ИИ Голос", f_color:"Цвета", btn_upgrade:"Стать VIP", btn_sub:"Оплата в приложении.", tut_title:"3 Шага", tut_sub:"Очень просто.", t1_title:"Google Login", t1_desc:"Вход через Google.", t1_b1:"Надежно", t2_title:"ИИ Запись", t2_desc:"Пишите или диктуйте.", t2_link:"В приложение →", t3_title:"Бэкап", t3_desc:"Шифрование WhatsApp.", t3_b1:"AES-256", btn_full_tutorial:"Туториал", foot_priv:"Конфиденциальность", only_vip:"ТОЛЬКО VIP", modal_title:"План", modal_btn:"Продолжить" },
-            
-            zh: { nav_feat:"功能", nav_prem:"高级版", nav_how:"指南", nav_open:"打开应用", hero_title:"您的资金，<br><span class='gradient-text'>完全控制。</span>", hero_sub:"私密跟踪您的支出。", hero_btn1:"免费开始", hero_btn2:"逐步指南", feat_title:"发现", feat_sub:"快速，安全。", f1_title:"控制", f1_desc:"查看图表余额。", f2_title:"隐私", f2_desc:"无服务器，本地存储。", f3_title:"AI语音", f3_desc:"只需说话，AI自动检测。", vip_title:"计划", vip_sub:"本地货币。", plan_1_title:"1个月", plan_2_title:"1年", plan_3_title:"终身", plan_pop:"热门", plan_sub:"USD", plan_3_sub:"一次性", tbl_feat:"功能", f_reg:"无限制", f_sec:"私密", f_back:"WhatsApp备份", f_ai_anal:"AI分析", f_voice:"AI语音", f_color:"颜色", btn_upgrade:"获取VIP", btn_sub:"支持应用内支付。", tut_title:"3步", tut_sub:"很简单。", t1_title:"Google登录", t1_desc:"安全登录。", t1_b1:"安全认证", t2_title:"AI记录", t2_desc:"输入或说话。", t2_link:"前往应用 →", t3_title:"备份", t3_desc:"加密至WhatsApp。", t3_b1:"AES-256", btn_full_tutorial:"查看教程", foot_priv:"隐私政策", only_vip:"仅限VIP", modal_title:"选择计划", modal_btn:"继续至WhatsApp" },
-            
-            ja: { nav_feat:"機能", nav_prem:"プレミアム", nav_how:"ガイド", nav_open:"アプリを開く", hero_title:"あなたのお金を、<br><span class='gradient-text'>完全にコントロール。</span>", hero_sub:"100%プライベートに記録。", hero_btn1:"開始", hero_btn2:"ステップバイステップ", feat_title:"発見", feat_sub:"迅速、安全。", f1_title:"管理", f1_desc:"残高を表示。", f2_title:"プライバシー", f2_desc:"サーバーなし。", f3_title:"AI音声", f3_desc:"話すだけ。", vip_title:"プラン", vip_sub:"現地通貨。", plan_1_title:"1ヶ月", plan_2_title:"1年", plan_3_title:"永久", plan_pop:"人気", plan_sub:"USD", plan_3_sub:"一括", tbl_feat:"機能", f_reg:"無制限", f_sec:"ローカル保存", f_back:"WhatsAppバックアップ", f_ai_anal:"AI分析", f_voice:"AI音声", f_color:"カラー", btn_upgrade:"VIPになる", btn_sub:"アプリ内決済。", tut_title:"3ステップ", tut_sub:"簡単です。", t1_title:"Googleログイン", t1_desc:"安全なログイン。", t1_b1:"安全", t2_title:"AIで記録", t2_desc:"入力または話す。", t2_link:"アプリへ →", t3_title:"バックアップ", t3_desc:"WhatsAppへ暗号化。", t3_b1:"AES-256", btn_full_tutorial:"チュートリアル", foot_priv:"プライバシーポリシー", only_vip:"VIPのみ", modal_title:"プランを選択", modal_btn:"WhatsAppへ" },
-            
-            ar: { nav_feat:"الميزات", nav_prem:"بريميوم", nav_how:"الدليل", nav_open:"افتح التطبيق", hero_title:"أموالك، <br><span class='gradient-text'>تحت السيطرة.</span>", hero_sub:"خاص 100٪.", hero_btn1:"ابدأ مجانا", hero_btn2:"خطوة بخطوة", feat_title:"اكتشف", feat_sub:"سريع وآمن.", f1_title:"تحكم", f1_desc:"رصيد واضح.", f2_title:"خصوصية", f2_desc:"لا خوادم.", f3_title:"صوت ذكي", f3_desc:"فقط تحدث.", vip_title:"الخطط", vip_sub:"العملة المحلية.", plan_1_title:"1 شهر", plan_2_title:"1 سنة", plan_3_title:"مدى الحياة", plan_pop:"شائع", plan_sub:"USD", plan_3_sub:"دفعة واحدة", tbl_feat:"الميزات", f_reg:"غير محدود", f_sec:"تخزين محلي", f_back:"نسخ WhatsApp", f_ai_anal:"تحليل ذكي", f_voice:"صوت ذكي", f_color:"ألوان", btn_upgrade:"احصل على VIP", btn_sub:"دفع داخل التطبيق.", tut_title:"3 خطوات", tut_sub:"بسيط.", t1_title:"دخول جوجل", t1_desc:"آمن.", t1_b1:"مصادقة آمنة", t2_title:"تسجيل ذكي", t2_desc:"اكتب أو تحدث.", t2_link:"للتطبيق →", t3_title:"نسخ احتياطي", t3_desc:"تشفير إلى واتساب.", t3_b1:"AES-256", btn_full_tutorial:"شاهد الشرح", foot_priv:"سياسة الخصوصية", only_vip:"VIP فقط", modal_title:"اختر الخطة", modal_btn:"متابعة إلى WhatsApp" }
+            es: {
+                page_title: "Mi Billetera - Controla tus Finanzas", nav_feat: "Características", nav_prem: "Premium", nav_how: "Cómo Funciona", nav_open: "Abrir App",
+                hero_title: "Tu dinero, <br><span class='gradient-text'>bajo control total.</span>",
+                hero_sub: "Registra tus ingresos y gastos en segundos, analiza tus finanzas y obtén recomendaciones de ahorro. Todo desde tu celular, sin comprometer tu privacidad.",
+                hero_btn1: "Comenzar Gratis", hero_btn2: "Ver paso a paso", feat_title: "Descubre lo que puedes lograr", feat_sub: "Diseñada para ser rápida, segura y fácil de entender.",
+                f1_title: "Control Detallado", f1_desc: "Registra gastos e ingresos en segundos. Visualiza tu balance semanal, mensual o anual mediante gráficos claros y entiende exactamente en qué se va tu dinero con nuestro sistema de categorización inteligente. Nunca más llegarás a fin de mes preguntándote dónde quedó tu sueldo.",
+                f2_title: "Privacidad Total", f2_desc: "Tu seguridad es lo primero. Tus datos nunca tocan nuestros servidores ni se exponen a terceros. Todo se procesa y almacena en la memoria interna de tu celular de forma cifrada. Si lo deseas, puedes crear respaldos encriptados con seguridad AES-256 enviados directamente a tu propio chat de WhatsApp.",
+                f3_title: "Asistente de Voz IA", f3_desc: "Solo di 'Ayer gasté 15 dólares en comida' o 'Me pagaron mi sueldo de 500'. Nuestra Inteligencia Artificial detectará el monto, la fecha y la categoría automáticamente sin que tengas que teclear absolutamente nada. Simplifica tu rutina y ahorra tiempo.",
+                vip_title: "Planes y Beneficios", vip_sub: "Elige el plan que mejor se adapte a tus necesidades financieras. Los precios se ajustan a tu moneda local.",
+                plan_1_title: "1 Mes", plan_2_title: "1 Año", plan_3_title: "Vitalicio", plan_pop: "POPULAR", plan_sub: "MENSUAL", plan_3_sub: "PAGO ÚNICO",
+                tbl_feat: "Características de la App", f_reg: "Registro de ingresos y gastos ilimitados", f_sec: "Almacenamiento local seguro y privado", f_back: "Copia de seguridad vía WhatsApp (AES-256)", f_ai_anal: "Evaluación Semanal Inteligente (IA)", f_voice: "Asistente de Registro por Voz (IA)", f_color: "Personalización total de colores",
+                btn_upgrade: "Hacerme VIP por WhatsApp", btn_sub: "También puedes pagar escaneando el código QR directamente dentro de la App.",
+                tut_title: "Aprende a usarla en 3 pasos", tut_sub: "Es tan fácil que no necesitarás manual de instrucciones.",
+                t1_title: "Inicia Sesión con Google", t1_desc: "Olvídate de recordar y gestionar contraseñas complicadas que pueden ser vulneradas. Ingresa de forma 100% segura, rápida y transparente utilizando tu cuenta oficial de Google con un solo clic. Tu sesión estará protegida por la infraestructura de seguridad más avanzada del mundo.", t1_b1: "Autenticación blindada",
+                t2_title: "Registra con o sin IA", t2_desc: "Navega a la pestaña central 'Registrar'. Puedes escribir el monto y elegir la categoría manualmente como en las apps tradicionales, o usar tu voz y dictarle a tu teléfono si eres usuario VIP. ¡El panel de inicio y tu balance se actualizarán al instante de forma automática!", t2_link: "Ir a la app →",
+                t3_title: "Respalda en WhatsApp", t3_desc: "Tus datos son completamente tuyos y nunca se suben a la nube. Dirígete a Ajustes, crea una contraseña única y la app encriptará toda tu información para enviarla en un mensaje seguro a tu propio WhatsApp. Así, puedes cambiar de celular y restaurar tus datos cuando quieras.", t3_b1: "Cifrado de Grado Militar AES-256",
+                btn_full_tutorial: "Ver Tutorial Detallado Interactivo", foot_priv: "Política de Privacidad", only_vip: "SOLO VIP", modal_title: "Elige tu Plan VIP", modal_btn: "Continuar a WhatsApp"
+            },
+            en: {
+                page_title: "Mi Billetera - Control Your Finances", nav_feat: "Features", nav_prem: "Premium", nav_how: "How it works", nav_open: "Open App",
+                hero_title: "Your money, <br><span class='gradient-text'>under total control.</span>",
+                hero_sub: "Record your income and expenses in seconds, analyze your finances, and get savings recommendations. All from your phone, keeping your privacy intact.",
+                hero_btn1: "Start Free", hero_btn2: "Step by step", feat_title: "Discover what you can achieve", feat_sub: "Designed to be fast, secure, and easy to understand.",
+                f1_title: "Detailed Control", f1_desc: "Log expenses and income in seconds. View your weekly, monthly, or yearly balance through clear graphs and understand exactly where your money goes with our smart categorization system. Never again will you reach the end of the month wondering where your paycheck went.",
+                f2_title: "Total Privacy", f2_desc: "Your security comes first. Your data never touches our servers nor is exposed to third parties. Everything is processed and stored encrypted in your phone's internal memory. If you wish, you can create AES-256 encrypted backups sent directly to your own WhatsApp chat.",
+                f3_title: "AI Voice Assistant", f3_desc: "Just say 'Yesterday I spent 15 dollars on food' or 'I got paid my 500 salary'. Our Artificial Intelligence will automatically detect the amount, date, and category without you having to type absolutely anything. Simplify your routine and save time.",
+                vip_title: "Plans and Benefits", vip_sub: "Choose the plan that best suits your financial needs. Prices adjust to your local currency.",
+                plan_1_title: "1 Month", plan_2_title: "1 Year", plan_3_title: "Lifetime", plan_pop: "POPULAR", plan_sub: "MONTHLY", plan_3_sub: "ONE-TIME PAYMENT",
+                tbl_feat: "App Features", f_reg: "Unlimited income and expense logging", f_sec: "Secure and private local storage", f_back: "Backup via WhatsApp (AES-256)", f_ai_anal: "Smart Weekly Evaluation (AI)", f_voice: "Voice Logging Assistant (AI)", f_color: "Full color customization",
+                btn_upgrade: "Become VIP via WhatsApp", btn_sub: "You can also pay by scanning the QR code directly within the App.",
+                tut_title: "Learn to use it in 3 steps", tut_sub: "It's so easy you won't need an instruction manual.",
+                t1_title: "Log in with Google", t1_desc: "Forget remembering and managing complicated passwords that can be breached. Log in 100% securely, quickly, and transparently using your official Google account with a single click. Your session will be protected by the world's most advanced security infrastructure.", t1_b1: "Bulletproof authentication",
+                t2_title: "Log with or without AI", t2_desc: "Navigate to the central 'Log' tab. You can manually enter the amount and choose the category like in traditional apps, or use your voice and dictate to your phone if you're a VIP user. The home dashboard and your balance will update instantly and automatically!", t2_link: "Go to the app →",
+                t3_title: "Backup on WhatsApp", t3_desc: "Your data is completely yours and never uploaded to the cloud. Go to Settings, create a unique password, and the app will encrypt all your information to send it in a secure message to your own WhatsApp. This way, you can change phones and restore your data whenever you want.", t3_b1: "Military-Grade AES-256 Encryption",
+                btn_full_tutorial: "See Detailed Interactive Tutorial", foot_priv: "Privacy Policy", only_vip: "VIP ONLY", modal_title: "Choose your VIP Plan", modal_btn: "Continue to WhatsApp"
+            },
+            pt: {
+                page_title: "Mi Billetera - Controle suas Finanças", nav_feat: "Recursos", nav_prem: "Premium", nav_how: "Como Funciona", nav_open: "Abrir App",
+                hero_title: "Seu dinheiro, <br><span class='gradient-text'>sob controle total.</span>",
+                hero_sub: "Registre suas receitas e despesas em segundos, analise suas finanças e obtenha recomendações de economia. Tudo pelo celular, sem comprometer sua privacidade.",
+                hero_btn1: "Começar Grátis", hero_btn2: "Ver passo a passo", feat_title: "Descubra o que você pode alcançar", feat_sub: "Projetado para ser rápido, seguro e fácil de entender.",
+                f1_title: "Controle Detalhado", f1_desc: "Registre despesas e receitas em segundos. Visualize seu saldo semanal, mensal ou anual através de gráficos claros e entenda exatamente para onde vai seu dinheiro com nosso sistema inteligente de categorização. Nunca mais você chegará ao fim do mês se perguntando para onde foi seu salário.",
+                f2_title: "Privacidade Total", f2_desc: "Sua segurança vem em primeiro lugar. Seus dados nunca tocam nossos servidores e não são expostos a terceiros. Tudo é processado e armazenado de forma criptografada na memória interna do seu telefone. Se desejar, você pode criar backups criptografados AES-256 enviados diretamente para o seu próprio chat do WhatsApp.",
+                f3_title: "Assistente de Voz IA", f3_desc: "Basta dizer 'Ontem gastei 15 dólares com comida' ou 'Recebi meu salário de 500'. Nossa Inteligência Artificial detectará o valor, a data e a categoria automaticamente, sem que você precise digitar absolutamente nada. Simplifique sua rotina e economize tempo.",
+                vip_title: "Planos e Benefícios", vip_sub: "Escolha o plano que melhor se adapta às suas necessidades financeiras. Os preços se ajustam à sua moeda local.",
+                plan_1_title: "1 Mês", plan_2_title: "1 Ano", plan_3_title: "Vitalício", plan_pop: "POPULAR", plan_sub: "MENSAL", plan_3_sub: "PAGAMENTO ÚNICO",
+                tbl_feat: "Recursos do App", f_reg: "Registro ilimitado de receitas e despesas", f_sec: "Armazenamento local seguro e privado", f_back: "Backup via WhatsApp (AES-256)", f_ai_anal: "Avaliação Semanal Inteligente (IA)", f_voice: "Assistente de Registro por Voz (IA)", f_color: "Personalização total de cores",
+                btn_upgrade: "Torne-se VIP pelo WhatsApp", btn_sub: "Você também pode pagar escaneando o código QR diretamente no App.",
+                tut_title: "Aprenda a usar em 3 passos", tut_sub: "É tão fácil que você não precisará de um manual de instruções.",
+                t1_title: "Entrar com Google", t1_desc: "Esqueça ter que lembrar e gerenciar senhas complicadas que podem ser violadas. Faça o login de forma 100% segura, rápida e transparente usando sua conta oficial do Google com um único clique. Sua sessão será protegida pela infraestrutura de segurança mais avançada do mundo.", t1_b1: "Autenticação blindada",
+                t2_title: "Registre com ou sem IA", t2_desc: "Navegue até a aba central 'Registrar'. Você pode digitar o valor e escolher a categoria manualmente como nos aplicativos tradicionais, ou usar a voz e ditar para o seu telefone se for um usuário VIP. O painel inicial e o seu saldo serão atualizados instantaneamente e automaticamente!", t2_link: "Ir para o app →",
+                t3_title: "Backup no WhatsApp", t3_desc: "Seus dados são inteiramente seus e nunca são enviados para a nuvem. Vá em Configurações, crie uma senha única e o aplicativo criptografará todas as suas informações para enviá-las em uma mensagem segura para o seu próprio WhatsApp. Dessa forma, você pode trocar de telefone e restaurar seus dados quando quiser.", t3_b1: "Criptografia Militar AES-256",
+                btn_full_tutorial: "Ver Tutorial Interativo Detalhado", foot_priv: "Política de Privacidade", only_vip: "SOMENTE VIP", modal_title: "Escolha seu Plano VIP", modal_btn: "Continuar para o WhatsApp"
+            },
+            fr: {
+                page_title: "Mi Billetera - Contrôlez vos Finances", nav_feat: "Fonctionnalités", nav_prem: "Premium", nav_how: "Comment ça marche", nav_open: "Ouvrir l'App",
+                hero_title: "Votre argent, <br><span class='gradient-text'>sous contrôle total.</span>",
+                hero_sub: "Enregistrez vos revenus et dépenses en quelques secondes, analysez vos finances et obtenez des recommandations d'épargne. Le tout depuis votre mobile, sans compromettre votre vie privée.",
+                hero_btn1: "Commencer Gratuitement", hero_btn2: "Voir étape par étape", feat_title: "Découvrez ce que vous pouvez accomplir", feat_sub: "Conçu pour être rapide, sûr et facile à comprendre.",
+                f1_title: "Contrôle Détaillé", f1_desc: "Enregistrez vos dépenses et revenus en quelques secondes. Visualisez votre solde hebdomadaire, mensuel ou annuel grâce à des graphiques clairs et comprenez exactement où va votre argent grâce à notre système de catégorisation intelligent. Vous ne vous demanderez plus jamais où est passé votre salaire à la fin du mois.",
+                f2_title: "Confidentialité Totale", f2_desc: "Votre sécurité passe avant tout. Vos données ne touchent jamais nos serveurs et ne sont pas exposées à des tiers. Tout est traité et stocké de manière cryptée dans la mémoire interne de votre téléphone. Vous pouvez créer des sauvegardes cryptées AES-256 envoyées directement sur votre propre chat WhatsApp.",
+                f3_title: "Assistant Vocal IA", f3_desc: "Dites simplement 'J'ai dépensé 15 euros en nourriture hier' ou 'J'ai reçu mon salaire de 500'. Notre intelligence artificielle détectera automatiquement le montant, la date et la catégorie sans que vous n'ayez rien à taper. Simplifiez votre routine et gagnez du temps.",
+                vip_title: "Plans et Avantages", vip_sub: "Choisissez le plan qui correspond le mieux à vos besoins financiers. Les prix s'adaptent à votre devise locale.",
+                plan_1_title: "1 Mois", plan_2_title: "1 An", plan_3_title: "À vie", plan_pop: "POPULAIRE", plan_sub: "PAR MOIS", plan_3_sub: "PAIEMENT UNIQUE",
+                tbl_feat: "Fonctionnalités de l'App", f_reg: "Enregistrement illimité", f_sec: "Stockage local sécurisé", f_back: "Sauvegarde via WhatsApp (AES-256)", f_ai_anal: "Évaluation Hebdomadaire (IA)", f_voice: "Assistant Vocal (IA)", f_color: "Couleurs personnalisées",
+                btn_upgrade: "Devenir VIP via WhatsApp", btn_sub: "Paiement via code QR dans l'App.",
+                tut_title: "Apprenez en 3 étapes", tut_sub: "Si facile que vous n'aurez pas besoin de manuel.",
+                t1_title: "Connexion Google", t1_desc: "Oubliez les mots de passe compliqués. Connectez-vous en toute sécurité, rapidement et de manière transparente avec votre compte Google officiel en un seul clic.", t1_b1: "Authentification blindée",
+                t2_title: "Enregistrer avec ou sans IA", t2_desc: "Allez dans l'onglet 'Enregistrer'. Saisissez manuellement ou utilisez votre voix si vous êtes VIP. Votre solde se mettra à jour instantanément!", t2_link: "Aller à l'app →",
+                t3_title: "Sauvegarde sur WhatsApp", t3_desc: "Vos données vous appartiennent. Allez dans Paramètres, créez un mot de passe unique, et l'application cryptera vos informations pour les envoyer en toute sécurité sur votre propre WhatsApp.", t3_b1: "Cryptage Militaire AES-256",
+                btn_full_tutorial: "Voir le Tutoriel Détaillé", foot_priv: "Politique de Confidentialité", only_vip: "VIP UNIQUEMENT", modal_title: "Choisissez votre Plan VIP", modal_btn: "Continuer vers WhatsApp"
+            },
+            de: {
+                page_title: "Mi Billetera - Kontrollieren Sie Ihre Finanzen", nav_feat: "Funktionen", nav_prem: "Premium", nav_how: "Wie es funktioniert", nav_open: "App öffnen",
+                hero_title: "Dein Geld, <br><span class='gradient-text'>unter voller Kontrolle.</span>",
+                hero_sub: "Erfassen Sie Ihre Einnahmen und Ausgaben in Sekundenschnelle, analysieren Sie Ihre Finanzen und erhalten Sie Sparempfehlungen. Alles von Ihrem Handy aus, ohne Ihre Privatsphäre zu gefährden.",
+                hero_btn1: "Kostenlos starten", hero_btn2: "Schritt für Schritt", feat_title: "Entdecken Sie, was Sie erreichen können", feat_sub: "Entwickelt, um schnell, sicher und leicht verständlich zu sein.",
+                f1_title: "Detaillierte Kontrolle", f1_desc: "Erfassen Sie Ausgaben und Einnahmen in Sekundenschnelle. Visualisieren Sie Ihren wöchentlichen, monatlichen oder jährlichen Saldo durch klare Grafiken und verstehen Sie mit unserem intelligenten Kategorisierungssystem genau, wohin Ihr Geld fließt. Fragen Sie sich nie wieder am Ende des Monats, wo Ihr Gehalt geblieben ist.",
+                f2_title: "Absolute Privatsphäre", f2_desc: "Ihre Sicherheit steht an erster Stelle. Ihre Daten berühren nie unsere Server und werden keinen Dritten ausgesetzt. Alles wird verschlüsselt im internen Speicher Ihres Telefons verarbeitet und gespeichert. Sie können AES-256-verschlüsselte Backups erstellen, die direkt an Ihren eigenen WhatsApp-Chat gesendet werden.",
+                f3_title: "KI-Sprachassistent", f3_desc: "Sagen Sie einfach 'Ich habe gestern 15 Euro für Essen ausgegeben' oder 'Ich habe mein Gehalt von 500 bekommen'. Unsere künstliche Intelligenz erkennt Betrag, Datum und Kategorie automatisch, ohne dass Sie etwas tippen müssen. Vereinfachen Sie Ihre Routine und sparen Sie Zeit.",
+                vip_title: "Pläne und Vorteile", vip_sub: "Wählen Sie den Plan, der am besten zu Ihren finanziellen Bedürfnissen passt. Die Preise passen sich Ihrer Landeswährung an.",
+                plan_1_title: "1 Monat", plan_2_title: "1 Jahr", plan_3_title: "Lebenslang", plan_pop: "BELIEBT", plan_sub: "PRO MONAT", plan_3_sub: "EINMALZAHLUNG",
+                tbl_feat: "App-Funktionen", f_reg: "Unbegrenzte Erfassung", f_sec: "Sicherer lokaler Speicher", f_back: "Backup über WhatsApp (AES-256)", f_ai_anal: "Intelligente wöchentliche Analyse (KI)", f_voice: "Spracherfassungs-Assistent (KI)", f_color: "Vollständige Farbanpassung",
+                btn_upgrade: "VIP werden über WhatsApp", btn_sub: "Zahlen Sie auch per QR-Code in der App.",
+                tut_title: "Lernen Sie es in 3 Schritten", tut_sub: "So einfach, dass Sie kein Handbuch brauchen.",
+                t1_title: "Mit Google anmelden", t1_desc: "Vergessen Sie komplizierte Passwörter. Melden Sie sich 100 % sicher, schnell und transparent mit Ihrem offiziellen Google-Konto mit einem einzigen Klick an.", t1_b1: "Kugelsichere Authentifizierung",
+                t2_title: "Mit oder ohne KI erfassen", t2_desc: "Gehen Sie zum Tab 'Erfassen'. Geben Sie Beträge manuell ein oder nutzen Sie Ihre Stimme, wenn Sie ein VIP-Benutzer sind. Ihr Saldo wird sofort aktualisiert!", t2_link: "Zur App →",
+                t3_title: "Backup auf WhatsApp", t3_desc: "Ihre Daten gehören Ihnen. Gehen Sie zu den Einstellungen, erstellen Sie ein eindeutiges Passwort, und die App verschlüsselt Ihre Informationen und sendet sie sicher an Ihr eigenes WhatsApp.", t3_b1: "AES-256 Militärverschlüsselung",
+                btn_full_tutorial: "Detailliertes Tutorial ansehen", foot_priv: "Datenschutzrichtlinie", only_vip: "NUR VIP", modal_title: "Wählen Sie Ihren VIP-Plan", modal_btn: "Weiter zu WhatsApp"
+            },
+            it: {
+                page_title: "Mi Billetera - Controlla le tue Finanze", nav_feat: "Caratteristiche", nav_prem: "Premium", nav_how: "Come Funziona", nav_open: "Apri App",
+                hero_title: "I tuoi soldi, <br><span class='gradient-text'>sotto controllo totale.</span>",
+                hero_sub: "Registra le tue entrate e le tue uscite in pochi secondi, analizza le tue finanze e ottieni consigli per risparmiare. Tutto dal tuo cellulare, senza compromettere la tua privacy.",
+                hero_btn1: "Inizia Gratis", hero_btn2: "Passo dopo passo", feat_title: "Scopri cosa puoi ottenere", feat_sub: "Progettata per essere veloce, sicura e facile da capire.",
+                f1_title: "Controllo Dettagliato", f1_desc: "Registra spese ed entrate in pochi secondi. Visualizza il tuo saldo settimanale, mensile o annuale con grafici chiari e capisci esattamente dove finiscono i tuoi soldi con il nostro sistema di categorizzazione intelligente. Non arriverai mai più a fine mese chiedendoti dove sia finito il tuo stipendio.",
+                f2_title: "Privacy Totale", f2_desc: "La tua sicurezza è al primo posto. I tuoi dati non toccano mai i nostri server né vengono esposti a terzi. Tutto viene elaborato e archiviato in modo crittografato nella memoria interna del tuo telefono. Puoi creare backup crittografati AES-256 inviati direttamente alla tua chat WhatsApp.",
+                f3_title: "Assistente Vocale IA", f3_desc: "Dì semplicemente 'Ieri ho speso 15 euro per il cibo' o 'Mi hanno pagato uno stipendio di 500'. La nostra Intelligenza Artificiale rileverà automaticamente importo, data e categoria senza che tu debba digitare assolutamente nulla. Semplifica la tua routine e risparmia tempo.",
+                vip_title: "Piani e Vantaggi", vip_sub: "Scegli il piano più adatto alle tue esigenze finanziarie. I prezzi si adeguano alla tua valuta locale.",
+                plan_1_title: "1 Mese", plan_2_title: "1 Anno", plan_3_title: "A vita", plan_pop: "POPOLARE", plan_sub: "AL MESE", plan_3_sub: "PAGAMENTO UNICO",
+                tbl_feat: "Funzionalità dell'App", f_reg: "Registrazione illimitata", f_sec: "Archiviazione locale sicura", f_back: "Backup via WhatsApp (AES-256)", f_ai_anal: "Valutazione Settimanale (IA)", f_voice: "Assistente Vocale (IA)", f_color: "Personalizzazione colori",
+                btn_upgrade: "Diventa VIP tramite WhatsApp", btn_sub: "Puoi pagare anche tramite QR code nell'App.",
+                tut_title: "Impara in 3 passaggi", tut_sub: "Così facile che non avrai bisogno di un manuale.",
+                t1_title: "Accedi con Google", t1_desc: "Dimentica le password complicate. Accedi in modo 100% sicuro, veloce e trasparente utilizzando il tuo account Google ufficiale con un solo clic.", t1_b1: "Autenticazione blindata",
+                t2_title: "Registra con o senza IA", t2_desc: "Vai alla scheda 'Registra'. Inserisci manualmente o usa la voce se sei un utente VIP. Il tuo saldo si aggiornerà all'istante!", t2_link: "Vai all'app →",
+                t3_title: "Backup su WhatsApp", t3_desc: "I tuoi dati sono tuoi. Vai su Impostazioni, crea una password unica e l'app crittograferà le tue informazioni per inviarle in modo sicuro al tuo WhatsApp.", t3_b1: "Crittografia Militare AES-256",
+                btn_full_tutorial: "Vedi il Tutorial Dettagliato", foot_priv: "Informativa sulla Privacy", only_vip: "SOLO VIP", modal_title: "Scegli il tuo Piano VIP", modal_btn: "Continua su WhatsApp"
+            },
+            ja: {
+                page_title: "Mi Billetera - 財務を管理する", nav_feat: "機能", nav_prem: "プレミアム", nav_how: "使い方", nav_open: "アプリを開く",
+                hero_title: "あなたのお金を、<br><span class='gradient-text'>完全にコントロール。</span>",
+                hero_sub: "収入と支出を数秒で記録し、財務を分析して節約の推奨事項を受け取ります。プライバシーを損なうことなく、すべてスマホから行えます。",
+                hero_btn1: "無料で開始", hero_btn2: "ステップバイステップ", feat_title: "できることを発見する", feat_sub: "迅速、安全、そして理解しやすいように設計されています。",
+                f1_title: "詳細なコントロール", f1_desc: "支出と収入を数秒で記録します。明確なグラフで週次、月次、または年次の残高を視覚化し、スマートな分類システムでお金がどこに使われているかを正確に把握します。月末に給料がどこに消えたのか悩むことはもうありません。",
+                f2_title: "完全なプライバシー", f2_desc: "あなたのセキュリティが最優先です。データは当社のサーバーに触れることも、第三者に公開されることもありません。すべてはスマホの内部メモリで暗号化されて処理および保存されます。独自のWhatsAppチャットに直接送信されるAES-256暗号化バックアップを作成できます。",
+                f3_title: "AI音声アシスタント", f3_desc: "「昨日食べ物に15ドル使った」または「500の給料をもらった」と言うだけです。当社の人工知能は、あなたが何も入力しなくても、金額、日付、カテゴリを自動的に検出します。ルーチンを簡素化し、時間を節約します。",
+                vip_title: "プランと特典", vip_sub: "財務ニーズに最も適したプランを選択してください。価格は現地通貨に合わせて調整されます。",
+                plan_1_title: "1ヶ月", plan_2_title: "1年", plan_3_title: "永久", plan_pop: "人気", plan_sub: "月額", plan_3_sub: "一括払い",
+                tbl_feat: "アプリの機能", f_reg: "無制限の記録", f_sec: "安全なローカルストレージ", f_back: "WhatsApp経由のバックアップ (AES-256)", f_ai_anal: "スマートな週次評価 (AI)", f_voice: "音声記録アシスタント (AI)", f_color: "完全なカラーカスタマイズ",
+                btn_upgrade: "WhatsApp経由でVIPになる", btn_sub: "アプリ内でQRコードをスキャンして支払うこともできます。",
+                tut_title: "3つのステップで学ぶ", tut_sub: "マニュアルが不要なほど簡単です。",
+                t1_title: "Googleでログイン", t1_desc: "複雑なパスワードを忘れてください。公式のGoogleアカウントを使用して、ワンクリックで100%安全、迅速、透明にログインします。", t1_b1: "強固な認証",
+                t2_title: "AIあり・なしで記録", t2_desc: "「記録」タブに移動します。手動で入力するか、VIPユーザーの場合は音声を使用してください。残高は即座に更新されます！", t2_link: "アプリへ →",
+                t3_title: "WhatsAppへのバックアップ", t3_desc: "データはあなたのものです。設定に移動して一意のパスワードを作成すると、アプリは情報を暗号化してご自身のWhatsAppに安全に送信します。", t3_b1: "軍用グレードのAES-256暗号化",
+                btn_full_tutorial: "詳細なチュートリアルを見る", foot_priv: "プライバシーポリシー", only_vip: "VIP専用", modal_title: "VIPプランを選択", modal_btn: "WhatsAppへ進む"
+            }
         };
 
         let currentCountryName = "Perú", currentCurrencyCode = "PEN", currentSym = "S/", currentP1 = "", currentP2 = "", currentP3 = "";
@@ -359,56 +463,110 @@
         function changeLanguage(langCode) {
             const safeLang = i18n[langCode] ? langCode : 'en';
             document.getElementById('html-tag').lang = safeLang;
-            if(safeLang === 'ar') { document.body.setAttribute('dir', 'rtl'); } else { document.body.setAttribute('dir', 'ltr'); }
-            
+            document.title = i18n[safeLang].page_title;
+
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if(i18n[safeLang][key]) el.innerHTML = i18n[safeLang][key];
             });
-            document.getElementById('hero-title').innerHTML = i18n[safeLang].hero_title;
+            
+            // Actualización segura de elementos específicos de Index
+            if(document.getElementById('hero-title')) {
+                document.getElementById('hero-title').innerHTML = i18n[safeLang].hero_title;
+            }
         }
 
         function updateLocalization(countryName) {
-            const countryData = COUNTRIES.find(c => c.name === countryName);
-            if (!countryData) return;
-            const lang = countryData.lang; const currencyCode = countryData.defaultCurr;
+            let countryData = COUNTRIES.find(c => c.name === countryName);
+            // Si por error de caché tiene un país que ya no es VIP, forzar a Perú
+            if (!countryData) {
+                countryName = 'Perú';
+                countryData = COUNTRIES.find(c => c.name === 'Perú');
+            }
+
+            const lang = countryData.lang;
+            const currencyCode = countryData.defaultCurr;
             
             changeLanguage(lang);
+            
             localStorage.setItem('billetera_web_lang', lang);
             localStorage.setItem('billetera_web_country', countryName);
             
-            const rate = USD_RATES[currencyCode] || (USD_RATES[currencyCode.substring(0,3)] || 1);
-            const sym = ALL_CURRENCIES[currencyCode] || currencyCode;
-            
-            currentCountryName = countryName; currentCurrencyCode = currencyCode; currentSym = sym;
+            // Solo actualizamos precios si estamos en el Index.html
+            if (document.getElementById('price-1')) {
+                const rate = USD_RATES[currencyCode] || 1;
+                const sym = ALL_CURRENCIES[currencyCode] || currencyCode;
+                
+                currentCountryName = countryName;
+                currentCurrencyCode = currencyCode;
+                currentSym = sym;
 
-            const p1 = (3 * rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            const p2 = (15 * rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            const p3 = (45 * rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            currentP1 = p1; currentP2 = p2; currentP3 = p3;
+                const p1 = (3 * rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const p2 = (15 * rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const p3 = (45 * rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                
+                currentP1 = p1; currentP2 = p2; currentP3 = p3;
 
-            document.getElementById('price-1').innerText = `${sym} ${p1}`; document.getElementById('price-2').innerText = `${sym} ${p2}`; document.getElementById('price-3').innerText = `${sym} ${p3}`;
-            document.getElementById('modal-price-1').innerText = `${sym} ${p1}`; document.getElementById('modal-price-2').innerText = `${sym} ${p2}`; document.getElementById('modal-price-3').innerText = `${sym} ${p3}`;
+                document.getElementById('price-1').innerText = `${sym} ${p1}`;
+                document.getElementById('price-2').innerText = `${sym} ${p2}`;
+                document.getElementById('price-3').innerText = `${sym} ${p3}`;
+                
+                document.getElementById('modal-price-1').innerText = `${sym} ${p1}`;
+                document.getElementById('modal-price-2').innerText = `${sym} ${p2}`;
+                document.getElementById('modal-price-3').innerText = `${sym} ${p3}`;
+
+                const safeLang = document.getElementById('html-tag').lang;
+                document.querySelectorAll('[data-i18n="plan_sub"]').forEach(el => {
+                    el.innerHTML = `${i18n[safeLang].plan_sub} ${currencyCode}`;
+                });
+                document.querySelectorAll('[data-i18n="plan_3_sub"]').forEach(el => {
+                    el.innerHTML = `${i18n[safeLang].plan_3_sub} ${currencyCode}`;
+                });
+            }
         }
 
         function openPlanModal() {
-            const modal = document.getElementById('planModal'); const content = document.getElementById('planModalContent');
-            modal.classList.remove('hidden'); modal.classList.add('flex');
-            setTimeout(() => { modal.classList.remove('opacity-0'); content.classList.remove('scale-95'); }, 10);
+            const modal = document.getElementById('planModal');
+            const content = document.getElementById('planModalContent');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+            }, 10);
         }
 
         function closePlanModal() {
-            const modal = document.getElementById('planModal'); const content = document.getElementById('planModalContent');
-            modal.classList.add('opacity-0'); content.classList.add('scale-95');
-            setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('flex'); }, 300);
+            const modal = document.getElementById('planModal');
+            const content = document.getElementById('planModalContent');
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
         }
 
         function sendToWhatsApp() {
             const radios = document.getElementsByName('vip_plan');
             let selectedPlan = "1 Año", selectedPrice = currentP2;
-            for (let r of radios) { if (r.checked) { if (r.value === "1_Mes") { selectedPlan = "1 Mes"; selectedPrice = currentP1; } if (r.value === "1_Año") { selectedPlan = "1 Año"; selectedPrice = currentP2; } if (r.value === "Vitalicio") { selectedPlan = "Vitalicio"; selectedPrice = currentP3; } } }
+            for (let r of radios) {
+                if (r.checked) {
+                    if (r.value === "1_Mes") { selectedPlan = "1 Mes"; selectedPrice = currentP1; }
+                    if (r.value === "1_Año") { selectedPlan = "1 Año"; selectedPrice = currentP2; }
+                    if (r.value === "Vitalicio") { selectedPlan = "Vitalicio"; selectedPrice = currentP3; }
+                }
+            }
             const lang = document.getElementById('html-tag').lang;
-            let waMsg = lang === 'es' ? `Hola Carlos, quiero comprar el Plan VIP (${selectedPlan} por ${currentSym} ${selectedPrice} ${currentCurrencyCode}) desde ${currentCountryName}.` : `Hello Carlos, I want to buy the VIP Plan (${selectedPlan} for ${currentSym} ${selectedPrice} ${currentCurrencyCode}) from ${currentCountryName}.`;
+            let waMsg = "";
+            if(lang === 'en') { waMsg = `Hello Carlos, I come from the website. I want to buy the VIP Plan (${selectedPlan} for ${currentSym} ${selectedPrice} ${currentCurrencyCode}) from ${currentCountryName}.`; }
+            else if(lang === 'pt') { waMsg = `Olá Carlos, venho do site web. Quero comprar o Plano VIP (${selectedPlan} por ${currentSym} ${selectedPrice} ${currentCurrencyCode}) do ${currentCountryName}.`; }
+            else if(lang === 'fr') { waMsg = `Bonjour Carlos, je viens du site web. Je veux acheter le plan VIP (${selectedPlan} pour ${currentSym} ${selectedPrice} ${currentCurrencyCode}) depuis ${currentCountryName}.`; }
+            else if(lang === 'de') { waMsg = `Hallo Carlos, ich komme von der Website. Ich möchte den VIP-Plan (${selectedPlan} für ${currentSym} ${selectedPrice} ${currentCurrencyCode}) aus ${currentCountryName} kaufen.`; }
+            else if(lang === 'it') { waMsg = `Ciao Carlos, vengo dal sito web. Voglio acquistare il piano VIP (${selectedPlan} per ${currentSym} ${selectedPrice} ${currentCurrencyCode}) da ${currentCountryName}.`; }
+            else if(lang === 'ja') { waMsg = `こんにちはカルロス、ウェブサイトから来ました。${currentCountryName}からVIPプラン（${currentSym} ${selectedPrice} ${currentCurrencyCode}の${selectedPlan}）を購入したいです。`; }
+            else { waMsg = `Hola Carlos, vengo de la página web. Quiero comprar el Plan VIP (${selectedPlan} por ${currentSym} ${selectedPrice} ${currentCurrencyCode}) desde ${currentCountryName}.`; }
+            
             window.open(`https://wa.me/51930266472?text=${encodeURIComponent(waMsg)}`, '_blank');
             closePlanModal();
         }
@@ -416,11 +574,19 @@
         window.onload = () => {
             const select = document.getElementById('countrySwitcher');
             COUNTRIES.sort((a, b) => a.name.localeCompare(b.name)).forEach(c => {
-                const option = document.createElement('option'); option.value = c.name; option.textContent = `${c.name} (${c.defaultCurr})`; option.className = "bg-[#1e1e1e] text-white";
+                const option = document.createElement('option');
+                option.value = c.name;
+                option.textContent = `${c.name} (${c.defaultCurr})`;
+                option.className = "bg-[#1e1e1e] text-white";
                 select.appendChild(option);
             });
-            const savedCountry = localStorage.getItem('billetera_web_country') || 'Perú';
-            select.value = savedCountry; updateLocalization(savedCountry);
+            
+            let savedCountry = localStorage.getItem('billetera_web_country');
+            if (!savedCountry || !COUNTRIES.find(c => c.name === savedCountry)) {
+                savedCountry = 'Perú';
+            }
+            select.value = savedCountry;
+            updateLocalization(savedCountry);
         };
     </script>
 </body>
