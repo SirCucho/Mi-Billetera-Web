@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Billetera - Controla tus Finanzas</title>
     
-    <!-- FAVICON (Unificado) -->
+    <!-- FAVICON -->
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="favicon.png">
 
@@ -83,7 +83,7 @@
             <div class="flex gap-4 md:gap-6 text-xs md:text-sm font-medium text-secondary items-center">
                 <a href="#caracteristicas" data-i18n="nav_feat" class="hidden md:block hover:text-white transition">Características</a>
                 <a href="#vip" class="hover:text-warning transition flex items-center gap-1"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> <span data-i18n="nav_prem">Premium</span></a>
-                <a href="#tutorial" data-i18n="nav_how" class="hidden md:block hover:text-white transition">Cómo Funciona</a>
+                <a href="tutorial.html" data-i18n="nav_how" class="hidden md:block hover:text-white transition">Cómo Funciona</a>
                 
                 <!-- SELECTOR DE PAÍS GLOBAL -->
                 <div class="flex items-center gap-1.5 bg-[#1e1e1e] border border-[#27272a] rounded-lg px-2 py-1 hover:border-accent transition-colors">
@@ -106,7 +106,7 @@
                     <a href="app.html" class="bg-accent text-white px-8 py-3.5 rounded-xl font-bold hover:opacity-90 shadow-lg shadow-accent/30 transition-all flex items-center justify-center gap-2 hover:scale-105">
                         <span data-i18n="hero_btn1">Comenzar Gratis</span> <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
                     </a>
-                    <a href="#tutorial" class="bg-card border border-border text-white px-8 py-3.5 rounded-xl font-bold hover:bg-border transition-all flex items-center justify-center gap-2">
+                    <a href="tutorial.html" class="bg-card border border-border text-white px-8 py-3.5 rounded-xl font-bold hover:bg-border transition-all flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> <span data-i18n="hero_btn2">Ver paso a paso</span>
                     </a>
                 </div>
@@ -121,7 +121,7 @@
                 <div class="phone-mockup w-full max-w-[270px] aspect-[9/19] animate-float z-10">
                     <div class="phone-notch"></div>
                     <div class="phone-screen">
-                        <img src="portada.png" alt="Portada App" class="w-full h-full object-cover object-top">
+                        <img src="portada.png" alt="Portada App" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
                     </div>
                 </div>
             </div>
@@ -214,16 +214,63 @@
             </div>
             
             <div class="text-center">
-                 <a id="wa-btn" href="https://wa.me/51930266472?text=Hola,%20vengo%20de%20la%20página%20web.%20Me%20interesa%20comprar%20el%20plan%20VIP." target="_blank" class="bg-warning text-black px-8 md:px-12 py-4 rounded-xl font-extrabold text-lg md:text-xl hover:scale-105 transition-transform inline-flex items-center justify-center gap-3 shadow-[0_0_25px_rgba(234,179,8,0.4)] w-full sm:w-auto">
+                 <!-- BOTÓN PARA ABRIR MODAL -->
+                 <button onclick="openPlanModal()" class="bg-warning text-black px-8 md:px-12 py-4 rounded-xl font-extrabold text-lg md:text-xl hover:scale-105 transition-transform inline-flex items-center justify-center gap-3 shadow-[0_0_25px_rgba(234,179,8,0.4)] w-full sm:w-auto">
                      <span data-i18n="btn_upgrade">Hacerme VIP por WhatsApp</span> <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                 </a>
+                 </button>
                  <p class="text-xs text-secondary mt-4 max-w-sm mx-auto" data-i18n="btn_sub">También puedes pagar escaneando el código QR directamente dentro de la App.</p>
             </div>
         </div>
     </section>
 
+    <!-- MODAL DE SELECCIÓN DE PLANES VIP -->
+    <div id="planModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4 transition-opacity opacity-0">
+        <div class="bg-card border border-border rounded-3xl p-6 w-full max-w-md shadow-2xl transform scale-95 transition-transform" id="planModalContent">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <svg class="w-6 h-6 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+                    <span data-i18n="modal_title">Elige tu Plan VIP</span>
+                </h3>
+                <button onclick="closePlanModal()" class="text-secondary hover:text-white transition"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            
+            <div class="space-y-3 mb-6">
+                <!-- Option 1 -->
+                <label class="flex justify-between items-center p-4 border border-border rounded-xl cursor-pointer hover:border-warning/50 transition bg-bg">
+                    <div class="flex items-center gap-3">
+                        <input type="radio" name="vip_plan" value="1_Mes" class="w-4 h-4 text-warning focus:ring-warning accent-warning">
+                        <span class="font-bold text-white" data-i18n="plan_1_title">1 Mes</span>
+                    </div>
+                    <span class="text-warning font-extrabold text-lg" id="modal-price-1">$3.00</span>
+                </label>
+                <!-- Option 2 (Popular y seleccionado por defecto) -->
+                <label class="flex justify-between items-center p-4 border border-warning/50 rounded-xl cursor-pointer hover:border-warning transition bg-warning/5 relative">
+                    <div class="absolute -top-2 left-4 bg-warning text-black text-[9px] font-bold px-2 py-0.5 rounded-full" data-i18n="plan_pop">POPULAR</div>
+                    <div class="flex items-center gap-3">
+                        <input type="radio" name="vip_plan" value="1_Año" class="w-4 h-4 text-warning focus:ring-warning accent-warning" checked>
+                        <span class="font-bold text-white" data-i18n="plan_2_title">1 Año</span>
+                    </div>
+                    <span class="text-warning font-extrabold text-xl" id="modal-price-2">$15.00</span>
+                </label>
+                <!-- Option 3 -->
+                <label class="flex justify-between items-center p-4 border border-border rounded-xl cursor-pointer hover:border-warning/50 transition bg-bg">
+                    <div class="flex items-center gap-3">
+                        <input type="radio" name="vip_plan" value="Vitalicio" class="w-4 h-4 text-warning focus:ring-warning accent-warning">
+                        <span class="font-bold text-white" data-i18n="plan_3_title">Vitalicio</span>
+                    </div>
+                    <span class="text-warning font-extrabold text-lg" id="modal-price-3">$45.00</span>
+                </label>
+            </div>
+
+            <button onclick="sendToWhatsApp()" class="w-full bg-warning text-black py-3.5 rounded-xl font-bold text-lg hover:scale-105 transition-transform flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.3)]">
+                <span data-i18n="modal_btn">Continuar a WhatsApp</span>
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+    </div>
+
     <!-- SECCIÓN PASO A PASO -->
-    <section id="tutorial" class="py-16 md:py-24 border-t border-border px-4 sm:px-6 lg:px-8">
+    <section class="py-16 md:py-24 border-t border-border px-4 sm:px-6 lg:px-8">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold mb-4" data-i18n="tut_title">Aprende a usarla en 3 pasos</h2>
@@ -248,7 +295,7 @@
                         <div class="phone-mockup w-full max-w-[240px] aspect-[9/19] z-10">
                             <div class="phone-notch"></div>
                             <div class="phone-screen">
-                                <img src="paso1.png" loading="lazy" alt="Paso 1" class="w-full h-full object-cover object-top">
+                                <img src="paso1.png" loading="lazy" alt="Paso 1" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
                             </div>
                         </div>
                     </div>
@@ -261,7 +308,7 @@
                         <div class="phone-mockup w-full max-w-[240px] aspect-[9/19] z-10">
                             <div class="phone-notch"></div>
                             <div class="phone-screen">
-                                <img src="paso2.png" loading="lazy" alt="Paso 2" class="w-full h-full object-cover object-top">
+                                <img src="paso2.png" loading="lazy" alt="Paso 2" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
                             </div>
                         </div>
                     </div>
@@ -289,7 +336,7 @@
                         <div class="phone-mockup w-full max-w-[240px] aspect-[9/19] z-10">
                             <div class="phone-notch"></div>
                             <div class="phone-screen">
-                                <img src="paso3.png" loading="lazy" alt="Paso 3" class="w-full h-full object-cover object-top">
+                                <img src="paso3.png" loading="lazy" alt="Paso 3" class="w-full h-full object-cover object-top" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNzI3MmEiLz48L3N2Zz4='">
                             </div>
                         </div>
                     </div>
@@ -322,7 +369,7 @@
         </div>
     </footer>
 
-    <!-- SCRIPT DE TRADUCCIÓN, PAÍSES Y PRECIOS DINÁMICOS -->
+    <!-- SCRIPT DE TRADUCCIÓN, PAÍSES, MODAL Y PRECIOS DINÁMICOS -->
     <script>
         const RAW_COUNTRIES = "Afganistán|AFN|ar,Albania|ALL|sq,Argelia|DZD|ar,Andorra|ALL|ca,Angola|DZD|ar,Antigua y Barbuda|EUR|ca,Argentina|ARS|es,Armenia|AMD|sq,Australia|AUD|en,Austria|EUR|de,Azerbaiyán|AZN|ru,Bahamas|XCD|en,Bahréin|BHD|ar,Bangladesh|BDT|en,Barbados|BSD|en,Bielorrusia|BYN|ru,Bélgica|EUR|de,Belice|BZD|en,Benín|AOA|fr,Bhután|BDT|en,Bolivia|BOB|es,Bosnia y Herzegovina|BAM|ru,Botsuana|BWP|en,Brasil|BRL|pt,Brunéi|BTN|en,Bulgaria|EUR|fr,Burkina Faso|XOF|fr,Burundi|XOF|fr,Cabo Verde|CVE|pt,Camboya|BND|en,Camerún|XAF|fr,Canadá|CAD|en,República Centroafricana|XAF|fr,Chad|XAF|fr,Chile|CLP|es,China|CNY|zh,Colombia|COP|es,Comoras|KHR|fr,Congo|XAF|fr,Costa Rica|COP|es,Croacia|BGN|ru,Cuba|CLP|es,Chipre|HRK|en,República Checa|EUR|en,Dinamarca|CZK|en,Yibuti|KMF|ar,Dominica|XCD|en,República Dominicana|DOP|es,Ecuador|USD|es,Egipto|EGP|ar,El Salvador|CRC|es,Guinea Ecuatorial|XAF|es,Eritrea|DJF|ar,Estonia|DKK|en,Eswatini|ERN|en,Etiopía|EGP|ar,Fiji|FJD|en,Finlandia|EUR|en,Francia|EUR|fr,Gabón|XAF|fr,Gambia|GMD|en,Georgia|GEL|ru,Alemania|EUR|de,Ghana|GHS|en,Grecia|EUR|en,Granada|XCD|en,Guatemala|CRC|es,Guinea|GNF|fr,Guinea-Bisáu|XOF|pt,Guyana|GYD|en,Haití|HTG|fr,Honduras|HNL|es,Hungría|HUF|en,Islandia|EUR|en,India|INR|hi,Indonesia|IDR|en,Irán|IRR|ar,Irak|IQD|ar,Irlanda|EUR|en,Israel|ILS|ar,Italia|EUR|it,Jamaica|JMD|en,Japón|JPY|ja,Jordania|JOD|ar,Kazajistán|KZT|ru,Kenia|KES|en,Kiribati|KWD|en,Kuwait|KWD|ar,Kirguistán|KGS|ru,Laos|LAK|fr,Letonia|EUR|ru,Líbano|LBP|ar,Lesoto|LSL|en,Liberia|LRD|en,Libia|LYD|ar,Liechtenstein|EUR|ca,Lituania|EUR|ru,Luxemburgo|CHF|de,Madagascar|MGA|fr,Malaui|MWK|en,Malasia|MYR|en,Maldivas|MVR|en,Malí|XOF|fr,Malta|EUR|fr,Islas Marshall|AUD|en,Mauritania|MRU|ar,Mauricio|MUR|en,México|MXN|es,Micronesia|AUD|en,Moldavia|EUR|ru,Mónaco|EUR|fr,Mongolia|MDL|ru,Montenegro|EUR|en,Marruecos|MAD|ar,Mozambique|MZN|fr,Myanmar|MNT|zh,Namibia|NAD|pt,Nauru|AUD|en,Nepal|NPR|hi,Países Bajos|EUR|fr,Nueva Zelanda|NZD|en,Nicaragua|NIO|es,Níger|XOF|fr,Nigeria|XOF|fr,Macedonia del Norte|EUR|ru,Noruega|NZD|en,Omán|OMR|ar,Pakistán|NPR|hi,Palaos|AUD|en,Panamá|NIO|es,Papúa Nueva Guinea|USD|en,Paraguay|NIO|es,Perú|PEN|es,Filipinas|PHP|en,Polonia|EUR|en,Portugal|EUR|pt,Catar|QAR|ar,Corea del Sur|KRW|ja,Rumania|RON|en,Rusia|RUB|ru,Ruanda|ZAR|en,San Cristóbal y Nieves|XCD|en,Santa Lucía|XCD|en,San Vicente y las Granadinas|XCD|en,Samoa|AUD|en,San Marino|EUR|fr,Santo Tomé y Príncipe|XCD|en,Arabia Saudita|SAR|ar,Senegal|XOF|fr,Serbia|RSD|ru,Seychelles|STN|en,Sierra Leona|XOF|fr,Singapur|SGD|en,Eslovaquia|EUR|en,Eslovenia|EUR|en,Islas Salomón|AUD|en,Somalia|SOS|ar,Sudáfrica|ZAR|en,Sudán del Sur|SOS|ar,España|EUR|es,Sri Lanka|LKR|en,Sudán|SDG|ar,Surinam|PYG|es,Suecia|SEK|en,Suiza|CHF|de,Siria|SYP|ar,Tayikistán|TJS|ru,Tanzania|TZS|en,Tailandia|THB|en,Timor Oriental|USD|pt,Togo|XOF|fr,Tonga|TOP|en,Trinidad y Tobago|TTD|en,Túnez|TND|ar,Turquía|TRY|en,Turkmenistán|TMT|ru,Tuvalu|TOP|en,Uganda|UGX|en,Ucrania|UAH|ru,Emiratos Árabes Unidos|AED|ar,Reino Unido|GBP|en,Estados Unidos|USD|en,Uruguay|UYU|es,Uzbekistán|UZS|ru,Vanuatu|AUD|en,Ciudad del Vaticano|EUR|it,Venezuela|UYU|es,Vietnam|VND|en,Yemen|YER|ar,Zambia|UGX|en,Zimbabue|ZWL|en";
         const COUNTRIES = RAW_COUNTRIES.split(',').map(item => { const [name, curr, lang] = item.split('|'); return { name, defaultCurr: curr, lang }; });
@@ -352,7 +399,8 @@
                 t2_title: "Registra con o sin IA", t2_desc: "Ve a la pestaña central 'Registrar'. Puedes escribir el monto y categoría manualmente, o simplemente dictarle a tu teléfono si eres usuario VIP. ¡El panel de inicio se actualizará al instante!", t2_link: "Ir a la app y probar →",
                 t3_title: "Respalda tus datos en WhatsApp", t3_desc: "Tus datos nunca se suben a la nube. Ve a Ajustes, crea una contraseña y haz clic en 'Respaldar'. La app encriptará tu información y te la enviará a tu propio WhatsApp.", t3_b1: "Nadie más tiene tus datos (Cifrado AES-256)", t3_b2: "Restaura pegando el código y la contraseña",
                 foot_priv: "Política de Privacidad (Legal)", foot_enter: "Ingresar a la App →", only_vip: "SOLO VIP",
-                btn_full_tutorial: "Ver Tutorial Detallado Interactivo", btn_full_tutorial_sub: "Explora minuciosamente cada pantalla y opción que ofrece la aplicación."
+                btn_full_tutorial: "Ver Tutorial Detallado Interactivo", btn_full_tutorial_sub: "Explora minuciosamente cada pantalla y opción que ofrece la aplicación.",
+                modal_title: "Elige tu Plan VIP", modal_btn: "Continuar a WhatsApp"
             },
             en: {
                 nav_feat: "Features", nav_how: "How it works", nav_prem: "Premium", nav_open: "Open App",
@@ -371,9 +419,16 @@
                 t2_title: "Record with or without AI", t2_desc: "Go to the 'Record' tab. Enter the amount manually or just speak to your phone if you are VIP.", t2_link: "Go to the app and try →",
                 t3_title: "Backup your data on WhatsApp", t3_desc: "Your data is never uploaded to the cloud. Go to Settings, click 'Backup', and the app will encrypt your info and send it to your WhatsApp.", t3_b1: "No one else has your data (AES-256)", t3_b2: "Restore by pasting the code and password",
                 foot_priv: "Privacy Policy (Legal)", foot_enter: "Enter the App →", only_vip: "VIP ONLY",
-                btn_full_tutorial: "View Detailed Interactive Tutorial", btn_full_tutorial_sub: "Explore every screen and option the application offers step-by-step."
+                btn_full_tutorial: "View Detailed Interactive Tutorial", btn_full_tutorial_sub: "Explore every screen and option the application offers step-by-step.",
+                modal_title: "Choose your VIP Plan", modal_btn: "Continue to WhatsApp"
             }
         };
+
+        // VARIABLES GLOBALES PARA EL MODAL
+        let currentCountryName = "Perú";
+        let currentCurrencyCode = "PEN";
+        let currentSym = "S/";
+        let currentP1 = "", currentP2 = "", currentP3 = "";
 
         function changeLanguage(langCode) {
             const safeLang = i18n[langCode] ? langCode : (i18n[langCode.split('-')[0]] ? langCode.split('-')[0] : 'en');
@@ -395,29 +450,83 @@
             
             changeLanguage(lang);
             
-            // GUARDAMOS EL PAÍS Y EL IDIOMA EN LA MEMORIA DEL NAVEGADOR
             localStorage.setItem('billetera_web_lang', lang);
             localStorage.setItem('billetera_web_country', countryName);
             
             const rate = USD_RATES[currencyCode] || 1;
             const sym = ALL_CURRENCIES[currencyCode] || currencyCode;
             
+            currentCountryName = countryName;
+            currentCurrencyCode = currencyCode;
+            currentSym = sym;
+
             const p1 = (3 * rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const p2 = (15 * rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const p3 = (45 * rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             
+            currentP1 = p1; currentP2 = p2; currentP3 = p3;
+
+            // Actualiza tarjetas de la tabla principal
             document.getElementById('price-1').innerText = `${sym} ${p1}`;
             document.getElementById('price-2').innerText = `${sym} ${p2}`;
             document.getElementById('price-3').innerText = `${sym} ${p3}`;
             
+            // Actualiza precios del Modal
+            document.getElementById('modal-price-1').innerText = `${sym} ${p1}`;
+            document.getElementById('modal-price-2').innerText = `${sym} ${p2}`;
+            document.getElementById('modal-price-3').innerText = `${sym} ${p3}`;
+
             document.querySelectorAll('[data-i18n="plan_sub"], [data-i18n="plan_3_sub"]').forEach(el => {
                 const originalText = i18n[document.getElementById('html-tag').lang][el.getAttribute('data-i18n')];
                 el.innerHTML = `${originalText} ${currencyCode}`;
             });
+        }
 
-            const waBtn = document.getElementById('wa-btn');
-            const waMsg = `Hola Carlos, vengo de la página web. Me interesa comprar el plan VIP desde ${countryName} en ${currencyCode}.`;
-            waBtn.href = `https://wa.me/51930266472?text=${encodeURIComponent(waMsg)}`;
+        function openPlanModal() {
+            const modal = document.getElementById('planModal');
+            const content = document.getElementById('planModalContent');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closePlanModal() {
+            const modal = document.getElementById('planModal');
+            const content = document.getElementById('planModalContent');
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        function sendToWhatsApp() {
+            const radios = document.getElementsByName('vip_plan');
+            let selectedPlan = "1 Año"; 
+            let selectedPrice = currentP2;
+            
+            for (let r of radios) {
+                if (r.checked) {
+                    if (r.value === "1_Mes") { selectedPlan = "1 Mes"; selectedPrice = currentP1; }
+                    if (r.value === "1_Año") { selectedPlan = "1 Año"; selectedPrice = currentP2; }
+                    if (r.value === "Vitalicio") { selectedPlan = "Vitalicio"; selectedPrice = currentP3; }
+                }
+            }
+
+            const lang = document.getElementById('html-tag').lang;
+            let waMsg = "";
+            if (lang === 'en') {
+                waMsg = `Hello Carlos, I am coming from the website. I want to buy the VIP Plan (${selectedPlan} for ${currentSym} ${selectedPrice} ${currentCurrencyCode}) from ${currentCountryName}.`;
+            } else {
+                waMsg = `Hola Carlos, vengo de la página web. Quiero comprar el Plan VIP (${selectedPlan} por ${currentSym} ${selectedPrice} ${currentCurrencyCode}) desde ${currentCountryName}.`;
+            }
+
+            window.open(`https://wa.me/51930266472?text=${encodeURIComponent(waMsg)}`, '_blank');
+            closePlanModal();
         }
 
         window.onload = () => {
@@ -430,7 +539,6 @@
                 select.appendChild(option);
             });
             
-            // LEEMOS LA ÚLTIMA ELECCIÓN DEL USUARIO (Por defecto Perú)
             const savedCountry = localStorage.getItem('billetera_web_country') || 'Perú';
             select.value = savedCountry;
             updateLocalization(savedCountry);
