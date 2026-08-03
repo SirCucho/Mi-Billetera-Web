@@ -50,7 +50,7 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // PAÍSES ESTRICTOS SIN COMISIÓN
+        // PAÍSES ESTRICTOS SIN COMISIÓN Y SUS MONEDAS
         const RAW_COUNTRIES = "Alemania|EUR|de,Argentina|ARS|es,Australia|AUD|en,Brasil|BRL|pt,Canadá|CAD|en,Chile|CLP|es,Colombia|COP|es,España|EUR|es,Estados Unidos|USD|en,Francia|EUR|fr,Italia|EUR|it,Japón|JPY|ja,México|MXN|es,Perú|PEN|es,Reino Unido|GBP|en,Suiza|CHF|de";
         const COUNTRIES = RAW_COUNTRIES.split(',').map(item => { const [name, curr, lang] = item.split('|'); return { name, defaultCurr: curr, lang }; });
         
@@ -67,7 +67,7 @@
             return `${sym} ${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; 
         }
 
-        // DICCIONARIO 7 IDIOMAS COMPLETOS PARA LA APP
+        // --- DICCIONARIO 7 IDIOMAS COMPLETOS PARA TODAS LAS VENTANAS DE LA APP ---
         const DICTIONARY = {
             es: { 
                 months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -78,11 +78,12 @@
                 lbl_actual: "Actual", lbl_goal: "Meta", days: ["D","L","M","M","J","V","S"],
                 categories: ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"],
                 income_words: ["recib", "ingreso", "gan", "cobr", "dieron", "tengo", "pagaron", "sueldo", "pago"],
-                quotes: ["Planifica tus compras y evita decisiones impulsivas.", "Ahorrar no es solo guardar, es saber gastar.", "Controla tus gastos antes de que ellos te controlen a ti.", "Págate a ti mismo primero: ahorra antes de gastar.", "Un pequeño agujero hunde un gran barco. Cuida los gastos hormiga.", "El interés compuesto es la octava maravilla del mundo."],
+                quotes: ["Planifica tus compras y evita decisiones impulsivas.", "Ahorrar no es solo guardar, es saber gastar.", "Controla tus gastos antes de que ellos te controlen a ti.", "Págate a ti mismo primero: ahorra antes de gastar.", "Un pequeño agujero hunde un gran barco. Cuida los gastos hormiga."],
                 analisis_sv_1: "Ahorraste el", analisis_sv_2: "% de tus ingresos esta semana.", analisis_leak_1: "Tu mayor fuga de dinero fue en", analisis_leak_2: ". Evalúa si fue estrictamente necesario.", analisis_warn: "¡Cuidado! Tus gastos superaron tus ingresos. Debes ajustar tu presupuesto urgente.", analisis_none: "No tienes movimientos recientes en los últimos 7 días para analizar.",
                 tips: ["Aplica la regla 50/30/20 (Necesidades/Deseos/Ahorro) para un mejor balance.", "Antes de una compra grande, espera 24 horas para evitar impulsos.", "Revisa tus suscripciones recurrentes, podrías estar pagando por algo que no usas.", "Considera usar la técnica de los sobres para controlar gastos diarios."],
                 auth_title: "Controla tus finanzas personales con Inteligencia Artificial. Rápido y privado.", auth_sub: "Acceso Seguro", auth_footer: "Al ingresar aceptas que tus datos se guarden únicamente de forma local en tu dispositivo.",
-                pay_title: "Desbloquea la IA", pay_sub: "Analiza tus finanzas, personaliza a tu estilo y registra por voz.", pay_month: "1 Mes", pay_year: "1 Año", pay_life: "Vitalicio", pay_pop: "POPULAR", pay_footer: "Te enviaré un código de activación único para tu correo tras el pago."
+                pay_title: "Desbloquea la IA", pay_sub: "Analiza tus finanzas, personaliza a tu estilo y registra por voz.", pay_month: "1 Mes", pay_year: "1 Año", pay_life: "Vitalicio", pay_pop: "POPULAR", pay_footer: "Te enviaré un código de activación único para tu correo tras el pago.",
+                settings_title: "Ajustes Globales", user_vip: "USUARIO VIP", user_free: "USUARIO FREE", btn_renew_vip: "Renovar / Ingresar Nuevo Código VIP", btn_redeem_vip: "Canjear Código VIP", btn_logout: "Cerrar Sesión", lbl_country_curr: "País de Residencia y Monedas", lbl_primary: "Principal", lbl_option: "Opción", lbl_only_vip: "Solo VIP", lbl_vip_custom: "Personalización VIP", btn_restore_def: "Restaurar Default", tab_themes: "Temas", tab_bg: "Fondos", tab_texts: "Textos", txt_themes_sub: "12 Personalidades diseñadas para ti", txt_bg_sub: "Personaliza el fondo libremente", lbl_global_bg: "Fondo Global", lbl_cards: "Tarjetas", txt_texts_sub: "Elige tu tipografía favorita", lbl_main_text: "Color de texto principal:", lbl_backup: "Respaldo Cifrado (AES-256)", btn_send_wa: "Enviar a WhatsApp", ph_paste_code: "Pega el código aquí", btn_restore: "Restaurar", btn_save_close: "Guardar y Cerrar", alert_backup_pwd: "Crea una clave para encriptar tu respaldo:", alert_copy_manual: "Copia este código manualmente:\n\n", alert_paste_code: "Pega el código.", alert_dec_pwd: "Clave de cifrado:", alert_overwrite: "⚠️ ¿Sobrescribir datos y restaurar tu cuenta?", alert_restored: "✅ Restauración exitosa.", alert_dec_error: "❌ Error: Clave incorrecta o código dañado.", alert_enter_vip: "Ingresa el código VIP:", alert_invalid_code: "Código inválido.", alert_expired: "El código caducó.", alert_vip_active: "VIP Activado!", alert_invalid_email: "Código inválido para este correo.", modal_country_title: "Seleccionar País", ph_search_country: "Buscar país...", wa_backup_msg: "Mi código seguro Billetera:\n", alert_del_txn: "¿Borrar?", lbl_edit: "Editar", alert_saved: "✅ Registrado."
             },
             en: { 
                 months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -93,11 +94,12 @@
                 lbl_actual: "Current", lbl_goal: "Goal", days: ["S","M","T","W","T","F","S"],
                 categories: ["Salary", "Food", "Transport", "Utilities", "Housing", "Health", "Education", "Entertainment", "Investment", "Others"],
                 income_words: ["receive", "income", "earn", "got", "have", "paid", "salary", "wage", "pay"],
-                quotes: ["Plan your purchases to avoid impulse buys.", "Saving isn't just storing, it's knowing how to spend.", "Control your expenses before they control you.", "Pay yourself first: save before you spend.", "A small leak will sink a great ship. Watch small expenses."],
+                quotes: ["Plan your purchases to avoid impulse buys.", "Saving isn't just storing, it's knowing how to spend.", "Control your expenses before they control you.", "Pay yourself first: save before you spend.", "A small leak will sink a great ship."],
                 analisis_sv_1: "You saved", analisis_sv_2: "% of your income this week.", analisis_leak_1: "Your biggest money drain was on", analisis_leak_2: ". Evaluate if it was necessary.", analisis_warn: "Warning! Your expenses exceeded your income. Adjust your budget urgently.", analisis_none: "You have no recent transactions in the last 7 days to analyze.",
                 tips: ["Apply the 50/30/20 rule (Needs/Wants/Savings) for a better balance.", "Before a large purchase, wait 24 hours to avoid impulse buying.", "Check your recurring subscriptions.", "Consider using the envelope budgeting method."],
                 auth_title: "Control your personal finances with Artificial Intelligence. Fast and private.", auth_sub: "Secure Access", auth_footer: "By logging in, you agree that your data is stored solely locally on your device.",
-                pay_title: "Unlock AI", pay_sub: "Analyze your finances, customize your style and log by voice.", pay_month: "1 Month", pay_year: "1 Year", pay_life: "Lifetime", pay_pop: "POPULAR", pay_footer: "I will send you a unique activation code to your email after payment."
+                pay_title: "Unlock AI", pay_sub: "Analyze your finances, customize your style and log by voice.", pay_month: "1 Month", pay_year: "1 Year", pay_life: "Lifetime", pay_pop: "POPULAR", pay_footer: "I will send you a unique activation code to your email after payment.",
+                settings_title: "Global Settings", user_vip: "VIP USER", user_free: "FREE USER", btn_renew_vip: "Renew / Enter New VIP Code", btn_redeem_vip: "Redeem VIP Code", btn_logout: "Log Out", lbl_country_curr: "Country and Currencies", lbl_primary: "Primary", lbl_option: "Option", lbl_only_vip: "VIP Only", lbl_vip_custom: "VIP Customization", btn_restore_def: "Restore Default", tab_themes: "Themes", tab_bg: "Backgrounds", tab_texts: "Texts", txt_themes_sub: "12 Personalities for you", txt_bg_sub: "Customize background freely", lbl_global_bg: "Global Background", lbl_cards: "Cards", txt_texts_sub: "Choose your typography", lbl_main_text: "Main text color:", lbl_backup: "Encrypted Backup (AES-256)", btn_send_wa: "Send to WhatsApp", ph_paste_code: "Paste code here", btn_restore: "Restore", btn_save_close: "Save & Close", alert_backup_pwd: "Create a password to encrypt backup:", alert_copy_manual: "Copy manually:\n\n", alert_paste_code: "Paste the code.", alert_dec_pwd: "Encryption password:", alert_overwrite: "⚠️ Overwrite data and restore account?", alert_restored: "✅ Restoration successful.", alert_dec_error: "❌ Error: Wrong password or corrupted code.", alert_enter_vip: "Enter VIP code:", alert_invalid_code: "Invalid code.", alert_expired: "Code expired.", alert_vip_active: "VIP Activated!", alert_invalid_email: "Invalid code for this email.", modal_country_title: "Select Country", ph_search_country: "Search country...", wa_backup_msg: "My secure Wallet code:\n", alert_del_txn: "Delete?", lbl_edit: "Edit", alert_saved: "✅ Saved."
             },
             pt: { 
                 months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
@@ -112,7 +114,8 @@
                 analisis_sv_1: "Você economizou", analisis_sv_2: "% de sua renda esta semana.", analisis_leak_1: "Seu maior vazamento de dinheiro foi em", analisis_leak_2: ".", analisis_warn: "Cuidado! Suas despesas excederam sua renda.", analisis_none: "Sem transações recentes.",
                 tips: ["Aplique a regra 50/30/20.", "Espere 24 horas antes de compras grandes."],
                 auth_title: "Controle suas finanças com IA. Rápido e privado.", auth_sub: "Acesso Seguro", auth_footer: "Seus dados são salvos apenas localmente.",
-                pay_title: "Desbloqueie a IA", pay_sub: "Analise, personalize e registre por voz.", pay_month: "1 Mês", pay_year: "1 Ano", pay_life: "Vitalício", pay_pop: "POPULAR", pay_footer: "Código de ativação enviado após o pagamento."
+                pay_title: "Desbloqueie a IA", pay_sub: "Analise, personalize e registre por voz.", pay_month: "1 Mês", pay_year: "1 Ano", pay_life: "Vitalício", pay_pop: "POPULAR", pay_footer: "Código de ativação enviado após o pagamento.",
+                settings_title: "Configurações Globais", user_vip: "USUÁRIO VIP", user_free: "USUÁRIO FREE", btn_renew_vip: "Renovar / Inserir Código VIP", btn_redeem_vip: "Resgatar Código VIP", btn_logout: "Sair", lbl_country_curr: "País e Moedas", lbl_primary: "Principal", lbl_option: "Opção", lbl_only_vip: "Apenas VIP", lbl_vip_custom: "Personalização VIP", btn_restore_def: "Restaurar Padrão", tab_themes: "Temas", tab_bg: "Fundos", tab_texts: "Textos", txt_themes_sub: "12 Personalidades para você", txt_bg_sub: "Personalize o fundo livremente", lbl_global_bg: "Fundo Global", lbl_cards: "Cartões", txt_texts_sub: "Escolha sua tipografia", lbl_main_text: "Cor do texto principal:", lbl_backup: "Backup Criptografado (AES-256)", btn_send_wa: "Enviar para WhatsApp", ph_paste_code: "Cole o código aqui", btn_restore: "Restaurar", btn_save_close: "Salvar e Fechar", alert_backup_pwd: "Crie uma senha para criptografar seu backup:", alert_copy_manual: "Copie manualmente:\n\n", alert_paste_code: "Cole o código.", alert_dec_pwd: "Senha de criptografia:", alert_overwrite: "⚠️ Sobrescrever dados e restaurar conta?", alert_restored: "✅ Restauração concluída.", alert_dec_error: "❌ Erro: Senha incorreta ou código corrompido.", alert_enter_vip: "Insira o código VIP:", alert_invalid_code: "Código inválido.", alert_expired: "O código expirou.", alert_vip_active: "VIP Ativado!", alert_invalid_email: "Código inválido para este e-mail.", modal_country_title: "Selecionar País", ph_search_country: "Buscar país...", wa_backup_msg: "Meu código seguro:\n", alert_del_txn: "Excluir?", lbl_edit: "Editar", alert_saved: "✅ Salvo."
             },
             fr: { 
                 months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
@@ -127,7 +130,8 @@
                 analisis_sv_1: "Vous avez économisé", analisis_sv_2: "% de vos revenus.", analisis_leak_1: "Plus grande dépense en", analisis_leak_2: ".", analisis_warn: "Attention! Dépenses > Revenus.", analisis_none: "Pas de transactions récentes.",
                 tips: ["Appliquez la règle 50/30/20.", "Attendez 24h avant un gros achat."],
                 auth_title: "Contrôlez vos finances avec l'IA. Rapide et privé.", auth_sub: "Accès Sécurisé", auth_footer: "Vos données restent locales.",
-                pay_title: "Débloquez l'IA", pay_sub: "Analysez et enregistrez par la voix.", pay_month: "1 Mois", pay_year: "1 An", pay_life: "À vie", pay_pop: "POPULAIRE", pay_footer: "Code envoyé après paiement."
+                pay_title: "Débloquez l'IA", pay_sub: "Analysez et enregistrez par la voix.", pay_month: "1 Mois", pay_year: "1 An", pay_life: "À vie", pay_pop: "POPULAIRE", pay_footer: "Code envoyé après paiement.",
+                settings_title: "Paramètres Globaux", user_vip: "UTILISATEUR VIP", user_free: "UTILISATEUR GRATUIT", btn_renew_vip: "Renouveler / Nouveau Code VIP", btn_redeem_vip: "Utiliser Code VIP", btn_logout: "Déconnexion", lbl_country_curr: "Pays et Devises", lbl_primary: "Principal", lbl_option: "Option", lbl_only_vip: "VIP Uniquement", lbl_vip_custom: "Personnalisation VIP", btn_restore_def: "Restaurer Défaut", tab_themes: "Thèmes", tab_bg: "Fonds", tab_texts: "Textes", txt_themes_sub: "12 Styles pour vous", txt_bg_sub: "Personnalisez le fond librement", lbl_global_bg: "Fond Global", lbl_cards: "Cartes", txt_texts_sub: "Choisissez votre typographie", lbl_main_text: "Couleur du texte principal:", lbl_backup: "Sauvegarde Cryptée (AES)", btn_send_wa: "Envoyer à WhatsApp", ph_paste_code: "Collez le code ici", btn_restore: "Restaurer", btn_save_close: "Enregistrer et Fermer", alert_backup_pwd: "Créez un mot de passe pour crypter la sauvegarde:", alert_copy_manual: "Copiez manuellement:\n\n", alert_paste_code: "Veuillez coller le code.", alert_dec_pwd: "Mot de passe de cryptage:", alert_overwrite: "⚠️ Écraser les données et restaurer le compte?", alert_restored: "✅ Restauration réussie.", alert_dec_error: "❌ Erreur: Mot de passe incorrect ou code corrompu.", alert_enter_vip: "Entrez le code VIP:", alert_invalid_code: "Code invalide.", alert_expired: "Le code a expiré.", alert_vip_active: "VIP Activé!", alert_invalid_email: "Code invalide pour cet email.", modal_country_title: "Sélectionner le Pays", ph_search_country: "Rechercher pays...", wa_backup_msg: "Mon code de sécurité:\n", alert_del_txn: "Supprimer?", lbl_edit: "Éditer", alert_saved: "✅ Enregistré."
             },
             de: { 
                 months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
@@ -142,11 +146,12 @@
                 analisis_sv_1: "Sie haben", analisis_sv_2: "% gespart.", analisis_leak_1: "Größtes Leck bei", analisis_leak_2: ".", analisis_warn: "Achtung! Ausgaben > Einnahmen.", analisis_none: "Keine aktuellen Daten.",
                 tips: ["Nutzen Sie die 50/30/20 Regel.", "Warten Sie 24h bei großen Käufen."],
                 auth_title: "Finanzen mit KI kontrollieren. Privat & sicher.", auth_sub: "Sicherer Zugang", auth_footer: "Daten bleiben auf dem Gerät.",
-                pay_title: "KI Freischalten", pay_sub: "Stimmen-Erfassung & Analyse.", pay_month: "1 Monat", pay_year: "1 Jahr", pay_life: "Lebenslang", pay_pop: "BELIEBT", pay_footer: "Aktivierungscode nach Zahlung."
+                pay_title: "KI Freischalten", pay_sub: "Stimmen-Erfassung & Analyse.", pay_month: "1 Monat", pay_year: "1 Jahr", pay_life: "Lebenslang", pay_pop: "BELIEBT", pay_footer: "Aktivierungscode nach Zahlung.",
+                settings_title: "Globale Einstellungen", user_vip: "VIP-BENUTZER", user_free: "FREE-BENUTZER", btn_renew_vip: "Erneuern / Neuen VIP-Code", btn_redeem_vip: "VIP-Code einlösen", btn_logout: "Abmelden", lbl_country_curr: "Land und Währungen", lbl_primary: "Haupt", lbl_option: "Option", lbl_only_vip: "Nur VIP", lbl_vip_custom: "VIP-Anpassung", btn_restore_def: "Standard wiederherstellen", tab_themes: "Themen", tab_bg: "Hintergrund", tab_texts: "Texte", txt_themes_sub: "12 Stile für Sie", txt_bg_sub: "Hintergrund frei anpassen", lbl_global_bg: "Globaler Hintergrund", lbl_cards: "Karten", txt_texts_sub: "Wählen Sie Ihre Typografie", lbl_main_text: "Haupttextfarbe:", lbl_backup: "Verschlüsseltes Backup (AES)", btn_send_wa: "An WhatsApp senden", ph_paste_code: "Code hier einfügen", btn_restore: "Wiederherstellen", btn_save_close: "Speichern & Schließen", alert_backup_pwd: "Passwort zur Verschlüsselung erstellen:", alert_copy_manual: "Manuell kopieren:\n\n", alert_paste_code: "Bitte Code einfügen.", alert_dec_pwd: "Verschlüsselungspasswort:", alert_overwrite: "⚠️ Daten überschreiben und Konto wiederherstellen?", alert_restored: "✅ Wiederherstellung erfolgreich.", alert_dec_error: "❌ Fehler: Falsches Passwort oder beschädigter Code.", alert_enter_vip: "VIP-Code eingeben:", alert_invalid_code: "Ungültiger Code.", alert_expired: "Code abgelaufen.", alert_vip_active: "VIP aktiviert!", alert_invalid_email: "Ungültiger Code für diese E-Mail.", modal_country_title: "Land auswählen", ph_search_country: "Land suchen...", wa_backup_msg: "Mein sicherer Code:\n", alert_del_txn: "Löschen?", lbl_edit: "Bearbeiten", alert_saved: "✅ Gespeichert."
             },
             it: { 
                 months: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
-                home: "Inizio", record: "Registra", analysis: "Analisi", history: "Storico", balance: "Saldo totale", income: "Entrate", exp: "Uscite", save: "Risparmio", manual: "Manuale", ai: "Intelligente (IA)", text_ai: "Testo", voice_ai: "Voce", amount: "Importo", cat: "Categoria", desc: "Descrizione", btn_save: "Salva", settings: "Impostazioni", fixed: "Spese fisse", fixed_sub: "Ricorrenti", analysis_title: "Valutazione", last_7: "Ultimi 7 giorni", weekly_balance: "Saldo sett.", no_txns: "Nessuna transazione.",
+                home: "Inizio", record: "Registra", analysis: "Analisi", history: "Storico", balance: "Saldo totale", income: "Entrate", exp: "Uscite", save: "Risparmio", manual: "Manuale", ai: "Intelligente (IA)", text_ai: "Testo", voice_ai: "Voce", amount: "Importo", cat: "Categoria", desc: "Descrizione", btn_save: "Salva", settings: "Impostazioni", fixed: "Spese fisse", fixed_sub: "Ricorrentes", analysis_title: "Valutazione", last_7: "Ultimi 7 giorni", weekly_balance: "Saldo sett.", no_txns: "Nessuna transazione.",
                 btn_expense: "Uscita", btn_income: "Entrata", btn_write: "Scrivi", btn_speak: "Parla", btn_process_ai: "Elabora IA", btn_analyze_txt: "Analizza Testo", btn_analyze: "Analizza", btn_analyzing: "Analizzando...", btn_see_plans: "Vedi Piani",
                 tab_daily: "Giorno", tab_weekly: "Settimana", tab_monthly: "Mese",
                 msg_listening: "Ascoltando... premi per fermare", msg_tap_mic: "Premi per parlare", msg_processing: "Elaborazione IA...", msg_no_amount: "🤖 IA: Nessun importo rilevato.",
@@ -157,7 +162,8 @@
                 analisis_sv_1: "Hai risparmiato il", analisis_sv_2: "% delle entrate.", analisis_leak_1: "Maggior spesa in", analisis_leak_2: ".", analisis_warn: "Attenzione! Uscite > Entrate.", analisis_none: "Nessun dato recente.",
                 tips: ["Usa la regola 50/30/20.", "Aspetta 24h per grandi acquisti."],
                 auth_title: "Controlla le finanze con l'IA. Veloce e privato.", auth_sub: "Accesso Sicuro", auth_footer: "I dati restano sul dispositivo.",
-                pay_title: "Sblocca l'IA", pay_sub: "Analizza e registra con la voce.", pay_month: "1 Mese", pay_year: "1 Anno", pay_life: "A vita", pay_pop: "POPOLARE", pay_footer: "Codice inviato dopo il pagamento."
+                pay_title: "Sblocca l'IA", pay_sub: "Analizza e registra con la voce.", pay_month: "1 Mese", pay_year: "1 Anno", pay_life: "A vita", pay_pop: "POPOLARE", pay_footer: "Codice inviato dopo il pagamento.",
+                settings_title: "Impostazioni Globali", user_vip: "UTENTE VIP", user_free: "UTENTE FREE", btn_renew_vip: "Rinnova / Nuovo Codice VIP", btn_redeem_vip: "Riscatta Codice VIP", btn_logout: "Esci", lbl_country_curr: "Paese e Valute", lbl_primary: "Principale", lbl_option: "Opzione", lbl_only_vip: "Solo VIP", lbl_vip_custom: "Personalizzazione VIP", btn_restore_def: "Ripristina Predefinito", tab_themes: "Temi", tab_bg: "Sfondi", tab_texts: "Testi", txt_themes_sub: "12 Stili per te", txt_bg_sub: "Personalizza lo sfondo", lbl_global_bg: "Sfondo Globale", lbl_cards: "Carte", txt_texts_sub: "Scegli la tua tipografia", lbl_main_text: "Colore testo principale:", lbl_backup: "Backup Crittografato (AES)", btn_send_wa: "Invia a WhatsApp", ph_paste_code: "Incolla qui il codice", btn_restore: "Ripristina", btn_save_close: "Salva e Chiudi", alert_backup_pwd: "Crea una password per crittografare il backup:", alert_copy_manual: "Copia manualmente:\n\n", alert_paste_code: "Incolla il codice.", alert_dec_pwd: "Password di crittografia:", alert_overwrite: "⚠️ Sovrascrivere i dati e ripristinare il conto?", alert_restored: "✅ Ripristino completato.", alert_dec_error: "❌ Errore: Password errata o codice danneggiato.", alert_enter_vip: "Inserisci codice VIP:", alert_invalid_code: "Codice non valido.", alert_expired: "Codice scaduto.", alert_vip_active: "VIP Attivato!", alert_invalid_email: "Codice non valido per questa email.", modal_country_title: "Seleziona Paese", ph_search_country: "Cerca paese...", wa_backup_msg: "Il mio codice sicuro:\n", alert_del_txn: "Eliminare?", lbl_edit: "Modifica", alert_saved: "✅ Registrato."
             },
             ja: { 
                 months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
@@ -172,7 +178,8 @@
                 analisis_sv_1: "今週は収入の", analisis_sv_2: "% を節約しました。", analisis_leak_1: "最大の支出は", analisis_leak_2: "でした。", analisis_warn: "警告！支出が収入を上回っています。", analisis_none: "最近のデータがありません。",
                 tips: ["50/30/20ルールを適用してください。", "大きな買い物の前に24時間待ちます。"],
                 auth_title: "AIで財務を管理。迅速かつプライベート。", auth_sub: "安全なアクセス", auth_footer: "データはデバイスにのみ保存されます。",
-                pay_title: "AIのロック解除", pay_sub: "分析、カスタマイズ、音声記録。", pay_month: "1ヶ月", pay_year: "1年", pay_life: "永久", pay_pop: "人気", pay_footer: "支払い後にアクティベーションコードを送信します。"
+                pay_title: "AIのロック解除", pay_sub: "分析、カスタマイズ、音声記録。", pay_month: "1ヶ月", pay_year: "1年", pay_life: "永久", pay_pop: "人気", pay_footer: "支払い後にアクティベーションコードを送信します。",
+                settings_title: "グローバル設定", user_vip: "VIP ユーザー", user_free: "無料ユーザー", btn_renew_vip: "更新 / 新VIPコード", btn_redeem_vip: "VIPコードを利用", btn_logout: "ログアウト", lbl_country_curr: "国と通貨", lbl_primary: "メイン", lbl_option: "オプション", lbl_only_vip: "VIP専用", lbl_vip_custom: "VIPカスタマイズ", btn_restore_def: "デフォルトに戻す", tab_themes: "テーマ", tab_bg: "背景", tab_texts: "テキスト", txt_themes_sub: "12のスタイル", txt_bg_sub: "背景をカスタマイズ", lbl_global_bg: "グローバル背景", lbl_cards: "カード", txt_texts_sub: "タイポグラフィを選択", lbl_main_text: "メインテキスト色:", lbl_backup: "暗号化バックアップ (AES)", btn_send_wa: "WhatsAppに送信", ph_paste_code: "ここにコードを貼り付け", btn_restore: "復元する", btn_save_close: "保存して閉じる", alert_backup_pwd: "バックアップのパスワードを作成:", alert_copy_manual: "手動でコピー:\n\n", alert_paste_code: "コードを貼り付けてください。", alert_dec_pwd: "暗号化パスワード:", alert_overwrite: "⚠️ データを上書きして復元しますか？", alert_restored: "✅ 復元成功。", alert_dec_error: "❌ エラー: パスワード間違いまたは破損コード。", alert_enter_vip: "VIPコードを入力:", alert_invalid_code: "無効なコード。", alert_expired: "期限切れコード。", alert_vip_active: "VIP有効化！", alert_invalid_email: "このメールには無効なコード。", modal_country_title: "国を選択", ph_search_country: "国を検索...", wa_backup_msg: "私の安全なコード:\n", alert_del_txn: "削除しますか？", lbl_edit: "編集", alert_saved: "✅ 保存しました。"
             }
         };
 
@@ -287,7 +294,7 @@
                     <div className="flex items-center gap-3">
                         <button onClick={onOpenCountryMenu} className="flex items-center gap-1.5 bg-background border px-2.5 py-1.5 rounded-xl shadow-sm hover:border-accent transition-colors" style={{borderColor: c?.border}}>
                             <span className="text-lg">{getFlag(country)}</span>
-                            <span className="text-xs font-bold text-primary">{country}</span>
+                            <span className="text-xs font-bold text-primary hidden sm:block">{country}</span>
                             <Icons.ChevronDown c="w-3 h-3 text-secondary"/>
                         </button>
                         <button onClick={onOpenSettings} className="w-10 h-10 rounded-full border-2 overflow-hidden relative shadow-md hover:opacity-80 transition-opacity" style={{borderColor: c?.border}}>
@@ -300,7 +307,7 @@
         }
 
         // --- COMPONENTE: MODAL SELECCIÓN DE PAÍS RÁPIDO ---
-        function CountryModal({ onClose, settings, saveSettings, c }) {
+        function CountryModal({ onClose, settings, saveSettings, c, t }) {
             const [search, setSearch] = useState('');
             const filtered = COUNTRIES.filter(x => x.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -317,8 +324,8 @@
                 <div className="fixed inset-0 modal-overlay flex items-center justify-center p-4 z-[300]">
                     <div className="bg-card w-full max-w-sm rounded-3xl p-6 border shadow-2xl view-animate relative flex flex-col max-h-[80vh]" style={{borderColor: c.border}}>
                         <button onClick={onClose} className="absolute top-4 right-4 bg-background border rounded-full p-1.5 text-secondary hover:text-white transition z-10" style={{borderColor: c.border}}><Icons.X c="w-5 h-5"/></button>
-                        <h2 className="text-xl font-bold mb-4 text-primary">Seleccionar País</h2>
-                        <input type="text" placeholder="Buscar país..." value={search} onChange={e=>setSearch(e.target.value)} className="w-full p-3 rounded-xl border bg-background outline-none text-primary text-sm mb-4" style={{borderColor: c.border}} />
+                        <h2 className="text-xl font-bold mb-4 text-primary">{t('modal_country_title') || 'Seleccionar País'}</h2>
+                        <input type="text" placeholder={t('ph_search_country') || 'Buscar país...'} value={search} onChange={e=>setSearch(e.target.value)} className="w-full p-3 rounded-xl border bg-background outline-none text-primary text-sm mb-4" style={{borderColor: c.border}} />
                         <div className="flex-1 overflow-y-auto space-y-2 pr-2">
                             {filtered.map(ct => (
                                 <button key={ct.name} onClick={()=>selectCountry(ct.name)} className={`w-full flex items-center justify-between p-3 rounded-xl border transition-colors ${settings.country === ct.name ? 'bg-accent/10' : 'bg-background hover:border-secondary'}`} style={{borderColor: settings.country === ct.name ? c.accent : c.border}}>
@@ -335,20 +342,19 @@
         // --- COMPONENTE: MODAL DE PAGO VIP ---
         function PaymentModal({ onClose, t, cur, country, lang, c }) {
             const rate = USD_RATES[cur] || 1;
-            const sym = ALL_CURRENCIES[cur] || cur;
             const p1 = formatMoneda(3 * rate, cur);
             const p2 = formatMoneda(15 * rate, cur);
             const p3 = formatMoneda(45 * rate, cur);
 
             const redirectWA = (planCode, priceStr) => {
                 let waMsg = "";
-                if(lang === 'en') { waMsg = `Hello Carlos, I want to buy the VIP Plan (${planCode} for ${priceStr} ${cur}) from ${country}.`; }
-                else if(lang === 'pt') { waMsg = `Olá Carlos, quero comprar o Plano VIP (${planCode} por ${priceStr} ${cur}) do ${country}.`; }
-                else if(lang === 'fr') { waMsg = `Bonjour Carlos, je veux acheter le plan VIP (${planCode} pour ${priceStr} ${cur}) depuis ${country}.`; }
-                else if(lang === 'de') { waMsg = `Hallo Carlos, ich möchte den VIP-Plan (${planCode} für ${priceStr} ${cur}) aus ${country} kaufen.`; }
-                else if(lang === 'it') { waMsg = `Ciao Carlos, voglio acquistare il Piano VIP (${planCode} per ${priceStr} ${cur}) da ${country}.`; }
-                else if(lang === 'ja') { waMsg = `こんにちはカルロス、${country}からVIPプラン（${priceStr} ${cur}の${planCode}）を購入したいです。`; }
-                else { waMsg = `Hola Carlos, quiero comprar el plan VIP de ${planCode} por ${priceStr} ${cur} desde ${country}.`; }
+                if(lang === 'en') { waMsg = `Hello Carlos, I come from the app. I want to buy the VIP Plan (${planCode} for ${priceStr} ${cur}) from ${country}.`; }
+                else if(lang === 'pt') { waMsg = `Olá Carlos, venho do app. Quero comprar o Plano VIP (${planCode} por ${priceStr} ${cur}) do ${country}.`; }
+                else if(lang === 'fr') { waMsg = `Bonjour Carlos, je viens de l'app. Je veux acheter le plan VIP (${planCode} pour ${priceStr} ${cur}) depuis ${country}.`; }
+                else if(lang === 'de') { waMsg = `Hallo Carlos, ich komme aus der App. Ich möchte den VIP-Plan (${planCode} für ${priceStr} ${cur}) aus ${country} kaufen.`; }
+                else if(lang === 'it') { waMsg = `Ciao Carlos, vengo dall'app. Voglio acquistare il Piano VIP (${planCode} per ${priceStr} ${cur}) da ${country}.`; }
+                else if(lang === 'ja') { waMsg = `こんにちはカルロス、アプリから来ました。${country}からVIPプラン（${priceStr} ${cur}の${planCode}）を購入したいです。`; }
+                else { waMsg = `Hola Carlos, vengo de la app. Quiero comprar el Plan VIP de ${planCode} por ${priceStr} ${cur} desde ${country}.`; }
                 window.open(`https://wa.me/51930266472?text=${encodeURIComponent(waMsg)}`, '_blank');
             };
 
@@ -362,14 +368,14 @@
                         <p className="text-secondary text-sm mb-6">{t('pay_sub') || 'Analiza tus finanzas y registra por voz.'}</p>
                         
                         <div className="space-y-3 mb-6">
-                            <button onClick={()=>redirectWA('1 Mes', p1)} className="w-full bg-[#19191c] border border-border p-3 rounded-xl hover:border-warning transition flex justify-between items-center group">
+                            <button onClick={()=>redirectWA(t('pay_month')||'1 Mes', p1)} className="w-full bg-[#19191c] border border-border p-3 rounded-xl hover:border-warning transition flex justify-between items-center group">
                                 <span className="text-secondary font-bold group-hover:text-white">{t('pay_month') || '1 Mes'}</span><span className="text-white font-extrabold">{p1}</span>
                             </button>
-                            <button onClick={()=>redirectWA('1 Año', p2)} className="w-full bg-warning/10 border border-warning/50 p-3 rounded-xl hover:bg-warning/20 transition flex justify-between items-center relative">
+                            <button onClick={()=>redirectWA(t('pay_year')||'1 Año', p2)} className="w-full bg-warning/10 border border-warning/50 p-3 rounded-xl hover:bg-warning/20 transition flex justify-between items-center relative">
                                 <span className="absolute -top-2 left-4 bg-warning text-black text-[9px] px-2 py-0.5 rounded font-bold">{t('pay_pop') || 'POPULAR'}</span>
                                 <span className="text-warning font-bold">{t('pay_year') || '1 Año'}</span><span className="text-white font-extrabold">{p2}</span>
                             </button>
-                            <button onClick={()=>redirectWA('Vitalicio', p3)} className="w-full bg-[#19191c] border border-border p-3 rounded-xl hover:border-warning transition flex justify-between items-center group">
+                            <button onClick={()=>redirectWA(t('pay_life')||'Vitalicio', p3)} className="w-full bg-[#19191c] border border-border p-3 rounded-xl hover:border-warning transition flex justify-between items-center group">
                                 <span className="text-secondary font-bold group-hover:text-white">{t('pay_life') || 'Vitalicio'}</span><span className="text-white font-extrabold">{p3}</span>
                             </button>
                         </div>
@@ -455,10 +461,7 @@
             );
         }
 
-        function AuthView({ onLogin }) {
-            const sysLang = localStorage.getItem('billetera_web_lang') || 'es';
-            const tAuth = (k) => DICTIONARY[sysLang]?.[k] || DICTIONARY['es'][k];
-
+        function AuthView({ onLogin, t }) {
             useEffect(() => {
                 const initG = setInterval(() => {
                     if (window.google && window.google.accounts) {
@@ -466,7 +469,7 @@
                             /* ---------------------------------------------------- */
                             /* OJO: RECUERDA PONER TU CLIENT ID REAL DE GOOGLE      */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -485,11 +488,11 @@
                 <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#18181b] text-white">
                     <div className="w-24 h-24 rounded-3xl bg-transparent text-accent p-1 mb-6"><Icons.Logo /></div>
                     <h1 className="text-4xl font-extrabold tracking-tight mb-2">Mi Billetera</h1>
-                    <p className="text-[#a1a1aa] mb-12 text-center max-w-xs text-sm">{tAuth('auth_title') || 'Controla tus finanzas personales con Inteligencia Artificial. Rápido y privado.'}</p>
+                    <p className="text-[#a1a1aa] mb-12 text-center max-w-xs text-sm">{t('auth_title')}</p>
                     <div className="w-full max-w-xs p-6 bg-[#27272a] rounded-3xl border border-[#3f3f46] shadow-xl text-center">
-                        <p className="text-xs font-bold uppercase text-[#a1a1aa] tracking-widest mb-6">{tAuth('auth_sub') || 'Acceso Seguro'}</p>
+                        <p className="text-xs font-bold uppercase text-[#a1a1aa] tracking-widest mb-6">{t('auth_sub')}</p>
                         <div id="g-btn" className="w-full overflow-hidden rounded-xl h-12 flex justify-center"></div>
-                        <p className="text-[10px] text-[#a1a1aa] mt-4 leading-relaxed">{tAuth('auth_footer') || 'Al ingresar aceptas que tus datos se guarden únicamente de forma local en tu dispositivo.'}</p>
+                        <p className="text-[10px] text-[#a1a1aa] mt-4 leading-relaxed">{t('auth_footer')}</p>
                     </div>
                 </div>
             );
@@ -541,7 +544,7 @@
                 <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
                     <TopHeader title={t('home')||'Inicio'} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
 
-                    {isVip && expire && <div className="bg-warning/10 border border-warning/30 rounded-xl p-3 flex justify-between items-center text-xs"><span className="text-warning font-bold flex items-center gap-2"><Icons.Crown c="w-4 h-4"/> VIP Activo</span><span className="text-secondary">Exp: {expire === '2099-12-31' ? '∞' : expire}</span></div>}
+                    {isVip && expire && <div className="bg-warning/10 border border-warning/30 rounded-xl p-3 flex justify-between items-center text-xs"><span className="text-warning font-bold flex items-center gap-2"><Icons.Crown c="w-4 h-4"/> {t('user_vip')}</span><span className="text-secondary">Exp: {expire === '2099-12-31' ? '∞' : expire}</span></div>}
                     
                     <CurrencyTabs currencies={safeCurrencies} activeCurrency={cur} setActiveCurrency={setActiveCurrency} c={c} />
 
@@ -592,7 +595,7 @@
             const guardarManual = (e) => {
                 e.preventDefault(); if(!monto || isNaN(monto) || monto<=0) return;
                 addTxn({ id: Date.now(), type: tipo, amount: parseFloat(monto), category: cat, description: desc||cat, date: new Date().toISOString(), currency: cur });
-                setMonto(''); setDesc(''); alert("✅ Registrado.");
+                setMonto(''); setDesc(''); alert(t('alert_saved') || "✅ Registrado.");
             };
 
             const toggleVoz = () => {
@@ -825,7 +828,7 @@
                     <div className="fixed inset-0 modal-overlay z-[100] flex items-center justify-center p-4">
                         <div className="bg-card w-full max-w-sm rounded-3xl p-6 border shadow-2xl view-animate relative" style={{borderColor: c.border}}>
                             <button onClick={onClose} className="absolute top-4 right-4 bg-background border rounded-full p-1.5 text-secondary hover:text-white transition z-10" style={{borderColor: c.border}}><Icons.X c="w-5 h-5"/></button>
-                            <h2 className="text-xl font-bold mb-6 text-primary flex items-center gap-2"><Icons.Pencil c="w-5 h-5 text-accent"/> Editar</h2>
+                            <h2 className="text-xl font-bold mb-6 text-primary flex items-center gap-2"><Icons.Pencil c="w-5 h-5 text-accent"/> {t('lbl_edit') || 'Editar'}</h2>
                             <form onSubmit={handleSave} className="space-y-4">
                                 <input type="number" step="0.01" value={monto} onChange={e=>setMonto(e.target.value)} className="w-full p-4 rounded-xl border bg-background outline-none text-primary font-bold text-2xl text-center" style={{borderColor: c.border}}/>
                                 <select value={cat} onChange={e=>setCat(e.target.value)} className="w-full p-3.5 rounded-xl border bg-background outline-none text-primary text-sm font-bold" style={{borderColor: c.border}}>{catList.map(catItem => <option key={catItem} value={catItem}>{catItem}</option>)}</select>
@@ -930,7 +933,7 @@
         }
 
         // --- PANTALLA 5: AJUSTES (MODAL FLOTANTE VIP) ---
-        function AjustesModal({ onClose, onPreview, settings, saveSettings, user, isVip, onLogout, onUpgrade, Icons, c }) {
+        function AjustesModal({ onClose, onPreview, settings, saveSettings, user, isVip, onLogout, onUpgrade, Icons, c, t }) {
             const [local, setLocal] = useState(settings);
             const [code, setCode] = useState(''); const [crm, setCrm] = useState(false);
             const [customTab, setCustomTab] = useState('temas');
@@ -946,42 +949,43 @@
             };
 
             const backup = async () => {
-                const p = prompt("Crea una clave para encriptar tu respaldo:"); if(!p) return;
+                const p = prompt(t('alert_backup_pwd') || "Crea una clave para encriptar tu respaldo:"); if(!p) return;
                 const ud = DB.getUserData(user);
                 const payload = { txns: DB.getTxns(user), settings: local, vip: ud.vip, expireAt: ud.expireAt };
                 const d = CryptoJS.AES.encrypt(JSON.stringify(payload), p).toString();
                 try {
                     await navigator.clipboard.writeText(d);
-                    window.open(`https://wa.me/?text=${encodeURIComponent("Mi código seguro Billetera:\n" + d)}`);
-                } catch(e) { alert("Copia este código manualmente:\n\n" + d); }
+                    window.open(`https://wa.me/?text=${encodeURIComponent((t('wa_backup_msg') || "Mi código seguro Billetera:\n") + d)}`);
+                } catch(e) { alert((t('alert_copy_manual') || "Copia este código manualmente:\n\n") + d); }
             };
 
             const restore = () => {
-                if(!code) return alert("Pega el código."); const p = prompt("Clave de cifrado:"); if(!p) return;
+                if(!code) return alert(t('alert_paste_code') || "Pega el código."); 
+                const p = prompt(t('alert_dec_pwd') || "Clave de cifrado:"); if(!p) return;
                 try {
                     const dec = CryptoJS.AES.decrypt(code, p).toString(CryptoJS.enc.Utf8);
-                    if(dec && confirm("⚠️ ¿Sobrescribir datos y restaurar tu cuenta?")) { 
+                    if(dec && confirm(t('alert_overwrite') || "⚠️ ¿Sobrescribir datos y restaurar tu cuenta?")) { 
                         const data = JSON.parse(dec);
                         if (Array.isArray(data)) { DB.saveTxns(user, data); } else {
                             if(data.txns) DB.saveTxns(user, data.txns);
                             if(data.settings) DB.saveSettings(user, data.settings);
                             if(data.vip && data.expireAt) DB.activateVip(user, data.expireAt);
                         }
-                        alert("✅ Restauración completada exitosamente."); window.location.reload(); 
+                        alert(t('alert_restored') || "✅ Restauración completada exitosamente."); window.location.reload(); 
                     }
-                } catch(e) { alert("❌ Error: Clave incorrecta o código dañado."); }
+                } catch(e) { alert(t('alert_dec_error') || "❌ Error: Clave incorrecta o código dañado."); }
             };
 
             const redeem = () => {
-                const c = prompt("Ingresa el código VIP:"); if(!c) return; const cl = c.trim().toUpperCase();
+                const cd = prompt(t('alert_enter_vip') || "Ingresa el código VIP:"); if(!cd) return; const cl = cd.trim().toUpperCase();
                 if(cl === 'SIRQCHO-ADMIN') return setCrm(true);
-                if(!cl.includes('-')) return alert("Código inválido.");
+                if(!cl.includes('-')) return alert(t('alert_invalid_code') || "Código inválido.");
                 const [dStr, hash] = cl.split('-');
                 if(hash === CryptoJS.SHA256(user.toLowerCase().trim() + dStr + "Billetera_Carlos_Secreta_195").toString().substring(0,6).toUpperCase()) {
                     const fDate = `${dStr.substring(0,4)}-${dStr.substring(4,6)}-${dStr.substring(6,8)}`;
-                    if(fDate < new Date().toISOString().split('T')[0]) return alert("El código caducó.");
-                    DB.activateVip(user, fDate); alert("VIP Activado!"); window.location.reload();
-                } else alert("Código inválido para este correo.");
+                    if(fDate < new Date().toISOString().split('T')[0]) return alert(t('alert_expired') || "El código caducó.");
+                    DB.activateVip(user, fDate); alert(t('alert_vip_active') || "VIP Activado!"); window.location.reload();
+                } else alert(t('alert_invalid_email') || "Código inválido para este correo.");
             };
 
             return (
@@ -991,7 +995,7 @@
                         
                         {crm && <AdminCRMModal onClose={()=>setCrm(false)} cur={local.currencies[0]}/>}
                         
-                        <h1 className="text-2xl font-extrabold text-primary mb-6">Ajustes Globales</h1>
+                        <h1 className="text-2xl font-extrabold text-primary mb-6">{t('settings_title') || 'Ajustes Globales'}</h1>
                         
                         <div className="bg-background p-6 rounded-3xl border shadow-inner mb-6" style={{borderColor: c.border}}>
                             <div className="flex items-center gap-4 mb-6">
@@ -999,28 +1003,28 @@
                                 <div>
                                     <p className="font-bold text-primary text-lg leading-tight">{prof?.name||user}</p>
                                     <p className="text-xs text-secondary mb-2">{user}</p>
-                                    {isVip ? <span className="bg-warning/20 text-warning px-2 py-0.5 rounded text-[10px] font-bold tracking-widest border border-warning/30">USUARIO VIP</span> : <span className="bg-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-bold tracking-widest border border-accent/30" style={{color: c.accent, borderColor: `${c.accent}4D`}}>USUARIO FREE</span>}
+                                    {isVip ? <span className="bg-warning/20 text-warning px-2 py-0.5 rounded text-[10px] font-bold tracking-widest border border-warning/30">{t('user_vip') || 'USUARIO VIP'}</span> : <span className="bg-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-bold tracking-widest border border-accent/30" style={{color: c.accent, borderColor: `${c.accent}4D`}}>{t('user_free') || 'USUARIO FREE'}</span>}
                                 </div>
                             </div>
                             
                             <button onClick={redeem} className={`w-full bg-warning/10 text-warning border border-warning/30 p-3.5 rounded-xl font-bold text-sm mb-3 shadow-sm hover:bg-warning hover:text-black transition ${isVip ? 'opacity-80' : ''}`}>
-                                👑 {isVip ? 'Renovar / Ingresar Nuevo Código VIP' : 'Canjear Código VIP'}
+                                👑 {isVip ? (t('btn_renew_vip')||'Renovar / Ingresar Nuevo Código VIP') : (t('btn_redeem_vip')||'Canjear Código VIP')}
                             </button>
                             
-                            <button onClick={onLogout} className="w-full bg-card border border-error/50 text-error p-3.5 rounded-xl font-bold text-sm hover:bg-error hover:text-white transition flex items-center justify-center gap-2 shadow-sm" style={{borderColor: '#ef444480'}}><Icons.LogOut c="w-4 h-4"/> Cerrar Sesión</button>
+                            <button onClick={onLogout} className="w-full bg-card border border-error/50 text-error p-3.5 rounded-xl font-bold text-sm hover:bg-error hover:text-white transition flex items-center justify-center gap-2 shadow-sm" style={{borderColor: '#ef444480'}}><Icons.LogOut c="w-4 h-4"/> {t('btn_logout') || 'Cerrar Sesión'}</button>
                         </div>
 
                         <div className="space-y-6">
                             <div className="grid grid-cols-1 gap-4">
                                 <div>
-                                    <label className="text-[10px] font-bold text-secondary uppercase mb-2 block tracking-widest">País de Residencia y Monedas</label>
+                                    <label className="text-[10px] font-bold text-secondary uppercase mb-2 block tracking-widest">{t('lbl_country_curr') || 'País de Residencia y Monedas'}</label>
                                     <select value={local.country} onChange={chgCountry} className="w-full p-3 rounded-xl border bg-background outline-none text-primary text-sm font-bold shadow-inner mb-3" style={{borderColor: c.border}}>
                                         {COUNTRIES.map(ct=><option key={ct.name} value={ct.name}>{getFlag(ct.name)} {ct.name}</option>)}
                                     </select>
                                     <div className="grid grid-cols-3 gap-3">
                                         {[0, 1, 2].map(i => (
                                             <select key={i} value={local.currencies[i] || ''} onChange={e => { const nc = [...local.currencies]; nc[i] = e.target.value; setLocal({...local, currencies: nc}); }} className="w-full p-3 rounded-xl border bg-background outline-none text-primary text-xs font-bold text-center appearance-none shadow-inner" style={{borderColor: c.border}}>
-                                                <option value="">{i===0?'Principal':`Opción ${i+1}`}</option>
+                                                <option value="">{i===0 ? (t('lbl_primary')||'Principal') : `${t('lbl_option')||'Opción'} ${i+1}`}</option>
                                                 {Object.keys(ALL_CURRENCIES).map(code => <option key={code} value={code}>{code}</option>)}
                                             </select>
                                         ))}
@@ -1029,27 +1033,27 @@
                             </div>
 
                             <div className="pt-4 border-t relative" style={{borderColor: c.border}}>
-                                {!isVip && <div className="absolute inset-0 glass-panel z-10 flex justify-center items-center rounded-2xl"><button onClick={() => { onClose(); onUpgrade(); }} className="bg-warning text-black font-bold px-4 py-2 rounded-lg text-xs shadow-[0_0_15px_rgba(234,179,8,0.5)] flex items-center gap-1"><Icons.Crown c="w-4 h-4"/> Solo VIP</button></div>}
+                                {!isVip && <div className="absolute inset-0 glass-panel z-10 flex justify-center items-center rounded-2xl"><button onClick={() => { onClose(); onUpgrade(); }} className="bg-warning text-black font-bold px-4 py-2 rounded-lg text-xs shadow-[0_0_15px_rgba(234,179,8,0.5)] flex items-center gap-1"><Icons.Crown c="w-4 h-4"/> {t('lbl_only_vip') || 'Solo VIP'}</button></div>}
                                 
                                 <div className="flex justify-between items-center mb-4">
-                                    <label className="text-[10px] font-bold text-secondary uppercase tracking-widest flex items-center gap-1.5"><Icons.Palette c="w-3 h-3"/> Personalización VIP</label>
-                                    <button onClick={()=>{setLocal({...local, colors: DEFAULT_SETTINGS.colors, themeName: DEFAULT_SETTINGS.themeName, fontFamily: DEFAULT_SETTINGS.fontFamily});}} className="text-[10px] text-accent font-bold hover:underline flex items-center gap-1"><Icons.RefreshCw c="w-3 h-3"/> Restaurar Default</button>
+                                    <label className="text-[10px] font-bold text-secondary uppercase tracking-widest flex items-center gap-1.5"><Icons.Palette c="w-3 h-3"/> {t('lbl_vip_custom') || 'Personalización VIP'}</label>
+                                    <button onClick={()=>{setLocal({...local, colors: DEFAULT_SETTINGS.colors, themeName: DEFAULT_SETTINGS.themeName, fontFamily: DEFAULT_SETTINGS.fontFamily});}} className="text-[10px] text-accent font-bold hover:underline flex items-center gap-1"><Icons.RefreshCw c="w-3 h-3"/> {t('btn_restore_def') || 'Restaurar Default'}</button>
                                 </div>
 
                                 <div className="flex bg-background rounded-xl p-1 mb-4 border shadow-inner" style={{backgroundColor: c.navBg, borderColor: c.border}}>
-                                    <button onClick={()=>setCustomTab('temas')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all duration-300 ${customTab==='temas'?'bg-card text-primary shadow border':'text-secondary hover:text-primary'}`} style={customTab==='temas'?{borderColor: c.border}:{}}>🎨 1. Temas</button>
-                                    <button onClick={()=>setCustomTab('fondos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all duration-300 ${customTab==='fondos'?'bg-card text-primary shadow border':'text-secondary hover:text-primary'}`} style={customTab==='fondos'?{borderColor: c.border}:{}}>🖼️ 2. Fondos</button>
-                                    <button onClick={()=>setCustomTab('textos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all duration-300 ${customTab==='textos'?'bg-card text-primary shadow border':'text-secondary hover:text-primary'}`} style={customTab==='textos'?{borderColor: c.border}:{}}>Aa 3. Textos</button>
+                                    <button onClick={()=>setCustomTab('temas')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all duration-300 ${customTab==='temas'?'bg-card text-primary shadow border':'text-secondary hover:text-primary'}`} style={customTab==='temas'?{borderColor: c.border}:{}}>🎨 1. {t('tab_themes')||'Temas'}</button>
+                                    <button onClick={()=>setCustomTab('fondos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all duration-300 ${customTab==='fondos'?'bg-card text-primary shadow border':'text-secondary hover:text-primary'}`} style={customTab==='fondos'?{borderColor: c.border}:{}}>🖼️ 2. {t('tab_bg')||'Fondos'}</button>
+                                    <button onClick={()=>setCustomTab('textos')} className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all duration-300 ${customTab==='textos'?'bg-card text-primary shadow border':'text-secondary hover:text-primary'}`} style={customTab==='textos'?{borderColor: c.border}:{}}>Aa 3. {t('tab_texts')||'Textos'}</button>
                                 </div>
 
                                 <div className="bg-card rounded-xl p-4 shadow-sm min-h-[220px]" style={{borderColor: c.border}}>
                                     {customTab === 'temas' && (
                                         <div>
-                                            <p className="text-[10px] text-secondary mb-3 text-center">12 Personalidades diseñadas para ti</p>
+                                            <p className="text-[10px] text-secondary mb-3 text-center">{t('txt_themes_sub') || '12 Personalidades diseñadas para ti'}</p>
                                             <div className="grid grid-cols-2 gap-2 max-h-[160px] overflow-y-auto pr-1">
-                                                {PREDEFINED_THEMES.map(t => (
-                                                    <button key={t.name} onClick={()=>setLocal({ ...local, themeName: t.name, colors: t.colors })} className={`p-2 rounded-lg text-xs font-bold transition-all border ${local.themeName === t.name ? 'border-accent ring-1' : 'hover:border-secondary'}`} style={{backgroundColor: t.colors.card, color: t.colors.text, borderColor: local.themeName === t.name ? t.colors.accent : 'transparent', '--tw-ring-color': t.colors.accent }}>
-                                                        {t.name}
+                                                {PREDEFINED_THEMES.map(th => (
+                                                    <button key={th.name} onClick={()=>setLocal({ ...local, themeName: th.name, colors: th.colors })} className={`p-2 rounded-lg text-xs font-bold transition-all border ${local.themeName === th.name ? 'border-accent ring-1' : 'hover:border-secondary'}`} style={{backgroundColor: th.colors.card, color: th.colors.text, borderColor: local.themeName === th.name ? th.colors.accent : 'transparent', '--tw-ring-color': th.colors.accent }}>
+                                                        {th.name}
                                                     </button>
                                                 ))}
                                             </div>
@@ -1058,15 +1062,15 @@
 
                                     {customTab === 'fondos' && (
                                         <div>
-                                            <p className="text-[10px] text-secondary mb-4 text-center">Personaliza el fondo de la app libremente</p>
+                                            <p className="text-[10px] text-secondary mb-4 text-center">{t('txt_bg_sub') || 'Personaliza el fondo de la app libremente'}</p>
                                             <div className="flex justify-around gap-4">
                                                 <div className="flex flex-col items-center gap-2">
                                                     <input type="color" value={local.colors.bg} onChange={e=>setLocal({...local, colors:{...local.colors, bg:e.target.value}})} className="w-16 h-16 rounded-xl cursor-pointer border-2 shadow-sm" style={{borderColor: c.border}}/>
-                                                    <span className="text-[10px] font-bold uppercase text-secondary">Fondo Global</span>
+                                                    <span className="text-[10px] font-bold uppercase text-secondary">{t('lbl_global_bg') || 'Fondo Global'}</span>
                                                 </div>
                                                 <div className="flex flex-col items-center gap-2">
                                                     <input type="color" value={local.colors.card} onChange={e=>setLocal({...local, colors:{...local.colors, card:e.target.value}})} className="w-16 h-16 rounded-xl cursor-pointer border-2 shadow-sm" style={{borderColor: c.border}}/>
-                                                    <span className="text-[10px] font-bold uppercase text-secondary">Tarjetas</span>
+                                                    <span className="text-[10px] font-bold uppercase text-secondary">{t('lbl_cards') || 'Tarjetas'}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -1074,12 +1078,12 @@
 
                                     {customTab === 'textos' && (
                                         <div>
-                                            <p className="text-[10px] text-secondary mb-4 text-center">Elige tu tipografía favorita de 12 estilos</p>
+                                            <p className="text-[10px] text-secondary mb-4 text-center">{t('txt_texts_sub') || 'Elige tu tipografía favorita'}</p>
                                             <select value={local.fontFamily} onChange={e=>setLocal({...local, fontFamily: e.target.value})} className="w-full p-3 rounded-xl border bg-background outline-none text-primary text-sm font-bold shadow-inner mb-4" style={{fontFamily: local.fontFamily, borderColor: c.border}}>
                                                 {PREDEFINED_FONTS.map(f => <option key={f.name} value={f.value} style={{fontFamily: f.value}}>{f.name}</option>)}
                                             </select>
                                             <div className="flex justify-center items-center gap-4">
-                                                <span className="text-[10px] font-bold uppercase text-secondary">Color de texto principal:</span>
+                                                <span className="text-[10px] font-bold uppercase text-secondary">{t('lbl_main_text') || 'Color de texto principal:'}</span>
                                                 <input type="color" value={local.colors.text} onChange={e=>setLocal({...local, colors:{...local.colors, text:e.target.value}})} className="w-10 h-10 rounded-lg cursor-pointer border shadow-sm" style={{borderColor: c.border}}/>
                                             </div>
                                         </div>
@@ -1088,15 +1092,15 @@
                             </div>
 
                             <div className="pt-4 border-t" style={{borderColor: c.border}}>
-                                <label className="text-[10px] font-bold text-success uppercase mb-3 flex items-center gap-1.5 tracking-widest"><Icons.Shield c="w-4 h-4"/> Respaldo Cifrado (AES-256)</label>
-                                <button onClick={backup} className="w-full bg-success/10 text-success border border-success/30 p-3.5 rounded-xl font-bold text-sm mb-4 shadow-sm hover:bg-success hover:text-white transition">↑ Enviar a WhatsApp</button>
+                                <label className="text-[10px] font-bold text-success uppercase mb-3 flex items-center gap-1.5 tracking-widest"><Icons.Shield c="w-4 h-4"/> {t('lbl_backup') || 'Respaldo Cifrado (AES-256)'}</label>
+                                <button onClick={backup} className="w-full bg-success/10 text-success border border-success/30 p-3.5 rounded-xl font-bold text-sm mb-4 shadow-sm hover:bg-success hover:text-white transition">↑ {t('btn_send_wa') || 'Enviar a WhatsApp'}</button>
                                 <div className="bg-background p-2 rounded-xl border flex items-center gap-2 shadow-inner" style={{borderColor: c.border}}>
-                                    <input type="text" value={code} onChange={e=>setCode(e.target.value)} className="flex-1 p-2 bg-transparent outline-none text-xs text-primary font-mono" placeholder="Pega el código aquí"/>
-                                    <button onClick={restore} className="bg-card border text-primary px-4 py-2 rounded-lg font-bold text-xs hover:bg-accent hover:text-white transition shadow-sm" style={{borderColor: c.border}}>↓ Restaurar</button>
+                                    <input type="text" value={code} onChange={e=>setCode(e.target.value)} className="flex-1 p-2 bg-transparent outline-none text-xs text-primary font-mono" placeholder={t('ph_paste_code') || 'Pega el código aquí'}/>
+                                    <button onClick={restore} className="bg-card border text-primary px-4 py-2 rounded-lg font-bold text-xs hover:bg-accent hover:text-white transition shadow-sm" style={{borderColor: c.border}}>↓ {t('btn_restore') || 'Restaurar'}</button>
                                 </div>
                             </div>
 
-                            <button onClick={()=>{saveSettings(local); onClose();}} className="w-full bg-accent text-white p-4 rounded-xl font-bold mt-2 shadow-lg shadow-accent/30 text-lg hover:scale-[1.02] transition-transform">Guardar y Cerrar</button>
+                            <button onClick={()=>{saveSettings(local); onClose();}} className="w-full bg-accent text-white p-4 rounded-xl font-bold mt-2 shadow-lg shadow-accent/30 text-lg hover:scale-[1.02] transition-transform">{t('btn_save_close') || 'Guardar y Cerrar'}</button>
                         </div>
                     </div>
                 </div>
@@ -1114,7 +1118,6 @@
             const [previewSettings, setPreviewSettings] = useState(null); 
             const [cur, setCur] = useState('PEN');
 
-            // Leer lenguaje del navegador (si existe en index.html) antes del login
             useEffect(() => { 
                 const sUser = sessionStorage.getItem('billetera_active_user'); 
                 if(sUser) loadData(sUser); 
@@ -1126,13 +1129,11 @@
                 else { DB.deactivateVip(u); setVip(false); setExp(null); }
                 setTxns(Array.isArray(DB.getTxns(u)) ? DB.getTxns(u) : []); 
                 
-                // Forzar país seguro en carga inicial por si había un país antiguo en la caché
                 let s = DB.getSettings(u); 
                 if(!COUNTRIES.find(c => c.name === s.country)) {
                     s.country = 'Perú'; s.lang = 'es'; s.currencies[0] = 'PEN';
                     DB.saveSettings(u, s);
                 }
-
                 setSettings(s); setCur(s.currencies[0]||'PEN'); setView('home');
             };
 
@@ -1160,16 +1161,16 @@
                 document.body.setAttribute('dir', (activeSettings.lang === 'ar') ? 'rtl' : 'ltr');
             }, [activeSettings]);
 
-            if(!user) return <div><AuthView onLogin={login}/></div>;
-
             const t = (k) => DICTIONARY[activeSettings.lang]?.[k] || DICTIONARY['es'][k];
+
+            if(!user) return <div><AuthView onLogin={login} t={t}/></div>;
             
             const renderV = () => {
                 switch(view) {
                     case 'home': return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} expire={exp} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
                     case 'nueva': return <RegistroUnificado addTxn={x=>{const nw=[...txns,x];setTxns(nw);DB.saveTxns(user,nw);}} cur={cur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} onUpgrade={()=>setShowPay(true)} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
                     case 'analisis': return <Analisis txns={txns} cur={cur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} onUpgrade={()=>setShowPay(true)} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
-                    case 'historial': return <Historial txns={txns} cur={cur} setCur={setCur} curList={activeSettings.currencies} deleteTxn={id=>{if(confirm("¿Borrar?")){const nw=txns.filter(x=>x.id!==id);setTxns(nw);DB.saveTxns(user,nw);}}} updateTxn={x=>{const nw=txns.map(t=>t.id===x.id?x:t);setTxns(nw);DB.saveTxns(user,nw);}} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} settings={activeSettings} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
+                    case 'historial': return <Historial txns={txns} cur={cur} setCur={setCur} curList={activeSettings.currencies} deleteTxn={id=>{if(confirm(t('alert_del_txn')||"¿Borrar?")){const nw=txns.filter(x=>x.id!==id);setTxns(nw);DB.saveTxns(user,nw);}}} updateTxn={x=>{const nw=txns.map(tx=>tx.id===x.id?x:tx);setTxns(nw);DB.saveTxns(user,nw);}} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} settings={activeSettings} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
                     default: return <Dashboard txns={txns} cur={cur} setActiveCurrency={setCur} settings={activeSettings} t={t} isVip={vip} user={user} onOpenSettings={()=>setShowSettings(true)} onOpenCountryMenu={()=>setShowCountryModal(true)} expire={exp} formatMoneda={formatMoneda} Icons={Icons} c={activeSettings.colors}/>;
                 }
             };
@@ -1193,8 +1194,8 @@
                         })}
                     </div>
                     
-                    {showSettings && <AjustesModal settings={activeSettings} saveSettings={handleSaveSettings} onPreview={setPreviewSettings} user={user} isVip={vip} onLogout={logout} onUpgrade={()=>setShowPay(true)} onClose={handleCloseSettings} Icons={Icons} c={c}/>}
-                    {showCountryModal && <CountryModal onClose={()=>setShowCountryModal(false)} settings={activeSettings} saveSettings={handleSaveSettings} c={c} />}
+                    {showSettings && <AjustesModal t={t} settings={activeSettings} saveSettings={handleSaveSettings} onPreview={setPreviewSettings} user={user} isVip={vip} onLogout={logout} onUpgrade={()=>setShowPay(true)} onClose={handleCloseSettings} Icons={Icons} c={c}/>}
+                    {showCountryModal && <CountryModal t={t} onClose={()=>setShowCountryModal(false)} settings={activeSettings} saveSettings={handleSaveSettings} c={c} />}
                     {showPay && <PaymentModal onClose={()=>setShowPay(false)} t={t} cur={cur} country={activeSettings.country} lang={activeSettings.lang} c={c} />}
                 </div>
             );
