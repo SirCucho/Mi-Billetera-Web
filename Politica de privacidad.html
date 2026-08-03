@@ -1,260 +1,254 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" id="html-tag">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Privacidad - Mi Billetera</title>
-    <!-- Importando la fuente 'Inter' desde Google Fonts para máxima legibilidad -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <style>
-        :root {
-            --primary-color: #0f172a; 
-            --secondary-color: #1e293b;
-            --accent-color: #3b82f6;
-            --text-color: #334155; 
-            --bg-color: #f8fafc;
-            --container-bg: #ffffff;
-        }
+    <!-- FAVICON (Unificado) -->
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="favicon.png">
 
-        body {
-            font-family: 'Inter', sans-serif;
-            font-size: 17px; 
-            line-height: 1.75; 
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-        }
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 850px;
-            margin: 50px auto;
-            background: var(--container-bg);
-            padding: 60px 70px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-            border-radius: 16px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        h1 {
-            color: var(--primary-color);
-            font-size: 2.2em;
-            font-weight: 800;
-            letter-spacing: -0.03em; 
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
-
-        .last-updated {
-            color: #64748b;
-            font-size: 0.9em;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        h2 {
-            color: var(--primary-color);
-            font-size: 1.4em;
-            font-weight: 700;
-            margin-top: 50px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 20px;
-            letter-spacing: -0.02em;
-        }
-
-        h3 {
-            color: var(--primary-color);
-            font-size: 1.1em;
-            font-weight: 600;
-            margin-top: 30px;
-        }
-
-        p {
-            margin-bottom: 20px;
-            font-weight: 400;
-        }
-
-        strong {
-            font-weight: 600;
-            color: #0f172a;
-        }
-
-        ul {
-            padding-left: 20px;
-            margin-bottom: 25px;
-        }
-
-        li {
-            margin-bottom: 12px;
-        }
-
-        .toc {
-            background-color: #f1f5f9;
-            padding: 35px;
-            border-radius: 12px;
-            margin-bottom: 50px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .toc h3 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 1.2em;
-        }
-
-        .toc ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .toc a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .toc a:hover {
-            color: #1d4ed8;
-            text-decoration: underline;
-        }
-
-        .contact-box {
-            background-color: #eff6ff;
-            border: 1px solid #bfdbfe;
-            padding: 35px;
-            border-radius: 12px;
-            margin-top: 50px;
-            text-align: center;
-        }
-
-        .contact-box p {
-            margin: 0 0 15px 0;
-        }
-
-        .contact-box a {
-            color: #1d4ed8;
-            font-weight: 600;
-            font-size: 1.25em;
-            text-decoration: none;
-        }
-        
-        .contact-box a:hover {
-            text-decoration: underline;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 70px;
-            padding-top: 30px;
-            border-top: 1px solid #e2e8f0;
-            color: #94a3b8;
-            font-size: 0.85em;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 0;
-                padding: 30px 20px;
-                border-radius: 0;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                    colors: { bg: '#111111', card: '#1e1e1e', text: '#ffffff', secondary: '#a1a1aa', border: '#27272a', accent: '#3b82f6', success: '#10b981', warning: '#eab308' }
+                }
             }
-            h1 { font-size: 1.8em; }
-            body { font-size: 16px; }
         }
+    </script>
+    <style>
+        body { background-color: #111111; color: #ffffff; scroll-behavior: smooth; }
+        .gradient-text { background: linear-gradient(to right, #3b82f6, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .policy-section { transition: all 0.3s ease; }
+        .policy-section:hover { border-color: #3b82f6; box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.1); }
     </style>
 </head>
-<body>
+<body class="font-sans antialiased">
 
-    <div class="container">
-        <header>
-            <h1>Política de Privacidad de "Mi Billetera"</h1>
-            <p class="last-updated">Última actualización: Julio de 2026</p>
-        </header>
-
-        <div class="toc">
-            <h3>Tabla de Contenidos</h3>
-            <ul>
-                <li><a href="#introduccion">1. Introducción y Arquitectura Local</a></li>
-                <li><a href="#informacion">2. Información que Recopilamos (Google Auth)</a></li>
-                <li><a href="#internacional">3. Localización: 195 Países, Idiomas y Monedas</a></li>
-                <li><a href="#publicidad">4. Publicidad, Terceros y Respaldo Cifrado</a></li>
-                <li><a href="#gdpr">5. Derechos de Privacidad (GDPR, CCPA, CPRA)</a></li>
-                <li><a href="#contacto">6. Información de Contacto</a></li>
-            </ul>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="fixed w-full top-0 z-50 bg-[#111111]/90 backdrop-blur-md border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-b from-[#00d2ff] to-[#3a7bd5] flex items-center justify-center shadow-md">
+                        <svg viewBox="0 0 64 64" class="w-5 h-5"><path d="M44 14 c 6 4 8 12 4 18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28 h 40 v 20 a 4 4 0 0 1 -4 4 h -32 a 4 4 0 0 1 -4 -4 z" fill="#0ea5e9" stroke="#0f172a" stroke-width="3" stroke-linejoin="round"/><path d="M12 28 a 4 4 0 0 1 4 -4 h 32 a 4 4 0 0 1 4 4 v 6 h -40 z" fill="#38bdf8" stroke="#0f172a" stroke-width="3" stroke-linejoin="round"/><circle cx="26" cy="42" r="2" fill="#0f172a"/></svg>
+                    </div>
+                    <span class="font-bold text-lg tracking-wide hidden sm:block" data-i18n="nav_title">Mi Billetera - Legal</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-sm text-secondary hover:text-white transition" data-i18n="nav_home">← Inicio</a>
+                <a href="app.html" class="bg-accent text-white px-4 py-2 rounded-xl font-bold text-sm shadow-md" data-i18n="nav_app">Abrir App</a>
+            </div>
         </div>
+    </nav>
 
-        <section id="introduccion">
-            <h2>1. Introducción y Arquitectura Local</h2>
-            <p>En <strong>"Mi Billetera"</strong>, hemos construido nuestra aplicación bajo el estricto principio de "Privacidad por Diseño". A diferencia de otras aplicaciones financieras, <strong>nosotros no poseemos servidores ni bases de datos en la nube que recopilen o almacenen sus transacciones.</strong></p>
-            <p>Toda la información sobre sus ingresos, gastos, ahorros y presupuestos se procesa y almacena <strong>exclusivamente de forma local en la memoria de su propio dispositivo</strong> (a través del <em>localStorage</em> de su navegador). Al utilizar nuestra aplicación, usted mantiene el control absoluto y físico sobre sus datos financieros.</p>
-        </section>
+    <!-- ENCABEZADO -->
+    <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto">
+        <h1 class="text-3xl sm:text-5xl font-extrabold mb-4" data-i18n="hero_title">Política de <span class="gradient-text">Privacidad</span></h1>
+        <p class="text-secondary text-base sm:text-lg mb-2" data-i18n="hero_sub">Última actualización: Julio de 2026</p>
+    </header>
 
-        <section id="informacion">
-            <h2>2. Información que Recopilamos (Google Auth)</h2>
-            <p>Para garantizar un acceso seguro y evitar cuentas falsas, nuestra aplicación utiliza exclusivamente el sistema de autenticación oficial de Google. Al iniciar sesión, el sistema únicamente recibe de Google los siguientes datos identificativos básicos:</p>
-            <ul>
-                <li><strong>Información de Perfil:</strong> Su nombre público, dirección de correo electrónico y fotografía de perfil asociada a su cuenta de Google.</li>
-            </ul>
-            <p><strong>Declaración de no recopilación:</strong> Nosotros <strong>no tenemos acceso a su contraseña de Google</strong>. Tampoco extraemos datos de sus contactos, no accedemos a su cámara, ni rastreamos su ubicación física mediante GPS. Cualquier otro dato generado (como sus registros financieros o el uso de la Inteligencia Artificial de voz) no sale de su dispositivo.</p>
-        </section>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-12">
 
-        <section id="internacional">
-            <h2>3. Localización: 195 Países, Idiomas y Monedas</h2>
-            <p>Para brindar una experiencia global, "Mi Billetera" incluye soporte nativo para 195 países. Las opciones de idioma de la interfaz se adaptan de forma automática, y los precios de los planes VIP (Premium) se ajustan de manera dinámica al <strong>tipo de cambio de su moneda local</strong>.</p>
-            <p>Es importante destacar que <strong>no rastreamos su dirección IP ni su ubicación geográfica para lograr esto</strong>. Es usted (el usuario) quien selecciona manualmente su país de residencia dentro del panel de "Ajustes". Esta preferencia se guarda de manera local en su teléfono.</p>
-        </section>
-
-        <section id="publicidad">
-            <h2>4. Publicidad, Terceros y Respaldo Cifrado</h2>
-            <p>Nuestro modelo de servicio está centrado en la utilidad para el usuario y en las suscripciones VIP, no en la monetización de sus datos. Por lo tanto, establecemos de manera categórica:</p>
-            <ul>
-                <li><strong>Cero Publicidad:</strong> No utilizamos redes de anuncios, rastreadores (trackers) ni mostramos ningún tipo de publicidad dentro de la aplicación.</li>
-                <li><strong>No Venta de Datos:</strong> "Mi Billetera" no vende, alquila ni comparte su información con agencias de marketing o corredores de datos.</li>
-                <li><strong>Copias de Seguridad (Backups):</strong> Ofrecemos una herramienta para respaldar sus datos vía WhatsApp. Antes de salir de la aplicación, su información financiera es sometida a un <strong>Cifrado de Grado Militar (AES-256)</strong> utilizando una contraseña que solo usted conoce. Nadie, ni siquiera nosotros ni WhatsApp, puede leer sus datos cifrados.</li>
-            </ul>
-        </section>
-
-        <section id="gdpr">
-            <h2>5. Derechos de Privacidad (GDPR, CCPA y CalOPPA)</h2>
-            <p>Cumplimos con las normativas más exigentes a nivel global (Reglamento General de Protección de Datos Europeo y la Ley de Privacidad del Consumidor de California). Sin embargo, dado que operamos bajo una arquitectura de almacenamiento 100% local, la forma de ejercer estos derechos es directa e inmediata por parte del usuario:</p>
-            <ul>
-                <li><strong>Derecho de Acceso y Portabilidad:</strong> Usted puede ver, descargar y exportar toda su información directamente desde la sección "Historial" y "Ajustes" de la aplicación.</li>
-                <li><strong>Derecho al Olvido (Eliminación Total):</strong> Usted puede eliminar todos sus datos financieros y su cuenta al instante mediante dos vías: usando la opción "Limpiar" dentro del historial de la app, o simplemente <strong>borrando los datos de caché y almacenamiento de su navegador web</strong>. Dado que no tenemos servidores en la nube, al borrar los datos de su teléfono, estos desaparecen para siempre.</li>
-            </ul>
-        </section>
-
-        <section id="contacto">
-            <h2>6. Información de Contacto y Soporte</h2>
-            <p>Si tiene alguna inquietud sobre nuestra arquitectura de privacidad, desea gestionar la eliminación de un código de acceso VIP desde nuestra base de datos administrativa, o requiere soporte técnico, el Responsable de Protección de Datos está a su disposición.</p>
-            
-            <div class="contact-box">
-                <p>Puede comunicarse directamente con nosotros a través de los siguientes canales:</p>
-                <a href="mailto:sirqcho@gmail.com">sirqcho@gmail.com</a>
-                <p style="margin-top: 15px; font-weight: 600; color: #0f172a;">O mediante WhatsApp Directo:</p>
-                <p style="font-size: 1.1em; color: #3b82f6; font-weight: 700; margin: 0;">+51 930 266 472 (Carlos Cucho)</p>
-                <p style="margin-top: 20px; font-size: 0.85em; color: #475569; font-weight: 400;">Nos comprometemos a responder a todas las solicitudes relacionadas con privacidad y membresías a la mayor brevedad posible.</p>
+        <!-- ÁRBOL DE CONTENIDOS -->
+        <section class="bg-card/60 border border-border rounded-3xl p-6 sm:p-8 backdrop-blur-md">
+            <h3 class="text-lg font-bold mb-4 text-accent flex items-center gap-2" data-i18n="toc_title">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+                Tabla de Contenidos
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-secondary">
+                <ul class="space-y-2 border-l-2 border-border pl-4">
+                    <li><a href="#introduccion" class="hover:text-white transition" data-i18n="toc_1">1. Introducción y Arquitectura Local</a></li>
+                    <li><a href="#informacion" class="hover:text-white transition" data-i18n="toc_2">2. Información que Recopilamos (Google Auth)</a></li>
+                    <li><a href="#internacional" class="hover:text-white transition" data-i18n="toc_3">3. Localización: 195 Países, Idiomas y Monedas</a></li>
+                </ul>
+                <ul class="space-y-2 border-l-2 border-border pl-4">
+                    <li><a href="#publicidad" class="hover:text-white transition" data-i18n="toc_4">4. Publicidad, Terceros y Respaldo Cifrado</a></li>
+                    <li><a href="#gdpr" class="hover:text-white transition" data-i18n="toc_5">5. Derechos de Privacidad (GDPR, CCPA, CPRA)</a></li>
+                    <li><a href="#contacto" class="hover:text-white transition" data-i18n="toc_6">6. Información de Contacto</a></li>
+                </ul>
             </div>
         </section>
 
-        <footer>
-            <p>&copy; 2026 Mi Billetera. Todos los derechos reservados.</p>
-        </footer>
-    </div>
+        <!-- SECCIÓN 1 -->
+        <section id="introduccion" class="policy-section bg-card border border-border rounded-3xl p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-3 text-white border-l-4 border-accent pl-4" data-i18n="s1_title">1. Introducción y Arquitectura Local</h2>
+            <div class="text-secondary space-y-4 leading-relaxed text-sm sm:text-base">
+                <p data-i18n="s1_p1">En <strong>"Mi Billetera"</strong>, hemos construido nuestra aplicación bajo el estricto principio de "Privacidad por Diseño". A diferencia de otras aplicaciones financieras, <strong>nosotros no poseemos servidores ni bases de datos en la nube que recopilen o almacenen sus transacciones.</strong></p>
+                <p data-i18n="s1_p2">Toda la información sobre sus ingresos, gastos, ahorros y presupuestos se procesa y almacena <strong>exclusivamente de forma local en la memoria de su propio dispositivo</strong> (a través del <em>localStorage</em> de su navegador). Al utilizar nuestra aplicación, usted mantiene el control absoluto y físico sobre sus datos financieros.</p>
+            </div>
+        </section>
 
+        <!-- SECCIÓN 2 -->
+        <section id="informacion" class="policy-section bg-card border border-border rounded-3xl p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-3 text-white border-l-4 border-accent pl-4" data-i18n="s2_title">2. Información que Recopilamos (Google Auth)</h2>
+            <div class="text-secondary space-y-4 leading-relaxed text-sm sm:text-base">
+                <p data-i18n="s2_p1">Para garantizar un acceso seguro y evitar cuentas falsas, nuestra aplicación utiliza exclusivamente el sistema de autenticación oficial de Google. Al iniciar sesión, el sistema únicamente recibe de Google los siguientes datos identificativos básicos:</p>
+                <ul class="list-disc pl-6 space-y-2 text-white/90">
+                    <li data-i18n="s2_l1"><strong>Información de Perfil:</strong> Su nombre público, dirección de correo electrónico y fotografía de perfil asociada a su cuenta de Google.</li>
+                </ul>
+                <p data-i18n="s2_p2" class="mt-4"><strong>Declaración de no recopilación:</strong> Nosotros <strong>no tenemos acceso a su contraseña de Google</strong>. Tampoco extraemos datos de sus contactos, no accedemos a su cámara, ni rastreamos su ubicación física mediante GPS. Cualquier otro dato generado (como sus registros financieros o el uso de la Inteligencia Artificial de voz) no sale de su dispositivo.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3 -->
+        <section id="internacional" class="policy-section bg-card border border-border rounded-3xl p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-3 text-white border-l-4 border-accent pl-4" data-i18n="s3_title">3. Localización: 195 Países, Idiomas y Monedas</h2>
+            <div class="text-secondary space-y-4 leading-relaxed text-sm sm:text-base">
+                <p data-i18n="s3_p1">Para brindar una experiencia global, "Mi Billetera" incluye soporte nativo para 195 países. Las opciones de idioma de la interfaz se adaptan de forma automática, y los precios de los planes VIP se ajustan de manera dinámica al <strong>tipo de cambio de su moneda local</strong>.</p>
+                <p data-i18n="s3_p2">Es importante destacar que <strong>no rastreamos su dirección IP ni su ubicación geográfica para lograr esto</strong>. Es usted (el usuario) quien selecciona manualmente su país de residencia dentro del panel de "Ajustes". Esta preferencia se guarda de manera local en su teléfono.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4 -->
+        <section id="publicidad" class="policy-section bg-card border border-border rounded-3xl p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-3 text-white border-l-4 border-accent pl-4" data-i18n="s4_title">4. Publicidad, Terceros y Respaldo Cifrado</h2>
+            <div class="text-secondary space-y-4 leading-relaxed text-sm sm:text-base">
+                <p data-i18n="s4_p1">Nuestro modelo de servicio está centrado en la utilidad para el usuario y en las suscripciones VIP, no en la monetización de sus datos. Por lo tanto, establecemos de manera categórica:</p>
+                <ul class="list-disc pl-6 space-y-3 text-white/90">
+                    <li data-i18n="s4_l1"><strong>Cero Publicidad:</strong> No utilizamos redes de anuncios, rastreadores (trackers) ni mostramos ningún tipo de publicidad dentro de la aplicación.</li>
+                    <li data-i18n="s4_l2"><strong>No Venta de Datos:</strong> "Mi Billetera" no vende, alquila ni comparte su información con agencias de marketing o corredores de datos.</li>
+                    <li data-i18n="s4_l3"><strong>Copias de Seguridad (Backups):</strong> Ofrecemos una herramienta para respaldar sus datos vía WhatsApp. Antes de salir de la aplicación, su información financiera es sometida a un <strong>Cifrado de Grado Militar (AES-256)</strong> utilizando una contraseña que solo usted conoce. Nadie, ni siquiera nosotros ni WhatsApp, puede leer sus datos cifrados.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5 -->
+        <section id="gdpr" class="policy-section bg-card border border-border rounded-3xl p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-3 text-white border-l-4 border-accent pl-4" data-i18n="s5_title">5. Derechos de Privacidad (GDPR, CCPA y CalOPPA)</h2>
+            <div class="text-secondary space-y-4 leading-relaxed text-sm sm:text-base">
+                <p data-i18n="s5_p1">Cumplimos con las normativas más exigentes a nivel global. Sin embargo, dado que operamos bajo una arquitectura de almacenamiento 100% local, la forma de ejercer estos derechos es directa e inmediata por parte del usuario:</p>
+                <ul class="list-disc pl-6 space-y-3 text-white/90">
+                    <li data-i18n="s5_l1"><strong>Derecho de Acceso y Portabilidad:</strong> Usted puede ver, descargar y exportar toda su información directamente desde la sección "Historial" y "Ajustes" de la aplicación.</li>
+                    <li data-i18n="s5_l2"><strong>Derecho al Olvido (Eliminación Total):</strong> Usted puede eliminar todos sus datos financieros y su cuenta al instante mediante dos vías: usando la opción "Limpiar" dentro del historial de la app, o simplemente <strong>borrando los datos de caché y almacenamiento de su navegador web</strong>. Dado que no tenemos servidores en la nube, al borrar los datos de su teléfono, estos desaparecen para siempre.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 6 -->
+        <section id="contacto" class="bg-accent/10 border border-accent/30 rounded-3xl p-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4" data-i18n="s6_title">6. Información de Contacto y Soporte</h2>
+            <p class="text-secondary text-sm mb-6" data-i18n="s6_p1">Si tiene alguna inquietud sobre nuestra arquitectura de privacidad, desea gestionar la eliminación de un código VIP, o requiere soporte técnico, el Responsable de Protección de Datos está a su disposición:</p>
+            
+            <a href="mailto:sirqcho@gmail.com" class="text-xl font-bold text-accent hover:underline block mb-4">sirqcho@gmail.com</a>
+            
+            <p class="text-sm font-semibold text-white uppercase tracking-wider mb-2" data-i18n="s6_p2">O MEDIANTE WHATSAPP DIRECTO:</p>
+            <p class="text-2xl font-extrabold text-success mb-6">+51 930 266 472 <span class="text-lg font-normal text-secondary">(Carlos Cucho)</span></p>
+            
+            <p class="text-xs text-secondary max-w-md mx-auto" data-i18n="s6_p3">Nos comprometemos a responder a todas las solicitudes relacionadas con privacidad y membresías a la mayor brevedad posible.</p>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-card border-t border-border py-10 px-4 text-center">
+        <p class="text-secondary text-sm">Mi Billetera &copy; 2026 — Todos los derechos reservados.</p>
+        <div class="mt-4">
+            <a href="index.html" class="text-accent hover:underline text-sm font-semibold" data-i18n="foot_back">← Volver a la página principal</a>
+        </div>
+    </footer>
+
+    <!-- SCRIPT DE IDIOMAS -->
+    <script>
+        const i18n = {
+            es: {
+                nav_title: "Mi Billetera - Legal", nav_home: "← Inicio", nav_app: "Abrir App",
+                hero_title: "Política de <span class='gradient-text'>Privacidad</span>", hero_sub: "Última actualización: Julio de 2026",
+                toc_title: "Tabla de Contenidos",
+                toc_1: "1. Introducción y Arquitectura Local", toc_2: "2. Información que Recopilamos (Google Auth)", toc_3: "3. Localización: 195 Países, Idiomas y Monedas",
+                toc_4: "4. Publicidad, Terceros y Respaldo Cifrado", toc_5: "5. Derechos de Privacidad (GDPR, CCPA, CPRA)", toc_6: "6. Información de Contacto",
+                
+                s1_title: "1. Introducción y Arquitectura Local",
+                s1_p1: "En <strong>'Mi Billetera'</strong>, hemos construido nuestra aplicación bajo el estricto principio de 'Privacidad por Diseño'. A diferencia de otras aplicaciones financieras, <strong>nosotros no poseemos servidores ni bases de datos en la nube que recopilen o almacenen sus transacciones.</strong>",
+                s1_p2: "Toda la información sobre sus ingresos, gastos, ahorros y presupuestos se procesa y almacena <strong>exclusivamente de forma local en la memoria de su propio dispositivo</strong> (a través del <em>localStorage</em> de su navegador). Al utilizar nuestra aplicación, usted mantiene el control absoluto y físico sobre sus datos financieros.",
+                
+                s2_title: "2. Información que Recopilamos (Google Auth)",
+                s2_p1: "Para garantizar un acceso seguro y evitar cuentas falsas, nuestra aplicación utiliza exclusivamente el sistema de autenticación oficial de Google. Al iniciar sesión, el sistema únicamente recibe de Google los siguientes datos identificativos básicos:",
+                s2_l1: "<strong>Información de Perfil:</strong> Su nombre público, dirección de correo electrónico y fotografía de perfil asociada a su cuenta de Google.",
+                s2_p2: "<strong>Declaración de no recopilación:</strong> Nosotros <strong>no tenemos acceso a su contraseña de Google</strong>. Tampoco extraemos datos de sus contactos, no accedemos a su cámara, ni rastreamos su ubicación física mediante GPS. Cualquier otro dato generado (como sus registros financieros o el uso de la Inteligencia Artificial de voz) no sale de su dispositivo.",
+                
+                s3_title: "3. Localización: 195 Países, Idiomas y Monedas",
+                s3_p1: "Para brindar una experiencia global, 'Mi Billetera' incluye soporte nativo para 195 países. Las opciones de idioma de la interfaz se adaptan de forma automática, y los precios de los planes VIP se ajustan de manera dinámica al <strong>tipo de cambio de su moneda local</strong>.",
+                s3_p2: "Es importante destacar que <strong>no rastreamos su dirección IP ni su ubicación geográfica para lograr esto</strong>. Es usted (el usuario) quien selecciona manualmente su país de residencia dentro del panel de 'Ajustes'. Esta preferencia se guarda de manera local en su teléfono.",
+                
+                s4_title: "4. Publicidad, Terceros y Respaldo Cifrado",
+                s4_p1: "Nuestro modelo de servicio está centrado en la utilidad para el usuario y en las suscripciones VIP, no en la monetización de sus datos. Por lo tanto, establecemos de manera categórica:",
+                s4_l1: "<strong>Cero Publicidad:</strong> No utilizamos redes de anuncios, rastreadores (trackers) ni mostramos ningún tipo de publicidad dentro de la aplicación.",
+                s4_l2: "<strong>No Venta de Datos:</strong> 'Mi Billetera' no vende, alquila ni comparte su información con agencias de marketing o corredores de datos.",
+                s4_l3: "<strong>Copias de Seguridad (Backups):</strong> Ofrecemos una herramienta para respaldar sus datos vía WhatsApp. Antes de salir de la aplicación, su información financiera es sometida a un <strong>Cifrado de Grado Militar (AES-256)</strong> utilizando una contraseña que solo usted conoce. Nadie, ni siquiera nosotros ni WhatsApp, puede leer sus datos cifrados.",
+                
+                s5_title: "5. Derechos de Privacidad (GDPR, CCPA y CalOPPA)",
+                s5_p1: "Cumplimos con las normativas más exigentes a nivel global. Sin embargo, dado que operamos bajo una arquitectura de almacenamiento 100% local, la forma de ejercer estos derechos es directa e inmediata por parte del usuario:",
+                s5_l1: "<strong>Derecho de Acceso y Portabilidad:</strong> Usted puede ver, descargar y exportar toda su información directamente desde la sección 'Historial' y 'Ajustes' de la aplicación.",
+                s5_l2: "<strong>Derecho al Olvido (Eliminación Total):</strong> Usted puede eliminar todos sus datos financieros y su cuenta al instante mediante dos vías: usando la opción 'Limpiar' dentro del historial de la app, o simplemente <strong>borrando los datos de caché y almacenamiento de su navegador web</strong>. Dado que no tenemos servidores en la nube, al borrar los datos de su teléfono, estos desaparecen para siempre.",
+                
+                s6_title: "6. Información de Contacto y Soporte",
+                s6_p1: "Si tiene alguna inquietud sobre nuestra arquitectura de privacidad, desea gestionar la eliminación de un código VIP, o requiere soporte técnico, el Responsable de Protección de Datos está a su disposición:",
+                s6_p2: "O MEDIANTE WHATSAPP DIRECTO:",
+                s6_p3: "Nos comprometemos a responder a todas las solicitudes relacionadas con privacidad y membresías a la mayor brevedad posible.",
+                
+                foot_back: "← Volver a la página principal"
+            },
+            en: {
+                nav_title: "Mi Billetera - Legal", nav_home: "← Home", nav_app: "Open App",
+                hero_title: "<span class='gradient-text'>Privacy</span> Policy", hero_sub: "Last updated: July 2026",
+                toc_title: "Table of Contents",
+                toc_1: "1. Introduction and Local Architecture", toc_2: "2. Information We Collect (Google Auth)", toc_3: "3. Localization: 195 Countries and Currencies",
+                toc_4: "4. Advertising, Third Parties and Encrypted Backup", toc_5: "5. Privacy Rights (GDPR, CCPA, CPRA)", toc_6: "6. Contact Information",
+                
+                s1_title: "1. Introduction and Local Architecture",
+                s1_p1: "At <strong>'Mi Billetera'</strong>, we have built our application under the strict principle of 'Privacy by Design'. Unlike other financial applications, <strong>we do not own servers or cloud databases that collect or store your transactions.</strong>",
+                s1_p2: "All information about your income, expenses, savings, and budgets is processed and stored <strong>exclusively locally in your own device's memory</strong> (via your browser's <em>localStorage</em>). By using our application, you maintain absolute and physical control over your financial data.",
+                
+                s2_title: "2. Information We Collect (Google Auth)",
+                s2_p1: "To ensure secure access and prevent fake accounts, our application exclusively uses the official Google authentication system. Upon logging in, the system only receives the following basic identifying data from Google:",
+                s2_l1: "<strong>Profile Information:</strong> Your public name, email address, and profile picture associated with your Google account.",
+                s2_p2: "<strong>Non-collection declaration:</strong> We <strong>do not have access to your Google password</strong>. We also do not extract data from your contacts, do not access your camera, nor track your physical location via GPS. Any other generated data (like your financial records or Voice AI usage) does not leave your device.",
+                
+                s3_title: "3. Localization: 195 Countries, Languages and Currencies",
+                s3_p1: "To provide a global experience, 'Mi Billetera' includes native support for 195 countries. Interface language options adapt automatically, and VIP (Premium) plan prices dynamically adjust to your <strong>local currency exchange rate</strong>.",
+                s3_p2: "Importantly, <strong>we do not track your IP address or geographic location to achieve this</strong>. You (the user) manually select your country of residence within the 'Settings' panel. This preference is saved locally on your phone.",
+                
+                s4_title: "4. Advertising, Third Parties and Encrypted Backup",
+                s4_p1: "Our service model is centered on user utility and VIP subscriptions, not monetizing your data. Therefore, we categorically state:",
+                s4_l1: "<strong>Zero Advertising:</strong> We do not use ad networks, trackers, or show any type of advertising inside the application.",
+                s4_l2: "<strong>No Data Selling:</strong> 'Mi Billetera' does not sell, rent, or share your information with marketing agencies or data brokers.",
+                s4_l3: "<strong>Backups:</strong> We offer a tool to back up your data via WhatsApp. Before leaving the application, your financial information undergoes <strong>Military-Grade Encryption (AES-256)</strong> using a password only you know. No one, not even us or WhatsApp, can read your encrypted data.",
+                
+                s5_title: "5. Privacy Rights (GDPR, CCPA and CalOPPA)",
+                s5_p1: "We comply with the strictest global regulations. However, since we operate under a 100% local storage architecture, exercising these rights is direct and immediate by the user:",
+                s5_l1: "<strong>Right of Access and Portability:</strong> You can view, download, and export all your information directly from the 'History' and 'Settings' section of the app.",
+                s5_l2: "<strong>Right to be Forgotten (Total Deletion):</strong> You can delete all your financial data and your account instantly in two ways: using the 'Clear' option in the app's history, or simply by <strong>clearing your web browser's cache and storage data</strong>. Since we don't have cloud servers, when you delete data from your phone, it disappears forever.",
+                
+                s6_title: "6. Contact Information and Support",
+                s6_p1: "If you have any concerns about our privacy architecture, wish to manage the deletion of a VIP access code, or require technical support, the Data Protection Officer is at your disposal:",
+                s6_p2: "OR VIA DIRECT WHATSAPP:",
+                s6_p3: "We commit to answering all privacy and membership-related requests as soon as possible.",
+                
+                foot_back: "← Back to Home Page"
+            }
+        };
+
+        window.onload = () => {
+            const savedLang = localStorage.getItem('billetera_web_lang') || 'es';
+            const safeLang = i18n[savedLang] ? savedLang : 'es';
+            
+            document.getElementById('html-tag').lang = safeLang;
+            if(safeLang === 'ar') document.body.setAttribute('dir', 'rtl'); else document.body.setAttribute('dir', 'ltr');
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(i18n[safeLang][key]) el.innerHTML = i18n[safeLang][key];
+            });
+        };
+    </script>
 </body>
 </html>
