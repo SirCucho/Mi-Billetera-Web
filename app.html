@@ -49,52 +49,130 @@
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
-        
-        // ¡ESTA ES LA VARIABLE QUE FALTABA Y ROMPÍA EL HISTORIAL!
-        const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-        const RAW_COUNTRIES = "Afganistán|AFN|ar,Albania|ALL|sq,Argelia|DZD|ar,Andorra|ALL|ca,Angola|DZD|ar,Antigua y Barbuda|EUR|ca,Argentina|ARS|es,Armenia|AMD|sq,Australia|AUD|en,Austria|EUR|de,Azerbaiyán|AZN|ru,Bahamas|XCD|en,Bahréin|BHD|ar,Bangladesh|BDT|en,Barbados|BSD|en,Bielorrusia|BYN|ru,Bélgica|EUR|de,Belice|BZD|en,Benín|AOA|fr,Bhután|BDT|en,Bolivia|BOB|es,Bosnia y Herzegovina|BAM|ru,Botsuana|BWP|en,Brasil|BRL|pt,Brunéi|BTN|en,Bulgaria|EUR|fr,Burkina Faso|XOF|fr,Burundi|XOF|fr,Cabo Verde|CVE|pt,Camboya|BND|en,Camerún|XAF|fr,Canadá|CAD|en,República Centroafricana|XAF|fr,Chad|XAF|fr,Chile|CLP|es,China|CNY|zh,Colombia|COP|es,Comoras|KHR|fr,Congo|XAF|fr,Costa Rica|COP|es,Croacia|BGN|ru,Cuba|CLP|es,Chipre|HRK|en,República Checa|EUR|en,Dinamarca|CZK|en,Yibuti|KMF|ar,Dominica|XCD|en,República Dominicana|DOP|es,Ecuador|USD|es,Egipto|EGP|ar,El Salvador|CRC|es,Guinea Ecuatorial|XAF|es,Eritrea|DJF|ar,Estonia|DKK|en,Eswatini|ERN|en,Etiopía|EGP|ar,Fiji|FJD|en,Finlandia|EUR|en,Francia|EUR|fr,Gabón|XAF|fr,Gambia|GMD|en,Georgia|GEL|ru,Alemania|EUR|de,Ghana|GHS|en,Grecia|EUR|en,Granada|XCD|en,Guatemala|CRC|es,Guinea|GNF|fr,Guinea-Bisáu|XOF|pt,Guyana|GYD|en,Haití|HTG|fr,Honduras|HNL|es,Hungría|HUF|en,Islandia|EUR|en,India|INR|hi,Indonesia|IDR|en,Irán|IRR|ar,Irak|IQD|ar,Irlanda|EUR|en,Israel|ILS|ar,Italia|EUR|it,Jamaica|JMD|en,Japón|JPY|ja,Jordania|JOD|ar,Kazajistán|KZT|ru,Kenia|KES|en,Kiribati|KWD|en,Kuwait|KWD|ar,Kirguistán|KGS|ru,Laos|LAK|fr,Letonia|EUR|ru,Líbano|LBP|ar,Lesoto|LSL|en,Liberia|LRD|en,Libia|LYD|ar,Liechtenstein|EUR|ca,Lituania|EUR|ru,Luxemburgo|CHF|de,Madagascar|MGA|fr,Malaui|MWK|en,Malasia|MYR|en,Maldivas|MVR|en,Malí|XOF|fr,Malta|EUR|fr,Islas Marshall|AUD|en,Mauritania|MRU|ar,Mauricio|MUR|en,México|MXN|es,Micronesia|AUD|en,Moldavia|EUR|ru,Mónaco|EUR|fr,Mongolia|MDL|ru,Montenegro|EUR|en,Marruecos|MAD|ar,Mozambique|MZN|fr,Myanmar|MNT|zh,Namibia|NAD|pt,Nauru|AUD|en,Nepal|NPR|hi,Países Bajos|EUR|fr,Nueva Zelanda|NZD|en,Nicaragua|NIO|es,Níger|XOF|fr,Nigeria|XOF|fr,Macedonia del Norte|EUR|ru,Noruega|NZD|en,Omán|OMR|ar,Pakistán|NPR|hi,Palaos|AUD|en,Panamá|NIO|es,Papúa Nueva Guinea|USD|en,Paraguay|NIO|es,Perú|PEN|es,Filipinas|PHP|en,Polonia|EUR|en,Portugal|EUR|pt,Catar|QAR|ar,Corea del Sur|KRW|ja,Rumania|RON|en,Rusia|RUB|ru,Ruanda|ZAR|en,San Cristóbal y Nieves|XCD|en,Santa Lucía|XCD|en,San Vicente y las Granadinas|XCD|en,Samoa|AUD|en,San Marino|EUR|fr,Santo Tomé y Príncipe|XCD|en,Arabia Saudita|SAR|ar,Senegal|XOF|fr,Serbia|RSD|ru,Seychelles|STN|en,Sierra Leona|XOF|fr,Singapur|SGD|en,Eslovaquia|EUR|en,Eslovenia|EUR|en,Islas Salomón|AUD|en,Somalia|SOS|ar,Sudáfrica|ZAR|en,Sudán del Sur|SOS|ar,España|EUR|es,Sri Lanka|LKR|en,Sudán|SDG|ar,Surinam|PYG|es,Suecia|SEK|en,Suiza|CHF|de,Siria|SYP|ar,Tayikistán|TJS|ru,Tanzania|TZS|en,Tailandia|THB|en,Timor Oriental|USD|pt,Togo|XOF|fr,Tonga|TOP|en,Trinidad y Tobago|TTD|en,Túnez|TND|ar,Turquía|TRY|en,Turkmenistán|TMT|ru,Tuvalu|TOP|en,Uganda|UGX|en,Ucrania|UAH|ru,Emiratos Árabes Unidos|AED|ar,Reino Unido|GBP|en,Estados Unidos|USD|en,Uruguay|UYU|es,Uzbekistán|UZS|ru,Vanuatu|AUD|en,Ciudad del Vaticano|EUR|it,Venezuela|UYU|es,Vietnam|VND|en,Yemen|YER|ar,Zambia|UGX|en,Zimbabue|ZWL|en";
+        // PAÍSES ESTRICTOS SIN COMISIÓN
+        const RAW_COUNTRIES = "Alemania|EUR|de,Argentina|ARS|es,Australia|AUD|en,Brasil|BRL|pt,Canadá|CAD|en,Chile|CLP|es,Colombia|COP|es,España|EUR|es,Estados Unidos|USD|en,Francia|EUR|fr,Italia|EUR|it,Japón|JPY|ja,México|MXN|es,Perú|PEN|es,Reino Unido|GBP|en,Suiza|CHF|de";
         const COUNTRIES = RAW_COUNTRIES.split(',').map(item => { const [name, curr, lang] = item.split('|'); return { name, defaultCurr: curr, lang }; });
+        
+        const USD_RATES = { 'PEN': 3.75, 'EUR': 0.92, 'GBP': 0.79, 'BRL': 5.15, 'MXN': 16.8, 'ARS': 1000, 'COP': 3900, 'CLP': 950, 'CAD': 1.37, 'AUD': 1.52, 'JPY': 150, 'CHF': 0.88, 'USD': 1 };
+        const ALL_CURRENCIES = { 'PEN': 'S/', 'USD': '$', 'EUR': '€', 'GBP': '£', 'BRL': 'R$', 'MXN': '$', 'CAD': 'CA$', 'ARS': '$', 'COP': '$', 'CLP': '$', 'JPY': '¥', 'AUD': 'A$', 'CHF': 'CHF' };
 
+        const getFlag = (country) => {
+            const flags = { 'Perú':'🇵🇪', 'México':'🇲🇽', 'Colombia':'🇨🇴', 'Argentina':'🇦🇷', 'Chile':'🇨🇱', 'España':'🇪🇸', 'Estados Unidos':'🇺🇸', 'Brasil':'🇧🇷', 'Canadá':'🇨🇦', 'Reino Unido':'🇬🇧', 'Francia':'🇫🇷', 'Alemania':'🇩🇪', 'Italia':'🇮🇹', 'Japón':'🇯🇵', 'Australia':'🇦🇺', 'Suiza':'🇨🇭' };
+            return flags[country] || '🌐';
+        };
+
+        function formatMoneda(val, currCode) { 
+            const sym = ALL_CURRENCIES[currCode] || currCode; 
+            return `${sym} ${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; 
+        }
+
+        // DICCIONARIO 7 IDIOMAS COMPLETOS PARA LA APP
         const DICTIONARY = {
             es: { 
+                months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 home: "Inicio", record: "Registrar", analysis: "Análisis", history: "Historial", balance: "Saldo total", income: "Ingresos", exp: "Gastos", save: "Tu ahorro", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Monto", cat: "Categoría", desc: "Descripción", btn_save: "Guardar", settings: "Ajustes", fixed: "Gastos fijos", fixed_sub: "Recurrentes", analysis_title: "Evaluación semanal", last_7: "Últimos 7 días", weekly_balance: "Balance semanal", no_txns: "Sin transacciones.",
                 btn_expense: "Gasto", btn_income: "Ingreso", btn_write: "Escribir", btn_speak: "Hablar", btn_process_ai: "Procesar con IA", btn_analyze_txt: "Analizar Texto", btn_analyze: "Analizar", btn_analyzing: "Analizando...", btn_see_plans: "Ver Planes VIP",
                 tab_daily: "Diario", tab_weekly: "Semanal", tab_monthly: "Mensual",
                 msg_listening: "Escuchando... presiona para detener", msg_tap_mic: "Toca el micro para hablar", msg_processing: "Procesando movimientos con IA...", msg_no_amount: "🤖 IA: No detecté ningún monto en tu frase.",
-                lbl_actual: "Actual", lbl_goal: "Meta",
-                days: ["D","L","M","M","J","V","S"],
+                lbl_actual: "Actual", lbl_goal: "Meta", days: ["D","L","M","M","J","V","S"],
                 categories: ["Salario", "Comida", "Transporte", "Servicios", "Vivienda", "Salud", "Educación", "Entretenimiento", "Inversión", "Otros"],
                 income_words: ["recib", "ingreso", "gan", "cobr", "dieron", "tengo", "pagaron", "sueldo", "pago"],
                 quotes: ["Planifica tus compras y evita decisiones impulsivas.", "Ahorrar no es solo guardar, es saber gastar.", "Controla tus gastos antes de que ellos te controlen a ti.", "Págate a ti mismo primero: ahorra antes de gastar.", "Un pequeño agujero hunde un gran barco. Cuida los gastos hormiga.", "El interés compuesto es la octava maravilla del mundo."],
                 analisis_sv_1: "Ahorraste el", analisis_sv_2: "% de tus ingresos esta semana.", analisis_leak_1: "Tu mayor fuga de dinero fue en", analisis_leak_2: ". Evalúa si fue estrictamente necesario.", analisis_warn: "¡Cuidado! Tus gastos superaron tus ingresos. Debes ajustar tu presupuesto urgente.", analisis_none: "No tienes movimientos recientes en los últimos 7 días para analizar.",
-                tips: ["Aplica la regla 50/30/20 (Necesidades/Deseos/Ahorro) para un mejor balance.", "Antes de una compra grande, espera 24 horas para evitar impulsos.", "Revisa tus suscripciones recurrentes, podrías estar pagando por algo que no usas.", "Considera usar la técnica de los sobres para controlar gastos diarios.", "Intenta llevar almuerzo al trabajo 3 veces por semana, notarás la diferencia."]
+                tips: ["Aplica la regla 50/30/20 (Necesidades/Deseos/Ahorro) para un mejor balance.", "Antes de una compra grande, espera 24 horas para evitar impulsos.", "Revisa tus suscripciones recurrentes, podrías estar pagando por algo que no usas.", "Considera usar la técnica de los sobres para controlar gastos diarios."],
+                auth_title: "Controla tus finanzas personales con Inteligencia Artificial. Rápido y privado.", auth_sub: "Acceso Seguro", auth_footer: "Al ingresar aceptas que tus datos se guarden únicamente de forma local en tu dispositivo.",
+                pay_title: "Desbloquea la IA", pay_sub: "Analiza tus finanzas, personaliza a tu estilo y registra por voz.", pay_month: "1 Mes", pay_year: "1 Año", pay_life: "Vitalicio", pay_pop: "POPULAR", pay_footer: "Te enviaré un código de activación único para tu correo tras el pago."
             },
             en: { 
+                months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                 home: "Home", record: "Record", analysis: "Analysis", history: "History", balance: "Total Balance", income: "Income", exp: "Expenses", save: "Savings", manual: "Manual Entry", ai: "Smart Entry (AI)", text_ai: "Text", voice_ai: "Voice", amount: "Amount", cat: "Category", desc: "Description", btn_save: "Save", settings: "Settings", fixed: "Fixed Expenses", fixed_sub: "Recurring", analysis_title: "Weekly Evaluation", last_7: "Last 7 days", weekly_balance: "Weekly Balance", no_txns: "No transactions.",
                 btn_expense: "Expense", btn_income: "Income", btn_write: "Write", btn_speak: "Speak", btn_process_ai: "Process with AI", btn_analyze_txt: "Analyze Text", btn_analyze: "Analyze", btn_analyzing: "Analyzing...", btn_see_plans: "View VIP Plans",
                 tab_daily: "Daily", tab_weekly: "Weekly", tab_monthly: "Monthly",
                 msg_listening: "Listening... press to stop", msg_tap_mic: "Tap mic to speak", msg_processing: "Processing with AI...", msg_no_amount: "🤖 AI: I couldn't detect any amount.",
-                lbl_actual: "Current", lbl_goal: "Goal",
-                days: ["S","M","T","W","T","F","S"],
+                lbl_actual: "Current", lbl_goal: "Goal", days: ["S","M","T","W","T","F","S"],
                 categories: ["Salary", "Food", "Transport", "Utilities", "Housing", "Health", "Education", "Entertainment", "Investment", "Others"],
                 income_words: ["receive", "income", "earn", "got", "have", "paid", "salary", "wage", "pay"],
                 quotes: ["Plan your purchases to avoid impulse buys.", "Saving isn't just storing, it's knowing how to spend.", "Control your expenses before they control you.", "Pay yourself first: save before you spend.", "A small leak will sink a great ship. Watch small expenses."],
                 analisis_sv_1: "You saved", analisis_sv_2: "% of your income this week.", analisis_leak_1: "Your biggest money drain was on", analisis_leak_2: ". Evaluate if it was necessary.", analisis_warn: "Warning! Your expenses exceeded your income. Adjust your budget urgently.", analisis_none: "You have no recent transactions in the last 7 days to analyze.",
-                tips: ["Apply the 50/30/20 rule (Needs/Wants/Savings) for a better balance.", "Before a large purchase, wait 24 hours to avoid impulse buying.", "Check your recurring subscriptions; you might be paying for something you don't use.", "Consider using the envelope budgeting method for daily expenses.", "Try taking your lunch to work 3 times a week, you'll notice the difference."]
+                tips: ["Apply the 50/30/20 rule (Needs/Wants/Savings) for a better balance.", "Before a large purchase, wait 24 hours to avoid impulse buying.", "Check your recurring subscriptions.", "Consider using the envelope budgeting method."],
+                auth_title: "Control your personal finances with Artificial Intelligence. Fast and private.", auth_sub: "Secure Access", auth_footer: "By logging in, you agree that your data is stored solely locally on your device.",
+                pay_title: "Unlock AI", pay_sub: "Analyze your finances, customize your style and log by voice.", pay_month: "1 Month", pay_year: "1 Year", pay_life: "Lifetime", pay_pop: "POPULAR", pay_footer: "I will send you a unique activation code to your email after payment."
             },
             pt: { 
-                home: "Início", record: "Registrar", analysis: "Análise", history: "Histórico", balance: "Saldo total", income: "Receitas", exp: "Despesas", save: "Economia", manual: "Registro Manual", ai: "Registro Inteligente (IA)", text_ai: "Texto", voice_ai: "Voz", amount: "Valor", cat: "Categoria", desc: "Descrição", btn_save: "Salvar", settings: "Configurações", fixed: "Despesas fixas", fixed_sub: "Recorrentes", analysis_title: "Avaliação semanal", last_7: "Últimos 7 dias", weekly_balance: "Saldo semanal", no_txns: "Sem transações.",
-                btn_expense: "Despesa", btn_income: "Receita", btn_write: "Escrever", btn_speak: "Falar", btn_process_ai: "Processar com IA", btn_analyze_txt: "Analisar Texto", btn_analyze: "Analisar", btn_analyzing: "Analisando...", btn_see_plans: "Ver Planos VIP",
+                months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                home: "Início", record: "Registrar", analysis: "Análise", history: "Histórico", balance: "Saldo total", income: "Receitas", exp: "Despesas", save: "Economia", manual: "Registro Manual", ai: "Registro Inteligente", text_ai: "Texto", voice_ai: "Voz", amount: "Valor", cat: "Categoria", desc: "Descrição", btn_save: "Salvar", settings: "Ajustes", fixed: "Despesas fixas", fixed_sub: "Recorrentes", analysis_title: "Avaliação semanal", last_7: "Últimos 7 dias", weekly_balance: "Saldo semanal", no_txns: "Sem transações.",
+                btn_expense: "Despesa", btn_income: "Receita", btn_write: "Escrever", btn_speak: "Falar", btn_process_ai: "Processar com IA", btn_analyze_txt: "Analisar", btn_analyze: "Analisar", btn_analyzing: "Analisando...", btn_see_plans: "Ver Planos",
                 tab_daily: "Diário", tab_weekly: "Semanal", tab_monthly: "Mensal",
                 msg_listening: "Ouvindo... pressione para parar", msg_tap_mic: "Toque no microfone para falar", msg_processing: "Processando com IA...", msg_no_amount: "🤖 IA: Não detectei nenhum valor.",
-                lbl_actual: "Atual", lbl_goal: "Meta",
-                days: ["D","S","T","Q","Q","S","S"],
+                lbl_actual: "Atual", lbl_goal: "Meta", days: ["D","S","T","Q","Q","S","S"],
                 categories: ["Salário", "Comida", "Transporte", "Serviços", "Moradia", "Saúde", "Educação", "Entretenimento", "Investimento", "Outros"],
                 income_words: ["receb", "renda", "ganh", "cobr", "deram", "tenho", "pagaram", "salário", "pago"],
-                quotes: ["Planeje suas compras e evite impulsos.", "Economizar é saber gastar.", "Controle seus gastos antes que eles controlem você.", "Pague a si mesmo primeiro.", "Um pequeno vazamento afunda um grande navio."],
-                analisis_sv_1: "Você economizou", analisis_sv_2: "% de sua renda esta semana.", analisis_leak_1: "Seu maior vazamento de dinheiro foi em", analisis_leak_2: ". Avalie se foi estritamente necessário.", analisis_warn: "Cuidado! Suas despesas excederam sua renda. Você precisa ajustar seu orçamento com urgência.", analisis_none: "Você não tem transações recentes nos últimos 7 dias para analisar.",
-                tips: ["Aplique a regra 50/30/20 (Necessidades/Desejos/Poupança) para um melhor equilíbrio.", "Antes de uma compra grande, espere 24 horas para evitar impulsos.", "Revise suas assinaturas recorrentes.", "Considere usar o método dos envelopes para despesas diárias.", "Tente levar o almoço para o trabalho 3 vezes por semana."]
+                quotes: ["Planeje suas compras e evite impulsos.", "Economizar é saber gastar.", "Controle seus gastos antes que eles controlem você."],
+                analisis_sv_1: "Você economizou", analisis_sv_2: "% de sua renda esta semana.", analisis_leak_1: "Seu maior vazamento de dinheiro foi em", analisis_leak_2: ".", analisis_warn: "Cuidado! Suas despesas excederam sua renda.", analisis_none: "Sem transações recentes.",
+                tips: ["Aplique a regra 50/30/20.", "Espere 24 horas antes de compras grandes."],
+                auth_title: "Controle suas finanças com IA. Rápido e privado.", auth_sub: "Acesso Seguro", auth_footer: "Seus dados são salvos apenas localmente.",
+                pay_title: "Desbloqueie a IA", pay_sub: "Analise, personalize e registre por voz.", pay_month: "1 Mês", pay_year: "1 Ano", pay_life: "Vitalício", pay_pop: "POPULAR", pay_footer: "Código de ativação enviado após o pagamento."
+            },
+            fr: { 
+                months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                home: "Accueil", record: "Enregistrer", analysis: "Analyse", history: "Historique", balance: "Solde total", income: "Revenus", exp: "Dépenses", save: "Épargne", manual: "Manuel", ai: "Intelligent (IA)", text_ai: "Texte", voice_ai: "Voix", amount: "Montant", cat: "Catégorie", desc: "Description", btn_save: "Sauvegarder", settings: "Paramètres", fixed: "Dépenses fixes", fixed_sub: "Récurrentes", analysis_title: "Évaluation", last_7: "7 derniers jours", weekly_balance: "Solde hebdo", no_txns: "Aucune transaction.",
+                btn_expense: "Dépense", btn_income: "Revenu", btn_write: "Écrire", btn_speak: "Parler", btn_process_ai: "Traiter IA", btn_analyze_txt: "Analyser Texte", btn_analyze: "Analyser", btn_analyzing: "Analyse...", btn_see_plans: "Voir les Plans",
+                tab_daily: "Jour", tab_weekly: "Semaine", tab_monthly: "Mois",
+                msg_listening: "Écoute... appuyez pour arrêter", msg_tap_mic: "Appuyez pour parler", msg_processing: "Traitement IA...", msg_no_amount: "🤖 IA: Aucun montant détecté.",
+                lbl_actual: "Actuel", lbl_goal: "Objectif", days: ["D","L","M","M","J","V","S"],
+                categories: ["Salaire", "Nourriture", "Transport", "Services", "Logement", "Santé", "Éducation", "Divertissement", "Investissement", "Autres"],
+                income_words: ["reçu", "revenu", "gagné", "payé", "salaire"],
+                quotes: ["Planifiez pour éviter les achats impulsifs.", "L'épargne, c'est savoir dépenser."],
+                analisis_sv_1: "Vous avez économisé", analisis_sv_2: "% de vos revenus.", analisis_leak_1: "Plus grande dépense en", analisis_leak_2: ".", analisis_warn: "Attention! Dépenses > Revenus.", analisis_none: "Pas de transactions récentes.",
+                tips: ["Appliquez la règle 50/30/20.", "Attendez 24h avant un gros achat."],
+                auth_title: "Contrôlez vos finances avec l'IA. Rapide et privé.", auth_sub: "Accès Sécurisé", auth_footer: "Vos données restent locales.",
+                pay_title: "Débloquez l'IA", pay_sub: "Analysez et enregistrez par la voix.", pay_month: "1 Mois", pay_year: "1 An", pay_life: "À vie", pay_pop: "POPULAIRE", pay_footer: "Code envoyé après paiement."
+            },
+            de: { 
+                months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                home: "Start", record: "Erfassen", analysis: "Analyse", history: "Historie", balance: "Gesamtsaldo", income: "Einnahmen", exp: "Ausgaben", save: "Sparen", manual: "Manuell", ai: "Intelligent (KI)", text_ai: "Text", voice_ai: "Stimme", amount: "Betrag", cat: "Kategorie", desc: "Beschreibung", btn_save: "Speichern", settings: "Einstellungen", fixed: "Fixkosten", fixed_sub: "Wiederkehrend", analysis_title: "Auswertung", last_7: "Letzte 7 Tage", weekly_balance: "Wochensaldo", no_txns: "Keine Transaktionen.",
+                btn_expense: "Ausgabe", btn_income: "Einnahme", btn_write: "Schreiben", btn_speak: "Sprechen", btn_process_ai: "KI-Prozess", btn_analyze_txt: "Text analysieren", btn_analyze: "Analysieren", btn_analyzing: "Analysiert...", btn_see_plans: "Pläne ansehen",
+                tab_daily: "Tag", tab_weekly: "Woche", tab_monthly: "Monat",
+                msg_listening: "Höre zu... tippen zum Stoppen", msg_tap_mic: "Tippen zum Sprechen", msg_processing: "KI-Verarbeitung...", msg_no_amount: "🤖 KI: Kein Betrag erkannt.",
+                lbl_actual: "Aktuell", lbl_goal: "Ziel", days: ["S","M","D","M","D","F","S"],
+                categories: ["Gehalt", "Essen", "Transport", "Dienstleistungen", "Wohnen", "Gesundheit", "Bildung", "Unterhaltung", "Investition", "Andere"],
+                income_words: ["gehalt", "einkommen", "verdient", "bekommen"],
+                quotes: ["Planen Sie Ihre Einkäufe.", "Sparen heißt richtig ausgeben."],
+                analisis_sv_1: "Sie haben", analisis_sv_2: "% gespart.", analisis_leak_1: "Größtes Leck bei", analisis_leak_2: ".", analisis_warn: "Achtung! Ausgaben > Einnahmen.", analisis_none: "Keine aktuellen Daten.",
+                tips: ["Nutzen Sie die 50/30/20 Regel.", "Warten Sie 24h bei großen Käufen."],
+                auth_title: "Finanzen mit KI kontrollieren. Privat & sicher.", auth_sub: "Sicherer Zugang", auth_footer: "Daten bleiben auf dem Gerät.",
+                pay_title: "KI Freischalten", pay_sub: "Stimmen-Erfassung & Analyse.", pay_month: "1 Monat", pay_year: "1 Jahr", pay_life: "Lebenslang", pay_pop: "BELIEBT", pay_footer: "Aktivierungscode nach Zahlung."
+            },
+            it: { 
+                months: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
+                home: "Inizio", record: "Registra", analysis: "Analisi", history: "Storico", balance: "Saldo totale", income: "Entrate", exp: "Uscite", save: "Risparmio", manual: "Manuale", ai: "Intelligente (IA)", text_ai: "Testo", voice_ai: "Voce", amount: "Importo", cat: "Categoria", desc: "Descrizione", btn_save: "Salva", settings: "Impostazioni", fixed: "Spese fisse", fixed_sub: "Ricorrenti", analysis_title: "Valutazione", last_7: "Ultimi 7 giorni", weekly_balance: "Saldo sett.", no_txns: "Nessuna transazione.",
+                btn_expense: "Uscita", btn_income: "Entrata", btn_write: "Scrivi", btn_speak: "Parla", btn_process_ai: "Elabora IA", btn_analyze_txt: "Analizza Testo", btn_analyze: "Analizza", btn_analyzing: "Analizzando...", btn_see_plans: "Vedi Piani",
+                tab_daily: "Giorno", tab_weekly: "Settimana", tab_monthly: "Mese",
+                msg_listening: "Ascoltando... premi per fermare", msg_tap_mic: "Premi per parlare", msg_processing: "Elaborazione IA...", msg_no_amount: "🤖 IA: Nessun importo rilevato.",
+                lbl_actual: "Attuale", lbl_goal: "Obiettivo", days: ["D","L","M","M","G","V","S"],
+                categories: ["Stipendio", "Cibo", "Trasporto", "Servizi", "Casa", "Salute", "Educazione", "Intrattenimento", "Investimenti", "Altro"],
+                income_words: ["stipendio", "entrata", "guadagnato", "pagato"],
+                quotes: ["Pianifica i tuoi acquisti.", "Risparmiare è saper spendere."],
+                analisis_sv_1: "Hai risparmiato il", analisis_sv_2: "% delle entrate.", analisis_leak_1: "Maggior spesa in", analisis_leak_2: ".", analisis_warn: "Attenzione! Uscite > Entrate.", analisis_none: "Nessun dato recente.",
+                tips: ["Usa la regola 50/30/20.", "Aspetta 24h per grandi acquisti."],
+                auth_title: "Controlla le finanze con l'IA. Veloce e privato.", auth_sub: "Accesso Sicuro", auth_footer: "I dati restano sul dispositivo.",
+                pay_title: "Sblocca l'IA", pay_sub: "Analizza e registra con la voce.", pay_month: "1 Mese", pay_year: "1 Anno", pay_life: "A vita", pay_pop: "POPOLARE", pay_footer: "Codice inviato dopo il pagamento."
+            },
+            ja: { 
+                months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                home: "ホーム", record: "記録", analysis: "分析", history: "履歴", balance: "総残高", income: "収入", exp: "支出", save: "貯蓄", manual: "手動", ai: "スマート (AI)", text_ai: "テキスト", voice_ai: "音声", amount: "金額", cat: "カテゴリ", desc: "説明", btn_save: "保存", settings: "設定", fixed: "固定費", fixed_sub: "定期", analysis_title: "週次評価", last_7: "過去7日間", weekly_balance: "週間残高", no_txns: "取引なし。",
+                btn_expense: "支出", btn_income: "収入", btn_write: "書く", btn_speak: "話す", btn_process_ai: "AI処理", btn_analyze_txt: "テキスト分析", btn_analyze: "分析する", btn_analyzing: "分析中...", btn_see_plans: "プランを見る",
+                tab_daily: "日", tab_weekly: "週", tab_monthly: "月",
+                msg_listening: "聞いています...停止", msg_tap_mic: "マイクをタップ", msg_processing: "AI処理中...", msg_no_amount: "🤖 AI: 金額が検出されません。",
+                lbl_actual: "現在", lbl_goal: "目標", days: ["日","月","火","水","木","金","土"],
+                categories: ["給与", "食費", "交通", "ユーティリティ", "住居", "健康", "教育", "エンタメ", "投資", "その他"],
+                income_words: ["給与", "収入", "稼ぐ", "もらった"],
+                quotes: ["計画的に買い物をしましょう。", "賢く使うことが貯蓄です。"],
+                analisis_sv_1: "今週は収入の", analisis_sv_2: "% を節約しました。", analisis_leak_1: "最大の支出は", analisis_leak_2: "でした。", analisis_warn: "警告！支出が収入を上回っています。", analisis_none: "最近のデータがありません。",
+                tips: ["50/30/20ルールを適用してください。", "大きな買い物の前に24時間待ちます。"],
+                auth_title: "AIで財務を管理。迅速かつプライベート。", auth_sub: "安全なアクセス", auth_footer: "データはデバイスにのみ保存されます。",
+                pay_title: "AIのロック解除", pay_sub: "分析、カスタマイズ、音声記録。", pay_month: "1ヶ月", pay_year: "1年", pay_life: "永久", pay_pop: "人気", pay_footer: "支払い後にアクティベーションコードを送信します。"
             }
         };
 
@@ -166,15 +244,6 @@
             saveSettings: (user, s) => localStorage.setItem(`settings_${user}`, JSON.stringify(s))
         };
 
-        const ALL_CURRENCIES = { 'PEN': 'S/', 'USD': '$', 'EUR': '€', 'GBP': '£', 'CNY': '¥', 'BRL': 'R$', 'MXN': '$', 'CAD': 'CA$', 'AUD': 'A$', 'ARS': '$', 'COP': '$', 'CLP': '$', 'BOB': 'Bs' };
-        const USD_RATES = { 'PEN': 3.75, 'EUR': 0.92, 'GBP': 0.79, 'BRL': 5.15, 'MXN': 16.8, 'ARS': 1000, 'COP': 3900, 'CLP': 950, 'BOB': 6.9, 'CAD': 1.37, 'AUD': 1.52, 'CNY': 7.24, 'USD': 1 };
-        function formatMoneda(val, currCode) { const sym = ALL_CURRENCIES[currCode] || currCode; return `${sym} ${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
-
-        const getFlag = (country) => {
-            const flags = { 'Perú':'🇵🇪', 'México':'🇲🇽', 'Colombia':'🇨🇴', 'Argentina':'🇦🇷', 'Chile':'🇨🇱', 'España':'🇪🇸', 'Estados Unidos':'🇺🇸', 'Brasil':'🇧🇷', 'Ecuador':'🇪🇨', 'Bolivia':'🇧🇴', 'Uruguay':'🇺🇾', 'Paraguay':'🇵🇾', 'Venezuela':'🇻🇪', 'Costa Rica':'🇨🇷', 'Guatemala':'🇬🇹', 'Honduras':'🇭🇳', 'El Salvador':'🇸🇻', 'Nicaragua':'🇳🇮', 'Panamá':'🇵🇦', 'República Dominicana':'🇩🇴', 'Cuba':'🇨🇺', 'Puerto Rico':'🇵🇷', 'Canadá':'🇨🇦', 'Reino Unido':'🇬🇧', 'Francia':'🇫🇷', 'Alemania':'🇩🇪', 'Italia':'🇮🇹', 'Portugal':'🇵🇹' };
-            return flags[country] || '🌐';
-        };
-
         // --- ICONOS COMPLETOS ---
         const Icons = {
             Logo: ({c}) => <svg viewBox="0 0 64 64" className={c || "w-full h-full"}><rect width="64" height="64" rx="16" fill="currentColor"/><path d="M44 14c6 4 8 12 4 18" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"/><polygon points="48,12 43,16 50,16" fill="#fff"/><path d="M12 28h40v20a4 4 0 0 1-4 4h-32a4 4 0 0 1-4-4z" fill="#0ea5e9" stroke="#fff" strokeWidth="2"/><path d="M12 28a4 4 0 0 1 4-4h32a4 4 0 0 1 4 4v6h-40z" fill="#38bdf8" stroke="#fff" strokeWidth="2"/><circle cx="26" cy="42" r="3" fill="#fff"/></svg>,
@@ -218,6 +287,7 @@
                     <div className="flex items-center gap-3">
                         <button onClick={onOpenCountryMenu} className="flex items-center gap-1.5 bg-background border px-2.5 py-1.5 rounded-xl shadow-sm hover:border-accent transition-colors" style={{borderColor: c?.border}}>
                             <span className="text-lg">{getFlag(country)}</span>
+                            <span className="text-xs font-bold text-primary">{country}</span>
                             <Icons.ChevronDown c="w-3 h-3 text-secondary"/>
                         </button>
                         <button onClick={onOpenSettings} className="w-10 h-10 rounded-full border-2 overflow-hidden relative shadow-md hover:opacity-80 transition-opacity" style={{borderColor: c?.border}}>
@@ -263,33 +333,50 @@
         }
 
         // --- COMPONENTE: MODAL DE PAGO VIP ---
-        function PaymentModal({ onClose, t }) {
-            const redirectWA = (plan) => window.open(`https://wa.me/51930266472?text=Hola%20Carlos,%20quiero%20pagar%20el%20plan%20VIP%20de%20${plan}`, '_blank');
+        function PaymentModal({ onClose, t, cur, country, lang, c }) {
+            const rate = USD_RATES[cur] || 1;
+            const sym = ALL_CURRENCIES[cur] || cur;
+            const p1 = formatMoneda(3 * rate, cur);
+            const p2 = formatMoneda(15 * rate, cur);
+            const p3 = formatMoneda(45 * rate, cur);
+
+            const redirectWA = (planCode, priceStr) => {
+                let waMsg = "";
+                if(lang === 'en') { waMsg = `Hello Carlos, I want to buy the VIP Plan (${planCode} for ${priceStr} ${cur}) from ${country}.`; }
+                else if(lang === 'pt') { waMsg = `Olá Carlos, quero comprar o Plano VIP (${planCode} por ${priceStr} ${cur}) do ${country}.`; }
+                else if(lang === 'fr') { waMsg = `Bonjour Carlos, je veux acheter le plan VIP (${planCode} pour ${priceStr} ${cur}) depuis ${country}.`; }
+                else if(lang === 'de') { waMsg = `Hallo Carlos, ich möchte den VIP-Plan (${planCode} für ${priceStr} ${cur}) aus ${country} kaufen.`; }
+                else if(lang === 'it') { waMsg = `Ciao Carlos, voglio acquistare il Piano VIP (${planCode} per ${priceStr} ${cur}) da ${country}.`; }
+                else if(lang === 'ja') { waMsg = `こんにちはカルロス、${country}からVIPプラン（${priceStr} ${cur}の${planCode}）を購入したいです。`; }
+                else { waMsg = `Hola Carlos, quiero comprar el plan VIP de ${planCode} por ${priceStr} ${cur} desde ${country}.`; }
+                window.open(`https://wa.me/51930266472?text=${encodeURIComponent(waMsg)}`, '_blank');
+            };
+
             return (
                 <div className="fixed inset-0 modal-overlay flex items-center justify-center p-4 z-[250]">
                     <div className="bg-card w-full max-w-sm rounded-3xl p-8 border border-border shadow-2xl view-animate text-center relative">
                         <button onClick={onClose} className="absolute top-4 right-4 bg-background border border-border rounded-full p-1.5 text-secondary hover:text-white transition z-10"><Icons.X c="w-5 h-5"/></button>
                         
                         <div className="w-16 h-16 rounded-full bg-warning/20 text-warning flex items-center justify-center mx-auto mb-4 mt-2 shadow-lg border border-warning/50"><Icons.Crown c="w-8 h-8"/></div>
-                        <h2 className="text-2xl font-bold text-primary mb-2">Desbloquea la IA</h2>
-                        <p className="text-secondary text-sm mb-6">Analiza tus finanzas, personaliza a tu estilo y registra por voz.</p>
+                        <h2 className="text-2xl font-bold text-primary mb-2">{t('pay_title') || 'Desbloquea la IA'}</h2>
+                        <p className="text-secondary text-sm mb-6">{t('pay_sub') || 'Analiza tus finanzas y registra por voz.'}</p>
                         
                         <div className="space-y-3 mb-6">
-                            <button onClick={()=>redirectWA('1 Mes ($3.00)')} className="w-full bg-[#19191c] border border-border p-3 rounded-xl hover:border-warning transition flex justify-between items-center group">
-                                <span className="text-secondary font-bold group-hover:text-white">1 Mes</span><span className="text-white font-extrabold">$3.00</span>
+                            <button onClick={()=>redirectWA('1 Mes', p1)} className="w-full bg-[#19191c] border border-border p-3 rounded-xl hover:border-warning transition flex justify-between items-center group">
+                                <span className="text-secondary font-bold group-hover:text-white">{t('pay_month') || '1 Mes'}</span><span className="text-white font-extrabold">{p1}</span>
                             </button>
-                            <button onClick={()=>redirectWA('1 Año ($15.00)')} className="w-full bg-warning/10 border border-warning/50 p-3 rounded-xl hover:bg-warning/20 transition flex justify-between items-center relative">
-                                <span className="absolute -top-2 left-4 bg-warning text-black text-[9px] px-2 py-0.5 rounded font-bold">POPULAR</span>
-                                <span className="text-warning font-bold">1 Año</span><span className="text-white font-extrabold">$15.00</span>
+                            <button onClick={()=>redirectWA('1 Año', p2)} className="w-full bg-warning/10 border border-warning/50 p-3 rounded-xl hover:bg-warning/20 transition flex justify-between items-center relative">
+                                <span className="absolute -top-2 left-4 bg-warning text-black text-[9px] px-2 py-0.5 rounded font-bold">{t('pay_pop') || 'POPULAR'}</span>
+                                <span className="text-warning font-bold">{t('pay_year') || '1 Año'}</span><span className="text-white font-extrabold">{p2}</span>
                             </button>
-                            <button onClick={()=>redirectWA('Vitalicio ($45.00)')} className="w-full bg-[#19191c] border border-border p-3 rounded-xl hover:border-warning transition flex justify-between items-center group">
-                                <span className="text-secondary font-bold group-hover:text-white">Vitalicio</span><span className="text-white font-extrabold">$45.00</span>
+                            <button onClick={()=>redirectWA('Vitalicio', p3)} className="w-full bg-[#19191c] border border-border p-3 rounded-xl hover:border-warning transition flex justify-between items-center group">
+                                <span className="text-secondary font-bold group-hover:text-white">{t('pay_life') || 'Vitalicio'}</span><span className="text-white font-extrabold">{p3}</span>
                             </button>
                         </div>
-                        <div className="bg-white p-3 rounded-2xl inline-block shadow-xl cursor-pointer" onClick={()=>redirectWA('Suscripción')}>
+                        <div className="bg-white p-3 rounded-2xl inline-block shadow-xl cursor-pointer" onClick={()=>redirectWA('Suscripción', p2)}>
                             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/51930266472?text=Hola%20Carlos,%20quiero%20pagar%20mi%20suscripcion%20VIP" alt="QR" className="w-32 h-32"/>
                         </div>
-                        <p className="text-[10px] text-secondary mt-3">Te enviaré un código de activación único para tu correo tras el pago.</p>
+                        <p className="text-[10px] text-secondary mt-3">{t('pay_footer') || 'Te enviaré un código de activación único para tu correo tras el pago.'}</p>
                     </div>
                 </div>
             );
@@ -369,6 +456,9 @@
         }
 
         function AuthView({ onLogin }) {
+            const sysLang = localStorage.getItem('billetera_web_lang') || 'es';
+            const tAuth = (k) => DICTIONARY[sysLang]?.[k] || DICTIONARY['es'][k];
+
             useEffect(() => {
                 const initG = setInterval(() => {
                     if (window.google && window.google.accounts) {
@@ -376,7 +466,7 @@
                             /* ---------------------------------------------------- */
                             /* OJO: RECUERDA PONER TU CLIENT ID REAL DE GOOGLE      */
                             /* ---------------------------------------------------- */
-                            client_id: "268830657919-cj88u38ksn7hqprbcjb3nrffdd7mnq3u.apps.googleusercontent.com", 
+                            client_id: "PON_TU_CLIENT_ID_DE_GOOGLE_AQUI.apps.googleusercontent.com", 
                             callback: (res) => {
                                 try {
                                     const payload = JSON.parse(decodeURIComponent(window.atob(res.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
@@ -395,11 +485,11 @@
                 <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#18181b] text-white">
                     <div className="w-24 h-24 rounded-3xl bg-transparent text-accent p-1 mb-6"><Icons.Logo /></div>
                     <h1 className="text-4xl font-extrabold tracking-tight mb-2">Mi Billetera</h1>
-                    <p className="text-[#a1a1aa] mb-12 text-center max-w-xs text-sm">Controla tus finanzas personales con Inteligencia Artificial. Rápido y privado.</p>
+                    <p className="text-[#a1a1aa] mb-12 text-center max-w-xs text-sm">{tAuth('auth_title') || 'Controla tus finanzas personales con Inteligencia Artificial. Rápido y privado.'}</p>
                     <div className="w-full max-w-xs p-6 bg-[#27272a] rounded-3xl border border-[#3f3f46] shadow-xl text-center">
-                        <p className="text-xs font-bold uppercase text-[#a1a1aa] tracking-widest mb-6">Acceso Seguro</p>
+                        <p className="text-xs font-bold uppercase text-[#a1a1aa] tracking-widest mb-6">{tAuth('auth_sub') || 'Acceso Seguro'}</p>
                         <div id="g-btn" className="w-full overflow-hidden rounded-xl h-12 flex justify-center"></div>
-                        <p className="text-[10px] text-[#a1a1aa] mt-4 leading-relaxed">Al ingresar aceptas que tus datos se guarden únicamente de forma local en tu dispositivo.</p>
+                        <p className="text-[10px] text-[#a1a1aa] mt-4 leading-relaxed">{tAuth('auth_footer') || 'Al ingresar aceptas que tus datos se guarden únicamente de forma local en tu dispositivo.'}</p>
                     </div>
                 </div>
             );
@@ -451,7 +541,7 @@
                 <div className={`p-4 space-y-4 view-animate ${hasMultipleCurrencies ? 'pt-20' : ''}`}>
                     <TopHeader title={t('home')||'Inicio'} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
 
-                    {isVip && expire && <div className="bg-warning/10 border border-warning/30 rounded-xl p-3 flex justify-between items-center text-xs"><span className="text-warning font-bold flex items-center gap-2"><Icons.Crown c="w-4 h-4"/> Suscripción Activa</span><span className="text-secondary">Vence: {expire === '2099-12-31' ? 'Vitalicio' : expire}</span></div>}
+                    {isVip && expire && <div className="bg-warning/10 border border-warning/30 rounded-xl p-3 flex justify-between items-center text-xs"><span className="text-warning font-bold flex items-center gap-2"><Icons.Crown c="w-4 h-4"/> VIP Activo</span><span className="text-secondary">Exp: {expire === '2099-12-31' ? '∞' : expire}</span></div>}
                     
                     <CurrencyTabs currencies={safeCurrencies} activeCurrency={cur} setActiveCurrency={setActiveCurrency} c={c} />
 
@@ -560,7 +650,7 @@
                         {!isVip && (
                             <div className="absolute inset-0 z-10 glass-panel flex flex-col items-center justify-center text-center p-6">
                                 <div className="w-12 h-12 bg-warning/20 text-warning rounded-full flex items-center justify-center mb-3"><Icons.Crown c="w-6 h-6"/></div>
-                                <h3 className="font-bold text-white mb-2">Desbloquea la Inteligencia Artificial</h3>
+                                <h3 className="font-bold text-white mb-2">{t('pay_title') || 'Desbloquea la Inteligencia Artificial'}</h3>
                                 <button onClick={onUpgrade} className="bg-warning text-black font-bold px-6 py-2.5 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:scale-105 transition">{t('btn_see_plans')||'Ver Planes'}</button>
                             </div>
                         )}
@@ -602,7 +692,7 @@
                         <TopHeader title={t('analysis')||'Análisis'} user={user} isVip={isVip} onOpenSettings={onOpenSettings} country={settings.country} onOpenCountryMenu={onOpenCountryMenu} c={c} />
                         <div className="flex-1 flex flex-col items-center justify-center text-center pb-20">
                             <div className="w-20 h-20 rounded-full bg-warning/10 text-warning flex items-center justify-center mb-6 shadow-lg border border-warning/20"><Icons.Crown c="w-10 h-10" /></div>
-                            <h2 className="text-2xl font-bold text-primary mb-3">Evaluación Semanal VIP</h2>
+                            <h2 className="text-2xl font-bold text-primary mb-3">{t('pay_title') || 'Evaluación Semanal VIP'}</h2>
                             <button onClick={onUpgrade} className="bg-warning text-black text-sm uppercase font-bold px-6 py-3 rounded-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] hover:scale-105 transition-transform">{t('btn_see_plans')||'Ver Planes'}</button>
                         </div>
                     </div>
@@ -663,7 +753,7 @@
 
                     <div className="bg-card rounded-3xl p-6 border shadow-lg mt-6 relative overflow-hidden" style={{borderColor: c.border}}>
                         <div className="flex justify-between items-center mb-5">
-                            <h2 className="text-sm font-bold text-warning flex items-center gap-2"><Icons.Brain c="w-6 h-6"/> IA Recomienda</h2>
+                            <h2 className="text-sm font-bold text-warning flex items-center gap-2"><Icons.Brain c="w-6 h-6"/> IA</h2>
                             <button onClick={handleAnalyze} disabled={isAnalyzing} className={`bg-warning/20 text-warning px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${isAnalyzing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-warning hover:text-black shadow-md'}`}>
                                 {isAnalyzing ? <Icons.RefreshCw c="w-3 h-3 animate-spin"/> : <Icons.Brain c="w-3 h-3"/>}
                                 {isAnalyzing ? (t('btn_analyzing')||'Analizando...') : (t('btn_analyze')||'Analizar')}
@@ -679,8 +769,8 @@
                             <ul className="space-y-4 text-sm text-secondary font-medium leading-relaxed view-animate">
                                 {tipsGen.map((tip, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
-                                        <span className={`${tip.includes('!') || tip.includes('Cuidado') || tip.includes('Warning') ? 'text-error' : 'text-accent'} mt-0.5 font-bold`}>●</span>
-                                        <span className={tip.includes('!') || tip.includes('Cuidado') || tip.includes('Warning') ? 'text-error font-bold' : ''}>{tip}</span>
+                                        <span className={`${tip.includes('!') || tip.includes('Cuidado') || tip.includes('Warning') || tip.includes('Attention') || tip.includes('Achtung') ? 'text-error' : 'text-accent'} mt-0.5 font-bold`}>●</span>
+                                        <span className={tip.includes('!') || tip.includes('Cuidado') || tip.includes('Warning') || tip.includes('Attention') || tip.includes('Achtung') ? 'text-error font-bold' : ''}>{tip}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -702,6 +792,8 @@
 
             const year = currentDate.getFullYear(); const month = currentDate.getMonth();
             const daysInMonth = new Date(year, month + 1, 0).getDate(); const firstDay = new Date(year, month, 1).getDay();
+            
+            const TR_MESES = Array.isArray(t('months')) ? t('months') : ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
             const changeMonth = (dir) => { setCurrentDate(new Date(year, month + dir, 1)); setSelectedDay(null); };
             const checkDayHasTxns = (d) => { 
@@ -713,13 +805,13 @@
             if (filtro === 'Diario' && selectedDay) {
                 const dateStr = new Date(year, month, selectedDay).toISOString().split('T')[0];
                 displayTxns = displayTxns.filter(txn => txn.date && txn.date.startsWith(dateStr));
-                label = `${selectedDay} DE ${MESES[month].toUpperCase()} ${year}`;
+                label = `${selectedDay} ${TR_MESES[month].toUpperCase()} ${year}`;
             } else if (filtro === 'Semanal') {
                 displayTxns = displayTxns.filter(txn => txn.date && new Date(txn.date).getMonth() === month);
-                label = `SEM · ${MESES[month].substring(0,3).toUpperCase()}. ${year}`;
+                label = `${TR_MESES[month].substring(0,3).toUpperCase()} ${year}`;
             } else {
                 displayTxns = displayTxns.filter(txn => txn.date && new Date(txn.date).getMonth() === month);
-                label = `${MESES[month].toUpperCase()} ${year}`;
+                label = `${TR_MESES[month].toUpperCase()} ${year}`;
             }
 
             const inTotal = displayTxns.filter(txn => txn.type === 'ingreso').reduce((a, b) => a + (Number(b.amount)||0), 0);
@@ -758,7 +850,7 @@
                     <div className="bg-card rounded-3xl p-5 border shadow-md" style={{borderColor: c.border}}>
                         <div className="flex justify-between items-center mb-4">
                             <button onClick={() => changeMonth(-1)} className="text-secondary hover:text-primary p-2 bg-background border rounded-full" style={{borderColor: c.border}}><Icons.ChevronLeft c="w-4 h-4"/></button>
-                            <span className="font-bold text-primary tracking-wide">{MESES[month]} {year}</span>
+                            <span className="font-bold text-primary tracking-wide">{TR_MESES[month]} {year}</span>
                             <button onClick={() => changeMonth(1)} className="text-secondary hover:text-primary p-2 bg-background border rounded-full" style={{borderColor: c.border}}><Icons.ChevronRight c="w-4 h-4"/></button>
                         </div>
                         <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-secondary mb-2 uppercase">
@@ -779,9 +871,9 @@
                     </div>
 
                     <div className="flex bg-card rounded-xl border p-1 shadow-sm" style={{borderColor: c.border}}>
-                        {[t('tab_daily')||'Diario', t('tab_weekly')||'Semanal', t('tab_monthly')||'Mensual'].map((f, idx) => {
-                            const rawFilter = ['Diario', 'Semanal', 'Mensual'][idx];
-                            return <button key={rawFilter} onClick={() => { setFiltro(rawFilter); if(rawFilter!=='Diario') setSelectedDay(null); }} className={`flex-1 py-2.5 text-xs rounded-lg font-bold transition-all duration-300 ${filtro === rawFilter ? 'bg-background text-primary shadow-sm border' : 'text-secondary hover:text-primary'}`} style={filtro === rawFilter ? {borderColor: c.border} : {}}>{f}</button>
+                        {['Diario', 'Semanal', 'Mensual'].map((rawFilter, idx) => {
+                            const translatedFilter = [t('tab_daily')||'Diario', t('tab_weekly')||'Semanal', t('tab_monthly')||'Mensual'][idx];
+                            return <button key={rawFilter} onClick={() => { setFiltro(rawFilter); if(rawFilter!=='Diario') setSelectedDay(null); }} className={`flex-1 py-2.5 text-xs rounded-lg font-bold transition-all duration-300 ${filtro === rawFilter ? 'bg-background text-primary shadow-sm border' : 'text-secondary hover:text-primary'}`} style={filtro === rawFilter ? {borderColor: c.border} : {}}>{translatedFilter}</button>
                         })}
                     </div>
 
@@ -823,7 +915,7 @@
                                             {puedeEditar ? (
                                                 <button onClick={()=>setEditingTxn(txn)} className="p-1.5 text-secondary hover:text-accent bg-background rounded-lg border shadow-sm" style={{borderColor: c.border}}><Icons.Pencil c="w-3.5 h-3.5"/></button>
                                             ) : (
-                                                <span className="p-1.5 text-secondary/30 bg-background rounded-lg border border-transparent" title="Protegido (Pasaron 24h)"><Icons.Shield c="w-3.5 h-3.5"/></span>
+                                                <span className="p-1.5 text-secondary/30 bg-background rounded-lg border border-transparent" title="24h"><Icons.Shield c="w-3.5 h-3.5"/></span>
                                             )}
                                             <button onClick={()=>deleteTxn(txn.id)} className="p-1.5 text-secondary hover:text-error bg-background rounded-lg border shadow-sm" style={{borderColor: c.border}}><Icons.Trash c="w-3.5 h-3.5"/></button>
                                         </div>
@@ -923,7 +1015,7 @@
                                 <div>
                                     <label className="text-[10px] font-bold text-secondary uppercase mb-2 block tracking-widest">País de Residencia y Monedas</label>
                                     <select value={local.country} onChange={chgCountry} className="w-full p-3 rounded-xl border bg-background outline-none text-primary text-sm font-bold shadow-inner mb-3" style={{borderColor: c.border}}>
-                                        {COUNTRIES.map(c=><option key={c.name} value={c.name}>{c.name}</option>)}
+                                        {COUNTRIES.map(ct=><option key={ct.name} value={ct.name}>{getFlag(ct.name)} {ct.name}</option>)}
                                     </select>
                                     <div className="grid grid-cols-3 gap-3">
                                         {[0, 1, 2].map(i => (
@@ -1022,14 +1114,26 @@
             const [previewSettings, setPreviewSettings] = useState(null); 
             const [cur, setCur] = useState('PEN');
 
-            useEffect(() => { const sUser = sessionStorage.getItem('billetera_active_user'); if(sUser) loadData(sUser); }, []);
+            // Leer lenguaje del navegador (si existe en index.html) antes del login
+            useEffect(() => { 
+                const sUser = sessionStorage.getItem('billetera_active_user'); 
+                if(sUser) loadData(sUser); 
+            }, []);
 
             const loadData = (u) => {
                 setUser(u); const ud = DB.getUserData(u);
                 if(ud?.vip && ud.expireAt && ud.expireAt >= new Date().toISOString().split('T')[0]) { setVip(true); setExp(ud.expireAt); }
                 else { DB.deactivateVip(u); setVip(false); setExp(null); }
                 setTxns(Array.isArray(DB.getTxns(u)) ? DB.getTxns(u) : []); 
-                const s = DB.getSettings(u); setSettings(s); setCur(s.currencies[0]||'PEN'); setView('home');
+                
+                // Forzar país seguro en carga inicial por si había un país antiguo en la caché
+                let s = DB.getSettings(u); 
+                if(!COUNTRIES.find(c => c.name === s.country)) {
+                    s.country = 'Perú'; s.lang = 'es'; s.currencies[0] = 'PEN';
+                    DB.saveSettings(u, s);
+                }
+
+                setSettings(s); setCur(s.currencies[0]||'PEN'); setView('home');
             };
 
             const login = (u, p) => { sessionStorage.setItem('billetera_active_user', u); DB.loginOrRegisterGoogle(u, p); loadData(u); };
@@ -1052,6 +1156,8 @@
                 root.style.setProperty('--col-nav-bg', c.navBg); root.style.setProperty('--col-nav-active-bg', c.navActiveBg);
                 root.style.setProperty('--col-nav-active-text', c.navActiveText);
                 document.body.style.fontFamily = activeSettings.fontFamily;
+                document.documentElement.lang = activeSettings.lang || 'es';
+                document.body.setAttribute('dir', (activeSettings.lang === 'ar') ? 'rtl' : 'ltr');
             }, [activeSettings]);
 
             if(!user) return <div><AuthView onLogin={login}/></div>;
@@ -1089,7 +1195,7 @@
                     
                     {showSettings && <AjustesModal settings={activeSettings} saveSettings={handleSaveSettings} onPreview={setPreviewSettings} user={user} isVip={vip} onLogout={logout} onUpgrade={()=>setShowPay(true)} onClose={handleCloseSettings} Icons={Icons} c={c}/>}
                     {showCountryModal && <CountryModal onClose={()=>setShowCountryModal(false)} settings={activeSettings} saveSettings={handleSaveSettings} c={c} />}
-                    {showPay && <PaymentModal onClose={()=>setShowPay(false)} t={t} />}
+                    {showPay && <PaymentModal onClose={()=>setShowPay(false)} t={t} cur={cur} country={activeSettings.country} lang={activeSettings.lang} c={c} />}
                 </div>
             );
         }
